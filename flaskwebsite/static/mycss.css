@@ -1,0 +1,77 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto:wght@300');
+
+
+
+.wbase{
+    color: #ffffff;
+    font-family: 'Roboto';
+    font-size: 18;
+}
+.wtitle{
+    color: #ffffff;
+    font-family: 'Roboto';
+    font-weight: '300';
+}
+.wlink{
+    color: #ffffff;
+    text-decoration-line: none;
+    font-family: 'Roboto';
+    text-align: center;
+    font-size: 20;
+}
+.wlink:hover{
+    color:#FF7456;
+}
+.bwlink{
+    color: #ffffff;
+    text-decoration-line: none;
+    font-family: 'Roboto';
+    text-align: center;
+    font-size: 100;
+}
+.bwlink:hover{
+    color:#FF7456;
+}
+.centerdiv{
+    position: absolute;
+    left:50%;
+    top:50%;
+    transform: translate(-50%,-50%);
+    padding: 10px;
+}
+
+/* this is menu stuff*/
+.menu {
+    list-style: none;
+    height: 100px;
+    width: 700px;
+    padding:0%;
+    clear:left;
+}
+.menu >li > a {
+    color: #fff;
+    display: block;
+    text-align: left;
+    float:left;
+}
+ 
+.menu > li > ul {
+    opacity: 0;
+    transition: all .2s ease;
+    padding:0;
+    float:left;
+}
+.menu li:hover ul {
+    opacity: 1;
+    transform: translateY(0);
+}
+.menu > li > ul > a {
+    display: block;
+    text-align: left;
+    padding: 5px 0px;
+}
+/* this is menu stuff*/
+
+.body > div > darkdiv{
+    filter:brightness(200%);
+}

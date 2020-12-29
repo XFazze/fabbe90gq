@@ -1,0 +1,37 @@
+<html>
+
+<head>
+    <link rel="stylesheet" href="../static/mycss.css">
+</head>
+
+<body
+    style="background-image: url('../static/pictures/space.jpg');   overflow:hidden; background-size: 4500px; background-position-x:center;">
+    <div style="position:absolute; left: 20;">
+        <a href="/alien" class="wlink" >alien home(back)</a>
+        <h1 class="wtitle" >Alien planet - User</h1>
+        <p class="wbase" >How much do you need? </p>
+
+        {% block content %}
+            <p class="wbase" >Getting resources</p>
+            <form action="" method="post" novalidate>
+                {{ form.hidden_tag() }}
+                <p class="wbase" >
+                    {{ form.water.label }}<br/>
+                    {{ form.water(size=32) }}
+                </p>
+                <p class="wbase" >
+                    {{ form.food.label }}<br/>
+                    {{ form.food(size=32) }}
+
+                </p>
+                <p class="wbase" >
+                    {{ form.electric.label }}<br/>
+                    {{ form.electric(size=32) }}
+                </p>
+                <p>{{ form.submit() }}</p>
+            </form>
+            {% endblock %}
+    </div>
+</body>
+
+</html>

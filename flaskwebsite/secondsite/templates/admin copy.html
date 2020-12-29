@@ -1,0 +1,105 @@
+<html>
+
+<head>
+    <link rel="stylesheet" href="../static/mycss.css">
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+      google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(drawChart);
+
+      function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+          ['Time', 'Sales'],
+          ['1',  5],
+          ['2',  2],
+          ['3',  3],
+          ['4',  5],
+          ['5',  2],
+          ['6',  2],
+          ['7',  4],
+          ['8',  13],
+        ]);
+
+        var options = {
+          title: 'History',
+          legend: { position: 'bottom' }
+        };
+
+        var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
+
+        chart.draw(data, options);
+      }
+    </script><script type="text/javascript">
+      google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(drawChart);
+
+      function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+          ['Time', 'Sales'],
+          ['1',  5],
+          ['2',  2],
+          ['3',  3],
+          ['4',  5],
+          ['5',  2],
+          ['6',  2],
+          ['7',  4],
+          ['8',  23],
+        ]);
+
+        var options = {
+          title: 'History',
+          legend: { position: 'bottom' }
+        };
+
+        var chart = new google.visualization.LineChart(document.getElementById('curve_chart1'));
+
+        chart.draw(data, options);
+      }
+    </script><script type="text/javascript">
+      google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(drawChart);
+
+      function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+          ['Time', 'Sales'],
+          ['1',  1],
+          ['2',  2],
+          ['3',  3],
+          ['4',  5],
+          ['5',  2],
+          ['6',  2],
+          ['7',  4],
+          ['8',  533],
+        ]);
+
+        var options = {
+          title: 'History',
+          legend: { position: 'bottom' }
+        };
+
+        var chart = new google.visualization.LineChart(document.getElementById('curve_chart2'));
+
+        chart.draw(data, options);
+      }
+    </script>
+</head>
+
+<body
+    style="background-image: url('../static/pictures/space.jpg');  ; background-size: 4500px; background-position-x:center;">
+    <div style="position:absolute; left: 20;">
+      <a href="/alien" class="wlink" >alien home(back)</a>
+        <h1 class="wtitle">Alien planet</h1>
+        <h3 class="wtitle">Storage</h3>
+
+        <p class="wbase" >Water: {{ storage[0]["water"] }}</p>
+        <div id="curve_chart" style="width: 300px; height: 200px"></div>
+        
+        <p class="wbase" >Food: {{ storage[0]["food"] }}</p>
+        <div id="curve_chart1" style="width: 300px; height: 200px"></div>
+
+        <p class="wbase" >Electric: {{ storage[0]["electric"] }}</p>
+        <div id="curve_chart2" style="width: 300px; height: 200px"></div>
+    </div>
+</body>
+
+</html>

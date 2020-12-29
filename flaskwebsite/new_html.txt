@@ -1,0 +1,16 @@
+<html>
+<head>
+    <link rel="stylesheet" href="../static/mycss.css">
+</head>
+
+<body
+    style="background-image: url('../static/pictures/factorio_train.jpg');  background-repeat: no-repeat; background-size: cover;">
+    <div class="centerdiv">
+        <h1 class="wtitle">This will the vpn loggo</h1></bra>
+        <a href="/home" class="wlink">go back one step</a></br></bra>
+        <a href="/" class="wlink">go back pls let me be go back aaaa</a></br>
+
+    </div>
+</body>
+
+</html>

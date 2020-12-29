@@ -1,0 +1,29 @@
+<html>
+
+<head>
+  <link rel="stylesheet" href="../static/mycss.css">
+</head>
+
+<body
+  style="background-image: url('../static/pictures/space.jpg');  background-size: 4500px; background-position-x:center;">
+  <div style="left: 20;">
+    <a href="/alien" class="wlink">alien home(back)</a>
+    <h1 class="wtitle">Alien planet - Admin</h1>
+    <h3 class="wtitle">Storage</h3>
+
+    <p class="wbase">Water: {{ storage[0]["water"] }}</p>
+    <p class="wbase">Food: {{ storage[0]["food"] }}</p>
+    <p class="wbase">Electric: {{ storage[0]["electric"] }}</p>
+
+
+  </div>
+  <div>
+    <h3 class="wtitle">Manual input log:</h3>
+    <p class="wbase">Date and time, Water, Food, electric</p>
+    <p>{% for line in lines %}</p>
+    <p class="wbase">{{ line }}</p>
+    {% endfor %}
+  </div>
+</body>
+
+</html>
