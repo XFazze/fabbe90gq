@@ -8,6 +8,7 @@ items = json.load(open('/home/pi/website/factorio_site/ratio_code/items.json', '
 def get_components(item, amount, smelter, assembler):
     result = {}
     produce_per_sek = 1/items[item]["time"]
+    print(items[item]["output"],produce_per_sek )
     result["ratio"] = amount/(produce_per_sek*items[item]["output"])
     if not items[item]["raw"]:
         for first in items[item]["materials"]:
