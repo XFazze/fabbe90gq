@@ -1,0 +1,42 @@
+<html>
+
+<head>
+    <link rel="stylesheet" href="../static/mycss.css">
+</head>
+
+<body
+    style="background-image: url('../static/pictures/factorio_train.jpg');  background-repeat: no-repeat; background-size: cover;">
+    <div>
+        <a href="/factorio" class="wlink">Go back</a>
+        <h1 class="wtitle">Factorio Ratio calculator</h1></br>
+        <a class="wbase">You will chose component and amount per sekond you want to 
+        produce aswell as smelter and assembler modifiers</a></br>
+        <form action="" method="post" novalidate>
+            {{ form.hidden_tag() }}
+            <p class="wbase">{{ form.component.label }}:{{ form.component }} </p>
+            <p class="wbase">{{ form.amount.label }} {{ form.amount }}</p>
+            <p class="wbase">{{ form.smeliting_mod.label }} {{ form.smeliting_mod }}</p>
+            <p class="wbase">{{ form.assembler_mod.label }} {{ form.assembler_mod }}</p>
+            <p class="wbase"> {{ form.submit }}</p>
+        
+        </form>
+        <div class="darkdiv">
+            {% if submitted %}
+            <h3 class="wtitle">You want component:{{ component }} at {{ ratio }} assemblers/smelter shus</h3>
+                {% for item in sop %}
+                    {% if not item %}
+                        </br>
+                    {% else %}
+                    <p class="wbase">{{ item }}</p>
+                    
+                    {% endif %}
+                 
+                {% endfor %}
+                   
+            {% endif %}
+        </div>
+    </div>
+    
+</body>
+
+</html>
