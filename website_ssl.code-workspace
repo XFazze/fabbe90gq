@@ -1,12 +1,15 @@
 {
 	"folders": [
 		{
+			"name": "website",
 			"path": "."
 		},
 		{
+			"name": "apache2",
 			"path": "../../../etc/apache2"
 		},
 		{
+			"name": "apache2",
 			"path": "../../../var/log/apache2"
 		}
 	],
