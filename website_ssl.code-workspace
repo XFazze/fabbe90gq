@@ -1,0 +1,14 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"path": "../../../etc/apache2"
+		},
+		{
+			"path": "../../../var/log/apache2"
+		}
+	],
+	"settings": {}
+}
