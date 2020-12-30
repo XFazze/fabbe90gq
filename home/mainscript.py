@@ -6,13 +6,9 @@ app.config['SECRET_KEY'] = 'you-will-never-guess'
 # Root
 @app.route("/")
 def main():
-    return render_template('home_base.html')
+    return render_template('home.html')
 
 
-# Root
-@app.route("/vpn_log")
-def vpn_log():
-    return render_template('vpn_log.html')
 
 
 

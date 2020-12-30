@@ -13,7 +13,7 @@ app.config['SECRET_KEY'] = 'you-will-never-guess'
 
 @app.route("/")
 def main():
-    return render_template('home_base.html')
+    return render_template('home.html')
 
 
 names_id = [
