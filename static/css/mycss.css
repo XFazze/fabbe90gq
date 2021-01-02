@@ -1,4 +1,9 @@
-.menu{
+.pinkbackground{
+    margin:0;
+    background: rgb(255, 0, 75);
+    background-size:cover;
+}
+.m_menu{
     float:left;
     width:40%;
     height: 100%;
@@ -6,43 +11,45 @@
     flex-direction: column;
     justify-content: center;
 }
-ul {
+.m_menu > ul{
     list-style-type: none;
     padding: 10;
     margin-left: 40%;
 
 }
-ul ul{
-    margin-left: auto;
-
-}
-ul > li{
+.m_menu > ul >li{
     margin: 10;
     font-family: 'Bebas Neue';
         
 }
-ul > li > ul > li{
+.m_menu > ul >li >a{
+    text-decoration: none;
+    color:white;
+    font-size: 300%;
+
+}
+.m_menu > ul >li >a:hover{
+    color:black
+}
+
+.m_menu > ul > li > ul{
+    list-style-type: none;
+}
+.m_menu > ul > li > ul > li{
     margin: 10;
     margin-left: 30;
     font-family: 'Roboto';
 
 }
-
-ul li a{
+.m_menu > ul > li > ul > li >a{
     text-decoration: none;
-    color:white;
-
-}
-ul > li > a{
-    font-size: 300%;
-}
-ul > li > a:hover{
-    color:black
-}
-ul > li > ul > li >a{
     font-size: 150%;
     color:rgb(226, 226, 226)
 }
+.m_menu > ul > li > ul > li >a:hover{
+    color:black;
+}
+
 .rcenter{
     float:right;
     width: 60%;
@@ -59,74 +66,9 @@ ul > li > ul > li >a{
     font-style: italic;
     font-weight: Thin;
 } 
-body{
-    margin:0;
-    background: rgb(255, 0, 75);
-    background-size:cover;
-}
-.menu{
-    float:left;
-    width:40%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-}
-ul {
-    list-style-type: none;
-    padding: 10;
-    margin-left: 40%;
 
-}
-ul ul{
-    margin-left: auto;
 
-}
-ul > li{
-    margin: 10;
-    font-family: 'Bebas Neue';
-        
-}
-ul > li > ul > li{
-    margin: 10;
-    margin-left: 30;
-    font-family: 'Roboto';
 
-}
 
-ul li a{
-    text-decoration: none;
-    color:white;
 
-}
-ul > li > a{
-    font-size: 300%;
-}
-ul > li > a:hover{
-    color:black
-}
-ul > li > ul > li >a{
-    font-size: 150%;
-    color:rgb(226, 226, 226)
-}
-.rcenter{
-    float:right;
-    width: 60%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    text-align: center;
-    background:rgb(255, 255, 255);
-}
-.rcenter > p{
-    margin:10px;
-    font-family: 'Roboto';
-    font-style: italic;
-    font-weight: Thin;
-} 
-body{
-    margin:0;
-    background: rgb(255, 0, 75);
-    background-size:cover;
-}
+
