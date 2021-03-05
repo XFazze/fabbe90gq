@@ -22,7 +22,7 @@ def pappa():
 # Bjornbanan
 @app.route("/bjornbanan")
 def bjornbanan():
-    return render_template('index.html')
+    return render_template('bjornbanan.html')
 
 # Portfolio
 @app.route("/portfolio")
