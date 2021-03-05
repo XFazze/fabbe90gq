@@ -29,6 +29,11 @@ def bjornbanan():
 def portfolio():
     return render_template('portfolio.html')
 
+# prim
+@app.route("/portfolio/prim")
+def prim():
+    return render_template('prim.html')
+
 # Factorio
 @app.route("/factorio")
 def factorio_home():
