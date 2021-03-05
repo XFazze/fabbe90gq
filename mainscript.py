@@ -9,6 +9,10 @@ def main():
     return render_template('index.html')
 
 
+# Pappa
+@app.route("/pappa")
+def main():
+    return render_template('pappa.html')
 
 
 
