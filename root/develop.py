@@ -6,7 +6,7 @@ app.config['SECRET_KEY'] = 'you-will-never-guess'
 # Root
 @app.route("/")
 def main():
-    return render_template('template.html')
+    return render_template('pappa.html')
 
 
 
