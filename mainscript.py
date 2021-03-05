@@ -12,7 +12,7 @@ app.config['SECRET_KEY'] = 'you-will-never-guess'
 def index():
     return render_template('index.html')
 
-
+'''
 # Pappa
 @app.route("/pappa")
 def pappa():
@@ -869,7 +869,7 @@ def prop_calc():
                            component=component,
                            submitted=submitted,
                            sop=sop)
-
+'''
 # Run the site
 if __name__ == "__main__":
     app.run()
