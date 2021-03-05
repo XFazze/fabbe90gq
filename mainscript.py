@@ -15,7 +15,7 @@ def pappa():
     return render_template('pappa.html')
 
 
-# Björnbanan
+# Bjornbanan
 @app.route("/bjornbanan")
 def bjornbanan():
     return render_template('index.html')
