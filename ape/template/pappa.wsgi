@@ -6,3 +6,4 @@ sys.path.insert(0,"/home/pi/website/ape/")
 
 from mainscript import app as application
 application.secret_key = 'you-will-never-guess'
+#huh
