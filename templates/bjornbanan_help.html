@@ -1,19 +1,77 @@
 <html>
 
 <head>
-    <link rel="stylesheet" href="/static/mycss.css">
+    <link rel="stylesheet" href="/static/css/newccs.css">
+    <link rel="shortcut icon" href="/static/favicon.ico">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&family=Roboto+Mono&display=swap" rel="stylesheet">
+    <title>Björnbanan - Commands</title>
 </head>
 
 <body
-    style="background-image: url('/static/pics/bear.jpg');  background-repeat: no-repeat; background-size: cover;">
+    style="background-image: url('/static/pics/bear.jpg');  background-repeat: no-repeat; background-size: cover;margin:0%;">
+    <div class="navbar">
+        <a href="/portfolio">Portfolio</a>
+        <a href="/factorio">Factorio</a>
+        <a href="/bjornbanan">Björnbanan</a>
+    </div>
     <div class="centerdiv">
-        <a href="/" class="wlink">go back(index)</a></br>
-        <h1 class="wtitle">Björnbanan</h1>
+        <h1 class="wtitle">Björnbanan Commands</h1>
+        <p style="width: 800px;">Björnbanan natural prefix is g as the way of the nature. But this can be changed if
+            there is somethng wrong with you. Every commands with a few exceptions have g in front of them, if you've
+            changed it then it's whatever you changed to</p>
+        <p>
         <pre style="color:white">
-            God - Play music
+            Administation
             ghelp - come here
+            gsetprefix [prefix] - sets the prefix of the server to the symbols used in prefix 
+            gnewmembers - will return user without any roles(except @everyone). Used for gateway systems
+            gclear [not](optional) [amount to skip](optional) [amount] - will remove that amount of messages. If you wrote "not" you have to specify amount that the bot should skip.
+            gspam - spams 500 messages. only god can use this
+
+            [Bettervc] is a system for voice channel to disapear and appear with demand. I suggest you remove afk channel cause that shit wack.
+            gaddvcat - enables the system on the category where your sitting in voice chat. You should have created some channels before(they will be hidden)
+            gremovevccat - disables the category where your sitting in voice chat
+            
+            grear [@role] [emoji] [text if you want] - this will create a message people can react to which will give them the role @
+            greac - will remove roles messages and send them again. This will create a nicer look 
+            
+            
+            [shrödingers cat] this is a server which got special commands
+            gprime - gives user @priviledge roles and removes @public role
+            gcolor [#AAAAAA] - sets your role color to the hex color. If you dont have a role it will create one.(I can enable this on other servers)     
+            gticket - will create a channel with you and admins. When reacting to the lock on the first message it will remove the channel and send a text file with the message history to every memeber(can be enabled)
+            
+        
+            [noelbot] this enables noel mode on a channel. It removes all messages in a channel every 10 seconds
+            gnoelbotad - enables noelbot on the text channel you wrote in
+            gnoelbotremove - disables noelbot on the text channel you wrote in
+
+            [rolebot] this enables a role log channel. It will send messages when users gets/loses a role and ping a role on schrödinger cat if op bots is added.
+            grolebotadd - enables role log on text channel
+            grolebotremove - disables role log on text channel
+
+
+            Voice
+            gj - joins your voice channel
+            gl - leaves voice channel
+            god - plays anthem
+            gerika - plays second anthem
+            gtits [text] - follow this by a message and it will say it in voice chat (gtits hey)
+
+            DND
+            gdndframer - creates category and channels with Abbe's layout
+            d - If your message starts with the letter "d" and containes numbers and +-*/ it will probably get u a answer.(d10+4)
+
+            Quotes (the voting is not activated cause eww)
+            gobi - send a quote in the text channel
+            gobiv - says the quote in your voice channel and sends a message you can vote on
+            gadd [text] - adds a quote to the hive mind
+
+
 
         </pre>
+        </p>
 
 
     </div>
