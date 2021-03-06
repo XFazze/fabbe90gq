@@ -21,9 +21,8 @@ color: grey;
     display:flex;
     justify-content:center;
     align-items: center;
-    bottom:15px;
-    position:relative;
-    bottom:0px;
+    position:absolute;
+    width: 100%;
 
 }
 .socials img{
