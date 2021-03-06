@@ -12,7 +12,6 @@ app.config['SECRET_KEY'] = 'you-will-never-guess'
 def index():
     return render_template('index.html')
 
-'''
 # Pappa
 @app.route("/pappa")
 def pappa():
@@ -39,6 +38,7 @@ def prim():
 def factorio_home():
     return render_template('factorio_home.html')
 
+'''
 names_id = [
     (
         "accumulator",
