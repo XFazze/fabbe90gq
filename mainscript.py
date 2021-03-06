@@ -12,12 +12,6 @@ app.config['SECRET_KEY'] = 'you-will-never-guess'
 def index():
     return render_template('index.html')
 
-# Pappa
-@app.route("/pappa")
-def pappa():
-    return render_template('pappa.html')
-
-
 # Bjornbanan
 @app.route("/bjornbanan")
 def bjornbanan():
@@ -42,6 +36,7 @@ def prim():
 @app.route("/portfolio/pappa")
 def pappa():
     return render_template('/portfolio/pappa.html')
+
 # Factorio
 @app.route("/factorio")
 def factorio_home():
