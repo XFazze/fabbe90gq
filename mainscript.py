@@ -36,7 +36,7 @@ def portfolio():
 # prim
 @app.route("/portfolio/soduko")
 def prim():
-    return render_template('portfolio_soduko.html')
+    return render_template('/portfolio/soduko.html')
 
 # Factorio
 @app.route("/factorio")
