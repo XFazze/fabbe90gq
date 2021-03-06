@@ -37,6 +37,11 @@ def prim():
 def pappa():
     return render_template('/portfolio/pappa.html')
 
+# pappa
+@app.route("/portfolio/netflix_analysis")
+def netflix_analyss():
+    return render_template('/portfolio/netflix_analysis.html')
+
 # Factorio
 @app.route("/factorio")
 def factorio_home():
