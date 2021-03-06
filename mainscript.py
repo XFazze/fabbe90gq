@@ -22,6 +22,10 @@ def pappa():
 @app.route("/bjornbanan")
 def bjornbanan():
     return render_template('bjornbanan.html')
+# help commands
+@app.route("/bjornbanan/help")
+def bjornbanan_help():
+    return render_template('bjornbanan_help.html')
 
 # Portfolio
 @app.route("/portfolio")
@@ -38,7 +42,6 @@ def prim():
 def factorio_home():
     return render_template('factorio_home.html')
 
-'''
 names_id = [
     (
         "accumulator",
@@ -869,7 +872,7 @@ def prop_calc():
                            component=component,
                            submitted=submitted,
                            sop=sop)
-'''
+
 # Run the site
 if __name__ == "__main__":
     app.run()
