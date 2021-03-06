@@ -22,6 +22,7 @@ def pappa():
 @app.route("/bjornbanan")
 def bjornbanan():
     return render_template('bjornbanan.html')
+
 # help commands
 @app.route("/bjornbanan/help")
 def bjornbanan_help():
@@ -33,9 +34,9 @@ def portfolio():
     return render_template('portfolio.html')
 
 # prim
-@app.route("/portfolio/prim")
+@app.route("/portfolio/soduko")
 def prim():
-    return render_template('prim.html')
+    return render_template('portfolio_soduko.html')
 
 # Factorio
 @app.route("/factorio")
@@ -866,7 +867,7 @@ def prop_calc():
                                 form.smeliting_mod.data, form.assembler_mod.data)
         ratio=str(result["ratio"])
         sop = stage(result, 1, [])
-    return render_template('prop_calc.html',
+    return render_template('factorio_proportions.html',
                            form=form,
                            ratio=ratio,
                            component=component,
