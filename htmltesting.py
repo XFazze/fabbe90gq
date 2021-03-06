@@ -10,7 +10,7 @@ app.config['SECRET_KEY'] = 'you-will-never-guess'
 # Root
 @app.route("/")
 def index():
-    return render_template('template.html')
+    return render_template('bjornbanan.html')
 
 # Run the site
 if __name__ == "__main__":
