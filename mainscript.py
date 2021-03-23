@@ -27,6 +27,10 @@ def bjornbanan_help():
 def projects():
     return render_template('projects.html')
 
+@app.route('/projects/<path:filename>')
+def send_js(filename):
+    return send_from_directory('projects', filename)
+"""
 # prim
 @app.route("/projects/soduko")
 def prim():
@@ -41,7 +45,7 @@ def pappa():
 @app.route("/projects/netflix_analysis")
 def netflix_analyss():
     return render_template('/projects/netflix_analysis.html')
-
+"""
 # Factorio
 @app.route("/factorio")
 def factorio_home():
