@@ -4,7 +4,7 @@ from wtforms import Form, SelectField, validators, SubmitField, IntegerField
 from wtforms.validators import DataRequired
 from ratio_code.basic_copy import *
 # Initializing flask and sql
-app = Flask(__name__,  projects_folder='static/projects')
+app = Flask(__name__,  static_folder='static/projects')
 app.config['SECRET_KEY'] = 'you-will-never-guess'
 
 # Root
@@ -29,7 +29,7 @@ def projects():
 
 @app.route('/projects/<path:filename>')
 def send_js(filename):
-    return send_from_directory(app.projects_folder, filename)
+    return send_from_directory(app.static_folder, filename)
 
 """
 # prim
