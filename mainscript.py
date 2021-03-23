@@ -22,25 +22,25 @@ def bjornbanan():
 def bjornbanan_help():
     return render_template('bjornbanan_help.html')
 
-# Portfolio
-@app.route("/portfolio")
-def portfolio():
-    return render_template('portfolio.html')
+# projects
+@app.route("/projects")
+def projects():
+    return render_template('projects.html')
 
 # prim
-@app.route("/portfolio/soduko")
+@app.route("/projects/soduko")
 def prim():
-    return render_template('/portfolio/soduko.html')
+    return render_template('/projects/soduko.html')
     
 # pappa
-@app.route("/portfolio/pappa")
+@app.route("/projects/pappa")
 def pappa():
-    return render_template('/portfolio/pappa.html')
+    return render_template('/projects/pappa.html')
 
 # pappa
-@app.route("/portfolio/netflix_analysis")
+@app.route("/projects/netflix_analysis")
 def netflix_analyss():
-    return render_template('/portfolio/netflix_analysis.html')
+    return render_template('/projects/netflix_analysis.html')
 
 # Factorio
 @app.route("/factorio")
