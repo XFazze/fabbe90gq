@@ -23,30 +23,30 @@ def bjornbanan_help():
     return render_template('bjornbanan_help.html')
 
 # projects
-@app.route("/projects")
-def projects():
-    return render_template('projects.html')
+@app.route("/projects/files")
+def files():
+    return render_template('files.html')
 
-@app.route('/projects/<path:filename>')
-def send_js(filename):
+@app.route('/projects/files/<path:filename>')
+def sendfile(filename):
     return send_from_directory(app.static_folder, filename)
 
-"""
-# prim
-@app.route("/projects/soduko")
-def prim():
-    return render_template('/projects/soduko.html')
+# projects
+@app.route("/projects/")
+def pappa():
+    return render_template('projects.html')
+
     
 # pappa
 @app.route("/projects/pappa")
 def pappa():
-    return render_template('/projects/pappa.html')
+    return render_template('pappa.html')
 
 # pappa
 @app.route("/projects/netflix_analysis")
 def netflix_analyss():
-    return render_template('/projects/netflix_analysis.html')
-"""
+    return render_template('netflix_analysis.html')
+
 # Factorio
 @app.route("/factorio")
 def factorio_home():
