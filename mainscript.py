@@ -33,7 +33,7 @@ def sendfile(filename):
 
 # projects
 @app.route("/projects/")
-def pappa():
+def projects():
     return render_template('projects.html')
 
     
