@@ -15,14 +15,14 @@
 
     <div class="centerdiv">
         <h1 class="wtitle">Files</h1>
-        <h1>{{ tree.name }}</h1>
         <ul>
-        {%- for item in tree.children recursive %}
-            <li>{{ item.name }}
-            {%- if item.children -%}
-                <ul>{{ loop(item.children) }}</ul>
-            {%- endif %}</li>
-        {%- endfor %}
+            {% for file in files %}
+            <li>
+                <a href="{{ (request.path + '/' if request.path != '/' else '') + file }}">
+                    {{ (request.path + '/' if request.path != '/' else '') + file }}
+                </a>
+            </li>
+            {% endfor %}
         </ul>
 
 
