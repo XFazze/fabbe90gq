@@ -9,61 +9,51 @@ app = Flask(__name__,  static_folder='static/projects')
 app.config['SECRET_KEY'] = 'you-will-never-guess'
 
 # Root
-
-
 @app.route("/")
 def index():
     return render_template('index.html')
 
 # Bjornbanan
-
-
 @app.route("/bjornbanan")
 def bjornbanan():
     return render_template('bjornbanan.html')
 
 # help commands
-
-
 @app.route("/bjornbanan/help")
 def bjornbanan_help():
     return render_template('bjornbanan_help.html')
 
 # projects
-
-
 @app.route("/projects/files")
 def files():
     files = os.listdir("/home/pi/website/static/projects/")
+    print(files)
     return render_template('files.html', files=files)
 
+@app.route('/projects/files/<path:filename>')
+def sendfile(filename):
+    return send_from_directory(app.static_folder, filename)
+
 # projects
-
-
 @app.route("/projects/")
 def projects():
     return render_template('projects.html')
 
-
+    
 # pappa
 @app.route("/projects/pappa")
 def pappa():
     return render_template('pappa.html')
 
 # pappa
-
-
 @app.route("/projects/netflix_analysis")
 def netflix_analyss():
     return render_template('netflix_analysis.html')
 
 # Factorio
-
-
 @app.route("/factorio")
 def factorio_home():
     return render_template('factorio_home.html')
-
 
 names_id = [
     (
@@ -864,12 +854,10 @@ names_id = [
     )
 ]
 
-
 class simple(FlaskForm):
     component = SelectField('Component ', choices=names_id,
                             validators=[DataRequired()])
-    amount = IntegerField('Amount per second', validators=[
-                          DataRequired()], default=1)
+    amount = IntegerField('Amount per second', validators=[DataRequired()], default=1)
     smeliting_mod = IntegerField('Smelting mod', validators=[
                                  DataRequired()], default=1)
     assembler_mod = IntegerField('Assembler mod', validators=[
@@ -877,8 +865,6 @@ class simple(FlaskForm):
     submit = SubmitField('Run')
 
 # proportions calc
-
-
 @app.route("/factorio/proportion",  methods=['GET', 'POST'])
 def prop_calc():
     ratio = "nno"
@@ -891,7 +877,7 @@ def prop_calc():
         component = form.component.data
         result = get_components(form.component.data, form.amount.data,
                                 form.smeliting_mod.data, form.assembler_mod.data)
-        ratio = str(result["ratio"])
+        ratio=str(result["ratio"])
         sop = stage(result, 1, [])
     return render_template('factorio_proportions.html',
                            form=form,
@@ -899,7 +885,6 @@ def prop_calc():
                            component=component,
                            submitted=submitted,
                            sop=sop)
-
 
 # Run the site
 if __name__ == "__main__":
