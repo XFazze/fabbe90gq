@@ -5,7 +5,7 @@ from wtforms import Form, SelectField, validators, SubmitField, IntegerField
 from wtforms.validators import DataRequired
 from ratio_code.basic_copy import *
 # Initializing flask and sql
-app = Flask(__name__,  static_folder='static/projects')
+app = Flask(__name__,  static_folder='static')
 app.config['SECRET_KEY'] = 'you-will-never-guess'
 
 # Root
@@ -45,10 +45,6 @@ def projects():
 def pappa():
     return render_template('pappa.html')
 
-# pappa
-@app.route("/projects/netflix_analysis")
-def netflix_analyss():
-    return render_template('netflix_analysis.html')
 
 # Factorio
 @app.route("/factorio")
