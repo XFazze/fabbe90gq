@@ -23,6 +23,12 @@ def bjornbanan():
 def bjornbanan_help():
     return render_template('bjornbanan_help.html')
 
+
+# help commands
+@app.route("/bjornbanan/music_help")
+def bjornbanan_music_help():
+    return render_template('bjornbanan_music_help.html')
+
 # projects
 @app.route("/projects/files")
 def files():
@@ -46,10 +52,7 @@ def pappa():
     return render_template('pappa.html')
 
 
-# Factorio
-@app.route("/factorio")
-def factorio_home():
-    return render_template('factorio_home.html')
+
 
 names_id = [
     (
@@ -861,7 +864,7 @@ class simple(FlaskForm):
     submit = SubmitField('Run')
 
 # proportions calc
-@app.route("/factorio/proportion",  methods=['GET', 'POST'])
+@app.route("/projects/factorio",  methods=['GET', 'POST'])
 def prop_calc():
     ratio = "nno"
     component = "trash"
