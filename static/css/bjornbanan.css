@@ -1,0 +1,87 @@
+.navbar{
+    display:flex;
+    justify-content:center;
+    overflow:hidden;
+    background-color:black;
+}
+.navbar a {
+    float: left;
+    color: #f2f2f2;
+    text-align: center;
+    padding: 16px 30px;
+    text-decoration: none;
+    font-size: 30px;
+    font-family: 'Roboto Mono', monospace;
+}
+.navbar a:hover {
+color: grey;
+}
+
+.socials{
+    display:flex;
+    justify-content:center;
+    align-items: center;
+    position:absolute;
+    width: 100%;
+    bottom:0px;
+
+}
+.socials img{
+    padding:30px;
+    width:100px;
+    height:auto;
+}
+
+.centerdiv{
+    padding:5%;
+
+}
+.centerdiv p{
+    font-family: 'Roboto', sans-serif;
+    color:white;
+
+}
+.centerdiv a{
+    font-family: 'Roboto', sans-serif;
+    text-decoration: none;
+    color:white;
+
+}
+.wtitle{
+    font-family: 'Roboto Mono', monospace;
+    color:white;
+}
+.wlink{
+    font-family: 'Roboto', sans-serif;
+    color:white;
+    text-decoration: none;
+}
+.wbase{
+    font-size: 10px;
+    font-family: 'Roboto', sans-serif;
+    color:white;
+
+}
+.html{
+    font-size: 20px;
+    font-family: 'Roboto', sans-serif;
+    color:#ff04ad;
+}
+#mainlinks{
+    display: none;
+}
+#musiclinks{
+    display: none;
+}
+#mainlinksBtn{
+    cursor:pointer;
+}
+#musiclinksBtn{
+    cursor:pointer;
+}
+#musiclinksBtn-close{
+    cursor:pointer;
+}
+#mainlinksBtn-close{
+    cursor:pointer;
+}

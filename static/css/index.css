@@ -1,0 +1,114 @@
+.navbar{
+    display:flex;
+    justify-content:center;
+    overflow:hidden;
+    background-color:black;
+}
+.navbar a {
+    float: left;
+    color: #f2f2f2;
+    text-align: center;
+    padding: 16px 30px;
+    text-decoration: none;
+    font-size: 30px;
+    font-family: 'Roboto Mono', monospace;
+}
+.navbar a:hover {
+color: grey;
+}
+
+.socials{
+    display:flex;
+    justify-content:center;
+    align-items: center;
+    position:absolute;
+    width: 100%;
+    bottom:0px;
+
+}
+.socials img{
+    padding:30px;
+    width:100px;
+    height:auto;
+}
+
+.centerdiv{
+    padding:5%;
+
+}
+.centerdiv p{
+    font-family: 'Roboto', sans-serif;
+    color:white;
+
+}
+.centerdiv a{
+    font-family: 'Roboto', sans-serif;
+    text-decoration: none;
+    color:white;
+
+}
+.wtitle{
+    font-family: 'Roboto Mono', monospace;
+    color:white;
+}
+.wlink{
+    font-family: 'Roboto', sans-serif;
+    color:white;
+    text-decoration: none;
+}
+.wbase{
+    font-size: 10px;
+    font-family: 'Roboto', sans-serif;
+    color:white;
+
+}
+.html{
+    font-size: 20px;
+    font-family: 'Roboto', sans-serif;
+    color:#ff04ad;
+}
+#contactdiv{
+    position:fixed;
+    left: 50px;
+    bottom: 50px;
+}
+#contacts{
+    font-family: 'Roboto', sans-serif;
+    display: none;
+
+}
+#contactsBtn{
+    display: Block;
+    font-size: 36px;
+    cursor:pointer;
+
+}
+#games-contacts{
+    display: none;
+
+}
+#rest-contacts{
+    display: none;
+
+}
+#games-contactsBtn{
+    cursor:pointer;
+
+}
+#games-contactsBtn-close{
+    cursor:pointer;
+
+}
+#rest-contactsBtn{
+    cursor:pointer;
+
+}
+#rest-contactsBtn-close{
+    cursor:pointer;
+
+}
+#contactsBtn-close{
+    cursor:pointer;
+
+}
+
