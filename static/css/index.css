@@ -71,5 +71,10 @@ color: grey;
 .hidden-div{
     display: none;
 }
+#contactdiv{
+    position: absolute;
+    bottom: 3%;
+    left: 3%;
+}
 
 
