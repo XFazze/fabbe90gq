@@ -11,7 +11,6 @@ window.onload = function(){
     }
       
     document.getElementById("div2Btn").onclick = function() {
-      alert("div2");
       document.getElementById("div2").style.display = "block";
       }
     document.getElementById("div2-close").onclick = function() {
