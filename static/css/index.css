@@ -66,49 +66,10 @@ color: grey;
     font-size: 20px;
     font-family: 'Roboto', sans-serif;
     color:#ff04ad;
+    cursor:pointer;
 }
-#contactdiv{
-    position:fixed;
-    left: 50px;
-    bottom: 50px;
-}
-#contacts{
-    font-family: 'Roboto', sans-serif;
+.hidden-div{
     display: none;
-
 }
-#contactsBtn{
-    display: Block;
-    font-size: 36px;
-    cursor:pointer;
 
-}
-#games-contacts{
-    display: none;
-
-}
-#rest-contacts{
-    display: none;
-
-}
-#games-contactsBtn{
-    cursor:pointer;
-
-}
-#games-contactsBtn-close{
-    cursor:pointer;
-
-}
-#rest-contactsBtn{
-    cursor:pointer;
-
-}
-#rest-contactsBtn-close{
-    cursor:pointer;
-
-}
-#contactsBtn-close{
-    cursor:pointer;
-
-}
 

@@ -1,64 +1,43 @@
-<head>
+{% extends "template.html" %}
+{% block link %}
     <link rel="stylesheet" href="/static/css/index.css">
-    <link rel="shortcut icon" href="/static/favicon.ico">
-    <link rel="preconnect" href="https://fonts.gstatic.com">
     <script type="text/javascript" src="/static/js/contacts.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto&family=Roboto+Mono&display=swap" rel="stylesheet">
-    <title>Fabbe90.gq</title>
-</head>
-<body  style="background-image: url('/static/pics/ml.png');  background-repeat: no-repeat; background-size: contain; margin:0%;">
-    <div class="navbar" >
-        <a href="/" style="position: absolute; left:0px; "><img alt="Qries" src="/static/pics/logos/home.png" style="height: 39px; width: auto;" ></a>
-        <a href="/projects" >Projects</a>
-        <a href="/bjornbanan">Björnbanan</a>
-    </div>
+{% endblock %}
+{% block body %} background-image: url('/static/pics/ml.png');  background-repeat: no-repeat; background-size: contain;{% endblock %}
+{% block main%}
+<div class="centerdiv">
+    <pre style="color:black; font-size: 20px; font-family: 'Roboto', sans-serif;">This is the way
+    "A Bro is always allowed to do something stupid as long as his Bros are doing it."
+    "A Bro doesn’t allow another Bro to get married until they are at least thirty years old."
+    "Bros don't make eye-contact during a Devil's Three-way."</pre>
+</div>
+<!--- <div style="position:relative; right:center; display: flex; justify-content: center;">
+    <canvas id="game-layer" width="200" height="200"></canvas>
     
-    <div class="centerdiv">
-        <pre style="color:black; font-size: 20px; font-family: 'Roboto', sans-serif;">This is the way
-        "A Bro is always allowed to do something stupid as long as his Bros are doing it."
-        "A Bro doesn’t allow another Bro to get married until they are at least thirty years old."
-        "Bros don't make eye-contact during a Devil's Three-way."</pre>
-    </div>
-   <!--- <div style="position:relative; right:center; display: flex; justify-content: center;">
-        <canvas id="game-layer" width="200" height="200"></canvas>
-        
-        <script type="text/javascript" src="/static/js/osu.js"></script>
+    <script type="text/javascript" src="/static/js/osu.js"></script>
 
-    </div>-->
-    
-    <!--<div class="socials">
-        <a href="https://twitter.com/XFazze" target="_blank"><img alt="Qries" src="/static/pics/logos/twitter.png" ></a>
-        <a href="https://www.youtube.com/channel/UC5QPhBDzdyERk92kzCz-TBw" target="_blank"><img alt="Qries" src="/static/pics/logos/youtube.png" style="width:120px" ></a>
-        <a href="https://www.twitch.tv/xfazze/" target="_blank"><img alt="Qries" src="/static/pics/logos/twitch.png" ></a>
-        <a href="https://open.spotify.com/user/xfazze" target="_blank"><img alt="Qries" src="/static/pics/logos/spotify.png" style="width:170px"></a>
-        <a href="https://discord.com/invite/BrcW9gcAXa" target="_blank"><img alt="Qries" src="/static/pics/logos/discord.png" style="width:130px" ></a>
-        <a href="https://steamcommunity.com/id/sutener_fuck_you" target="_blank"><img alt="Qries" src="/static/pics/logos/steam.png" style="width:130px" ></a>
-        <a href="https://osu.ppy.sh/users/9132903" target="_blank"><img alt="Qries" src="/static/pics/logos/osu.png" ></a>
-
-        <a href="https://discord.com/invite/BrcW9gcAXa" target="_blank" style="text-decoration: none; color:black; font-size: 22px">.discord()</a><br>
-    </div>-->
-    <div id="contactdiv">
-        <span class="html" id="contactsBtn" >&#60;Contacts show&#62;</span>
-        <div id="contacts" >
-            <a href="https://github.com/XFazze" target="_blank" style="text-decoration: none; color:black; font-size: 22px">.github()</a><br>
-            <a href="todo" target="_blank" style="text-decoration: none; color:black; font-size: 22px">.email()</a><br>
-            <br><span class="html" id="games-contactsBtn" >&#60;Games show&#62;</span>
-            <div id="games-contacts">
-                <a href="https://steamcommunity.com/id/sutener_fuck_you" target="_blank" style="text-decoration: none; color:black; font-size: 22px">.steam()</a><br>
-                <a href="https://osu.ppy.sh/users/9132903" target="_blank" style="text-decoration: none; color:black; font-size: 22px">.osu!()</a><br>
-                <span class="html" id="games-contactsBtn-close" >&#60;/Games&#62;</span><br>
-            </div>
-            <br><span class="html" id="rest-contactsBtn" >&#60;Rest show&#62;</span>
-            <div id="rest-contacts">
-                <a href="https://twitter.com/xfazze" target="_blank" style="text-decoration: none; color:black; font-size: 22px">.twitter()</a><br>
-                <a href="https://open.spotify.com/user/xfazze" target="_blank" style="text-decoration: none; color:black; font-size: 22px">.spotify()</a><br>
-                <a href="https://www.youtube.com/channel/UC5QPhBDzdyERk92kzCz-TBw" target="_blank" style="text-decoration: none; color:black; font-size: 22px">.youtube()</a><br>
-                <a href="https://www.twitch.tv/xfazze/" target="_blank" style="text-decoration: none; color:black; font-size: 22px">.twitch()</a><br>
-                <span class="html" id="rest-contactsBtn-close" >&#60;/Rest&#62;</span><br>
-            </div>
-            
-            <br><span class="html" id="contactsBtn-close">&#60;/Contacts&#62;</span><br>
+</div>-->
+<div id="contactdiv">
+    <span class="html" id="div1Btn" >&#60;Contacts show&#62;</span>
+    <div id="div1" class="hidden-div" >
+        <a href="https://github.com/XFazze" target="_blank" style="text-decoration: none; color:black; font-size: 22px">Github</a><br>
+        <a style="text-decoration: none; color:black; font-size: 22px">me@fabbe90.gq</a><br>
+        <br><span class="html" id="div2Btn" >&#60;Games show&#62;</span>
+        <div id="div2" class="hidden-div">
+            <a href="https://steamcommunity.com/id/sutener_fuck_you" target="_blank" style="text-decoration: none; color:black; font-size: 22px">.steam()</a><br>
+            <a href="https://osu.ppy.sh/users/9132903" target="_blank" style="text-decoration: none; color:black; font-size: 22px">.osu!()</a><br>
+            <span class="html" id="div2-close" >&#60;/Games hide&#62;</span><br>
         </div>
+        <br><span class="html" id="div3Btn" >&#60;Rest show&#62;</span>
+        <div id="div3" class="hidden-div">
+            <a href="https://twitter.com/xfazze" target="_blank" style="text-decoration: none; color:black; font-size: 22px">.twitter()</a><br>
+            <a href="https://open.spotify.com/user/xfazze" target="_blank" style="text-decoration: none; color:black; font-size: 22px">.spotify()</a><br>
+            <a href="https://www.youtube.com/channel/UC5QPhBDzdyERk92kzCz-TBw" target="_blank" style="text-decoration: none; color:black; font-size: 22px">.youtube()</a><br>
+            <a href="https://www.twitch.tv/xfazze/" target="_blank" style="text-decoration: none; color:black; font-size: 22px">.twitch()</a><br>
+            <span class="html" id="rest-contactsBtn-close" >&#60;/Rest hide&#62;</span><br>
+        </div>
+        
+        <br><span class="html" id="div3-close">&#60;/Contacts hide&#62;</span><br>
     </div>
-    </body>
-    
+</div>
+{% endblock %}

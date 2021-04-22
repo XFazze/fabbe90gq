@@ -1,26 +1,27 @@
 window.onload = function(){ 
-    document.getElementById("contactsBtn").onclick = function() {
-        document.getElementById("contacts").style.display = "block";
-        document.getElementById("contactsBtn").style.fontSize = 22;
+    document.getElementById("div1Btn").onclick = function() {
+      document.getElementById("div1").style.display = "block";
+      document.getElementById("div1Btn").style.fontSize = 22;
       }
+    document.getElementById("div1-close").onclick = function() {
+      document.getElementById("div1").style.display = "none";
+      document.getElementById("div2").style.display = "none";
+      document.getElementById("div3").style.display = "none";
+      document.getElementById("div1Btn").style.fontSize = 36;
+    }
       
-    document.getElementById("games-contactsBtn").onclick = function() {
-        document.getElementById("games-contacts").style.display = "block";
+    document.getElementById("div2Btn").onclick = function() {
+      alert("div2");
+      document.getElementById("div2").style.display = "block";
       }
-    document.getElementById("rest-contactsBtn").onclick = function() {
-        document.getElementById("rest-contacts").style.display = "block";
-        }
-    document.getElementById("contactsBtn-close").onclick = function() {
-      document.getElementById("contacts").style.display = "none";
-      document.getElementById("games-contacts").style.display = "none";
-      document.getElementById("rest-contacts").style.display = "none";
-      document.getElementById("contactsBtn").style.fontSize = 36;
-          }
-    document.getElementById("games-contactsBtn-close").onclick = function() {
-      document.getElementById("games-contacts").style.display = "none";
-          }
-    document.getElementById("rest-contactsBtn-close").onclick = function() {
-      document.getElementById("rest-contacts").style.display = "none";
-          }
+    document.getElementById("div2-close").onclick = function() {
+      document.getElementById("div2").style.display = "none";
+      }
+    document.getElementById("div3Btn").onclick = function() {
+        document.getElementById("div3").style.display = "block";
+      }
+    document.getElementById("div3-close").onclick = function() {
+      document.getElementById("div3").style.display = "none";
+      }
     };
     

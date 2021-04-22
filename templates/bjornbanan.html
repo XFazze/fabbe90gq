@@ -1,55 +1,32 @@
-<html>
-
-<head>
+{% extends "template.html" %}
+{% block link %}
     <link rel="stylesheet" href="/static/css/bjornbanan.css">
-    <link rel="shortcut icon" href="/static/favicon.ico">
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <script type="text/javascript" src="/static/js/bjornbanan.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto&family=Roboto+Mono&display=swap" rel="stylesheet">
-    <title>Björnbanan</title>
-</head>
+{% endblock %}
+{% block body %}background-image: url('/static/pics/bear.jpg');  background-repeat: no-repeat; background-size: cover;{% endblock %}
+{% block main%}
 
-<body
-    style="background-image: url('/static/pics/bear.jpg');  background-repeat: no-repeat; background-size: cover;margin:0%;">
-    <div class="navbar">
-        <a href="/" style="position: absolute; left:0px; "><img alt="Qries" src="/static/pics/logos/home.png" style="height: 39px; width: auto;" ></a>
-        <a href="/projects">Projects</a>
-        <a href="/bjornbanan">Björnbanan</a>
-    </div>
-    <div class="centerdiv">
-        <h1 class="wtitle" >Björnbanan</h1>
-        <span class="html" >&#60;Main bot&#62;</span>
-        <p style="width: 800px;">Björnbanan is a discordbot. He is a nice bear. He can do all you want and
-            more. He likes
-            berries, squirrels and watersprinklers. But beware that monkeys will take your banan. If you want to keep
-            your banan, you shall not play valorant.</p>
-        <span class="html" id="mainlinksBtn" >&#60;Links show&#62;</span><br>
-        <div id="mainlinks">
-        <a href="/bjornbanan/help" >> Commands</a><br>
-        <a href="https://discord.com/api/oauth2/authorize?client_id=759541425078534154&permissions=8&scope=bot" target="_blank">> Invite link for the bot</a><br>
-        <a href="https://discord.gg/Ry2Hah38Mu" target="_blank">> Invite link to Bjornbanan discord server</a><br>
-        <span class="html" id="mainlinksBtn-close" >&#60;/Links&#62;</span><br>
-        </div><br>
-        <span class="html" >&#60;/Main bot&#62;</span>
-    </div>
-        
-    <div  class="centerdiv">
-        <span class="html" >&#60;Music bot&#62;</span><br>
-        <p style="width: 800px;">Music bot is severly not totally ok always</p>
-        <span class="html" id="musiclinksBtn" >&#60;Links show&#62;</span><br>
-        <div id="musiclinks">
-        <a href="/bjornbanan/music_help" >> Commands</a><br>
-        <a href="https://discord.com/api/oauth2/authorize?client_id=820557765222858763&permissions=3148800&scope=bot" target="_blank">> Invite link for m bot</a><br>
-        <a href="https://discord.com/api/oauth2/authorize?client_id=824021883393409064&permissions=3148800&scope=bot" target="_blank">> Invite link for n bot</a><br>
-        <a href="https://discord.com/api/oauth2/authorize?client_id=824041041312481311&permissions=3148800&scope=bot" target="_blank">> Invite link for b bot</a><br>
-        <span class="html" id="musiclinksBtn-close" >&#60;/Links&#62;</span><br>
-        </div><br>
+<div class="centerdiv">
+    <h1 class="wtitle" >Björnbanan</h1>
+    <p style="width: 800px;">Björnbanan is a discordbot. He is a nice bear. He can do all you want and
+        more. He likes
+        berries, squirrels and watersprinklers. But beware that monkeys will take your banan. If you want to keep
+        your banan, you shall not play valorant.</p>
+    <div>
+    <a href="/bjornbanan/help" >> Commands</a><br>
+    <a href="https://discord.com/api/oauth2/authorize?client_id=759541425078534154&permissions=8&scope=bot" target="_blank">> Invite link for the bot</a><br>
+    <a href="https://discord.gg/Ry2Hah38Mu" target="_blank">> Invite link to Bjornbanan discord server</a><br>
+    </div><br>
+</div>
+    
+<div  class="centerdiv">
+    <h1 class="wtitle" >Björnbanan music</h1>
+    <p style="width: 800px;">Music bot is severly not totally ok always</p>
+    <div>
+    <a href="/bjornbanan/music_help" >> Commands</a><br>
+    <a href="https://discord.com/api/oauth2/authorize?client_id=820557765222858763&permissions=3148800&scope=bot" target="_blank">> Invite link for m bot</a><br>
+    <a href="https://discord.com/api/oauth2/authorize?client_id=824021883393409064&permissions=3148800&scope=bot" target="_blank">> Invite link for n bot</a><br>
+    <a href="https://discord.com/api/oauth2/authorize?client_id=824041041312481311&permissions=3148800&scope=bot" target="_blank">> Invite link for b bot</a><br>
+    </div><br>
+</div>
+{% endblock %}
 
-        <span class="html" >&#60;/Music bot&#62;</span><br>
-    </div>
-
-
-    </div>
-</body>
-
-</html>

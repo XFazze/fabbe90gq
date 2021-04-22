@@ -67,21 +67,3 @@ color: grey;
     font-family: 'Roboto', sans-serif;
     color:#ff04ad;
 }
-#mainlinks{
-    display: none;
-}
-#musiclinks{
-    display: none;
-}
-#mainlinksBtn{
-    cursor:pointer;
-}
-#musiclinksBtn{
-    cursor:pointer;
-}
-#musiclinksBtn-close{
-    cursor:pointer;
-}
-#mainlinksBtn-close{
-    cursor:pointer;
-}

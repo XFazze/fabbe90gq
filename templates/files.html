@@ -1,31 +1,22 @@
-<head>
-    <link rel="stylesheet" href="/static/css/newccs.css">
-    <link rel="shortcut icon" href="/static/favicon.ico">
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto&family=Roboto+Mono&display=swap" rel="stylesheet">
-    <title>Fabbe90.gq</title>
-</head>
-<body style="margin:0%;background-image: url('/static/pics/knuck.jpg');  background-repeat: no-repeat; background-size: cover;">
-    <div class="navbar" >
-        <a href="/" style="position: absolute; left:0px; "><img alt="Qries" src="/static/pics/logos/home.png" style="height: 39px; width: auto;" ></a>
-        <a href="/projects" >Projects</a>
-        <a href="/bjornbanan">Björnbanan</a>
-    </div>
-
-    <div class="centerdiv">
-        <h1 class="wtitle">Files</h1>
-        <ul>
-            {% for file in files %}
-            <li>
-                <a href="{{ (request.path + '/' if request.path != '/' else '') + file }}">
-                    {{ (request.path + '/' if request.path != '/' else '') + file }}
-                </a>
-            </li>
-            {% endfor %}
-        </ul>
+{% extends "template.html" %}
+{% block link %}
+<link rel="stylesheet" href="/static/css/newccs.css">
+{% endblock %}
+{% block body %}background-image: url('/static/pics/knuck.jpg');  background-repeat: no-repeat; background-size: cover;{% endblock %}
+{% block main%}
+<a href="/projects" class="wlink" >Back</a>
+<div class="centerdiv">
+    <h1 class="wtitle">Files</h1>
+    <ul>
+        {% for file in files %}
+        <li>
+            <a href="{{ (request.path + '/' if request.path != '/' else '') + file }}">
+                {{ (request.path + '/' if request.path != '/' else '') + file }}
+            </a>
+        </li>
+        {% endfor %}
+    </ul>
 
 
-    </div>
-</body>
-
-</html>
+</div>
+{% endblock %}

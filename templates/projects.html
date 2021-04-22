@@ -1,34 +1,29 @@
-<head>
-    <link rel="stylesheet" href="/static/css/newccs.css">
-    <link rel="shortcut icon" href="/static/favicon.ico">
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto&family=Roboto+Mono&display=swap" rel="stylesheet">
-    <title>Fabbe90.gq</title>
-</head>
-<body style="margin:0%;background-image: url('/static/pics/knuck.jpg'); background-size: cover;">
-    <div class="navbar" >
-        <a href="/" style="position: absolute; left:0px; "><img alt="Qries" src="/static/pics/logos/home.png" style="height: 39px; width: auto;" ></a>
-        <a href="/projects" >Projects</a>
-        <a href="/bjornbanan">Björnbanan</a>
-    </div>
+{% extends "template.html" %}
+{% block link %}
+<link rel="stylesheet" href="/static/css/newccs.css">
+{% endblock %}
+{% block body %}background-image: url('/static/pics/knuck.jpg'); background-size: cover;{% endblock %}
+{% block main%}
 
+<div class="centerdiv">
+    <h1 class="wtitle">Projects</h1>
+    <a style="font-size:26px;font-family: 'Roboto Mono', monospace;" href="/projects/files">Files examples</a><br>
+    <ul>
+        {% for file in files %}
+        <li>
+            <a href="{{ (request.path  if request.path != '/' else '') + 'files/' + file  }}">
+                {{ (request.path  if request.path != '/' else '') + 'files/' + file }}
+            </a>
+        </li>
+        {% endfor %}
+    </ul>
+</div>
 
-
+<div class="centerdiv">
+    <p style="font-size:26px;font-family: 'Roboto Mono', monospace; color: white" >Websites examples</p>
+    <a href="/projects/pappa" >Pappa</a><br>
+    <a href="/projects/factorio" >Factorio Ratio Calculator</a><br>
+</div>
+{% endblock %}
     
-    <div class="centerdiv">
-        <h1 class="wtitle">Projects</h1>
-        <span class="html">&#60;Local Files&#62;</span><br>
-        <a style ="font-size:26px;font-family: 'Roboto Mono', monospace;" href="/projects/files"> link</a><br>
-        <span class="html">&#60;/Local Files&#62;</span>
-    </div>
-    
-    <div class="centerdiv">
-        <span class="html">&#60;a Little bigger&#62;</span><br>
-        <a href="/projects/pappa" >Pappa</a><br>
-        <a href="/projects/factorio" >Factorio Ratio Calculator</a><br>
-        <span class="html">&#60;/a Little bigger&#62;</span>
-    </div>
-    
-    
-    </body>
     
