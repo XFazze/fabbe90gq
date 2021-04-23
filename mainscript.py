@@ -1,15 +1,15 @@
 import os
+import json
+import ast
 from flask import *
 from flask_wtf import FlaskForm
 from wtforms import Form, SelectField, validators, SubmitField, IntegerField
 from wtforms.validators import DataRequired
 from ratio_code.basic_copy import *
+from forms.osuform import osuform
 # Initializing flask and sql
 app = Flask(__name__,  static_folder='static')
 app.config['SECRET_KEY'] = 'you-will-never-guess'
-
-# Root
-
 
 @app.route("/")
 def index():
@@ -20,13 +20,13 @@ def index():
 def bjornbanan():
     return render_template('bjornbanan.html')
 
-# help commands
+
+
 @app.route("/bjornbanan/help")
 def bjornbanan_help():
     return render_template('bjornbanan_help.html')
 
 
-# help commands
 @app.route("/bjornbanan/music_help")
 def bjornbanan_music_help():
     return render_template('bjornbanan_m_help.html')
@@ -43,17 +43,32 @@ def sendfile(filename):
     projects_path = app.static_folder + "/projects/"
     return send_from_directory(projects_path, filename)
 
-# projects
+#projects
 @app.route("/projects/")
 def projects():
     files = os.listdir("/home/pi/website/static/projects/")
     return render_template('projects.html', files=files)
 
 
-# pappa
 @app.route("/projects/pappa")
 def pappa():
     return render_template('pappa.html')
+
+# games
+@app.route("/games/osu", methods=['GET', 'POST'])
+def osu():
+    form = osuform()
+    '''if form.validate_on_submit():
+        with open('/home/pi/website/static/leaderboards/osu.json', 'r+') as f:
+            leaderboard = f.read()
+            leaderboard = ast.literal_eval(leaderboard)
+            for place in range(len(leaderboard)):
+                if leaderboard[place]["value" ] < value
+        return form.name.data'''
+    with open('/home/pi/website/static/leaderboards/osu.json', 'r+') as f:
+        leaderboard = f.read()
+        leaderboard = ast.literal_eval(leaderboard)
+    return render_template('osu.html', form=form, leaderboard=leaderboard)
 
 
 names_id = [

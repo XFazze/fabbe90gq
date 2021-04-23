@@ -1,32 +1,79 @@
-var canvas = document.getElementById("game-layer");
-var canvasLeft = canvas.offsetLeft + canvas.clientLeft;
-var canvasTop = canvas.offsetTop + canvas.clientTop;
-var context = canvas.getContext("2d");
-var elements = [];
+window.onload = function () {
+    var canvas = document.getElementById("game-layer");
+    var canvasLeft = canvas.offsetLeft + canvas.clientLeft;
+    var canvasTop = canvas.offsetTop + canvas.clientTop;
+    var ctx = canvas.getContext("2d");
+    ctx.fillStyle = 'black';
+    ctx.fillRect(0, 0, 500, 300);
+    var element = {
+        colour: '#05EFFF',
+        top: 150,
+        left: 250
+    };
+
+    ctx.beginPath();
+    ctx.fillStyle = '#90ee90';
+    ctx.arc(element.left,  element.top, 25, 0, 2 * Math.PI);
+    ctx.fill();
+
+    var last_time = Date.now()*10;
+    var difficulty = 1;
+    var clicks = 0;
+
+    canvas.addEventListener('click', function (event) {
+        var x = event.pageX - canvasLeft,
+            y = event.pageY - canvasTop;
+
+        if ((Math.abs(y-element.top)**2+Math.abs(x-element.left)**2)**0.5 < 25) {
+            var score = document.getElementById('score');
+            score.innerHTML = 'Score : ' + clicks.toString() + '    Difficulty : ' + Math.round(difficulty*1000).toString();
+
+            ctx.fillStyle = 'black';
+            ctx.fillRect(0, 0, 500, 300);   
+
+            element.left = 25+Math.random()*450;
+            element.top = 25+Math.random()*250;
+
+            ctx.beginPath();
+            ctx.fillStyle = '#90ee90';
+            ctx.arc(element.left,  element.top, 25, 0, 2 * Math.PI);
+            ctx.fill();
+            clicks += 1;
+            if (Date.now() > last_time + difficulty*1000){
+                document.getElementById("snoop").style.display = "block";
+                document.getElementById("game-layer").style.display = "none";
+                document.getElementById("nameform").style.display = "block";
+            }
+            difficulty -= difficulty/10
+            last_time = Date.now()
+
+        }});
+    document.getElementById("resetbutton").addEventListener("click", function (event) {
+        last_time = Date.now()*10;
+        difficulty = 1;
+        clicks = 0; 
+        element.top = 150;
+        element.left = 250;
+
+        var score = document.getElementById('score');
+        score.innerHTML = 'Score : hej  Difficulta : eddddbaaaau';
+
+        
+       
+        document.getElementById("snoop").style.display = "none";
+        document.getElementById("game-layer").style.display = "block";
+        document.getElementById("nameform").style.display = "none";
+            
+
+        ctx.fillStyle = 'black';
+        ctx.fillRect(0, 0, 500, 300);
+
+        ctx.beginPath();
+        ctx.fillStyle = '#90ee90';
+        ctx.arc(element.left,  element.top, 25, 0, 2 * Math.PI);
+        ctx.fill();
 
 
-canvas.addEventListener('click', function(event) {
-    var x = event.pageX - canvasLeft,
-        y = event.pageY - canvasTop;
-
-    elements.forEach(function(element) {
-        if (y > element.top && y < element.top + element.height 
-            && x > element.left && x < element.left + element.width) {
-            alert('clicked an element');
-        }
     });
 
-}, false);
-
-elements.push({
-    colour: '#05EFFF',
-    width: 150,
-    height: 100,
-    top: 20,
-    left: 15
-});
-
-elements.forEach(function(element){
-    context.fillStyle = element.colour;
-    context.fillRect(element.left, element.top, element.width, element.height);
-});​
+};
