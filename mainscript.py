@@ -1,25 +1,29 @@
 import os
 import json
 import ast
+import requests
 from flask import *
 from flask_wtf import FlaskForm
 from wtforms import Form, SelectField, validators, SubmitField, IntegerField
 from wtforms.validators import DataRequired
 from ratio_code.basic_copy import *
-from forms.osuform import osuform
+from forms.osuform import *
+from ludvig_blabarsylt.api_calls import *
 # Initializing flask and sql
 app = Flask(__name__,  static_folder='static')
 app.config['SECRET_KEY'] = 'you-will-never-guess'
+
 
 @app.route("/")
 def index():
     return render_template('index.html')
 
 # Bjornbanan
+
+
 @app.route("/bjornbanan")
 def bjornbanan():
     return render_template('bjornbanan.html')
-
 
 
 @app.route("/bjornbanan/help")
@@ -32,6 +36,8 @@ def bjornbanan_music_help():
     return render_template('bjornbanan_m_help.html')
 
 # projects files
+
+
 @app.route("/projects/files")
 def files():
     files = os.listdir("/home/pi/website/static/projects/")
@@ -43,7 +49,9 @@ def sendfile(filename):
     projects_path = app.static_folder + "/projects/"
     return send_from_directory(projects_path, filename)
 
-#projects
+# projects
+
+
 @app.route("/projects/")
 def projects():
     files = os.listdir("/home/pi/website/static/projects/")
@@ -55,6 +63,8 @@ def pappa():
     return render_template('pappa.html')
 
 # games
+
+
 @app.route("/games/osu", methods=['GET', 'POST'])
 def osu():
     form = osuform()
@@ -905,6 +915,36 @@ def prop_calc():
                            component=component,
                            submitted=submitted,
                            sop=sop)
+
+
+# http://127.0.0.1:5000/ludvig_blabarsylt_2000?name=xfazze&region=eun1&region_large=europe
+@app.route("/ludvig_blabarsylt_2000", methods=['GET', 'POST'])
+def ludvig_blabarsylt_2000():
+    username = request.args.get('name')  # getluminated"  # xfazze
+    region = request.args.get('region')   # eun1"
+    region_large = request.args.get('region_large')   # europe
+    print(request.args.get('name'), request.args.get('region'),request.args.get('region_large'))
+
+
+    summoner_dict= get_summoner(region, username)
+    id = summoner_dict["id"]
+    puuid = summoner_dict["puuid"]
+    mastery_dict= get_mastery(region, id)
+    total_mastery= get_total_mastery(region, id)
+    match_history= get_match_history(region_large, puuid)
+    match_id = match_history[0]
+    match_dict= get_match(region_large, match_id)
+    match_timeline_dict= get_match_timeline(region_large, match_id)
+    live_game_dict= get_live_game(region, id)
+    
+
+    return render_template('ludvig_blabarsylt_2000.html', summoner_dict=summoner_dict,
+                           mastery_dict=mastery_dict,
+                           total_mastery=total_mastery,
+                           match_history=match_history,
+                           match_dict=match_dict,
+                           match_timeline_dict=match_timeline_dict,
+                           live_game_dict=live_game_dict)
 
 
 # Run the site
