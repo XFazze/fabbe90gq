@@ -1,0 +1,41 @@
+{% extends "template.html" %}
+{% block link %}
+<link rel="stylesheet" href="/static/css/newccs.css">
+{% endblock %}
+{% block body %}{% endblock %}
+{% block main%}
+<h1> Summoner </h1>
+{% for key in summoner_dict.keys() %}
+<p>{{ key }} : {{ summoner_dict[key] }}</p>
+{% endfor %}
+
+
+<h1> Live Game </h1>
+{% for key in live_game_dict.keys() %}
+<p>{{ key }} : {{ live_game_dict[key] }}</p>
+{% endfor %}
+<h1> Match Timeline </h1>
+{% for key in match_timeline_dict.keys() %}
+<p>{{ key }} : {{ match_timeline_dict[key] }}</p>
+{% endfor %}\
+
+<h1> Match </h1>
+{% for key in match_dict.keys() %}
+<p>{{ key }} : {{ match_dict[key] }}</p>
+{% endfor %}\
+
+<h1> Match History </h1>
+{% for match in match_history %}
+<p>{{ match }}</p>
+{% endfor %}
+
+<h1> Total Mastery </h1>
+<p>{{ total_mastery }}</p>
+
+<h1> Mastery Points</h1>
+{% for champ in mastery_dict %}
+<p>{{ champ }}</p>
+{% endfor %}
+
+
+{% endblock %}

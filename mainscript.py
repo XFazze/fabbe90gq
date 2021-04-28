@@ -2,6 +2,7 @@ import os
 import json
 import ast
 import requests
+import time
 from flask import *
 from flask_wtf import FlaskForm
 from wtforms import Form, SelectField, validators, SubmitField, IntegerField
@@ -919,23 +920,23 @@ def prop_calc():
 
 # http://127.0.0.1:5000/ludvig_blabarsylt_2000?name=xfazze&region=eun1&region_large=europe
 @app.route("/ludvig_blabarsylt_2000", methods=['GET', 'POST'])
-def ludvig_blabarsylt_2000():
+def lb2000():
     username = request.args.get('name')  # getluminated"  # xfazze
     region = request.args.get('region')   # eun1"
     region_large = request.args.get('region_large')   # europe
     print(request.args.get('name'), request.args.get('region'),request.args.get('region_large'))
 
 
-    summoner_dict= get_summoner(region, username)
+    summoner_dict= get_summoner(region, username, "RGAPI-6bcf6dbe-9646-4443-a210-32e35c9ef0e0")
     id = summoner_dict["id"]
     puuid = summoner_dict["puuid"]
-    mastery_dict= get_mastery(region, id)
-    total_mastery= get_total_mastery(region, id)
-    match_history= get_match_history(region_large, puuid)
+    mastery_dict= get_mastery(region, id, "RGAPI-6bcf6dbe-9646-4443-a210-32e35c9ef0e0")
+    total_mastery= get_total_mastery(region, id, "RGAPI-6bcf6dbe-9646-4443-a210-32e35c9ef0e0")
+    match_history= get_match_history(region_large, puuid, "RGAPI-6bcf6dbe-9646-4443-a210-32e35c9ef0e0")
     match_id = match_history[0]
-    match_dict= get_match(region_large, match_id)
-    match_timeline_dict= get_match_timeline(region_large, match_id)
-    live_game_dict= get_live_game(region, id)
+    match_dict= get_match(region_large, match_id, "RGAPI-6bcf6dbe-9646-4443-a210-32e35c9ef0e0")
+    match_timeline_dict= get_match_timeline(region_large, match_id, "RGAPI-6bcf6dbe-9646-4443-a210-32e35c9ef0e0")
+    live_game_dict= get_live_game(region, id, "RGAPI-6bcf6dbe-9646-4443-a210-32e35c9ef0e0")
     
 
     return render_template('ludvig_blabarsylt_2000.html', summoner_dict=summoner_dict,
@@ -946,7 +947,34 @@ def ludvig_blabarsylt_2000():
                            match_timeline_dict=match_timeline_dict,
                            live_game_dict=live_game_dict)
 
+@app.route("/ludvig_blabarsylt_2000/profile", methods=['GET', 'POST'])
+def lb2000_profile():
+    username = request.args.get('name')  # getluminated"  # xfazze
+    region = request.args.get('region')   # eun1"
+    region_large = request.args.get('region_large')   # europe
+    print(request.args.get('name'), request.args.get('region'),request.args.get('region_large'))
 
+
+    summoner_dict= get_summoner(region, username, "RGAPI-6bcf6dbe-9646-4443-a210-32e35c9ef0e0")
+    puuid = summoner_dict["puuid"]
+    match_history= get_match_history(region_large, puuid, "RGAPI-6bcf6dbe-9646-4443-a210-32e35c9ef0e0")
+    matches = []
+    o = 0
+    time_0 = time.time()
+    print(time_0)
+    for match_id in match_history:
+        o += 1
+        matches.append(get_match(region_large, match_id, "RGAPI-6bcf6dbe-9646-4443-a210-32e35c9ef0e0"))
+        if o % 10 == 0:
+            while time_0 + 10 > time.time():
+                print("sleeping",time.time() )
+                time.sleep(1)
+            time_0 = time.time()
+        print(o)
+    
+
+    return render_template('ludvig_blabarsylt_2000.html', summoner_dict=summoner_dict,
+                           matches=matches, time=time.time(), round=round, puuid=puuid)
 # Run the site
 if __name__ == "__main__":
     app.run()
