@@ -9,6 +9,7 @@ from wtforms import Form, SelectField, validators, SubmitField, IntegerField
 from wtforms.validators import DataRequired
 from ratio_code.basic_copy import *
 from forms.osuform import *
+from forms.pappa_form import *
 from ludvig_blabarsylt.api_calls import *
 # Initializing flask and sql
 app = Flask(__name__,  static_folder='static')
@@ -24,17 +25,17 @@ def index():
 
 @app.route("/bjornbanan")
 def bjornbanan():
-    return render_template('bjornbanan.html')
+    return render_template('bjornbanan/bjornbanan.html')
 
 
 @app.route("/bjornbanan/help")
 def bjornbanan_help():
-    return render_template('bjornbanan_help.html')
+    return render_template('bjornbanan/bjornbanan_help.html')
 
 
 @app.route("/bjornbanan/music_help")
 def bjornbanan_music_help():
-    return render_template('bjornbanan_m_help.html')
+    return render_template('bjornbanan/bjornbanan_m_help.html')
 
 # projects files
 
@@ -59,18 +60,28 @@ def projects():
     return render_template('projects.html', files=files)
 
 
-@app.route("/projects/pappa")
+@app.route("/projects/pappa", methods=['GET', 'POST'])
 def pappa():
-    return render_template('pappa.html')
+    return render_template('produktutveckling/pappa.html')
 
-# games
+@app.route("/projects/pappa/login", methods=['GET', 'POST'])
+def pappa_login():
+    form = pappa_login_form()
+    return render_template('produktutveckling/pappa_login.html', form=form)
+
+@app.route("/projects/pappa/register", methods=['GET', 'POST'])
+def pappa_register():
+    form = pappa_register_form()
+    return render_template('produktutveckling/pappa_register.html', form=form)
+
 
 
 @app.route("/games/osu", methods=['GET', 'POST'])
 def osu():
     form = osuform()
-    '''if form.validate_on_submit():
-        with open('/home/pi/website/static/leaderboards/osu.json', 'r+') as f:
+    if form.validate_on_submit():
+        print("suvbl")
+        '''with open('/home/pi/website/static/leaderboards/osu.json', 'r+') as f:
             leaderboard = f.read()
             leaderboard = ast.literal_eval(leaderboard)
             for place in range(len(leaderboard)):
@@ -79,7 +90,7 @@ def osu():
     with open('/home/pi/website/static/leaderboards/osu.json', 'r+') as f:
         leaderboard = f.read()
         leaderboard = ast.literal_eval(leaderboard)
-    return render_template('osu.html', form=form, leaderboard=leaderboard)
+    return render_template('games/osu.html', form=form, leaderboard=leaderboard)
 
 
 names_id = [
@@ -939,7 +950,7 @@ def lb2000():
     live_game_dict= get_live_game(region, id, "RGAPI-6bcf6dbe-9646-4443-a210-32e35c9ef0e0")
     
 
-    return render_template('ludvig_blabarsylt_2000.html', summoner_dict=summoner_dict,
+    return render_template('lb2000/ludvig_blabarsylt_2000.html', summoner_dict=summoner_dict,
                            mastery_dict=mastery_dict,
                            total_mastery=total_mastery,
                            match_history=match_history,
@@ -973,7 +984,7 @@ def lb2000_profile():
         print(o)
     
 
-    return render_template('ludvig_blabarsylt_2000.html', summoner_dict=summoner_dict,
+    return render_template('lb2000/ludvig_blabarsylt_2000.html', summoner_dict=summoner_dict,
                            matches=matches, time=time.time(), round=round, puuid=puuid)
 # Run the site
 if __name__ == "__main__":

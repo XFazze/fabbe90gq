@@ -1,0 +1,21 @@
+{% extends "produktutveckling/pappa_template.html" %}
+{% block link %}
+<link rel="stylesheet" href="/static/css/pappa.css">
+{% endblock %}
+{% block body %}background:#222;{% endblock %}
+{% block main%}
+<div class="login-div" >
+    <div class="login">
+    <br><br>
+    <form method="post" action="/projects/pappa" >
+    {{ form.csrf_token }}
+    <h2>Register</h2>
+    <p>Email </p>
+    {{ form.email }}<br>
+    <p>Password </p>
+    {{ form.passw }}<br>
+    {{ form.register }} 
+    </form>
+    <br><br></div>
+</div>
+{% endblock %}

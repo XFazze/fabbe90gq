@@ -1,0 +1,76 @@
+{% extends "produktutveckling/pappa_template.html" %}
+{% block link %}
+<link rel="stylesheet" href="/static/css/pappa.css">
+{% endblock %}
+{% block body %}background:white;{% endblock %}
+{% block main%}
+<div class="main" style="background-image: url('/static/pics/runner.jpg');" >
+    <div class="menu">
+        <p id="name" >Trötter Marklund</p>
+        <p id="vanner" >Vänner </p>
+        <p id="loggbok" >Loggbok </p>
+        <p>Påminnelser </p>
+        <p>Inställningar </p>
+    </div>
+    <div class="info" id="namediv">
+        <p>Vikt: 150 kg  (160)</p>
+        <p>Längd: 160 cm  (169)</p>
+        <p>bmi: 2 </p>
+        <h2>Stora mätningar</h2>
+        <p>Bröst</p>
+        <p>Midja</p>
+        <p>Lägre midja</p>
+        <p>Höfter</p>
+        <p>Axlar</p>
+        <p>Arm längd</p>
+        <p>Nacke</p>
+        <h2>Mindre</h2>
+        <p>Över arm</p>
+        <p>Vrist</p>
+        <p>Ankel</p>
+        <p>Vader</p>
+        <p>Lår</p>
+    </div>
+
+    <div class="info" id="loggbokdiv" >
+        <p>Add a training</p>
+        <div class="training" >
+            <p>1 day ago</p>
+            <p>30 minutes</p>
+        </div>
+
+    </div>
+</div>
+{% endblock %}
+
+
+<!---<div class="row">
+    <div class="column" style="background-color:saddlebrown;" >
+        <div class="block" >Poäng : 5</div>
+        <div class="block" >STREAK: 2</div>
+        <div class="block" >Success rate: 2</div><br>
+        <div class="block" >Vänner <br>
+            edard 0<br>
+            noel 2<br>
+        </div>
+    </div>
+    <div class="column" style="background-color:peru;">
+        <div class="block" >Trötter Marklund</div><br>
+        <div class="block" >Vikt: 150 kg  (160)</div><br>
+        <div class="block" >Längd: 160 cm  (169)</div><br>
+        <div class="block" >bmi: 2 </div><br>
+        <div class="block" >Etnicitet: 50% spanjor (60%)</div><br>
+        <div class="block" >För att nå ditt mål</div>
+        <div class="block" >Calorier: 15 st</div>
+        <div class="block" >Antal träningar: 15</div>
+    </div>
+    
+    <div class="column" style="background-color:violet;">
+        <div class="button" >Jag kommer träna</div><br>
+        <div class="block" >Din planerad träning</div>
+        <div class="button" >Jag har tränat</div>
+        <div class="block" >Träningslogg</div>
+        <div class="block" >- 20/10-20 Styrketräning 10 min</div>
+        <div class="block" >- 21/10-20 Styrketräning 12 min</div>
+    </div>
+</div>-->
