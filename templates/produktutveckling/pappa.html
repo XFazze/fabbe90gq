@@ -1,6 +1,7 @@
 {% extends "produktutveckling/pappa_template.html" %}
 {% block link %}
 <link rel="stylesheet" href="/static/css/pappa.css">
+<script type="text/javascript" src="/static/js/pappa.js"></script>
 {% endblock %}
 {% block body %}background:white;{% endblock %}
 {% block main%}
@@ -9,8 +10,8 @@
         <p id="name" >Trötter Marklund</p>
         <p id="vanner" >Vänner </p>
         <p id="loggbok" >Loggbok </p>
-        <p>Påminnelser </p>
-        <p>Inställningar </p>
+        <p id="paminnelser" >Påminnelser </p>
+        <p id="installnigar" >Inställningar </p>
     </div>
     <div class="info" id="namediv">
         <p>Vikt: 150 kg  (160)</p>
@@ -31,7 +32,9 @@
         <p>Vader</p>
         <p>Lår</p>
     </div>
-
+    <div class="info" id="vannerdiv" >
+        <p>vannerdiv</p>
+    </div>
     <div class="info" id="loggbokdiv" >
         <p>Add a training</p>
         <div class="training" >
@@ -39,6 +42,12 @@
             <p>30 minutes</p>
         </div>
 
+    </div>
+    <div class="info" id="paminnelserdiv" >
+        <p>paminnelserdiv</p>
+    </div>
+    <div class="info" id="Installningardiv" >
+        <p>Installningardiv</p>
     </div>
 </div>
 {% endblock %}
