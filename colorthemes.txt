@@ -1,0 +1,4 @@
+background - duh
+Main  - main buttons
+sub - smaller subbos
+text - text color ? or just sub
