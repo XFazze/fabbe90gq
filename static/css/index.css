@@ -1,66 +1,39 @@
-.socials{
-    display:flex;
-    justify-content:center;
-    align-items: center;
-    position:absolute;
-    width: 100%;
-    bottom:0px;
-
-}
-.socials img{
-    padding:30px;
-    width:100px;
-    height:auto;
-}
-
-.centerdiv{
-    padding:5%;
-
-}
-.centerdiv p{
-    font-family: 'Roboto', sans-serif;
-    color:white;
-
-}
-.centerdiv a{
-    font-family: 'Roboto', sans-serif;
-    text-decoration: none;
-    color:white;
-
-}
-.wtitle{
-    font-family: 'Roboto Mono', monospace;
-    color:white;
-}
-.wlink{
-    font-family: 'Roboto', sans-serif;
-    color:white;
-    text-decoration: none;
-}
-.wbase{
-    font-size: 10px;
-    font-family: 'Roboto', sans-serif;
-    color:white;
-
-}
 .html{
     font-size: 20px;
-    font-family: 'Roboto', sans-serif;
-    color:#ff04ad;
+    font-family: var(--main-font);
+    color:var(--sub-color);
     cursor:pointer;
 }
 .hidden-div{
     display: none;
 }
-#contactdiv{
-    position: absolute;
-    bottom: 3%;
-    left: 3%;
-}
+
 
 .contact{
     text-decoration: none;
-    color:black;
+    color:var(--text-color);
     font-size: 22px;
-    font-family: 'Roboto', sans-serif;
+    font-family: var(--main-font);
 }
+#rotating1{
+    animation: fadeIn 25s infinite;
+    opacity: 0;
+}
+#rotating2{
+    animation: fadeIn 25s infinite;
+    opacity: 0;
+    animation-delay: 8.3s;
+}
+#rotating3{
+    animation: fadeIn 25s infinite;
+    opacity: 0;
+    animation-delay:16.7s;
+}
+
+@keyframes fadeIn {
+    0%{opacity:0;}
+    10%{opacity: 1;}
+    30% {opacity:1;}
+    40% {opacity:0;}
+    100% {opacity:0;}
+  }
