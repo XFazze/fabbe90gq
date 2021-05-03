@@ -1,6 +1,7 @@
 import requests
 def get_summoner(region, username, api_key):
     url = "https://" + region + ".api.riotgames.com/lol/summoner/v4/summoners/by-name/" + username + "?api_key=" + api_key
+    print(url)
     return requests.get(url).json()
     
 
