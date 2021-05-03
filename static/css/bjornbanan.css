@@ -1,46 +1,26 @@
-.socials{
-    display:flex;
-    justify-content:center;
-    align-items: center;
-    position:absolute;
-    width: 100%;
-    bottom:0px;
-
-}
-.socials img{
-    padding:30px;
-    width:100px;
-    height:auto;
-}
-
 .centerdiv{
     padding:5%;
 
 }
 .centerdiv p{
-    font-family: 'Roboto', sans-serif;
-    color:white;
+    font-family: var(--main-font);
+    color:var(--sub-color);
 
 }
 .centerdiv a{
-    font-family: 'Roboto', sans-serif;
+    font-family: var(--main-font);
     text-decoration: none;
-    color:white;
+    color:var(--text-color);
 
 }
-.wtitle{
-    font-family: 'Roboto Mono', monospace;
-    color:white;
+.centerdiv pre{
+    font-family: var(--main-font);
+    color:var(--text-color);
+
 }
-.wlink{
-    font-family: 'Roboto', sans-serif;
-    color:white;
-    text-decoration: none;
-}
-.wbase{
-    font-size: 10px;
-    font-family: 'Roboto', sans-serif;
-    color:white;
+.centerdiv h1{
+    font-family: var(--title-font);
+    color:var(--main-color);
 
 }
 .html{
