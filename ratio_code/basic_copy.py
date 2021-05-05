@@ -49,7 +49,7 @@ def spaces(lvl):
         newspace = newspace + space
     return str(newspace+">")
 
-print(stage(get_components("transport-belt",1, 1, 1), 1, []))
+#print(stage(get_components("transport-belt",1, 1, 1), 1, []))
 json = {'ratio': 0.25,
         'iron-gear-wheel': {'ratio': 0.125,
                             'iron-plate': {'ratio': 0.875,

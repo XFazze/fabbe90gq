@@ -8,7 +8,3 @@ class lb2000_getuser(FlaskForm):
     region = SelectField('Region', validators=[DataRequired()], choices = regions)
     large_region = SelectField('Large region', validators=[DataRequired()], choices = large_regions)
     submit = SubmitField('Get profile')
-
-class lb2000_getgames(FlaskForm):
-    amount_games = StringField('Amount', validators=[DataRequired()])
-    submit = SubmitField('Load')

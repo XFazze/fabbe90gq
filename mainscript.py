@@ -110,50 +110,8 @@ def prop_calc():
         ratio = str(result["ratio"])
         sop = stage(result, 1, [])
         print(result)
-        return render_template('factorio_proportions.html',
-                            form=form,
-                            ratio=ratio,
-                            component=component,
-                            submitted=True,
-                            sop=sop)
-    return render_template('factorio_proportions.html',
-                           form=form,
-                           ratio="wee",
-                           component="component",
-                           submitted=False,
-                           sop="sop")
-
-
-# http://127.0.0.1:5000/ludvig_blabarsylt_2000?name=xfazze&region=eun1&region_large=europe
-@app.route("/ludvig_blabarsylt_2000/old", methods=['GET', 'POST'])
-def lb2000_old():
-    api_key='RGAPI-8b2450d3-f27b-487f-a114-77839bfc1e90'
-    username = request.args.get('name')  # getluminated"  # kuuro2
-    region = request.args.get('region')   # eun1"
-    region_large = request.args.get('region_large')   # europe
-    if username is None or region is None or region_large is None:
-        print("should be redirected")
-        return redirect("ludvig_blabarsylt_2000/search")
-    print(request.args.get('name'), request.args.get('region'),request.args.get('region_large'))
-
-    summoner_dict= get_summoner(region, username,api_key)
-    id = summoner_dict["id"]
-    puuid = summoner_dict["puuid"]
-    mastery_dict= get_mastery(region, id, api_key)
-    total_mastery= get_total_mastery(region, id, api_key)
-    match_history= get_match_history(region_large, puuid, api_key)
-    match_id = match_history[0]
-    match_dict= get_match(region_large, match_id, api_key)
-    match_timeline_dict= get_match_timeline(region_large, match_id, api_key)
-    live_game_dict= get_live_game(region, id, api_key)
-
-    return render_template('lb2000/lb2000.html', summoner_dict=summoner_dict,
-                           mastery_dict=mastery_dict,
-                           total_mastery=total_mastery,
-                           match_history=match_history,
-                           match_dict=match_dict,
-                           match_timeline_dict=match_timeline_dict,
-                           live_game_dict=live_game_dict)
+        return render_template('factorio_proportions.html', form=form, ratio=ratio, component=component, submitted=True,  sop=sop)
+    return render_template('factorio_proportions.html', form=form, ratio="wee", component="component", submitted=False, sop="sop")
 
 
 @app.route("/ludvig_blabarsylt_2000", methods=['GET', 'POST'])
@@ -173,44 +131,12 @@ def lb2000():
             total_mastery = get_total_mastery(region, summoner['id'], api_key)
             ranks = get_rank(region, summoner['id'], api_key)
             timenow = time.time()
-            form = lb2000_getgames()
-            if form.validate_on_submit():
-                print("form is validatged")
-                return render_template('lb2000/lb2000_match_history.html', summoner=summoner, region=region, mastery=mastery, total_mastery=total_mastery, champ_id_to_name=champ_id_to_name, timenow=timenow,ranks=ranks,form=form)
-
+            form = lb2000_getuser()
             return render_template('lb2000/lb2000_base.html', summoner=summoner, region=region, mastery=mastery, total_mastery=total_mastery, champ_id_to_name=champ_id_to_name, timenow=timenow,ranks=ranks,form=form)
     return render_template('lb2000/lb2000_search.html', form=form, error=False)
 
 
-@app.route("/ludvig_blabarsylt_2000/profile", methods=['GET', 'POST'])
-def lb2000_profile():
-    api_key='RGAPI-8b2450d3-f27b-487f-a114-77839bfc1e90'
-    username = request.args.get('name')  # getluminated"  # xfazze
-    region = request.args.get('region')   # eun1"
-    region_large = request.args.get('region_large')   # europe
-    print(request.args.get('name'), request.args.get('region'),request.args.get('region_large'))
 
-
-    summoner_dict = get_summoner(region, username, api_key)
-    puuid = summoner_dict["puuid"]
-    match_history= get_match_history(region_large, puuid, api_key)
-    matches = []
-    o = 0
-    time_0 = time.time()
-    print(time_0)
-    for match_id in match_history:
-        o += 1
-        matches.append(get_match(region_large, match_id, api_key))
-        if o % 10 == 0:
-            while time_0 + 10 > time.time():
-                print("sleeping",time.time() )
-                time.sleep(1)
-            time_0 = time.time()
-        print(o)
-    
-
-    return render_template('lb2000/ludvig_blabarsylt_2000.html', summoner_dict=summoner_dict,
-                           matches=matches, time=time.time(), round=round, puuid=puuid)
 # Run the site
 if __name__ == "__main__":
     app.run()

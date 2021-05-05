@@ -7,13 +7,21 @@
 {% block main%}
 <div class="centerdiv" >
     <h1>Linus Blåbärsylt 2000 tools</h1></br>
+    <form action="" method="post" novalidate>
+        {{ form.hidden_tag() }}
+        <p style="color:var(--text-color)">{{ form.username.label }}: {{ form.username }} {{ form.region }}{{ form.large_region }}{{ form.submit }}</p>
+        {% if error %}
+        <p style="color:var(--error-color)">User doesnt exit, your bad</p>
+        {% endif %}
+    
+    </form>
     <div style="width:100%; height: 300px;">
-        <h1>Todo: Percentage of top and ladder rank, history, stats(win Percentage, kda, cs</h1>
+        <p>Todo: Percentage of top and ladder rank, history, stats(win Percentage, kda, cs, winrate with users, etc) </p>
         {% set icon_url = "http://ddragon.leagueoflegends.com/cdn/10.18.1/img/profileicon/" + summoner["profileIconId"]|string + ".png" %}
         <img src={{ icon_url }} style="float:left;">
         <div style="padding-left: 320px;">
             <h2>{{ region }} | {{ summoner["name"] }} | Lvl {{ summoner["summonerLevel"] }} | Total Mastery {{ total_mastery}}</h2>
-            {% if ranks|length >0 %}{% for rank in ranks %}<h2>{{rank["queueType"]}}:{{rank["tier"]}}-{{rank["rank"]}}({{rank["leaguePoints"]}})({{rank["wins"]}}/{{ rank["wins"]+rank["losses"] }})</h2>{% endfor %}{% endif %}
+            {% if ranks|length >0 %}{% for rank in ranks %}<h2>{{rank["queueType"]}}:{{rank["tier"]}}-{{rank["rank"]}}({{rank["leaguePoints"]}})({{rank["wins"]}}/rank["losses"] }}({{ rank["wins"]/(rank["wins"]+rank["losses"]) }}))</h2>{% endfor %}{% endif %}
             <div id="masterydiv" style="height: 193px; overflow:hidden;">
                 <div id="champion_masteryBtn">
                     <h1 id="masterydivtext">Show more</h1>
@@ -38,12 +46,8 @@
                 {% endfor %}
             </div>
         </div>
-        <form action="" method="post" novalidate>
-            {{ form.hidden_tag() }}
-            <h1>Load games {{ form.amount_games }}{{ form.submit }}</h1>
-        
-        </form>
         <div id="match_history" >
+            <p id="xx">123</p>
 
         </div>
     </div>

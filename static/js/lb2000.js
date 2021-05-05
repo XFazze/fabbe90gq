@@ -8,6 +8,4 @@ window.onload = function(){
         document.getElementById("masterydivtext").innerHTML = "Show all";
       }
       }
-    
     };
-    
