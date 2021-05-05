@@ -15,7 +15,7 @@
         {% endif %}
     
     </form>
-    <div style="width:100%; height: 300px;">
+    <div style="width:100%">
         <p>Todo: Percentage of top and ladder rank, history, stats(win Percentage, kda, cs, winrate with users, etc) </p>
         {% set icon_url = "http://ddragon.leagueoflegends.com/cdn/10.18.1/img/profileicon/" + summoner["profileIconId"]|string + ".png" %}
         <img src={{ icon_url }} style="float:left;">
@@ -47,10 +47,41 @@
             </div>
         </div>
         <div id="match_history" >
-            <p id="xx">123</p>
+
+            {% for match in match_history %}
+                {% set match1 = match_sleep(region_large,match) %}
+                {% if (match1[summonerid]['meta']['win']) %}
+                    <div class="amatch" style="background-image:-webkit-linear-gradient(left, var(--error-color), var(--error-color) 70%, transparent 70%, transparent 100%);" >
+                    {% else %}
+                    <div class="amatch" style="background-image:-webkit-linear-gradient(left, var(--sub-color), var(--sub-color) 70%, transparent 70%, transparent 100%)" >
+                {% endif %}
+                {% set icon_url = "http://ddragon.leagueoflegends.com/cdn/11.9.1/img/champion/" + match1[summonerid]['champ']['championName'] + ".png" %}
+                <div style="width: 80px; float: left;display: flex;">
+                    <p style="margin:auto;" >{{ (((timenow-(match1["meta"]["gameCreation"]/1000))/8640)|round)/10 }}d  </p>
+                    <p style="margin:auto;" >&nbsp;{{ (match1["meta"]["gameDuration"]/60000)|int }}m</p>
+                </div>
+                <img src={{ icon_url }}  style="width: 60;float:left">
+                
+                </div>
+            {% endfor %}
+
 
         </div>
     </div>
 
 </div>
 {% endblock %}
+<!---
+gameCreation, gameDuration, gameMode, gameType, gameVersion, win, individualPosition
+
+participants, championName, , perks, assists, champLevel, deaths, kills, item0, item1, item2, item3, item4, item5, item6, summoner1Id, summoner2Id
+
+detectorWardsPlaced, sightWardsBoughtInGame, visionScore, visionWardsBoughtInGame, wardsKilled, wardsPlaced
+doubleKills, killingSprees, largestKillingSpree, largestMultiKill, longestTimeSpentLiving, totalTimeSpentDead, pentaKills,quadraKills, tripleKills, unrealKills, largestCriticalStrike
+magicDamageDealt, physicalDamageDealt, totalDamageDealt, trueDamageDealt, magicDamageDealtToChampions, physicalDamageDealtToChampions, totalDamageDealtToChampions, trueDamageDealtToChampions, damageDealtToBuildings, damageDealtToObjectives, damageDealtToTurrets, magicDamageTaken, physicalDamageTaken, totalDamageTaken, trueDamageTaken
+totalDamageShieldedOnTeammates, totalHeal, totalHealsOnTeammates, timeCCingOthers, totalTimeCCDealt
+neutralMinionsKilled, dragonKills, baronKills, objectivesStolen, objectivesStolenAssists, totalMinionsKilled
+firstBloodAssist, firstBloodKill, firstTowerAssist, firstTowerKill, inhibitorKills, inhibitorsLost, turretKills, turretsLost, 
+
+goldEarned,  goldSpent, itemsPurchased,spell1Casts, spell2Casts, spell3Casts, spell4Casts, summoner1Casts, summoner2Casts
+-->
