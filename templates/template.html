@@ -11,6 +11,7 @@
     --main-color: #fcfbf6;
     --sub-color: #85a5bb;
     --text-color: #1a2633;
+    --error-color: #bf616a;
     --main-font:'Roboto', sans-serif;
     --title-font:'Roboto Mono', monospace;
 }
@@ -39,14 +40,40 @@
     font-family: var(--title-font);
 }
 .navbar a:hover {
-color: grey;
+color: var(--sub-color);
+}
+#dropdowndiv > a{
+    color:var(--main-color);
+    font-size: 18px; 
+    text-align: center;
+    padding: 5px;
+    width: 240px;
+}
+#dropdowndiv{
+    display: none;
+}
+#dropdown:hover #dropdowndiv{
+    display: block;
+}
+#dropdowndiv > a:hover{
+    color:var(--sub-color)
+}
+#dropdown{
+    width: 240px;
 }
 </style>
 <body style="background:var(--bg-color);display: flex;justify-content: center;" {% block body %}{% endblock %}>
     <div id="main">
         <div class="navbar" >
             <a href="/" >&#60;Home&#62;</a>
-            <a href="/projects" >&#60;Projects&#62;</a>
+            <div id="dropdown" >
+                <a href="/projects" >&#60;Projects&#62;</a>
+                <div id="dropdowndiv">
+                    <a href="/projects/pappa" >&#60;Pappa&#62;</a>
+                    <a href="/projects/factorio" >&#60;Factorio Ratio&#62;</a>
+                    <a href="/ludvig_blabarsylt_2000" >&#60;Linus Blåbärsylt 2k&#62;</a>
+                </div>
+            </div>
             <a href="/bjornbanan">&#60;Björnbanan&#62;</a>
         </div>
         {% block main %}

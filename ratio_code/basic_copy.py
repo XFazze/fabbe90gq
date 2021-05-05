@@ -8,11 +8,12 @@ items = json.load(open('/home/pi/website/ratio_code/items.json', 'r'))
 def get_components(item, amount, smelter, assembler):
     result = {}
     produce_per_sek = 1.0/float(items[item]["time"])
-    print(produce_per_sek, items[item]["output"])
     result["ratio"] = amount/(produce_per_sek*items[item]["output"])
+    print(amount, item, produce_per_sek, items[item]["output"], result["ratio"])
     if not items[item]["raw"]:
-        for first in items[item]["materials"]:
-            result[first["name"]] = get_components(first["name"], first["amount"]*result["ratio"], smelter, assembler)
+        for nextitem in items[item]["materials"]:
+            print(nextitem["name"], nextitem["amount"])
+            result[nextitem["name"]] = get_components(nextitem["name"], nextitem["amount"]*result["ratio"], smelter, assembler)
     return result
 
 

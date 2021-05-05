@@ -13,6 +13,10 @@ def get_mastery(region, id, api_key):
     url = "https://" + region + ".api.riotgames.com/lol/champion-mastery/v4/champion-masteries/by-summoner/" +  id + "?api_key=" + api_key
     return requests.get(url).json()
 
+def get_rank(region, id, api_key):
+    url = "https://" + region + ".api.riotgames.com/lol/league/v4/entries/by-summoner/" +  id + "?api_key=" + api_key
+    return requests.get(url).json()
+
 def get_match_history(region_large, puuid, api_key):
     url = "https://" + region_large + ".api.riotgames.com//lol/match/v5/matches/by-puuid/" + puuid + "/ids?start=0&count=9&api_key=" + api_key
     return requests.get(url).json()  # max 100 but has filters

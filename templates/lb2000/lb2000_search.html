@@ -1,0 +1,21 @@
+{% extends "template.html" %}
+{% block link %}
+<link rel="stylesheet" href="/static/css/lb2000.css">
+{% endblock %}
+{% block body %}{% endblock %}
+{% block main%}
+<div class="centerdiv" >
+    <h1>Linus Blåbärsylt 2000</h1></br>
+    <form action="" method="post" novalidate>
+        {{ form.hidden_tag() }}
+        <p style="color:var(--text-color)">{{ form.username.label }}: {{ form.username }} </p>
+        <p>{{ form.region }}</p>
+        <p>{{ form.large_region }}</p>
+        <p> {{ form.submit }}</p>
+        {% if error %}
+        <p style="color:var(--error-color)">User doesnt exit, your bad</p>
+        {% endif %}
+    
+    </form>
+</div>
+{% endblock %}

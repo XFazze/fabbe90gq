@@ -1,28 +1,35 @@
 {% extends "template.html" %}
 {% block link %}
-<link rel="stylesheet" href="/static/css/newccs.css">
+<link rel="stylesheet" href="/static/css/basic.css">
 {% endblock %}
 {% block body %}background-image: url('/static/pics/knuck.jpg'); background-size: cover;{% endblock %}
 {% block main%}
 
-<div class="centerdiv">
-    <h1 class="wtitle">Projects</h1>
-    <a style="font-size:26px;font-family: 'Roboto Mono', monospace;" href="/projects/files">Files examples</a><br>
-    <ul>
-        {% for file in files %}
-        <li>
-            <a href="{{ (request.path  if request.path != '/' else '') + 'files/' + file  }}">
-                {{ (request.path  if request.path != '/' else '') + 'files/' + file }}
-            </a>
-        </li>
-        {% endfor %}
-    </ul>
-</div>
+<div>
+    <div class="centerdiv">
+        <h1>Files</h1>
+        <ul style="list-style-type: none;">
+            {% for file in files %}
+            <li>
+                <a href="{{ (request.path  if request.path != '/' else '') + 'files/' + file  }}">
+                    {{ file }}
+                </a>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
 
-<div class="centerdiv">
-    <p style="font-size:26px;font-family: 'Roboto Mono', monospace; color: white" >Websites examples</p>
-    <a href="/projects/pappa" >Pappa</a><br>
-    <a href="/projects/factorio" >Factorio Ratio Calculator</a><br>
+    <div class="centerdiv">
+        <h1>Websites</h1>
+        <ul style="list-style-type: none;">
+            <li>
+                <a href="/projects/pappa" >Pappa</a><br>
+            </li>
+            <li>
+                <a href="/projects/factorio" >Factorio Ratio Calculator</a><br>
+            </li>
+    </ul>
+    </div>
 </div>
 {% endblock %}
     

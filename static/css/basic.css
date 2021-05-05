@@ -1,0 +1,26 @@
+.centerdiv h1{
+    font-family: var(--title-font);
+    color:var(--main-color);
+
+}
+.centerdiv h2{
+    font-family: var(--title-font);
+    color:var(--sub-color);
+
+}
+.centerdiv p{
+    font-family: var(--main-font);
+    color:var(--sub-color);
+
+}
+.centerdiv a{
+    font-family: var(--main-font);
+    text-decoration: none;
+    color:var(--text-color);
+
+}
+.centerdiv pre{
+    font-family: var(--main-font);
+    color:var(--text-color);
+
+}

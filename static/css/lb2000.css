@@ -1,0 +1,53 @@
+.centerdiv h1{
+    font-family: var(--title-font);
+    color:var(--main-color);
+
+}
+.centerdiv h2{
+    font-family: var(--title-font);
+    color:var(--sub-color);
+
+}
+.centerdiv p{
+    font-family: var(--main-font);
+    color:var(--text-color);
+
+}
+.centerdiv a{
+    font-family: var(--main-font);
+    text-decoration: none;
+    color:var(--text-color);
+
+}
+.centerdiv pre{
+    font-family: var(--main-font);
+    color:var(--text-color);
+
+}
+.mrow h2{
+    margin:0px;
+}
+.mcolumn{
+    width: 60px;
+    float:left;
+    height: 150px;
+}
+.mrow{
+    text-align: center;
+}
+#champion_masteryBtn{
+    background-color:var(--sub-color);
+    font-family: var(--main-font);
+    text-align: center;
+
+}
+#champion_masteryBtn h1{
+    margin: 0px;
+    color: var(--main-color);
+}
+#champion_masteryBtn:hover{
+    cursor: pointer;
+}
+.game{
+    width: 100%;
+}
