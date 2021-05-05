@@ -6,35 +6,53 @@
     <title>Fabbe90.gq</title>
 </head>
 <style>
+:root{
+    --bg-color: #afcbdd;
+    --main-color: #fcfbf6;
+    --sub-color: #85a5bb;
+    --text-color: #1a2633;
+    --main-font:'Roboto', sans-serif;
+    --title-font:'Roboto Mono', monospace;
+}
+#main{
+    max-width: 1000px;
+    display: grid;
+    grid-auto-flow: row;
+    padding: 2rem;
+    gap: 2rem;
+    align-items: center;
+    grid-template-rows: auto 1fr auto;
+    width: 100%;
+}
 .navbar{
     display:flex;
     justify-content:center;
     overflow:hidden;
-    background-color:black;
 }
 .navbar a {
     float: left;
-    color: #f2f2f2;
+    color: var(--main-color);
     text-align: center;
     padding: 16px 30px;
     text-decoration: none;
     font-size: 30px;
-    font-family: 'Roboto Mono', monospace;
+    font-family: var(--title-font);
 }
 .navbar a:hover {
 color: grey;
 }
 </style>
-<body style="margin:0%;{% block body %}{% endblock %}">
-    <div class="navbar" >
-        <a href="/" style="position: absolute; left:0px; "><img alt="Qries" src="/static/pics/logos/home.png" style="height: 39px; width: auto;" ></a>
-        <a href="/projects" >&#60;Projects&#62;</a>
-        <a href="/bjornbanan">&#60;Björnbanan&#62;</a>
-    </div>
-    {% block main %}
-    {% endblock %}
+<body style="background:var(--bg-color);display: flex;justify-content: center;" {% block body %}{% endblock %}>
+    <div id="main">
+        <div class="navbar" >
+            <a href="/" >&#60;Home&#62;</a>
+            <a href="/projects" >&#60;Projects&#62;</a>
+            <a href="/bjornbanan">&#60;Björnbanan&#62;</a>
+        </div>
+        {% block main %}
+        {% endblock %}
 
+    </div>
     
-    
-    </body>
+</body>
     

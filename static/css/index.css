@@ -24,12 +24,10 @@
     opacity: 0;
     animation-delay: 8.3s;
 }
-<<<<<<< HEAD
 .main_div{
     max-width: 1000px;
     display: grid;
 }
-=======
 #rotating3{
     animation: fadeIn 25s infinite;
     opacity: 0;
@@ -43,4 +41,3 @@
     40% {opacity:0;}
     100% {opacity:0;}
   }
->>>>>>> 77d213a5daa75a2ecf5280770bf1e6e12eace49b

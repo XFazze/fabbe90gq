@@ -11,7 +11,6 @@ from ratio_code.basic_copy import *
 from forms.osuform import *
 from forms.pappa_form import *
 from ludvig_blabarsylt.api_calls import *
-from forms.factorio_porportions import *
 
 # Initializing flask and sql
 app = Flask(__name__,  static_folder='static')
