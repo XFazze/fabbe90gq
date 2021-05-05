@@ -21,7 +21,7 @@
         <img src={{ icon_url }} style="float:left;">
         <div style="padding-left: 320px;">
             <h2>{{ region }} | {{ summoner["name"] }} | Lvl {{ summoner["summonerLevel"] }} | Total Mastery {{ total_mastery}}</h2>
-            {% if ranks|length >0 %}{% for rank in ranks %}<h2>{{rank["queueType"]}}:{{rank["tier"]}}-{{rank["rank"]}}({{rank["leaguePoints"]}})({{rank["wins"]}}/rank["losses"] }}({{ rank["wins"]/(rank["wins"]+rank["losses"]) }}))</h2>{% endfor %}{% endif %}
+            {% if ranks|length >0 %}{% for rank in ranks %}<h2>{{rank["queueType"]}}:{{rank["tier"]}}-{{rank["rank"]}}({{rank["leaguePoints"]}}LP)({{rank["wins"]}}/{{ rank["losses"] }}({{ (100*rank["wins"]/(rank["wins"]+rank["losses"]))|round }}%))</h2>{% endfor %}{% endif %}
             <div id="masterydiv" style="height: 193px; overflow:hidden;">
                 <div id="champion_masteryBtn">
                     <h1 id="masterydivtext">Show more</h1>
