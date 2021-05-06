@@ -10,7 +10,25 @@ app.config['SECRET_KEY'] = 'you-will-never-guess'
 # Root
 @app.route("/")
 def index():
-    return render_template('bjornbanan_help.html')
+    client_id = 'd3a17cc496724a538a7b2af6024b0a26'
+    client_secret = '6f3a2f416e4e4cbc8eff1ddd94be94b1'
+    scope = 'user-read-private user-read-email'
+    redirect_uri = 'http://localhost:5000/callback'
+
+    # add state for security
+    spotify_url='https://accounts.spotify.com/authorize?'+'response_type=code&client_id='+client_id+'&scope='+scope+'&redirect_uri='+redirect_uri
+    return redirect(spotify_url)
+
+@app.route("/callback")
+def callback():
+    code = request.args['code']
+    url = ' '
+    json = requests.get(url).json()
+    print(code)
+    return "Weeooe"
+    
+
+
 
 # Run the site
 if __name__ == "__main__":
