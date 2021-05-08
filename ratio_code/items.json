@@ -1981,7 +1981,7 @@
     },
     "petroleum-gas": {
         "materials": [],
-        "raw": false,
+        "raw": true,
         "output": 1,
         "time": 1
     },
