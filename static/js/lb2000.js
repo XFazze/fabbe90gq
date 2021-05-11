@@ -18,6 +18,6 @@ function loadDoc() {
         this.responseText;
     }
   };
-  xhttp.open("GET", "/static/lolgames/EUN1/2829613673.json", true);
+  xhttp.open("GET", "static/lolgames/EUN1/2829613673.json", true);
   xhttp.send();
 }
