@@ -46,11 +46,15 @@
                 {% endfor %}
             </div>
         </div>
+        
+        <div id="demo">
+            <h2>The XMLHttpRequest Object</h2>
+            <button type="button" onclick="loadDoc()">Change Content</button>
+        </div>
         <div id="match_history" >
 
-            {% for match in match_history %}
-                {% set match1 = match_sleep(region_large,match) %}
-                {% if (match1[summonerid]['meta']['win']) %}
+            {# {% for match in match_history %}
+            {% if (match1[summonerid]['meta']['win']) %}
                     <div class="amatch" style="background-image:-webkit-linear-gradient(left, var(--error-color), var(--error-color) 70%, transparent 70%, transparent 100%);" >
                     {% else %}
                     <div class="amatch" style="background-image:-webkit-linear-gradient(left, var(--sub-color), var(--sub-color) 70%, transparent 70%, transparent 100%)" >
@@ -63,7 +67,7 @@
                 <img src={{ icon_url }}  style="width: 60;float:left">
                 
                 </div>
-            {% endfor %}
+            {% endfor %} #}
 
 
         </div>
