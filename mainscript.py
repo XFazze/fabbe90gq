@@ -124,7 +124,7 @@ def lb2000():
             download_matches(match_history,region_large, api_key)
             timenow = time.time()
             form = lb2000_getuser()
-            with open('/home/pi/website/ludvig_blabarsylt/games/EUN1/2829613673.json', 'r') as f:
+            with open('/home/pi/website/static/lolgames/EUN1/2829613673.json', 'r') as f:
                 match1 = json.load(f)
                 print(match1)
             return render_template('lb2000/lb2000_base.html', summoner=summoner, region=region, mastery=mastery, total_mastery=total_mastery, champ_id_to_name=champ_id_to_name, timenow=timenow,ranks=ranks,form=form,
