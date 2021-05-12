@@ -57,3 +57,99 @@
     display: flex;
     align-items: center;
 }
+.match{
+    width: 100%;
+}
+.meta{
+    width: 10%;
+}
+.players{
+    width: 90%;
+}
+#match{
+    width: 100%;
+}
+#meta{
+    width: 10%;
+    float:left;
+}
+#meta p{
+    font-family: var(--main-font);
+    color:var(--text-color);
+    font-size: 12;
+
+}
+#players{
+    width: 90%;
+    float:left;
+}
+#brief{
+    width: 100%;
+    background-color: yellow;
+    display:table;
+}
+#brief p{
+    font-family: var(--main-font);
+    color:var(--text-color);
+    display: inline-block;
+    margin:0px;
+}
+.champ{
+    width: 20;
+    height: 19;
+    float: left;
+}
+.lvl{
+    width: 30px;
+}
+.lane{
+    width: 90px;
+}
+.kda{
+    width: 70px
+}
+.kdacalc{
+    width: 40px
+}
+.cs{
+    width: 30px
+}
+.cspermin{
+    width: 40px
+}
+.visionscore{
+    width: 20px
+}
+.controlwards{
+    width: 20px
+
+}
+#details div{
+    float:left;
+    border:1px solid black;
+    margin-left: 1%;
+    margin-right: 1%;
+}
+#objectives{
+    width:10%;
+}
+#spells{
+    width:10%;
+    
+}
+#kills{
+    width:10%;
+    
+}
+#minons{
+    width:15%;
+    
+}
+#vision{
+    width:10%;
+    
+}
+#damage{
+    width:30%;
+    
+}

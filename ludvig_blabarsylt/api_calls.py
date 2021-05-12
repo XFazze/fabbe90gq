@@ -1,4 +1,4 @@
-import requests, json, os.path, time
+import requests, json, os.path, time, sphc
 def get_summoner(region, username, api_key):
     url = "https://" + region + ".api.riotgames.com/lol/summoner/v4/summoners/by-name/" + username + "?api_key=" + api_key
     print(url)
@@ -41,7 +41,7 @@ def download_matches(match_history, region_large, api_key):
             if os.path.isfile(path):
                 print('skipped already downloaded game')
                 continue
-            time.sleep(1/15)
+            time.sleep(1/5)
             ret_json = {}
             url = "https://" + region_large + ".api.riotgames.com/lol/match/v5/matches/" + match + "?api_key=" + api_key
             json_match =  requests.get(url).json()
@@ -171,3 +171,50 @@ def download_matches(match_history, region_large, api_key):
             with open(path, 'w') as f:
                 json.dump(ret_json, f)
                 print('saved to' ,path)
+
+def generate_html(match_json):
+    tf = sphc.TagFactory()
+    gameCreation = tf.p(str(round(match_json['meta']['gameCreation']/1000)) + 's')
+    gameduration = tf.p(str(round(match_json['meta']['gameDuration']/6000)/10) + 'm')
+    gamemode = tf.p('game mode:\n'+match_json['meta']['gameMode'])
+    gameType = tf.p('game type:\n'+match_json['meta']['gameType'])
+    gameVersion = tf.p('game versiopn:\n'+match_json['meta']['gameVersion'])
+    meta = tf.DIV([gameCreation, gameduration, gamemode, gameType,  gameVersion], id='meta')
+
+    team1 = []
+    team2 = []
+    tc = 0
+    for player in match_json:
+        tc += 1
+        if player == 'meta':
+            continue
+        hero = tf.img(src="http://ddragon.leagueoflegends.com/cdn/11.9.1/img/champion/" + match_json[player]['champ']['championName'] + ".png", Class='champ')
+        lvl = tf.p(str(match_json[player]['champ']['champLevel']), Class='lvl')
+        lane = tf.p(match_json[player]['meta']['teamPosition'], Class='lane')
+        kda  = tf.p(str(match_json[player]['champ']['kills']) + '/'+ str(match_json[player]['champ']['deaths']) + '/'+ str(match_json[player]['champ']['assists']), Class='kda')
+        kdacalc = tf.p('(' + str(round((10*match_json[player]['champ']['kills']+10*match_json[player]['champ']['assists'])/match_json[player]['champ']['deaths'])/10)+ ')', Class='kdacalc')
+        cs = tf.p(str(match_json[player]['objectives']['totalMinionsKilled']), Class='cs')
+        cspermin = tf.p('(' + str((round((match_json[player]['objectives']['totalMinionsKilled']*10)/((match_json['meta']['gameDuration']/6000)/10)))/10) + ')', Class='cspermin')
+        visionscore = tf.p(str(match_json[player]['vision']['visionScore']), Class='visionscore')
+        controlwards = tf.p('('+str(match_json[player]['vision']['visionWardsBoughtInGame'])+')', Class='controlwards')
+
+        brief = tf.DIV([hero, lvl, lane, kda, kdacalc, cs,cspermin, visionscore, controlwards], id='brief')
+        objectives = tf.DIV(id='objectives')
+        spells = tf.DIV(id='spells')
+        kills = tf.DIV(id='kills')
+        minons = tf.DIV(id='minons')
+        vision = tf.DIV(id='vision')
+        damage = tf.DIV(id='damage')
+        details = tf.DIV([objectives, spells, kills, minons, vision, damage], id='details')
+        player = tf.DIV([brief, details], id='player')
+        if tc > 6:
+            team2.append(player)
+        else:
+            team1.append(player)
+    team1 = tf.DIV(team1, id='team')
+    team2 = tf.DIV(team2, id='team')
+    players = tf.DIV([team1,team2], id='players')
+
+    doc = tf.DIV([meta, players], id="match")
+    print(doc)
+    return doc
