@@ -118,7 +118,7 @@ def lb2000_test():
 
 @app.route("/ludvig_blabarsylt_2000", methods=['GET', 'POST'])
 def lb2000():
-    api_key='RGAPI-7917d1f8-1559-46d4-8558-26b0e203b52b'
+    api_key='RGAPI-84616086-cf2e-4703-a519-912d63be77bf'
     form = lb2000_getuser()
     
     

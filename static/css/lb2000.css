@@ -94,6 +94,12 @@
     display: inline-block;
     margin:0px;
 }
+#brief div{
+    display: inline-block;
+    float: right;
+    margin:0px;
+    padding-left: 20px;
+}
 .champ{
     width: 20;
     height: 19;
@@ -121,8 +127,11 @@
     width: 20px
 }
 .controlwards{
-    width: 20px
+    width: 30px
 
+}
+.item{ 
+    width: 19px;
 }
 #details div{
     float:left;
