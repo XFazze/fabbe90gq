@@ -133,6 +133,9 @@
 .item{ 
     width: 19px;
 }
+.player{
+    display: none;
+}
 #details div{
     float:left;
     border:1px solid black;
