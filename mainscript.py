@@ -99,7 +99,22 @@ def prop_calc():
     return render_template('factorio_proportions.html', form=form, ratio="wee", component="component", submitted=False, sop="sop")
 
 
-            
+        
+@app.route("/ludvig_blabarsylt_2000/test")
+def lb2000_test():    
+    
+    with open('/home/pi/website/static/lolgames/EUN1/2826516269.json', 'r') as f:
+        match1 = json.load(f)
+        before = "{% extends 'template.html' %}\n                    {% block link %}\n                    <link rel='stylesheet' href='/static/css/lb2000.css'>\n                    <script type='text/javascript' src='/static/js/lb2000.js'></script>\n                    {% endblock %}\n                    {% block body %}{% endblock %}\n                    {% block main%}\n"
+
+        after = '\n{% endblock %}'
+        match1_html= before + str(generate_html(match1)) +after
+        print(type(match1_html))
+        with open('/home/pi/website/templates/lb2000/example_match.html', 'w') as f1:
+            f1.write(match1_html)
+    return render_template('lb2000/example_match.html')
+
+
 
 @app.route("/ludvig_blabarsylt_2000", methods=['GET', 'POST'])
 def lb2000():
@@ -124,9 +139,9 @@ def lb2000():
             download_matches(match_history,region_large, api_key)
             timenow = time.time()
             form = lb2000_getuser()
-            with open('/home/pi/website/ludvig_blabarsylt/games/EUN1/2829613673.json', 'r') as f:
+            with open('/home/pi/website/static/lolgames/EUN1/2829613673.json', 'r') as f:
                 match1 = json.load(f)
-                print(match1)
+                #print(match1)
             return render_template('lb2000/lb2000_base.html', summoner=summoner, region=region, mastery=mastery, total_mastery=total_mastery, champ_id_to_name=champ_id_to_name, timenow=timenow,ranks=ranks,form=form,
                                     match_history=match_history,region_large=region_large, summonerid=summoner['id'], match1=match1)
     return render_template('lb2000/lb2000_search.html', form=form, error=False)
