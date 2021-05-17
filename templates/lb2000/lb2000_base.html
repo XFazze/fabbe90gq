@@ -52,8 +52,13 @@
             <button type="button" onclick="loadDoc()">Change Content</button>
         </div>
         <div id="match_history" >
+            <style>
+                #{{summonerid}} {
+                    display : table;
+                }
+            </style>
             {% for match in match_history %}
-                <div class="{{ match }}"><p>Loading match</p></div>
+                <div id="{{ match }}"><p>Loading match</p></div>
             {% endfor %}
 
             {# 

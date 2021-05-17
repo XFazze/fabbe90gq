@@ -14,22 +14,25 @@ window.onload = function () {
   console.log(childNodes)
       var i, e, d;
       for (i = 0; i < childNodes.length; ++i) {
-          e = childNodes[i];
-          e.innerHTML = "Looped thrioyg";
+        gameid = String(childNodes[i].id).split('_');
+        path = 'static/lolgames_html/'+gameid[0] + '/' + gameid[1] + '.txt'
+        console.log(path, childNodes[i].id)
+        e = childNodes[i];
+        loadDoc(path, e)
+        e.innerHTML = path;
         };
 
 };
 
 
 
-function loadDoc() {
+function loadDoc(path, e) {
   var xhttp = new XMLHttpRequest();
   xhttp.onreadystatechange = function () {
     if (this.readyState == 4 && this.status == 200) {
-      document.getElementById("demo").innerHTML =
-        this.responseText;
+      e.innerHTML = this.responseText;
     }
   };
-  xhttp.open("GET", "static/lolgames/example_match.xml", true);
+  xhttp.open("GET", path, true);
   xhttp.send();
 }

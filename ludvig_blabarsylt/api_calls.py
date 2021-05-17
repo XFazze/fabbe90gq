@@ -1,4 +1,4 @@
-import requests, json, os.path, time, sphc
+import requests, json, os.path, time, sphc, os
 def get_summoner(region, username, api_key):
     url = "https://" + region + ".api.riotgames.com/lol/summoner/v4/summoners/by-name/" + username + "?api_key=" + api_key
     print(url)
@@ -37,7 +37,7 @@ def get_live_game(region, id, api_key):
 def download_matches(match_history, region_large, api_key):
         for match in match_history:
             match_name = match.split('_')
-            path = '/home/pi/website/static/lolgames/' + match_name[0] + '/' + match_name[1] + '.json'
+            path = '/home/pi/website/static/lolgames_html/' + match_name[0] + '/' + match_name[1] + '.txt'
             if os.path.isfile(path):
                 print('skipped already downloaded game')
                 continue
@@ -167,9 +167,12 @@ def download_matches(match_history, region_large, api_key):
                 ret_json[player['summonerId']]['stats']['spell4Casts'] = player['spell4Casts']
                 ret_json[player['summonerId']]['stats']['summoner1Casts'] = player['summoner1Casts']
                 ret_json[player['summonerId']]['stats']['summoner2Casts'] = player['summoner2Casts']
-
+            div = generate_html(ret_json)
+            #print('\n\n\npringint folder pand ')
+            #for f in os.listdir("/home/pi/website/static/lolgames_html/"):
+	        #    print(f)
             with open(path, 'w') as f:
-                json.dump(ret_json, f)
+                f.write(str(div))
                 print('saved to' ,path)
 
 def generate_html(match_json):
@@ -197,8 +200,17 @@ def generate_html(match_json):
         cspermin = tf.p('(' + str((round((match_json[player]['objectives']['totalMinionsKilled']*10)/((match_json['meta']['gameDuration']/6000)/10)))/10) + ')', Class='cspermin')
         visionscore = tf.p(str(match_json[player]['vision']['visionScore']), Class='visionscore')
         controlwards = tf.p('('+str(match_json[player]['vision']['visionWardsBoughtInGame'])+')', Class='controlwards')
-
-        brief = tf.DIV([hero, lvl, lane, kda, kdacalc, cs,cspermin, visionscore, controlwards], id='brief')
+        item0 = tf.img(src="http://ddragon.leagueoflegends.com/cdn/10.18.1/img/item/" + str(match_json[player]['champ']['item0']) + ".png", Class='item')
+        item1 = tf.img(src="http://ddragon.leagueoflegends.com/cdn/10.18.1/img/item/" + str(match_json[player]['champ']['item1']) + ".png", Class='item')
+        item2 = tf.img(src="http://ddragon.leagueoflegends.com/cdn/10.18.1/img/item/" + str(match_json[player]['champ']['item2']) + ".png", Class='item')
+        item3 = tf.img(src="http://ddragon.leagueoflegends.com/cdn/10.18.1/img/item/" + str(match_json[player]['champ']['item3']) + ".png", Class='item')
+        item4 = tf.img(src="http://ddragon.leagueoflegends.com/cdn/10.18.1/img/item/" + str(match_json[player]['champ']['item4']) + ".png", Class='item')
+        item5 = tf.img(src="http://ddragon.leagueoflegends.com/cdn/10.18.1/img/item/" + str(match_json[player]['champ']['item5']) + ".png", Class='item')
+        item6 = tf.img(src="http://ddragon.leagueoflegends.com/cdn/10.18.1/img/item/" + str(match_json[player]['champ']['item6']) + ".png", Class='item')
+        
+        items = tf.DIV([item0, item1, item2, item3, item4, item5, item6], Class='items')
+        runes = tf.DIV('runes', Class='runes')
+        brief = tf.DIV([hero, lvl, lane, kda, kdacalc, cs,cspermin, visionscore, controlwards, runes,items], id='brief')
         objectives = tf.DIV(id='objectives')
         spells = tf.DIV(id='spells')
         kills = tf.DIV(id='kills')
@@ -206,7 +218,7 @@ def generate_html(match_json):
         vision = tf.DIV(id='vision')
         damage = tf.DIV(id='damage')
         details = tf.DIV([objectives, spells, kills, minons, vision, damage], id='details')
-        player = tf.DIV([brief, details], id='player')
+        player = tf.DIV([brief, details], id=match_json[player]['meta']['summonerId'], Class="player")
         if tc > 6:
             team2.append(player)
         else:
@@ -216,5 +228,4 @@ def generate_html(match_json):
     players = tf.DIV([team1,team2], id='players')
 
     doc = tf.DIV([meta, players], id="match")
-    print(doc)
     return doc

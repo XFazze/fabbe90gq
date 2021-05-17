@@ -118,7 +118,7 @@ def lb2000_test():
 
 @app.route("/ludvig_blabarsylt_2000", methods=['GET', 'POST'])
 def lb2000():
-    api_key='RGAPI-7917d1f8-1559-46d4-8558-26b0e203b52b'
+    api_key='RGAPI-84616086-cf2e-4703-a519-912d63be77bf'
     form = lb2000_getuser()
     
     
@@ -126,6 +126,14 @@ def lb2000():
         username = form.username.data
         region = form.region.data
         region_large = form.large_region.data
+        '''
+        with open('/home/pi/website/static/lolgames_html/popularppl.json', 'r') as f:
+            pop = json.load(f)
+            print("before", pop)
+        pop.append({"username" : username, "region" : region, "region_large": region_large})
+        print("ater",pop)
+        with open('/home/pi/website/static/lolgames_html/popularppl.json', 'w') as f1:
+            json.dump(f1, pop, indent = 4)'''
         summoner = get_summoner(region, username, api_key)
         print("form submitterd")
         if "status" in summoner.keys():
@@ -139,11 +147,11 @@ def lb2000():
             download_matches(match_history,region_large, api_key)
             timenow = time.time()
             form = lb2000_getuser()
-            with open('/home/pi/website/static/lolgames/EUN1/2829613673.json', 'r') as f:
-                match1 = json.load(f)
+            #with open('/home/pi/website/static/lolgames/EUN1/2829613673.json', 'r') as f:
+                #match1 = json.load(f)
                 #print(match1)
             return render_template('lb2000/lb2000_base.html', summoner=summoner, region=region, mastery=mastery, total_mastery=total_mastery, champ_id_to_name=champ_id_to_name, timenow=timenow,ranks=ranks,form=form,
-                                    match_history=match_history,region_large=region_large, summonerid=summoner['id'], match1=match1)
+                                    match_history=match_history,region_large=region_large, summonerid=summoner['id'])
     return render_template('lb2000/lb2000_search.html', form=form, error=False)
 
 
