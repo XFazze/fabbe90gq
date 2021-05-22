@@ -1,7 +1,7 @@
 import requests, json, os.path, time, sphc, os
 def get_summoner(region, username, api_key):
     url = "https://" + region + ".api.riotgames.com/lol/summoner/v4/summoners/by-name/" + username + "?api_key=" + api_key
-    print(url)
+    print("summoner url: ", url)
     return requests.get(url).json()
     
 
@@ -18,7 +18,8 @@ def get_rank(region, id, api_key):
     return requests.get(url).json()
 
 def get_match_history(region_large, puuid, api_key):
-    url = "https://" + region_large + ".api.riotgames.com//lol/match/v5/matches/by-puuid/" + puuid + "/ids?start=0&count=9&api_key=" + api_key
+    url = "https://" + region_large + ".api.riotgames.com/lol/match/v5/matches/by-puuid/" + puuid + "/ids?start=0&count=9&api_key=" + api_key
+    print("match history url: ", url)
     return requests.get(url).json()  # max 100 but has filters
 
 
@@ -44,9 +45,12 @@ def download_matches(match_history, region_large, api_key):
             time.sleep(1/5)
             ret_json = {}
             url = "https://" + region_large + ".api.riotgames.com/lol/match/v5/matches/" + match + "?api_key=" + api_key
+            print(url)
             json_match =  requests.get(url).json()
+            if "status" in json_match.keys():
+                continue
             ret_json["meta"] ={}
-            ret_json["meta"]["gameCreation"] = json_match["info"]["gameCreation"]
+            ret_json["meta"]["gameCreation"] = json_match["info"]["gameCreation"]/1000
             ret_json["meta"]["gameDuration"] = json_match["info"]["gameDuration"]
             ret_json["meta"]["gameMode"] = json_match["info"]["gameMode"]
             ret_json["meta"]["gameType"] = json_match["info"]["gameType"]
@@ -177,11 +181,11 @@ def download_matches(match_history, region_large, api_key):
 
 def generate_html(match_json):
     tf = sphc.TagFactory()
-    gameCreation = tf.p(str(round(match_json['meta']['gameCreation']/1000)) + 's')
-    gameduration = tf.p(str(round(match_json['meta']['gameDuration']/6000)/10) + 'm')
-    gamemode = tf.p('game mode:\n'+match_json['meta']['gameMode'])
-    gameType = tf.p('game type:\n'+match_json['meta']['gameType'])
-    gameVersion = tf.p('game versiopn:\n'+match_json['meta']['gameVersion'])
+    gameCreation = tf.p(str(match_json['meta']['gameCreation']) + 's', Class='game_creation')
+    gameduration = tf.p(str(round(match_json['meta']['gameDuration']/6000)/10) + 'm', Class='game_duration')
+    gamemode = tf.p('game mode:\n'+match_json['meta']['gameMode'], Class='game_mode')
+    gameType = tf.p('game type:\n'+match_json['meta']['gameType'], Class='game_type')
+    gameVersion = tf.p('game versiopn:\n'+match_json['meta']['gameVersion'], Class='game_version')
     meta = tf.DIV([gameCreation, gameduration, gamemode, gameType,  gameVersion], id='meta')
 
     team1 = []
@@ -195,7 +199,10 @@ def generate_html(match_json):
         lvl = tf.p(str(match_json[player]['champ']['champLevel']), Class='lvl')
         lane = tf.p(match_json[player]['meta']['teamPosition'], Class='lane')
         kda  = tf.p(str(match_json[player]['champ']['kills']) + '/'+ str(match_json[player]['champ']['deaths']) + '/'+ str(match_json[player]['champ']['assists']), Class='kda')
-        kdacalc = tf.p('(' + str(round((10*match_json[player]['champ']['kills']+10*match_json[player]['champ']['assists'])/match_json[player]['champ']['deaths'])/10)+ ')', Class='kdacalc')
+        if match_json[player]['champ']['deaths']  == 0:
+            kdacalc = tf.p('(Korean)', Class='kdacalc')    
+        else:
+            kdacalc = tf.p('(' + str(round((10*match_json[player]['champ']['kills']+10*match_json[player]['champ']['assists'])/match_json[player]['champ']['deaths'])/10)+ ')', Class='kdacalc')
         cs = tf.p(str(match_json[player]['objectives']['totalMinionsKilled']), Class='cs')
         cspermin = tf.p('(' + str((round((match_json[player]['objectives']['totalMinionsKilled']*10)/((match_json['meta']['gameDuration']/6000)/10)))/10) + ')', Class='cspermin')
         visionscore = tf.p(str(match_json[player]['vision']['visionScore']), Class='visionscore')
