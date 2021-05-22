@@ -1,6 +1,10 @@
 {% extends "template.html" %}
 {% block link %}
 <link rel="stylesheet" href="/static/css/lb2000.css">
+<style>
+    #{{summonerid}}  {display : block;}
+</style>
+<script type="text/javascript" src="/static/js/lb2000_settings.js"></script>
 <script type="text/javascript" src="/static/js/lb2000.js"></script>
 {% endblock %}
 {% block body %}{% endblock %}
@@ -15,7 +19,7 @@
         {% endif %}
     
     </form>
-    <div style="width:100%">
+    <div>
         <p>Todo: Percentage of top and ladder rank, history, stats(win Percentage, kda, cs, winrate with users, etc) </p>
         {% set icon_url = "http://ddragon.leagueoflegends.com/cdn/10.18.1/img/profileicon/" + summoner["profileIconId"]|string + ".png" %}
         <img src={{ icon_url }} style="float:left;">
@@ -46,17 +50,18 @@
                 {% endfor %}
             </div>
         </div>
-        
-        <div id="demo">
-            <h2>The XMLHttpRequest Object</h2>
-            <button type="button" onclick="loadDoc()">Change Content</button>
+    </div>
+    <div>
+        <div id="settings">
+            <div id="date">
+                <p>Date</p>
+            </div>
+            <div id="duration">
+                <p>Duration</p>
+            </div>
         </div>
         <div id="match_history" >
-            <style>
-                #{{summonerid}} {
-                    display : table;
-                }
-            </style>
+            <p></p>
             {% for match in match_history %}
                 <div id="{{ match }}"><p>Loading match</p></div>
             {% endfor %}

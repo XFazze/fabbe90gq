@@ -1,6 +1,4 @@
-import datetime
-from datetime import datetime as dt
+from datetime import datetime
 x = 1621522932
-x = dt.fromtimestamp(x)
-x = x.stftime('%h/%d/%m')
+x = datetime.fromtimestamp(x).strftime("%H:%m[%d/%m]")
 print(x)
