@@ -74,10 +74,35 @@
 }
 .streak{
   display: block; 
-  width: 100%;  
+  width: 50%;  
   text-align: right; 
   float: right;
+  margin:0px;
 }
 .friend_name{
   display: inline;
+}
+.friend{
+  width: 100%;
+}
+.inline_train{
+  display: inline-block;
+
+}
+.inlne_right{
+  display: inline-block;
+  float: right;
+}
+.a_training > h3{
+  margin: 5px;
+
+}
+#training_inpt{
+  display: none;
+}
+#train_closeBtn{
+  background-color: darkorange;
+}
+#trainBtn{
+  background-color: darkorange;
 }

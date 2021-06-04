@@ -33,26 +33,40 @@
         <p>Lår</p>
     </div>
     <div class="info" id="vannerdiv" >
-        <h1>Your friends</h1>
+        <h1>Dina vänner</h1>
         <div id="friend_list" >
-            <p class="friend_name" >Stig</p><p class="streak" >Start small(2)</p><br>
-            <p class="friend_name" >Martin</p><p class="streak">Very lazy(0)</p><br>
-            <p class="friend_name" >Vältränad</p><p class="streak" >MEGA STREAK(10)</p><br>
+            <div class='friend'><p class="friend_name" >Mr Stark</p><p class="streak" >Inte börjat :(</p></div>
+            <div class='friend'><p class="friend_name" >Stig</p><p class="streak" >Startat lite(2)</p></div>
+            <div class='friend'><p class="friend_name" >Martin</p><p class="streak">Mycket lat(0)</p></div>
+            <div class='friend'><p class="friend_name" >Mr patrik bexel</p><p class="streak" >MEGA STREAK(10)</p></div>
         </div>
     </div>
     <div class="info" id="loggbokdiv" >
-        <p>Add a training</p>
-        <div class="training" >
-            <p>1 day ago</p>
-            <p>30 minutes</p>
+        <p  id="trainBtn" >Lägg till en träning</p>
+        <div id="training_inpt">
+            <p id="train_closeBtn" >Spara träning</p>
+        </div>
+        <div class="a_training" >
+            <h3 class="inline_train" >Styrka</h3>
+            <h3 class="inline_train" >30 minuter</h3>
+            <h3 class="inlne_right" >1 dag sen</h3>
+            </br>
+            <h4 class="inline_train" >Din känsla</h4><h4 class="inlne_right" >6/10</h4>
+            <p>Bra pass, övre kropp</p>
+        </div>
+        </br>
+        </br>
+        </br>
+        <div class="a_training" >
+            <h3 class="inline_train" >Kondition</h3>
+            <h3 class="inline_train" >60 minuter</h3>
+            <h3 class="inlne_right" >1 dag sen</h3>
+            </br>
+            <h4 class="inline_train" >Din känsla</h4>
+            <h4 class="inlne_right" >1/10</h4>
+            <p>Springing 1.2 mil. mötte grannen påvägen. HAN GJORDE DE Så JOBBIGT 1/10</p>
         </div>
 
-    </div>
-    <div class="info" id="paminnelserdiv" >
-        <p>paminnelserdiv</p>
-    </div>
-    <div class="info" id="Installningardiv" >
-        <p>Installningardiv</p>
     </div>
 </div>
 {% endblock %}

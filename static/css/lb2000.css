@@ -1,3 +1,6 @@
+#main{
+    max-width: 1400px !important;
+}
 .centerdiv h1{
     font-family: var(--title-font);
     color:var(--main-color);
@@ -51,6 +54,23 @@
 #match_history{
     padding-top: 80px;
 }
+
+#settings{
+    display: flex;
+
+}
+#settings div{
+    padding: 0 0 5 5;
+    
+}
+
+
+
+
+
+
+
+
 .amatch{
     width: 100%;
     height: 60px;
@@ -59,42 +79,84 @@
 }
 .match{
     width: 100%;
+    display: flex;
 }
 .meta{
     width: 10%;
 }
-.players{
-    width: 90%;
+.team{
+    width: 50%;
+    float: left;
+    display: flex;
+    flex-direction:column;
 }
-#match{
-    width: 100%;
+.TOP{    
+    display: none;
+    width: 97%;
+    order: 1;
 }
-#meta{
+.JUNGLE{
+    display: none;
+    width: 97%;
+    order: 2;
+}
+.MIDDLE{
+    display: none;
+    width: 97%;
+    order: 3;
+}
+.BOTTOM{
+    display: none;
+    width: 97%;
+    order: 4;
+}
+.UTILITY{
+    display: none;
+    width: 97%;
+    order: 5;
+}
+.meta{
     width: 10%;
     float:left;
 }
-#meta p{
+.meta p{
     font-family: var(--main-font);
     color:var(--text-color);
     font-size: 12;
+    float: left;
 
 }
-#players{
+.game_creation{
+    width: 80px;
+}
+.game_duration{
+    width: 40px;
+}
+.game_mode{
+    display: none;
+}
+.game_type{
+    display: none;
+}
+.game_version{
+    display: none;
+}
+.players{
     width: 90%;
     float:left;
 }
-#brief{
+.brief{
     width: 100%;
     background-color: yellow;
     display:table;
 }
-#brief p{
+.brief p{
     font-family: var(--main-font);
     color:var(--text-color);
     display: inline-block;
     margin:0px;
 }
-#brief div{
+.brief div{
     display: inline-block;
     float: right;
     margin:0px;
@@ -115,10 +177,10 @@
     width: 70px
 }
 .kdacalc{
-    width: 40px
+    width:50px
 }
 .cs{
-    width: 30px
+    width: 35px
 }
 .cspermin{
     width: 40px
@@ -136,32 +198,32 @@
 .player{
     display: none;
 }
-#details div{
+.details div{
     float:left;
     border:1px solid black;
     margin-left: 1%;
     margin-right: 1%;
 }
-#objectives{
+.objectives{
     width:10%;
 }
-#spells{
-    width:10%;
-    
-}
-#kills{
+.spells{
     width:10%;
     
 }
-#minons{
+.kills{
+    width:10%;
+    
+}
+.minons{
     width:15%;
     
 }
-#vision{
+.vision{
     width:10%;
     
 }
-#damage{
+.damage{
     width:30%;
     
 }

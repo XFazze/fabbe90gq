@@ -1,3 +1,4 @@
-x = "sss_123123123"
-x = x.split('_')
+from datetime import datetime
+x = 1621522932
+x = datetime.fromtimestamp(x).strftime("%H:%m[%d/%m]")
 print(x)

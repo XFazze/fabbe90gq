@@ -103,22 +103,25 @@ def prop_calc():
 @app.route("/ludvig_blabarsylt_2000/test")
 def lb2000_test():    
     
-    with open('/home/pi/website/static/lolgames/EUN1/2826516269.json', 'r') as f:
-        match1 = json.load(f)
-        before = "{% extends 'template.html' %}\n                    {% block link %}\n                    <link rel='stylesheet' href='/static/css/lb2000.css'>\n                    <script type='text/javascript' src='/static/js/lb2000.js'></script>\n                    {% endblock %}\n                    {% block body %}{% endblock %}\n                    {% block main%}\n"
+    before = "{% extends 'template.html' %}\n   {% block link %}\n  <link rel='stylesheet' href='/static/css/lb2000.css'>\n  <script type='text/javascript' src='/static/js/lb2000.js'></script>\n  {% endblock %}\n  {% block body %}{% endblock %}\n  {% block main%}\n <div id=match_history >"
+    summonershow= "<style>  #p6PUxmQfJlQIVk7RN9ZcQAOwJL0IDBJlejCDpZfj1Uw_z5U {display : block;}  </style>"
+    after = '</div>\n{% endblock %}'
+    
+    url = 'https://europe.api.riotgames.com/lol/match/v5/matches/EUN1_2837606661?api_key=RGAPI-c78dba46-12fc-41f1-b924-de295c0de9ee'
+    ret_json =  jsonconvert(requests.get(url).json())
+    
+    match1_html= before +  summonershow + str(generate_html(ret_json)) +after
+    print(type(match1_html))
 
-        after = '\n{% endblock %}'
-        match1_html= before + str(generate_html(match1)) +after
-        print(type(match1_html))
-        with open('/home/pi/website/templates/lb2000/example_match.html', 'w') as f1:
-            f1.write(match1_html)
+    with open('/home/pi/website/templates/lb2000/example_match.html', 'w') as f1:
+        f1.write(match1_html)
     return render_template('lb2000/example_match.html')
 
 
 
 @app.route("/ludvig_blabarsylt_2000", methods=['GET', 'POST'])
 def lb2000():
-    api_key='RGAPI-84616086-cf2e-4703-a519-912d63be77bf'
+    api_key='RGAPI-c78dba46-12fc-41f1-b924-de295c0de9ee'
     form = lb2000_getuser()
     
     
@@ -133,7 +136,8 @@ def lb2000():
         pop.append({"username" : username, "region" : region, "region_large": region_large})
         print("ater",pop)
         with open('/home/pi/website/static/lolgames_html/popularppl.json', 'w') as f1:
-            json.dump(f1, pop, indent = 4)'''
+            json.dump(f1, pop, indent = 4)
+        '''
         summoner = get_summoner(region, username, api_key)
         print("form submitterd")
         if "status" in summoner.keys():
@@ -144,6 +148,7 @@ def lb2000():
             total_mastery = get_total_mastery(region, summoner['id'], api_key)
             ranks = get_rank(region, summoner['id'], api_key)
             match_history = get_match_history(region_large, summoner['puuid'], api_key)
+            print("match history:",match_history)
             download_matches(match_history,region_large, api_key)
             timenow = time.time()
             form = lb2000_getuser()
