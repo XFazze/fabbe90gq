@@ -107,7 +107,7 @@ def lb2000_test():
     summonershow= "<style>  #p6PUxmQfJlQIVk7RN9ZcQAOwJL0IDBJlejCDpZfj1Uw_z5U {display : block;}  </style>"
     after = '</div>\n{% endblock %}'
     
-    url = 'https://europe.api.riotgames.com/lol/match/v5/matches/EUN1_2837606661?api_key=RGAPI-c78dba46-12fc-41f1-b924-de295c0de9ee'
+    url = 'https://europe.api.riotgames.com/lol/match/v5/matches/EUN1_2837606661?api_key=RGAPI-4d3a43d1-172e-4205-a687-1d6a33839206'
     ret_json =  jsonconvert(requests.get(url).json())
     
     match1_html= before +  summonershow + str(generate_html(ret_json)) +after
@@ -121,7 +121,7 @@ def lb2000_test():
 
 @app.route("/ludvig_blabarsylt_2000", methods=['GET', 'POST'])
 def lb2000():
-    api_key='RGAPI-c78dba46-12fc-41f1-b924-de295c0de9ee'
+    api_key='RGAPI-4d3a43d1-172e-4205-a687-1d6a33839206'
     form = lb2000_getuser()
     
     
