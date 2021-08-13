@@ -163,4 +163,4 @@ def lb2000():
 
 # Run the site
 if __name__ == "__main__":
-    app.run()
+    app.run(debug=True)
