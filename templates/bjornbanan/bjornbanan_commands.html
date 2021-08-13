@@ -1,6 +1,7 @@
 {% extends "template.html" %}
 {% block link %}
 <link rel="stylesheet" href="/static/css/bjornbanan.css">
+<script type="text/javascript" src="/static/js/bjornbanan.js"></script>
 {% endblock %}
 {% block body %}{% endblock %}
 {% block main%}
@@ -11,6 +12,229 @@
     <p style="width: 800px;">Björnbanan natural prefix is g as the way of the nature. But this can be changed if
         there is somethng wrong with you. Every commands with a few exceptions have g in front of them, if you've
         changed it then it's whatever you changed to</p>
-    <p>
+    
+    <ul class="menu">
+        <li><a id="infobtn">&#60;Admin&#62;</a></li>
+        <li><a id="randombtn">&#60;Moderating&#62;</a></li>
+        <li><a id="adminbtn">&#60;Info&#62;</a></li>
+        <li><a id="moderatingbtn">&#60;Random&#62;</a></li>
+        <li><a id="voicebtn">&#60;Voice&#62;</a></li>
+    </ul>
+    <div class="command" >
+        <div>
+            <div class="header" >
+                <div class="alias">
+                    <div>
+                        <p>Command</p>
+                        <p>[Aliases]</p>
+                    </div>
+                </div>
+                <p>Description</p>
+                <p>Example</p>
+            </div>
+        </div>
+        <div id="info" class="category">
+            <div>
+                <div class="alias">
+                    <div>
+                        <p>ghelp</p>
+                        <p>[h]</p>
+                    </div>
+                </div>
+                <p>Brings you here</p>
+                <p>ghelp</p>
+            </div>
+        </div>
+        <div id="random" class="category">
+            <div>
+                <div class="alias">
+                    <div>
+                        <p>gclear</p>
+                        <p>[gg]</p>
+                    </div>
+                </div>
+                <p>Removes that amount of messages. Writing "not" and an amount will skip.</p>
+                <p>gclear [not] [amount to skip] [amount]</p>
+            </div>
+            <div>
+                <div class="alias">
+                    <div>
+                        <p>gcolorcode</p>
+                        <p>[gcc]</p>
+                    </div>  
+                </div>
+                <p>Sets your role color to the hex color. If you dont have a role it will create one</p>
+                <p>gcc [#AAAAAA]</p>
+            </div>
+            
+        </div>
+        <div id="admin" class="category">
+            <div>
+                <div class="alias">
+                    <div>
+                        <p>gsetprefix</p>
+                        <p>[none]</p>
+                    </div>  
+                </div>
+                <p>Sets the prefix of the server</p>
+                <p>gsetprefix [new prefix]</p>
+            </div>
+            <div>
+                <div class="alias">
+                    <div>
+                        <p>greactionroles</p>
+                        <p>[gr]</p>
+                    </div>  
+                </div>
+                <p>This will create a message people can react to which will give them the role @</p>
+                <p>greactionroles [@role] [emoji] [text if you want]</p>
+            </div>
+            <div>
+                <div class="alias">
+                    <div>
+                        <p>greactionrolesclean</p>
+                        <p>[grrc]</p>
+                    </div>  
+                </div>
+                <p>Will remove roles messages and send them again. This will create a nicer look</p>
+                <p>greactionrolesclean</p>
+            </div>
+            <div>
+                <div class="alias">
+                    <div>
+                        <p>genablebettervc</p>
+                        <p>[geb]</p>
+                    </div>  
+                </div>
+                <p>enables the system on the category where your sitting in voice chat. You should have created some channels before</p>
+                <p>genablebettervc</p>
+            </div>
+            <div>
+                <div class="alias">
+                    <div>
+                        <p>gdisablettervc</p>
+                        <p>[gdb]</p>
+                    </div>  
+                </div>
+                <p>disables the category where your sitting in voice chat</p>
+                <p>gdisablettervc</p>
+            </div>
+            <div>
+                <div class="alias">
+                    <div>
+                        <p>genabledelete</p>
+                        <p>[ged]</p>
+                    </div>  
+                </div>
+                <p>enables noelbot on the text channel you wrote in</p>
+                <p>genabledelete</p>
+            </div>
+            <div>
+                <div class="alias">
+                    <div>
+                        <p>gdisabledelete</p>
+                        <p>[gdd]</p>
+                    </div>  
+                </div>
+                <p>disables noelbot on the text channel you wrote in</p>
+                <p>gdisabledelete</p>
+            </div>
+            <div>
+                <div class="alias">
+                    <div>
+                        <p>genablerolelog</p>
+                        <p>[ger]</p>
+                    </div>  
+                </div>
+                <p>enables role log on text channel</p>
+                <p>genablerolelog</p>
+            </div>
+            <div>
+                <div class="alias">
+                    <div>
+                        <p>gdisablerolelog</p>
+                        <p>[gdr]</p>
+                    </div>  
+                </div>
+                <p>disables role log on text channel</p>
+                <p>gdisablerolelog</p>
+            </div>
+        </div>
+        <div id="moderating" class="category">
+            <div>
+                <div class="alias">
+                    <div>
+                        <p>gticket</p>
+                        <p>[gt]</p>
+                    </div>  
+                </div>
+                <p>Creates a channel with admins. Reacting to the lock deletes the channel and send a log to every memeber</p>
+                <p>gticker</p>
+            </div>
+            <div>
+                <div class="alias">
+                    <div>
+                        <p>gdndframer</p>
+                        <p>[gdf]</p>
+                    </div>  
+                </div>
+                <p>creates category and channels with Abbe's layout</p>
+                <p>gdndframer [name] [@perpson] [@more people]</p>
+            </div>
+        </div>
+        <div id="voice" class="category"> 
+            <div>
+                <div class="alias">
+                    <div>
+                        <p>gjoin</p>
+                        <p>[gj]</p>
+                    </div>  
+                </div>
+                <p>Joins your voice channel</p>
+                <p>gjoin</p>
+            </div>
+            <div>
+                <div class="alias">
+                    <div>
+                        <p>gleave</p>
+                        <p>[gl]</p>
+                    </div>  
+                </div>
+                <p>Leaves voice channel</p>
+                <p>gleave</p>
+            </div>
+            <div>
+                <div class="alias">
+                    <div>
+                        <p>god</p>
+                        <p>[none]</p>
+                    </div>  
+                </div>
+                <p>plays anthem</p>
+                <p>god</p>
+            </div>
+            <div>
+                <div class="alias">
+                    <div>
+                        <p>gerika</p>
+                        <p>[none]</p>
+                    </div>  
+                </div>
+                <p>plays second anthem</p>
+                <p>gerika</p>
+            </div>
+            <div>
+                <div class="alias">
+                    <div>
+                        <p>gtexttospeech</p>
+                        <p>[gtts]</p>
+                    </div>  
+                </div>
+                <p>plays second anthem</p>
+                <p>gerika</p>
+            </div>
+        </div>
+        
+    </div>
 </div>
 {% endblock %}

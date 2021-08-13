@@ -32,6 +32,10 @@ def bjornbanan():
 def bjornbanan_help():
     return render_template('bjornbanan/bjornbanan_help.html')
 
+@app.route("/bjornbanan/commands")
+def bjornbanan_commands():
+    return render_template('bjornbanan/bjornbanan_commands.html')
+
 @app.route("/bjornbanan/music_help")
 def bjornbanan_music_help():
     return render_template('bjornbanan/bjornbanan_m_help.html')
