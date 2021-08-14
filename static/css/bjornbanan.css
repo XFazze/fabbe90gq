@@ -30,7 +30,8 @@
     font-size: 20px;
 }
 .menu a:hover{
-    color:var(--sub-color)
+    color:var(--sub-color);
+    cursor: pointer;
 
 }
 .menu{
@@ -39,20 +40,30 @@
     justify-content: left;
     padding-left: 0;
 }
+.top{
+    float:top;
+    top:0;
+    height: 170px;
+}
 .command{
     width: 1000px;
 }
 
 .category{
+    width: 1000px;
+    display: block;
+}
+.grouped_commands{
+    border-radius: 4px;
+    background-color: var(--bg-color);
     text-align: center;
     width: 980px;
-    border-radius: 4px;
     filter: brightness(1.45);
-    padding: 5px;
-    margin-bottom: 20px;
-    background-color: var(--bg-color);
+    padding-left: 10px;
+    margin-bottom: 5px;
+
 }
-.command div div{
+.command div div div{
     filter: brightness(1);
     display: flex;
     margin-left: 5px;

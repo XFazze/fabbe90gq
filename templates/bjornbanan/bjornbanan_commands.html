@@ -8,230 +8,564 @@
 
 
 <div class="centerdiv">
-    <h1>Björnbanan Commands</h1>
-    <p style="width: 800px;">Björnbanan natural prefix is g as the way of the nature. But this can be changed if
-        there is somethng wrong with you. Every commands with a few exceptions have g in front of them, if you've
-        changed it then it's whatever you changed to</p>
-    
-    <ul class="menu">
-        <li><a id="infobtn">&#60;Admin&#62;</a></li>
-        <li><a id="randombtn">&#60;Moderating&#62;</a></li>
-        <li><a id="adminbtn">&#60;Info&#62;</a></li>
-        <li><a id="moderatingbtn">&#60;Random&#62;</a></li>
-        <li><a id="voicebtn">&#60;Voice&#62;</a></li>
-    </ul>
+    <div class="top">
+        <h1>Björnbanan Commands</h1>
+        <p style="width: 800px;">Björnbanan natural prefix is g as the way of the nature. But this can be changed if
+            there is somethng wrong with you. Every commands with a few exceptions have g in front of them, if you've
+            changed it then it's whatever you changed to</p>
+        
+        <ul class="menu">
+            <li><a id="adminbtn">&#60;Admin&#62;</a></li>
+            <li><a id="moderatingbtn">&#60;Moderating&#62;</a></li>
+            <li><a id="randombtn">&#60;Utilities&#62;</a></li>
+            <li><a id="infobtn">&#60;Info&#62;</a></li>
+            <li><a id="voicebtn">&#60;Voice&#62;</a></li>
+            <li><a id="statsbtn">&#60;Stats&#62;</a></li>
+        </ul>
+    </div>
     <div class="command" >
         <div>
-            <div class="header" >
-                <div class="alias">
-                    <div>
-                        <p>Command</p>
-                        <p>[Aliases]</p>
+            <div>
+                <div class="header" >
+                    <div class="alias">
+                        <div>
+                            <p>Command</p>
+                            <p>[Aliases]</p>
+                        </div>
                     </div>
+                    <p>Description</p>
+                    <p>Example</p>
                 </div>
-                <p>Description</p>
-                <p>Example</p>
             </div>
         </div>
+
         <div id="info" class="category">
-            <div>
-                <div class="alias">
-                    <div>
-                        <p>ghelp</p>
-                        <p>[h, commands]</p>
+            <div class="grouped_commands">
+                <div>
+                    <div class="alias">
+                        <div>
+                            <p>,help</p>
+                            <p>[h, commands]</p>
+                        </div>
                     </div>
+                    <p>Brings you here</p>
+                    <p>,help</p>
                 </div>
-                <p>Brings you here</p>
-                <p>ghelp</p>
+            </div>
+            <div class="grouped_commands">
+                <div>
+                    <div class="alias">
+                        <div>
+                            <p>,avatar</p>
+                            <p>[av]</p>
+                        </div>
+                    </div>
+                    <p>Shows a bigger picture of your avatar, or the pinged user</p>
+                    <p>,avatar [@role]</p>
+                </div>
+            </div>
+            <div class="grouped_commands">
+                <div>
+                    <div class="alias">
+                        <div>
+                            <p>,server</p>
+                            <p>[serverinfo]</p>
+                        </div>
+                    </div>
+                    <p>Shows information about the server</p>
+                    <p>,server</p>
+                </div>
+            </div>
+            <div class="grouped_commands">
+                <div>
+                    <div class="alias">
+                        <div>
+                            <p>,user</p>
+                            <p>[userinfo]</p>
+                        </div>
+                    </div>
+                    <p>Shows information about the user</p>
+                    <p>,user</p>
+                </div>
             </div>
         </div>
+
+
+
+
         <div id="random" class="category">
-            <div>
-                <div class="alias">
-                    <div>
-                        <p>gclear</p>
-                        <p>[gg, gpurge]</p>
+            <div class="grouped_commands">
+                <div>
+                    <div class="alias">
+                        <div>
+                            <p>,clear</p>
+                            <p>[g, purge]</p>
+                        </div>
                     </div>
+                    <p>Removes that amount of messages. Writing "not" and an amount will skip.</p>
+                    <p>,clear [not] [amount to skip] [amount]</p>
                 </div>
-                <p>Removes that amount of messages. Writing "not" and an amount will skip.</p>
-                <p>gclear [not] [amount to skip] [amount]</p>
             </div>
-            <div>
-                <div class="alias">
-                    <div>
-                        <p>gcolorcode</p>
-                        <p>[gcc]</p>
-                    </div>  
+            <div class="grouped_commands">
+                <div>
+                    <div class="alias">
+                        <div>
+                            <p>,colorcode</p>
+                            <p>[cc]</p>
+                        </div>  
+                    </div>
+                    <p>Sets your role color to the hex color. If you dont have a role it will create one</p>
+                    <p>,cc [#AAAAAA]</p>
                 </div>
-                <p>Sets your role color to the hex color. If you dont have a role it will create one</p>
-                <p>gcc [#AAAAAA]</p>
             </div>
-            
+            <div class="grouped_commands">
+                <div>
+                    <div class="alias">
+                        <div>
+                            <p>,dndframer</p>
+                            <p>[,df]</p>
+                        </div>  
+                    </div>
+                    <p>creates category and channels with Abbe's layout</p>
+                    <p>,dndframer [name] [@perpson] [@more people]</p>
+                </div>
+            </div>
+            <div class="grouped_commands">
+                <div>
+                    <div class="alias">
+                        <div>
+                            <p>,bomb_reactions</p>
+                            <p>[boom, bomb, reactions]</p>
+                        </div>  
+                    </div>
+                    <p>bombs the latest message with emojis, or from id</p>
+                    <p>,bomb_reactions [message id]</p>
+                </div>
+            </div>
+            <div class="grouped_commands">
+                <div>
+                    <div class="alias">
+                        <div>
+                            <p>,todo</p>
+                            <p>[none]</p>
+                        </div>  
+                    </div>
+                    <p>Creates a todo list</p>
+                    <p>,todo</p>
+                </div>
+                <div>
+                    <div class="alias">
+                        <div>
+                            <p>,tadd</p>
+                            <p>[none]</p>
+                        </div>  
+                    </div>
+                    <p>Adds a activity to the todo list</p>
+                    <p>,tadd [list id] [describe your activity here]</p>
+                </div>
+                <div>
+                    <div class="alias">
+                        <div>
+                            <p>,tactive</p>
+                            <p>[ta]</p>
+                        </div>  
+                    </div>
+                    <p>Moves an activity to the Active category. OBS CANT GO BACK</p>
+                    <p>,tactive [list id] [message index a number]</p>
+                </div>
+                <div>
+                    <div class="alias">
+                        <div>
+                            <p>,tdone</p>
+                            <p>[td]</p>
+                        </div>  
+                    </div>
+                    <p>Moves an activity to the Done category. OBS CANT GO BACK</p>
+                    <p>,tdone [list id] [message index a number]</p>
+                </div>
+            </div>
         </div>
+
+
+
         <div id="admin" class="category">
-            <div>
-                <div class="alias">
-                    <div>
-                        <p>gsetprefix</p>
-                        <p>[none]</p>
-                    </div>  
+            <div class="grouped_commands">
+                <div>
+                    <div class="alias">
+                        <div>
+                            <p>,setprefix</p>
+                            <p>[none]</p>
+                        </div>  
+                    </div>
+                    <p>Sets the prefix of the server</p>
+                    <p>,setprefix [new prefix]</p>
                 </div>
-                <p>Sets the prefix of the server</p>
-                <p>gsetprefix [new prefix]</p>
             </div>
-            <div>
-                <div class="alias">
-                    <div>
-                        <p>greactionroles</p>
-                        <p>[gr]</p>
-                    </div>  
+            <div class="grouped_commands">
+                <div>
+                    <div class="alias">
+                        <div>
+                            <p>,reactionroles</p>
+                            <p>[r]</p>
+                        </div>  
+                    </div>
+                    <p>This will create a message people can react to which will give them the role @</p>
+                    <p>,reactionroles [@role] [emoji] [text if you want]</p>
                 </div>
-                <p>This will create a message people can react to which will give them the role @</p>
-                <p>greactionroles [@role] [emoji] [text if you want]</p>
+                <div>
+                    <div class="alias">
+                        <div>
+                            <p>.reactionrolesclean</p>
+                            <p>[rrc]</p>
+                        </div>  
+                    </div>
+                    <p>Will remove roles messages and send them again. This will create a nicer look</p>
+                    <p>.reactionrolesclean</p>
+                </div>
             </div>
-            <div>
-                <div class="alias">
-                    <div>
-                        <p>greactionrolesclean</p>
-                        <p>[grrc]</p>
-                    </div>  
+            <div class="grouped_commands">
+                <div>
+                    <div class="alias">
+                        <div>
+                            <p>.enabledeletepinned</p>
+                            <p>[edp]</p>
+                        </div>  
+                    </div>
+                    <p>Enabled a function where the pinned message message by discord is deleted</p>
+                    <p>.enabledeletepinned</p>
                 </div>
-                <p>Will remove roles messages and send them again. This will create a nicer look</p>
-                <p>greactionrolesclean</p>
+                <div>
+                    <div class="alias">
+                        <div>
+                            <p>.disabledeletepinned</p>
+                            <p>[ddp]</p>
+                        </div>  
+                    </div>
+                    <p>Disables a function where the pinned message message by discord is deleted</p>
+                    <p>.disabledeletepinned</p>
+                </div> 
             </div>
-            <div>
-                <div class="alias">
-                    <div>
-                        <p>genablebettervc</p>
-                        <p>[geb]</p>
-                    </div>  
+            <div class="grouped_commands">
+                <div>
+                    <div class="alias">
+                        <div>
+                            <p>.enable</p>
+                            <p>[none]</p>
+                        </div>  
+                    </div>
+                    <p>Enables a command</p>
+                    <p>.enable [command]</p>
                 </div>
-                <p>enables the system on the category where your sitting in voice chat. You should have created some channels before</p>
-                <p>genablebettervc</p>
+                <div>
+                    <div class="alias">
+                        <div>
+                            <p>.disable</p>
+                            <p>[none]</p>
+                        </div>  
+                    </div>
+                    <p>Disables a command</p>
+                    <p>.disable [command]</p>
+                </div>
             </div>
-            <div>
-                <div class="alias">
-                    <div>
-                        <p>gdisablettervc</p>
-                        <p>[gdb]</p>
-                    </div>  
+            <div class="grouped_commands">
+                <div>
+                    <div class="alias">
+                        <div>
+                            <p>.joinroleadd</p>
+                            <p>[jra]</p>
+                        </div>  
+                    </div>
+                    <p>Gives the role to users joining the server</p>
+                    <p>.joinroleadd [@role]</p>
                 </div>
-                <p>disables the category where your sitting in voice chat</p>
-                <p>gdisablettervc</p>
+                <div>
+                    <div class="alias">
+                        <div>
+                            <p>.joinroleremove</p>
+                            <p>[jrr]</p>
+                        </div>  
+                    </div>
+                    <p>Stops giving the role to users joining the server</p>
+                    <p>.joinroleremove [@role]</p>
+                </div>
             </div>
-            <div>
-                <div class="alias">
-                    <div>
-                        <p>genabledelete</p>
-                        <p>[ged]</p>
-                    </div>  
+            <div class="grouped_commands">
+                <div>
+                    <div class="alias">
+                        <div>
+                            <p>,enablebettervc</p>
+                            <p>[eb]</p>
+                        </div>  
+                    </div>
+                    <p>enables the system on the category where your sitting in voice chat. You should have created some channels before</p>
+                    <p>,enablebettervc</p>
                 </div>
-                <p>enables noelbot on the text channel you wrote in</p>
-                <p>genabledelete</p>
+                <div>
+                    <div class="alias">
+                        <div>
+                            <p>,disablettervc</p>
+                            <p>[db]</p>
+                        </div>  
+                    </div>
+                    <p>disables the category where your sitting in voice chat</p>
+                    <p>,disablettervc</p>
+                </div>
             </div>
-            <div>
-                <div class="alias">
-                    <div>
-                        <p>gdisabledelete</p>
-                        <p>[gdd]</p>
-                    </div>  
+            <div class="grouped_commands">
+                <div>
+                    <div class="alias">
+                        <div>
+                            <p>,enabledelete</p>
+                            <p>[ed]</p>
+                        </div>  
+                    </div>
+                    <p>enables noelbot on the text channel you wrote in</p>
+                    <p>,enabledelete</p>
                 </div>
-                <p>disables noelbot on the text channel you wrote in</p>
-                <p>gdisabledelete</p>
+                <div>
+                    <div class="alias">
+                        <div>
+                            <p>,disabledelete</p>
+                            <p>[dd]</p>
+                        </div>  
+                    </div>
+                    <p>disables noelbot on the text channel you wrote in</p>
+                    <p>,disabledelete</p>
+                </div>
             </div>
-            <div>
-                <div class="alias">
-                    <div>
-                        <p>genablerolelog</p>
-                        <p>[ger]</p>
-                    </div>  
+            <div class="grouped_commands">
+                <div>
+                    <div class="alias">
+                        <div>
+                            <p>,enablerolelog</p>
+                            <p>[er]</p>
+                        </div>  
+                    </div>
+                    <p>Enables role log on text channel</p>
+                    <p>,enablerolelog</p>
                 </div>
-                <p>enables role log on text channel</p>
-                <p>genablerolelog</p>
+                <div>
+                    <div class="alias">
+                        <div>
+                            <p>,disablerolelog</p>
+                            <p>[dr]</p>
+                        </div>  
+                    </div>
+                    <p>Disables role log on text channel</p>
+                    <p>,disablerolelog</p>
+                </div>
             </div>
-            <div>
-                <div class="alias">
-                    <div>
-                        <p>gdisablerolelog</p>
-                        <p>[gdr]</p>
-                    </div>  
+            <div class="grouped_commands">
+                <div>
+                    <div class="alias">
+                        <div>
+                            <p>,enablejoinleavemessage</p>
+                            <p>[ejlm]</p>
+                        </div>  
+                    </div>
+                    <p>Enables join leave message in the channel</p>
+                    <p>,enablejoinleavemessage</p>
                 </div>
-                <p>disables role log on text channel</p>
-                <p>gdisablerolelog</p>
+                <div>
+                    <div class="alias">
+                        <div>
+                            <p>,disablejoinleavemessage</p>
+                            <p>[djlm]</p>
+                        </div>  
+                    </div>
+                    <p>Disables join leave message in the channel</p>
+                    <p>,disablejoinleavemessage</p>
+                </div>
             </div>
         </div>
+
+
+
+
         <div id="moderating" class="category">
-            <div>
-                <div class="alias">
-                    <div>
-                        <p>gticket</p>
-                        <p>[gt]</p>
-                    </div>  
+            <div class="grouped_commands">
+                <div>
+                    <div class="alias">
+                        <div>
+                            <p>,ticket</p>
+                            <p>[t]</p>
+                        </div>  
+                    </div>
+                    <p>Creates a channel with admins. Reacting to the lock deletes the channel and send a log to every memeber</p>
+                    <p>,ticker</p>
                 </div>
-                <p>Creates a channel with admins. Reacting to the lock deletes the channel and send a log to every memeber</p>
-                <p>gticker</p>
             </div>
-            <div>
-                <div class="alias">
-                    <div>
-                        <p>gdndframer</p>
-                        <p>[gdf]</p>
-                    </div>  
+            <div class="grouped_commands">
+                <div>
+                    <div class="alias">
+                        <div>
+                            <p>,banlist</p>
+                            <p>[none]</p>
+                        </div>  
+                    </div>
+                    <p>Shows bans in the server</p>
+                    <p>,banlist</p>
                 </div>
-                <p>creates category and channels with Abbe's layout</p>
-                <p>gdndframer [name] [@perpson] [@more people]</p>
+            </div>
+            <div class="grouped_commands">
+                <div>
+                    <div class="alias">
+                        <div>
+                            <p>,ban</p>
+                            <p>[none]</p>
+                        </div>  
+                    </div>
+                    <p>Bans a user</p>
+                    <p>,ban [@user] [here is your reason]</p>
+                </div>
+                <div>
+                    <div class="alias">
+                        <div>
+                            <p>,unban</p>
+                            <p>[none]</p>
+                        </div>  
+                    </div>
+                    <p>Unbans a user</p>
+                    <p>,unban [@user]</p>
+                </div>
+                <div>
+                    <div class="alias">
+                        <div>
+                            <p>,tempban</p>
+                            <p>[none]</p>
+                        </div>  
+                    </div>
+                    <p>Bans a user for a certain amount of days</p>
+                    <p>,tempban [@user] [days until unbanned] [reason]</p>
+                </div>
+            </div>
+            <div class="grouped_commands">
+                <div>
+                    <div class="alias">
+                        <div>
+                            <p>,kick</p>
+                            <p>[none]</p>
+                        </div>  
+                    </div>
+                    <p>Kicks a user</p>
+                    <p>,kick [@user] [your reason]</p>
+                </div>
+            </div>
+            <div class="grouped_commands">
+                <div>
+                    <div class="alias">
+                        <div>
+                            <p>,deletedmessages</p>
+                            <p>[d, deleted, snipe]</p>
+                        </div>  
+                    </div>
+                    <p>recives the latest message, if "list" is used as an argument many messages will be shown.
+                        By using a - between 2 numbers will give you all the messages between. 
+
+                    </p>
+                    <p>,deletedmessages [list] [page number] [index] [start index-end index]</p>
+                </div>
+            </div>
+            <div class="grouped_commands">
+                <div>
+                    <div class="alias">
+                        <div>
+                            <p>,editedmessages</p>
+                            <p>[e]</p>
+                        </div>  
+                    </div>
+                    <p>Shows the edited messages in the channel
+                    </p>
+                    <p>,editedmessages</p>
+                </div> 
             </div>
         </div>
+
+
+
+
         <div id="voice" class="category"> 
-            <div>
-                <div class="alias">
-                    <div>
-                        <p>gjoin</p>
-                        <p>[gj]</p>
-                    </div>  
+            <div class="grouped_commands">
+                <div>
+                    <div class="alias">
+                        <div>
+                            <p>,join</p>
+                            <p>[j]</p>
+                        </div>  
+                    </div>
+                    <p>Joins your voice channel</p>
+                    <p>,join</p>
                 </div>
-                <p>Joins your voice channel</p>
-                <p>gjoin</p>
+                <div>
+                    <div class="alias">
+                        <div>
+                            <p>,leave</p>
+                            <p>[l]</p>
+                        </div>  
+                    </div>
+                    <p>Leaves voice channel</p>
+                    <p>,leave</p>
+                </div>
             </div>
-            <div>
-                <div class="alias">
-                    <div>
-                        <p>gleave</p>
-                        <p>[gl]</p>
-                    </div>  
+            <div class="grouped_commands">
+                <div>
+                    <div class="alias">
+                        <div>
+                            <p>,od</p>
+                            <p>[none]</p>
+                        </div>  
+                    </div>
+                    <p>plays anthem</p>
+                    <p>,od</p>
                 </div>
-                <p>Leaves voice channel</p>
-                <p>gleave</p>
+                <div>
+                    <div class="alias">
+                        <div>
+                            <p>,erika</p>
+                            <p>[none]</p>
+                        </div>  
+                    </div>
+                    <p>plays second anthem</p>
+                    <p>,erika</p>
+                </div>
             </div>
-            <div>
-                <div class="alias">
-                    <div>
-                        <p>god</p>
-                        <p>[none]</p>
-                    </div>  
+            <div class="grouped_commands">
+                <div>
+                    <div class="alias">
+                        <div>
+                            <p>,texttospeech</p>
+                            <p>[tts]</p>
+                        </div>  
+                    </div>
+                    <p>plays second anthem</p>
+                    <p>,erika</p>
                 </div>
-                <p>plays anthem</p>
-                <p>god</p>
             </div>
-            <div>
-                <div class="alias">
-                    <div>
-                        <p>gerika</p>
-                        <p>[none]</p>
-                    </div>  
+        </div>
+
+
+        <div id="stats" class="category">
+            <div class="grouped_commands">
+                <div>
+                    <div class="alias">
+                        <div>
+                            <p>,textstats</p>
+                            <p>[tc, tcstats]</p>
+                        </div>  
+                    </div>
+                    <p>Shows the guild stats for text messages</p>
+                    <p>,textstats</p>
                 </div>
-                <p>plays second anthem</p>
-                <p>gerika</p>
-            </div>
-            <div>
-                <div class="alias">
-                    <div>
-                        <p>gtexttospeech</p>
-                        <p>[gtts]</p>
-                    </div>  
+                <div>
+                    <div class="alias">
+                        <div>
+                            <p>,voicestats</p>
+                            <p>[vc, vcstats]</p>
+                        </div>  
+                    </div>
+                    <p>Shows the guild stats for voice activity</p>
+                    <p>,voicestats</p>
                 </div>
-                <p>plays second anthem</p>
-                <p>gerika</p>
             </div>
         </div>
         
