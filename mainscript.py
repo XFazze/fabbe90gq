@@ -14,10 +14,11 @@ from forms.factorio_form import *
 from forms.lb2000_form import *
 from ludvig_blabarsylt.api_calls import *
 from ludvig_blabarsylt.championIdtoname import *
+from config import *
 
 # Initializing flask and sql
 app = Flask(__name__,  static_folder='static')
-app.config['SECRET_KEY'] = 'you-will-never-guess'
+app.config['SECRET_KEY'] = secret_key
 
 
 @app.route("/")
@@ -125,7 +126,6 @@ def lb2000_test():
 
 @app.route("/ludvig_blabarsylt_2000", methods=['GET', 'POST'])
 def lb2000():
-    api_key='RGAPI-4d3a43d1-172e-4205-a687-1d6a33839206'
     form = lb2000_getuser()
     
     
@@ -167,4 +167,4 @@ def lb2000():
 
 # Run the site
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run()
