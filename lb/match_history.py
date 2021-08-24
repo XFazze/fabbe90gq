@@ -1,43 +1,5 @@
 import requests, json, os.path, time, sphc, os
 from datetime import datetime
-def get_summoner(region, username, api_key):
-    url = "https://" + region + ".api.riotgames.com/lol/summoner/v4/summoners/by-name/" + username + "?api_key=" + api_key
-    print("summoner url: ", url)
-    return requests.get(url).json()
-    
-
-def get_total_mastery(region, id, api_key):
-    url = "https://" + region + ".api.riotgames.com/lol/champion-mastery/v4/scores/by-summoner/" + id + "?api_key=" + api_key
-    return requests.get(url).json()
-
-def get_mastery(region, id, api_key):
-    url = "https://" + region + ".api.riotgames.com/lol/champion-mastery/v4/champion-masteries/by-summoner/" +  id + "?api_key=" + api_key
-    return requests.get(url).json()
-
-def get_rank(region, id, api_key):
-    url = "https://" + region + ".api.riotgames.com/lol/league/v4/entries/by-summoner/" +  id + "?api_key=" + api_key
-    print("rank url: ", url)
-    return requests.get(url).json()
-
-def get_match_history(region_large, puuid, api_key):
-    url = "https://" + region_large + ".api.riotgames.com/lol/match/v5/matches/by-puuid/" + puuid + "/ids?start=0&count=9&api_key=" + api_key
-    print("match history url: ", url)
-    return requests.get(url).json()  # max 100 but has filters
-
-
-def get_match(region_large, match_id, api_key):
-    url = "https://" + region_large + ".api.riotgames.com/lol/match/v5/matches/" + match_id + "?api_key=" + api_key
-    print("match url: ", url)
-    return requests.get(url).json()
-
-def get_match_timeline(region_large, match_id, api_key):
-    url = "https://" + region_large + ".api.riotgames.com/lol/match/v5/matches/" + match_id + "/timeline?api_key=" + api_key
-    print("match timeline url: ", url)
-    return requests.get(url).json()
-
-def get_live_game(region, id, api_key):
-    url = "https://" + region + ".api.riotgames.com/lol/spectator/v4/active-games/by-summoner/" + id + "?api_key=" + api_key
-    return requests.get(url).json()
 
 def jsonconvert(json_match):
     ret_json = {}
@@ -181,7 +143,7 @@ def generate_html(match_json):
         tc += 1
         if player == 'meta':
             continue
-        hero = tf.img(src="http://ddragon.leagueoflegends.com/cdn/11.9.1/img/champion/" + match_json[player]['champ']['championName'] + ".png", Class='champ')
+        hero = tf.img(src="http://ddragon.leagueoflegends.com/cdn/11.16.1/img/champion/" + match_json[player]['champ']['championName'] + ".png", Class='champ')
         lvl = tf.p(str(match_json[player]['champ']['champLevel']), Class='lvl')
         kda  = tf.p(str(match_json[player]['champ']['kills']) + '/'+ str(match_json[player]['champ']['deaths']) + '/'+ str(match_json[player]['champ']['assists']), Class='kda')
         if match_json[player]['champ']['deaths']  == 0:
@@ -192,13 +154,13 @@ def generate_html(match_json):
         cspermin = tf.p('(' + str((round((match_json[player]['objectives']['totalMinionsKilled']*10)/((match_json['meta']['gameDuration']/6000)/10)))/10) + ')', Class='cspermin')
         visionscore = tf.p(str(match_json[player]['vision']['visionScore']), Class='visionscore')
         controlwards = tf.p('('+str(match_json[player]['vision']['visionWardsBoughtInGame'])+')', Class='controlwards')
-        item0 = tf.img(src="http://ddragon.leagueoflegends.com/cdn/10.18.1/img/item/" + str(match_json[player]['champ']['item0']) + ".png", Class='item')
-        item1 = tf.img(src="http://ddragon.leagueoflegends.com/cdn/10.18.1/img/item/" + str(match_json[player]['champ']['item1']) + ".png", Class='item')
-        item2 = tf.img(src="http://ddragon.leagueoflegends.com/cdn/10.18.1/img/item/" + str(match_json[player]['champ']['item2']) + ".png", Class='item')
-        item3 = tf.img(src="http://ddragon.leagueoflegends.com/cdn/10.18.1/img/item/" + str(match_json[player]['champ']['item3']) + ".png", Class='item')
-        item4 = tf.img(src="http://ddragon.leagueoflegends.com/cdn/10.18.1/img/item/" + str(match_json[player]['champ']['item4']) + ".png", Class='item')
-        item5 = tf.img(src="http://ddragon.leagueoflegends.com/cdn/10.18.1/img/item/" + str(match_json[player]['champ']['item5']) + ".png", Class='item')
-        item6 = tf.img(src="http://ddragon.leagueoflegends.com/cdn/10.18.1/img/item/" + str(match_json[player]['champ']['item6']) + ".png", Class='item')
+        item0 = tf.img(src="http://ddragon.leagueoflegends.com/cdn/11.16.1/img/item/" + str(match_json[player]['champ']['item0']) + ".png", Class='item')
+        item1 = tf.img(src="http://ddragon.leagueoflegends.com/cdn/11.16.1/img/item/" + str(match_json[player]['champ']['item1']) + ".png", Class='item')
+        item2 = tf.img(src="http://ddragon.leagueoflegends.com/cdn/11.16.1/img/item/" + str(match_json[player]['champ']['item2']) + ".png", Class='item')
+        item3 = tf.img(src="http://ddragon.leagueoflegends.com/cdn/11.16.1/img/item/" + str(match_json[player]['champ']['item3']) + ".png", Class='item')
+        item4 = tf.img(src="http://ddragon.leagueoflegends.com/cdn/11.16.1/img/item/" + str(match_json[player]['champ']['item4']) + ".png", Class='item')
+        item5 = tf.img(src="http://ddragon.leagueoflegends.com/cdn/11.16.1/img/item/" + str(match_json[player]['champ']['item5']) + ".png", Class='item')
+        item6 = tf.img(src="http://ddragon.leagueoflegends.com/cdn/11.16.1/img/item/" + str(match_json[player]['champ']['item6']) + ".png", Class='item')
         
         items = tf.DIV([item0, item1, item2, item3, item4, item5, item6], Class='items')
         runes = tf.DIV('runes', Class='runes')
@@ -246,5 +208,4 @@ def download_matches(match_history, region_large, api_key):
             with open(path, 'w') as f:
                 f.write(str(div))
                 print('saved to' ,path)
-
 

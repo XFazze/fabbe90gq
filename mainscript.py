@@ -1,3 +1,4 @@
+
 import os
 import json
 import ast
@@ -12,8 +13,9 @@ from forms.osu_form import *
 from forms.pappa_form import *
 from forms.factorio_form import *
 from forms.lb2000_form import *
-from ludvig_blabarsylt.api_calls import *
-from ludvig_blabarsylt.championIdtoname import *
+from lb.api_calls import *
+from lb.match_history import *
+from lb.championIdtoname import *
 from config import *
 
 # Initializing flask and sql
@@ -103,9 +105,8 @@ def prop_calc():
         return render_template('factorio_proportions.html', form=form, ratio=ratio, component=component, submitted=True,  sop=sop)
     return render_template('factorio_proportions.html', form=form, ratio="wee", component="component", submitted=False, sop="sop")
 
-
         
-@app.route("/ludvig_blabarsylt_2000/test")
+@app.route("/lb2000/test")
 def lb2000_test():    
     
     before = "{% extends 'template.html' %}\n   {% block link %}\n  <link rel='stylesheet' href='/static/css/lb2000.css'>\n  <script type='text/javascript' src='/static/js/lb2000.js'></script>\n  {% endblock %}\n  {% block body %}{% endblock %}\n  {% block main%}\n <div id=match_history >"
@@ -124,28 +125,18 @@ def lb2000_test():
 
 
 
-@app.route("/ludvig_blabarsylt_2000", methods=['GET', 'POST'])
+@app.route("/lb2000", methods=['GET', 'POST'])
 def lb2000():
     form = lb2000_getuser()
-    
-    
+
     if form.validate_on_submit():
         username = form.username.data
         region = form.region.data
         region_large = form.large_region.data
-        '''
-        with open('/home/pi/website/static/lolgames_html/popularppl.json', 'r') as f:
-            pop = json.load(f)
-            print("before", pop)
-        pop.append({"username" : username, "region" : region, "region_large": region_large})
-        print("ater",pop)
-        with open('/home/pi/website/static/lolgames_html/popularppl.json', 'w') as f1:
-            json.dump(f1, pop, indent = 4)
-        '''
         summoner = get_summoner(region, username, api_key)
-        print("form submitterd")
+        print("form submitted")
         if "status" in summoner.keys():
-            print("user not found error form")
+            print("error in get_summoner data")
             return render_template('lb2000/lb2000_search.html', form=form, error=True)
         else:
             mastery = get_mastery(region, summoner['id'], api_key)
@@ -156,9 +147,8 @@ def lb2000():
             download_matches(match_history,region_large, api_key)
             timenow = time.time()
             form = lb2000_getuser()
-            #with open('/home/pi/website/static/lolgames/EUN1/2829613673.json', 'r') as f:
-                #match1 = json.load(f)
-                #print(match1)
+            print("http://ddragon.leagueoflegends.com/cdn/10.18.1/img/profileicon/", summoner["profileIconId"], ".png")
+            print(champ_id_to_name)
             return render_template('lb2000/lb2000_base.html', summoner=summoner, region=region, mastery=mastery, total_mastery=total_mastery, champ_id_to_name=champ_id_to_name, timenow=timenow,ranks=ranks,form=form,
                                     match_history=match_history,region_large=region_large, summonerid=summoner['id'])
     return render_template('lb2000/lb2000_search.html', form=form, error=False)
@@ -167,4 +157,4 @@ def lb2000():
 
 # Run the site
 if __name__ == "__main__":
-    app.run()
+    app.run(debug=True)
