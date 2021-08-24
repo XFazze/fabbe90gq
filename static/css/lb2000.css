@@ -116,6 +116,11 @@
     width: 97%;
     order: 5;
 }
+.NOROLE{
+    display: none;
+    width: 97%;
+    order: 5;
+}
 .meta{
     width: 10%;
     float:left;
@@ -148,7 +153,6 @@
 }
 .brief{
     width: 100%;
-    background-color: yellow;
     display:table;
 }
 .brief p{
@@ -201,7 +205,6 @@
 }
 .details div{
     float:left;
-    border:1px solid black;
     margin-left: 1%;
     margin-right: 1%;
 }

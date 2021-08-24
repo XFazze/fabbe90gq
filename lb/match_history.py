@@ -20,6 +20,9 @@ def jsonconvert(json_match):
         ret_json[player['summonerId']]['meta']['summonerId'] = player['summonerId']
         ret_json[player['summonerId']]['meta']['summonerLevel'] = player['summonerLevel']
         ret_json[player['summonerId']]['meta']['summonerName'] = player['summonerName']
+        if player['teamPosition'] == "":
+            player['teamPosition'] = "NOROLE"
+
         ret_json[player['summonerId']]['meta']['teamPosition'] = player['teamPosition']
         ret_json[player['summonerId']]['meta']['individualPosition'] = player['individualPosition']
         ret_json[player['summonerId']]['meta']['win'] = player['win']

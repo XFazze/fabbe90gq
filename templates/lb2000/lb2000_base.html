@@ -4,7 +4,6 @@
 <style>
     #{{summonerid}}  {display : block;}
 </style>
-<script type="text/javascript" src="/static/js/lb2000_settings.js"></script>
 <script type="text/javascript" src="/static/js/lb2000.js"></script>
 {% endblock %}
 {% block body %}{% endblock %}
@@ -63,7 +62,6 @@
             </div>
         </div>
         <div id="match_history" >
-            <p></p>
             {% for match in match_history %}
                 <div id="{{ match }}"><p>Loading match</p></div>
             {% endfor %}
