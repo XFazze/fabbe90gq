@@ -3,15 +3,15 @@ from flask_wtf import FlaskForm
 from wtforms import Form, SelectField, validators, SubmitField, IntegerField
 from wtforms.validators import DataRequired
 from ratio_code.basic_copy import *
+from config import *
 # Initializing flask and sql
 app = Flask(__name__)
-app.config['SECRET_KEY'] = 'you-will-never-guess'
+app.config['SECRET_KEY'] = secret_key
 
 # Root
 @app.route("/")
 def index():
     client_id = 'd3a17cc496724a538a7b2af6024b0a26'
-    client_secret = '6f3a2f416e4e4cbc8eff1ddd94be94b1'
     scope = 'user-read-private user-read-email'
     redirect_uri = 'http://localhost:5000/callback'
 
@@ -23,7 +23,7 @@ def index():
 def callback():
     code = request.args['code']
     url = ' '
-    json = requests.get(url).json()
+    json = request.get(url).json()
     print(code)
     return "Weeooe"
     
