@@ -175,7 +175,7 @@ def generate_html(match_json):
         vision = tf.DIV(Class='vision')
         damage = tf.DIV(Class='damage')
         details = tf.DIV([objectives, spells, kills, minons, vision, damage], Class='details')
-        player = tf.DIV([brief, details], id=match_json[player]['meta']['summonerId'], Class=match_json[player]['meta']['teamPosition'])
+        player = tf.DIV([brief, details], Class=match_json[player]['meta']['teamPosition']+" "+match_json[player]['meta']['summonerId'])
         if tc > 6:
             team2.append(player)
         else:

@@ -1,9 +1,9 @@
 {% extends "template.html" %}
 {% block link %}
 <link rel="stylesheet" href="/static/css/lb2000.css">
-<style>
-    #{{summonerid}}  {display : block;}
-</style>
+<script type="text/javascript" >
+    var summonerid = {{ summonerid|tojson }}
+</script>
 <script type="text/javascript" src="/static/js/lb2000.js"></script>
 {% endblock %}
 {% block body %}{% endblock %}

@@ -17,6 +17,7 @@ from lb.api_calls import *
 from lb.match_history import *
 from lb.championIdtoname import *
 from config import *
+from threading import Thread
 
 # Initializing flask and sql
 app = Flask(__name__,  static_folder='static')
@@ -144,11 +145,10 @@ def lb2000():
             ranks = get_rank(region, summoner['id'], api_key)
             match_history = get_match_history(region_large, summoner['puuid'], api_key)
             print("match history:",match_history)
-            download_matches(match_history,region_large, api_key)
+            thread = Thread(target=download_matches, args=(match_history,region_large, api_key))
+            thread.start()
             timenow = time.time()
             form = lb2000_getuser()
-            print("http://ddragon.leagueoflegends.com/cdn/10.18.1/img/profileicon/", summoner["profileIconId"], ".png")
-            print(champ_id_to_name)
             return render_template('lb2000/lb2000_base.html', summoner=summoner, region=region, mastery=mastery, total_mastery=total_mastery, champ_id_to_name=champ_id_to_name, timenow=timenow,ranks=ranks,form=form,
                                     match_history=match_history,region_large=region_large, summonerid=summoner['id'])
     return render_template('lb2000/lb2000_search.html', form=form, error=False)
