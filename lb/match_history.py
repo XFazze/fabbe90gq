@@ -88,7 +88,7 @@ def jsonconvert(json_match):
         ret_json[player['summonerId']]['damage']['totalDamageDealt'] = player['trueDamageDealtToChampions']
         ret_json[player['summonerId']]['damage']['trueDamageDealt'] = player['damageDealtToBuildings']
         ret_json[player['summonerId']]['damage']['magicDamageDealtToChampions'] = player['damageDealtToObjectives']
-        ret_json[player['summonerId']]['damage']['physicalDamageDealtToChampions'] = player['damageDealtToTurrets']
+        ret_json[player['summonerId']]['damage']['damageDealtToTurrets'] = player['damageDealtToTurrets']
         ret_json[player['summonerId']]['damage']['physicalDamageTaken'] = player['physicalDamageTaken']
         ret_json[player['summonerId']]['damage']['totalDamageTaken'] = player['totalDamageTaken']
         ret_json[player['summonerId']]['damage']['trueDamageTaken'] = player['trueDamageTaken']
@@ -173,12 +173,54 @@ def generate_html(match_json):
         visionscore = tf.p(str(match_json[player]['vision']['visionScore']), Class='visionScore')
         controlwards = tf.p('('+str(match_json[player]['vision']['visionWardsBoughtInGame'])+')', Class='controlwards')
         vision = tf.DIV([visionscore,controlwards], Class='vision')
+
+        # Poppin div
+        doubleKills = tf.p(str(match_json[player]['poppin']['doubleKills']), Class='doubleKills')
+        killingSprees = tf.p('('+str(match_json[player]['poppin']['killingSprees'])+')', Class='killingSprees')
+        largestKillingSpree = tf.p(str(match_json[player]['poppin']['largestKillingSpree']), Class='largestKillingSpree')
+        largestMultiKill = tf.p('('+str(match_json[player]['poppin']['largestMultiKill'])+')', Class='largestMultiKill')
+        longestTimeSpentLiving = tf.p('('+str(match_json[player]['poppin']['longestTimeSpentLiving'])+')', Class='longestTimeSpentLiving')
+        totalTimeSpentDead = tf.p(str(match_json[player]['poppin']['totalTimeSpentDead']), Class='totalTimeSpentDead')
+        pentaKills = tf.p('('+str(match_json[player]['poppin']['pentaKills'])+')', Class='pentaKills')
+        quadraKills = tf.p('('+str(match_json[player]['poppin']['quadraKills'])+')', Class='quadraKills')
+        tripleKills = tf.p(str(match_json[player]['poppin']['tripleKills']), Class='tripleKills')
+        unrealKills = tf.p('('+str(match_json[player]['poppin']['unrealKills'])+')', Class='unrealKills')
+        poppin = tf.DIV([doubleKills, killingSprees, largestKillingSpree, largestMultiKill, longestTimeSpentLiving,
+         totalTimeSpentDead, pentaKills,quadraKills, tripleKills, unrealKills  ], Class='poppin')
+
+        # damage div
+        magicDamageDealt = tf.p(str(match_json[player]['damage']['magicDamageDealt']), Class='magicDamageDealt')
+        physicalDamageDealt = tf.p('('+str(match_json[player]['damage']['physicalDamageDealt'])+')', Class='physicalDamageDealt')
+        totalDamageDealt = tf.p(str(match_json[player]['damage']['totalDamageDealt']), Class='totalDamageDealt')
+        trueDamageDealt = tf.p('('+str(match_json[player]['damage']['trueDamageDealt'])+')', Class='trueDamageDealt')
+        magicDamageDealtToChampions = tf.p('('+str(match_json[player]['damage']['magicDamageDealtToChampions'])+')', Class='magicDamageDealtToChampions')
+        physicalDamageDealtToChampions = tf.p(str(match_json[player]['damage']['physicalDamageDealtToChampions']), Class='physicalDamageDealtToChampions')
+        totalDamageDealtToChampions = tf.p('('+str(match_json[player]['damage']['totalDamageDealtToChampions'])+')', Class='totalDamageDealtToChampions')
+        quadratotalDamageDealtKills = tf.p('('+str(match_json[player]['damage']['totalDamageDealt'])+')', Class='totalDamageDealt')
+        trueDamageDealt = tf.p(str(match_json[player]['damage']['trueDamageDealt']), Class='trueDamageDealt')
+        magicDamageDealtToChampions = tf.p('('+str(match_json[player]['damage']['magicDamageDealtToChampions'])+')', Class='magicDamageDealtToChampions')
+        damageDealtToTurrets = tf.p(str(match_json[player]['damage']['damageDealtToTurrets']), Class='damageDealtToTurrets')
+        physicalDamageTaken = tf.p(str(match_json[player]['damage']['physicalDamageTaken']), Class='physicalDamageTaken')
+        totalDamageTaken = tf.p(str(match_json[player]['damage']['totalDamageTaken']), Class='totalDamageTaken')
+        trueDamageTaken = tf.p(str(match_json[player]['damage']['trueDamageTaken']), Class='trueDamageTaken')
+        damage = tf.DIV([magicDamageDealt, physicalDamageDealt, totalDamageDealt, trueDamageDealt,magicDamageDealtToChampions, physicalDamageDealtToChampions,
+        totalDamageDealtToChampions,quadratotalDamageDealtKills,damageDealtToTurrets,physicalDamageTaken, totalDamageTaken, trueDamageTaken ], Class='damage')
+
+        # utility div
+        totalDamageShieldedOnTeammates = tf.p(str(match_json[player]['utility']['totalDamageShieldedOnTeammates']), Class='totalDamageShieldedOnTeammates')
+        totalHeal = tf.p('('+str(match_json[player]['utility']['totalHeal'])+')', Class='totalHeal')
+        totalHealsOnTeammates = tf.p(str(match_json[player]['utility']['totalHealsOnTeammates']), Class='totalHealsOnTeammates')
+        timeCCingOthers = tf.p('('+str(match_json[player]['utility']['timeCCingOthers'])+')', Class='timeCCingOthers')
+        totalTimeCCDealt = tf.p('('+str(match_json[player]['utility']['totalTimeCCDealt'])+')', Class='totalTimeCCDealt')
+        utility = tf.DIV([totalDamageShieldedOnTeammates,totalHeal, totalHealsOnTeammates, timeCCingOthers, totalTimeCCDealt], Class='utility')
+
+
         objectives = tf.DIV(Class='objectives')
         spells = tf.DIV(Class='spells')
         kills = tf.DIV(Class='kills')
         minons = tf.DIV(Class='minons')
         damage = tf.DIV(Class='damage')
-        player = tf.DIV([champion,vision], Class=match_json[player]['meta']['teamPosition']+" "+match_json[player]['meta']['summonerId'])
+        player = tf.DIV([champion,vision,poppin, damage], Class=match_json[player]['meta']['teamPosition']+" "+match_json[player]['meta']['summonerId'])
         if tc > 6:
             team2.append(player)
         else:
