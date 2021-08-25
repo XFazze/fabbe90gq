@@ -103,7 +103,7 @@ function settingsBtn(id, default_on){
     element.style.color = 'var(--main-color)';
     var element = document.getElementsByClassName(id);
     for (i=0; i< element.length; i++) {
-      element[i].style.display = 'block';
+      element[i].style.display = '';
   }}
   else{
     if(default_on){
@@ -117,7 +117,7 @@ function settingsBtn(id, default_on){
       element.style.color = 'var(--main-color)';
       var element = document.getElementsByClassName(id);
       for (i=0; i< element.length; i++) {
-        element[i].style.display = 'block';
+        element[i].style.display = '';
 
     }}
   }

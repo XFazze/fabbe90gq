@@ -140,14 +140,8 @@
     float: left;
 
 }
-#game_creation{
-    color:var(--main-color);
-}
 .game_creation{
     width: 80px;
-}
-#game_duration{
-    color:var(--main-color)
 }
 .game_duration{
     width: 40px;
@@ -166,17 +160,17 @@
     width: 90%;
     float:left;
 }
-.brief{
+.champion{
     width: 100%;
     display:table;
 }
-.brief p{
+.champion p{
     font-family: var(--main-font);
     color:var(--text-color);
     display: inline-block;
     margin:0px;
 }
-.brief div{
+.champion div{
     display: inline-block;
     margin:0px;
     padding-left: 20px;
@@ -244,4 +238,56 @@
 .damage{
     width:30%;
     
+}
+/* meta buttons */
+#game_creation{
+    color:var(--main-color);
+}
+#game_duration{
+    color:var(--main-color)
+}
+
+/* champ buttons */
+#champ{
+    color:var(--main-color);
+}
+#kills{
+    color:var(--main-color)
+}
+#assists{
+    color:var(--main-color);
+}
+#deaths{
+    color:var(--main-color)
+}
+#champLevel{
+    color:var(--main-color);
+}
+#items{
+    color:var(--main-color)
+}
+#summoner1Id{
+    color:var(--error-color);
+}
+#summoner2Id{
+    color:var(--error-color)
+}
+/* Vision buttons */
+#detectorWardsPlaced{
+    color:var(--error-color)
+}
+#sightWardsBoughtInGame{
+    color:var(--error-color);
+}
+#visionScore{
+    color:var(--main-color)
+}
+#visionWardsBoughtInGame{
+    color:var(--error-color)
+}
+#wardsKilled{
+    color:var(--error-color);
+}
+#wardsPlaced{
+    color:var(--error-color)
 }

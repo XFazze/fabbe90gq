@@ -52,8 +52,31 @@
         </div>
     </div>
     <div id="settings">
-        <button id="game_creation" onclick="settingsBtn(this.id, true)">Date</button>
-        <button id="game_duration" onclick="settingsBtn(this.id, true)">Length</button>
+        <div>
+            <p>Meta</p>
+            <button id="game_creation" onclick="settingsBtn(this.id, true)">Date</button>
+            <button id="game_duration" onclick="settingsBtn(this.id, true)">Length</button>
+        </div>
+        <div>
+            <p>Champion</p>
+            <button id="champ" onclick="settingsBtn(this.id, true)">Champion Images</button>
+            <button id="kills" onclick="settingsBtn(this.id, true)">Kills</button>
+            <button id="assists" onclick="settingsBtn(this.id, true)">Assists</button>
+            <button id="deaths" onclick="settingsBtn(this.id, true)">Deaths</button>
+            <button id="champLevel" onclick="settingsBtn(this.id, true)">Levels</button>
+            <button id="items" onclick="settingsBtn(this.id, true)">Items</button>
+            <button id="summoner1Id" onclick="settingsBtn(this.id, false)">First Summoner Spell</button>
+            <button id="summoner2Id" onclick="settingsBtn(this.id, false)">Second Summoner Spell</button>
+        </div>
+        <div>
+            <p>Vision</p>
+            <button id="detectorWardsPlaced" onclick="settingsBtn(this.id, false)">Controlwards Placed</button>
+            <button id="sightWardsBoughtInGame" onclick="settingsBtn(this.id, false)">Controlwards Bought</button>
+            <button id="visionscore" onclick="settingsBtn(this.id, true)">Vision Score</button>
+            <button id="visionWardsBoughtInGame" onclick="settingsBtn(this.id, false)">Visionwards Bought</button>
+            <button id="wardsKilled" onclick="settingsBtn(this.id, false)">Wards killed</button>
+            <button id="wardsPlaced" onclick="settingsBtn(this.id, false)">Wards placed</button>
+        </div>
     </div>
     <div>
         <div id="match_history" >

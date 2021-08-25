@@ -146,7 +146,9 @@ def generate_html(match_json):
         tc += 1
         if player == 'meta':
             continue
-        hero = tf.img(src="http://ddragon.leagueoflegends.com/cdn/11.16.1/img/champion/" + match_json[player]['champ']['championName'] + ".png", Class='champ')
+
+        # Champions div
+        champ = tf.img(src="http://ddragon.leagueoflegends.com/cdn/11.16.1/img/champion/" + match_json[player]['champ']['championName'] + ".png", Class='champ')
         lvl = tf.p(str(match_json[player]['champ']['champLevel']), Class='lvl')
         kda  = tf.p(str(match_json[player]['champ']['kills']) + '/'+ str(match_json[player]['champ']['deaths']) + '/'+ str(match_json[player]['champ']['assists']), Class='kda')
         if match_json[player]['champ']['deaths']  == 0:
@@ -155,8 +157,6 @@ def generate_html(match_json):
             kdacalc = tf.p('(' + str(round((10*match_json[player]['champ']['kills']+10*match_json[player]['champ']['assists'])/match_json[player]['champ']['deaths'])/10)+ ')', Class='kdacalc')
         cs = tf.p(str(match_json[player]['objectives']['totalMinionsKilled']), Class='cs')
         cspermin = tf.p('(' + str((round((match_json[player]['objectives']['totalMinionsKilled']*10)/((match_json['meta']['gameDuration']/6000)/10)))/10) + ')', Class='cspermin')
-        visionscore = tf.p(str(match_json[player]['vision']['visionScore']), Class='visionscore')
-        controlwards = tf.p('('+str(match_json[player]['vision']['visionWardsBoughtInGame'])+')', Class='controlwards')
         item0 = tf.img(src="http://ddragon.leagueoflegends.com/cdn/11.16.1/img/item/" + str(match_json[player]['champ']['item0']) + ".png", Class='item')
         item1 = tf.img(src="http://ddragon.leagueoflegends.com/cdn/11.16.1/img/item/" + str(match_json[player]['champ']['item1']) + ".png", Class='item')
         item2 = tf.img(src="http://ddragon.leagueoflegends.com/cdn/11.16.1/img/item/" + str(match_json[player]['champ']['item2']) + ".png", Class='item')
@@ -167,15 +167,18 @@ def generate_html(match_json):
         
         items = tf.DIV([item0, item1, item2, item3, item4, item5, item6], Class='items')
         runes = tf.DIV('runes', Class='runes')
-        brief = tf.DIV([hero, lvl, kda, kdacalc, cs,cspermin, visionscore, controlwards, runes,items], Class='brief')
+        champion = tf.DIV([champ, lvl, kda, kdacalc, cs,cspermin, runes,items], Class='champion')
+        
+        # Vision div
+        visionscore = tf.p(str(match_json[player]['vision']['visionScore']), Class='visionScore')
+        controlwards = tf.p('('+str(match_json[player]['vision']['visionWardsBoughtInGame'])+')', Class='controlwards')
+        vision = tf.DIV([visionscore,controlwards], Class='vision')
         objectives = tf.DIV(Class='objectives')
         spells = tf.DIV(Class='spells')
         kills = tf.DIV(Class='kills')
         minons = tf.DIV(Class='minons')
-        vision = tf.DIV(Class='vision')
         damage = tf.DIV(Class='damage')
-        details = tf.DIV([objectives, spells, kills, minons, vision, damage], Class='details')
-        player = tf.DIV([brief, details], Class=match_json[player]['meta']['teamPosition']+" "+match_json[player]['meta']['summonerId'])
+        player = tf.DIV([champion,vision], Class=match_json[player]['meta']['teamPosition']+" "+match_json[player]['meta']['summonerId'])
         if tc > 6:
             team2.append(player)
         else:
