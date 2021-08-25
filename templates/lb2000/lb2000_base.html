@@ -18,10 +18,10 @@
         {% endif %}
     
     </form>
-    <div>
+    <div id="user_info">
         {% set icon_url = "http://ddragon.leagueoflegends.com/cdn/10.18.1/img/profileicon/" + summoner["profileIconId"]|string + ".png" %}
-        <img src={{ icon_url }} style="float:left;">
-        <div style="padding-left: 320px;">
+        <img src={{ icon_url }} style="max-height: 300px;">
+        <div>
             <h2>{{ summoner["name"] }} | {{ region }} | Lvl {{ summoner["summonerLevel"] }} | Total Mastery {{ total_mastery}}</h2>
             {% if ranks|length >0 %}{% for rank in ranks %}
             <h2>{{rank["queueType"]}}:{{rank["tier"]}}-{{rank["rank"]}}-{{rank["leaguePoints"]}}LP  WR:{{rank["wins"]}}/{{ rank["losses"] }}({{ (100*rank["wins"]/(rank["wins"]+rank["losses"]))|round }}%)</h2>
@@ -51,11 +51,11 @@
             </div>
         </div>
     </div>
+    <div id="settings">
+        <button id="game_creation" onclick="settingsBtn(this.id, true)">Date</button>
+        <button id="game_duration" onclick="settingsBtn(this.id, true)">Length</button>
+    </div>
     <div>
-        <div id="settings">
-            <button id="game_creation" onclick="settingsBtn(this.id)">Date</button>
-            <button id="game_duration" onclick="settingsBtn(this.id)">Length</button>
-        </div>
         <div id="match_history" >
             {% for match in match_history %}
                 <div id="{{ match }}"><p>Loading match</p></div>

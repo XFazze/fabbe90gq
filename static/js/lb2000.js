@@ -88,9 +88,9 @@ function checkFileExist(urlToFile) {
   }
 }
 
-function settingsBtn(id){
+function settingsBtn(id, default_on){
   element = document.getElementById(id)
-  console.log(element.style.color)
+  console.log("color: ", element.style.color)
   if (element.style.color == 'var(--main-color)'){
     element.style.color = 'var(--error-color)';
     var element = document.getElementsByClassName(id);
@@ -98,12 +98,28 @@ function settingsBtn(id){
       element[i].style.display = 'none';
     }
   }
-  else{
+  else if(element.style.color == 'var(--error-color)'){
     console.log('not red')
     element.style.color = 'var(--main-color)';
     var element = document.getElementsByClassName(id);
     for (i=0; i< element.length; i++) {
       element[i].style.display = 'block';
   }}
+  else{
+    if(default_on){
+      element.style.color = 'var(--error-color)';
+      var element = document.getElementsByClassName(id);
+      for (i=0; i< element.length; i++) {
+        element[i].style.display = 'none';
+      }
+    }
+    else{
+      element.style.color = 'var(--main-color)';
+      var element = document.getElementsByClassName(id);
+      for (i=0; i< element.length; i++) {
+        element[i].style.display = 'block';
+
+    }}
+  }
   console.log('button pressed', id)
 }
