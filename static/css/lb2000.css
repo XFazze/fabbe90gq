@@ -34,6 +34,7 @@
     width: 60px;
     float:left;
     height: 150px;
+    background-color: var(--bg-color);
 }
 .mrow{
     text-align: center;
@@ -43,6 +44,7 @@
     font-family: var(--main-font);
     text-align: center;
     border-radius: 2px;
+    height: 43px;
 
 }
 #champion_masteryBtn h1{
@@ -59,6 +61,14 @@
 #settings{
     display: flex;
 
+}
+#settings button{
+    background-color: var(--bg-color);
+    border: none;
+    border-radius: 4px;
+    filter:brightness(1.25);
+    margin: .2%;
+    color:var(--error-color);
 }
 #settings div{
     padding: 0 0 5 5;
@@ -132,11 +142,18 @@
     float: left;
 
 }
+#game_creation{
+    color:var(--main-color) !important;
+}
 .game_creation{
     width: 80px;
 }
+#game_creation{
+    color:var(--sub-color)
+}
 .game_duration{
     width: 40px;
+    margin:1%;
 }
 .game_mode{
     display: none;

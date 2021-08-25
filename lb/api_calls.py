@@ -1,6 +1,7 @@
 import requests, json, os.path, time, sphc, os
 from datetime import datetime
 def get_summoner(region, username, api_key):
+    requests.adapters.DEFAULT_RETRIES = 1
     url = "https://" + region + ".api.riotgames.com/lol/summoner/v4/summoners/by-name/" + username + "?api_key=" + api_key
     print("summoner url: ", url)
     return requests.get(url).json()

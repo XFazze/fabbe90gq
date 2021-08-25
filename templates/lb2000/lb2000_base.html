@@ -19,7 +19,6 @@
     
     </form>
     <div>
-        <p>Todo: Percentage of top and ladder rank, history, stats(win Percentage, kda, cs, winrate with users, etc) </p>
         {% set icon_url = "http://ddragon.leagueoflegends.com/cdn/10.18.1/img/profileicon/" + summoner["profileIconId"]|string + ".png" %}
         <img src={{ icon_url }} style="float:left;">
         <div style="padding-left: 320px;">
@@ -54,12 +53,8 @@
     </div>
     <div>
         <div id="settings">
-            <div id="date">
-                <p>Date</p>
-            </div>
-            <div id="duration">
-                <p>Duration</p>
-            </div>
+            <button id="game_creation" onclick="settingsBtn(this.id)">Date</button>
+            <button id="game_duration" onclick="settingsBtn(this.id)">Length</button>
         </div>
         <div id="match_history" >
             {% for match in match_history %}
