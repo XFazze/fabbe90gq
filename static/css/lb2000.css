@@ -71,6 +71,7 @@
     border-radius: 4px;
     filter:brightness(1.25);
     margin: .2%;
+    white-space: nowrap;
 }
 #settings div{
     padding: 0 0 5 5;
@@ -160,25 +161,17 @@
     width: 90%;
     float:left;
 }
-.champion{
-    width: 100%;
-    display:table;
+.playerdiv{
+    display: flex;
 }
 .champion p{
     font-family: var(--main-font);
     color:var(--text-color);
-    display: inline-block;
     margin:0px;
-}
-.champion div{
-    display: inline-block;
-    margin:0px;
-    padding-left: 20px;
 }
 .champ{
     width: 20;
     height: 19;
-    float: left;
 }
 .lvl{
     width: 30px;
@@ -207,6 +200,9 @@
 }
 .item{ 
     width: 19px;
+}
+.items{
+    width: 100%;
 }
 .player{
     display: none;
@@ -240,11 +236,23 @@
     
 }
 /* meta buttons */
+#meta{
+    color:var(--main-color);
+}
 #game_creation{
     color:var(--main-color);
 }
 #game_duration{
-    color:var(--main-color)
+    color:var(--main-color);
+}
+#gameMode{
+    color:var(--error-color);
+}
+#gameType{
+    color:var(--error-color);
+}
+#gameVersion{
+    color:var(--error-color);
 }
 
 /* champ buttons */

@@ -53,13 +53,16 @@
     </div>
     <div id="settings">
         <div>
-            <p>Meta</p>
+            <button id="meta" onclick="settingsBtn(this.id,true)">Meta</button>
             <button id="game_creation" onclick="settingsBtn(this.id, true)">Date</button>
             <button id="game_duration" onclick="settingsBtn(this.id, true)">Length</button>
+            <button id="gameMode" onclick="settingsBtn(this.id, true)">Game Mode</button>
+            <button id="gameType" onclick="settingsBtn(this.id, true)">Game Type</button>
+            <button id="gameVersion" onclick="settingsBtn(this.id, true)">Game Version</button>
         </div>
         <div>
-            <p>Champion</p>
-            <button id="champ" onclick="settingsBtn(this.id, true)">Champion Images</button>
+            <button id="champ" onclick="settingsBtn(this.id,true)">Champion</button>
+            <button id="champimg" onclick="settingsBtn(this.id, true)">Champion Images</button>
             <button id="kills" onclick="settingsBtn(this.id, true)">Kills</button>
             <button id="assists" onclick="settingsBtn(this.id, true)">Assists</button>
             <button id="deaths" onclick="settingsBtn(this.id, true)">Deaths</button>
@@ -69,7 +72,61 @@
             <button id="summoner2Id" onclick="settingsBtn(this.id, false)">Second Summoner Spell</button>
         </div>
         <div>
-            <p>Vision</p>
+            <button id="vision" onclick="settingsBtn(this.id,true)">Vision</button>
+            <button id="detectorWardsPlaced" onclick="settingsBtn(this.id, false)">Controlwards Placed</button>
+            <button id="sightWardsBoughtInGame" onclick="settingsBtn(this.id, false)">Controlwards Bought</button>
+            <button id="visionscore" onclick="settingsBtn(this.id, true)">Vision Score</button>
+            <button id="visionWardsBoughtInGame" onclick="settingsBtn(this.id, false)">Visionwards Bought</button>
+            <button id="wardsKilled" onclick="settingsBtn(this.id, false)">Wards killed</button>
+            <button id="wardsPlaced" onclick="settingsBtn(this.id, false)">Wards placed</button>
+        </div>
+        <div>
+            <button id="multikills" onclick="settingsBtn(this.id,true)">Multikills</button>
+            <button id="detectorWardsPlaced" onclick="settingsBtn(this.id, false)">Controlwards Placed</button>
+            <button id="sightWardsBoughtInGame" onclick="settingsBtn(this.id, false)">Controlwards Bought</button>
+            <button id="visionscore" onclick="settingsBtn(this.id, true)">Vision Score</button>
+            <button id="visionWardsBoughtInGame" onclick="settingsBtn(this.id, false)">Visionwards Bought</button>
+            <button id="wardsKilled" onclick="settingsBtn(this.id, false)">Wards killed</button>
+            <button id="wardsPlaced" onclick="settingsBtn(this.id, false)">Wards placed</button>
+        </div>
+        <div>
+            <button id="damage" onclick="settingsBtn(this.id,true)">Damage</button>
+            <button id="detectorWardsPlaced" onclick="settingsBtn(this.id, false)">Controlwards Placed</button>
+            <button id="sightWardsBoughtInGame" onclick="settingsBtn(this.id, false)">Controlwards Bought</button>
+            <button id="visionscore" onclick="settingsBtn(this.id, true)">Vision Score</button>
+            <button id="visionWardsBoughtInGame" onclick="settingsBtn(this.id, false)">Visionwards Bought</button>
+            <button id="wardsKilled" onclick="settingsBtn(this.id, false)">Wards killed</button>
+            <button id="wardsPlaced" onclick="settingsBtn(this.id, false)">Wards placed</button>
+        </div>
+        <div>
+            <button id="support" onclick="settingsBtn(this.id,true)">Support</button>
+            <button id="detectorWardsPlaced" onclick="settingsBtn(this.id, false)">Controlwards Placed</button>
+            <button id="sightWardsBoughtInGame" onclick="settingsBtn(this.id, false)">Controlwards Bought</button>
+            <button id="visionscore" onclick="settingsBtn(this.id, true)">Vision Score</button>
+            <button id="visionWardsBoughtInGame" onclick="settingsBtn(this.id, false)">Visionwards Bought</button>
+            <button id="wardsKilled" onclick="settingsBtn(this.id, false)">Wards killed</button>
+            <button id="wardsPlaced" onclick="settingsBtn(this.id, false)">Wards placed</button>
+        </div>
+        <div>
+            <button id="objectives" onclick="settingsBtn(this.id,true)">Objectives</button>
+            <button id="detectorWardsPlaced" onclick="settingsBtn(this.id, false)">Controlwards Placed</button>
+            <button id="sightWardsBoughtInGame" onclick="settingsBtn(this.id, false)">Controlwards Bought</button>
+            <button id="visionscore" onclick="settingsBtn(this.id, true)">Vision Score</button>
+            <button id="visionWardsBoughtInGame" onclick="settingsBtn(this.id, false)">Visionwards Bought</button>
+            <button id="wardsKilled" onclick="settingsBtn(this.id, false)">Wards killed</button>
+            <button id="wardsPlaced" onclick="settingsBtn(this.id, false)">Wards placed</button>
+        </div>
+        <div>
+            <button id="stats" onclick="settingsBtn(this.id,true)">Stats</button>
+            <button id="detectorWardsPlaced" onclick="settingsBtn(this.id, false)">Controlwards Placed</button>
+            <button id="sightWardsBoughtInGame" onclick="settingsBtn(this.id, false)">Controlwards Bought</button>
+            <button id="visionscore" onclick="settingsBtn(this.id, true)">Vision Score</button>
+            <button id="visionWardsBoughtInGame" onclick="settingsBtn(this.id, false)">Visionwards Bought</button>
+            <button id="wardsKilled" onclick="settingsBtn(this.id, false)">Wards killed</button>
+            <button id="wardsPlaced" onclick="settingsBtn(this.id, false)">Wards placed</button>
+        </div>
+        <div>
+            <button id="event" onclick="settingsBtn(this.id,true)">Events</button>
             <button id="detectorWardsPlaced" onclick="settingsBtn(this.id, false)">Controlwards Placed</button>
             <button id="sightWardsBoughtInGame" onclick="settingsBtn(this.id, false)">Controlwards Bought</button>
             <button id="visionscore" onclick="settingsBtn(this.id, true)">Vision Score</button>
