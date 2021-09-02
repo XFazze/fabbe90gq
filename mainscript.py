@@ -79,6 +79,17 @@ def osu():
 
     return render_template('games/osu.html',  leaderboard=leaderboard)
 
+@app.route("/gamejs/snake", methods=['GET', 'POST'])
+def snake():
+    client = MongoClient('localhost', 27017)
+    db = client.website
+    collection = db.snake
+    leaderboard = []
+    for record in collection.find().sort("score", pymongo.DESCENDING).limit(10):
+        leaderboard.append(record)
+
+    return render_template('games/osu.html',  leaderboard=leaderboard)
+
 
 # PROJECTS
 @app.route("/projects/files")
