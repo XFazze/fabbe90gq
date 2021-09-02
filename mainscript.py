@@ -76,7 +76,6 @@ def osu():
     leaderboard = []
     for record in collection.find().sort("score", pymongo.DESCENDING).limit(10):
         leaderboard.append(record)
-    print(leaderboard)
 
     return render_template('games/osu.html',  leaderboard=leaderboard)
 
