@@ -2,6 +2,7 @@
 import os
 import json
 import ast
+import pymongo
 import requests
 import time
 from flask import *
@@ -9,7 +10,6 @@ from flask_wtf import FlaskForm
 from wtforms import Form, SelectField, validators, SubmitField, IntegerField
 from wtforms.validators import DataRequired
 from ratio_code.basic_copy import *
-from forms.osu_form import *
 from forms.pappa_form import *
 from forms.factorio_form import *
 from forms.lb2000_form import *
@@ -18,6 +18,7 @@ from lb.match_history import *
 from lb.championIdtoname import *
 from config import *
 from threading import Thread
+from pymongo import MongoClient, collation
 
 # Initializing flask and sql
 app = Flask(__name__,  static_folder='static')
@@ -28,6 +29,8 @@ app.config['SECRET_KEY'] = secret_key
 def index():
     return render_template('index.html')
 
+
+# BJORNBANAN
 @app.route("/bjornbanan")
 def bjornbanan():
     return render_template('bjornbanan/bjornbanan.html')
@@ -44,6 +47,41 @@ def bjornbanan_commands():
 def bjornbanan_music_help():
     return render_template('bjornbanan/bjornbanan_m_help.html')
 
+# GAMES
+@app.route("/gamejs")
+def gamejs():
+    return render_template('games/home.html')
+
+@app.route("/gamejs/leaderboard", methods=['GET', 'POST'])
+def leaderboard():
+    if request.method == "POST":
+        print("METHOD IS POST")
+        data = {}    # empty dict to store data
+        data['game'] = request.json['game']
+        data['user'] = request.json['user']
+        data['score'] = request.json['score']
+        client = MongoClient('localhost', 27017)
+        db = client.website
+        collection = db.osu
+        collection.insert_one(data)
+
+    return redirect('/gamejs/osu')
+
+
+@app.route("/gamejs/osu", methods=['GET', 'POST'])
+def osu():
+    client = MongoClient('localhost', 27017)
+    db = client.website
+    collection = db.osu
+    leaderboard = []
+    for record in collection.find().sort("score", pymongo.DESCENDING).limit(10):
+        leaderboard.append(record)
+    print(leaderboard)
+
+    return render_template('games/osu.html',  leaderboard=leaderboard)
+
+
+# PROJECTS
 @app.route("/projects/files")
 def files():
     files = os.listdir("/home/pi/website/static/projects/")
@@ -75,21 +113,7 @@ def pappa_register():
         return redirect('/hejda')
     return render_template('produktutveckling/pappa_register.html', form=form)
 
-@app.route("/games/osu", methods=['GET', 'POST'])
-def osu():
-    form = osuform()
-    if form.validate_on_submit():
-        print("suvbl")
-        '''with open('/home/pi/website/static/leaderboards/osu.json', 'r+') as f:
-            leaderboard = f.read()
-            leaderboard = ast.literal_eval(leaderboard)
-            for place in range(len(leaderboard)):
-                if leaderboard[place]["value" ] < value
-        return form.name.data'''
-    with open('/home/pi/website/static/leaderboards/osu.json', 'r+') as f:
-        leaderboard = f.read()
-        leaderboard = ast.literal_eval(leaderboard)
-    return render_template('games/osu.html', form=form, leaderboard=leaderboard)
+
 
 # proportions calc
 @app.route("/projects/factorio",  methods=['GET', 'POST'])
@@ -123,7 +147,6 @@ def lb2000_test():
     with open('/home/pi/website/templates/lb2000/example_match.html', 'w') as f1:
         f1.write(match1_html)
     return render_template('lb2000/example_match.html')
-
 
 
 @app.route("/lb2000", methods=['GET', 'POST'])

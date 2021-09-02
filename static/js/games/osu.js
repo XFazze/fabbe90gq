@@ -25,8 +25,8 @@ window.onload = function () {
             y = event.pageY - canvasTop;
 
         if ((Math.abs(y-element.top)**2+Math.abs(x-element.left)**2)**0.5 < 25) {
-            var score = document.getElementById('score');
-            score.innerHTML = 'Score : ' + clicks.toString() + '    Difficulty : ' + Math.round(difficulty*1000).toString();
+            var scoreElement = document.getElementById('score');
+            scoreElement.innerHTML = 'Score: ' + clicks.toString();
 
             ctx.fillStyle = 'black';
             ctx.fillRect(0, 0, 500, 300);   
@@ -42,12 +42,13 @@ window.onload = function () {
             if (Date.now() > last_time + difficulty*1000){
                 document.getElementById("snoop").style.display = "block";
                 document.getElementById("game-layer").style.display = "none";
-                document.getElementById("nameform").style.display = "block";
+                document.getElementById("leaderboard").style.display = "block";
             }
             difficulty -= difficulty/10
             last_time = Date.now()
 
         }});
+
     document.getElementById("resetbutton").addEventListener("click", function (event) {
         last_time = Date.now()*10;
         difficulty = 1;
@@ -55,14 +56,12 @@ window.onload = function () {
         element.top = 150;
         element.left = 250;
 
-        var score = document.getElementById('score');
-        score.innerHTML = 'Score : hej  Difficulta : eddddbaaaau';
-
-        
+        var scoreElement = document.getElementById('score');
+        scoreElement.innerHTML = 'Score: hej';
        
         document.getElementById("snoop").style.display = "none";
         document.getElementById("game-layer").style.display = "block";
-        document.getElementById("nameform").style.display = "none";
+        document.getElementById("leaderboard").style.display = "none";
             
 
         ctx.fillStyle = 'black';
@@ -73,7 +72,22 @@ window.onload = function () {
         ctx.arc(element.left,  element.top, 25, 0, 2 * Math.PI);
         ctx.fill();
 
-
     });
-
+    
+    document.getElementById("submit").addEventListener("click", function (event) {
+        var user = document.getElementById("leaderboard");
+        data = {'game': "osu",
+                'score' : clicks,
+                'user' : user.elements[0].value}
+        $.ajax({
+        url: '/gamejs/leaderboard',
+        type: 'POST',
+        contentType: 'application/json;charset=UTF-8',
+        data: JSON.stringify(data),   // converts js value to JSON string
+        })
+        .done(function(result){     // on success get the return object from server
+            console.log(result)     // do whatever with it. In this case see it in console
+        })
+        
+    });
 };

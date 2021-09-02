@@ -1,28 +1,34 @@
 {% extends "template.html" %}
 {% block link %}
-    <link rel="stylesheet" href="/static/css/newccs.css">
-    <script type="text/javascript" src="/static/js/osu.js"></script>
+    <link rel="stylesheet" href="/static/css/basic.css">
+    <link rel="stylesheet" href="/static/css/games.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script type="text/javascript" src="/static/js/games/osu.js"></script>
 {% endblock %}
 {% block body %}background-color:#23856D;{% endblock %}
 {% block main%}
 <div class="centerdiv">
-    <h1 style=" font-size: 20px; font-family: 'Roboto', sans-serif;">Osu,  </h1>
-    <p style="color:black; font-size: 20px; font-family: 'Roboto', sans-serif;">the way it was meant to be played. Click the circles as fast as possible rythm is a scam</p>
+    <h1>Osu</h1>
 </div>
-<div styler="display:flex ">
-    <p style=" font-size: 20px; font-family: 'Roboto', sans-serif; margin:auto; text-align:center" id="score" >Score : you suck  Difficulty : your grandma </p><br>
+<div styler="display:flex" class="centerdiv">
+    <h2  id="score" style="text-align:center;" >Score: you suck</h2><br>
     <img id="snoop" src='/static/pics/snoop_dog.gif' width=500px height=300px style="margin: auto; display:none; padding:0;">
     <canvas id="game-layer" width=500px height=300px style="margin: auto; display:block; padding:0;"></canvas><br>
-    <button id="resetbutton"  style="width:500px; margin:auto; display:block; padding:0;">Reset</button>
-    <form action="" method="post" style="width:500px; margin:auto; display:none; padding:0;" id="nameform">
-        <span >If you feel cool write your name here</span>
-        {{ form.name }}
-        {{ form.submit }}
+
+    <button id="resetbutton"  style="width:500px; margin:auto; display:block; padding:0;">RESET</button>
+
+    <form action="" method="post" id="leaderboard">
+        <input type="text" name="name" placeholder="name" required>
+        <button id="submit" type="submit">Submit</button>
     </form>
+
     <div style="margin: 20%; margin-top:0%">
         <h1> Leaderboard</h1>
         {% for score in leaderboard %}
-        <p>{{ score["name"] }}  :  {{ score["value"] }}</p>
+        <div class="score">
+            <p>{{ score["user"] }} </p>
+            <p> {{ score["score"] }}</p>
+        </div>
         {% endfor %}
     </div>
 </div>
