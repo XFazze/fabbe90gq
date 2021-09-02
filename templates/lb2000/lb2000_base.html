@@ -1,16 +1,15 @@
 {% extends "template.html" %}
 {% block link %}
 <link rel="stylesheet" href="/static/css/lb2000.css">
-<style>
-    #{{summonerid}}  {display : block;}
-</style>
-<script type="text/javascript" src="/static/js/lb2000_settings.js"></script>
+<script type="text/javascript" >
+    var summonerid = {{ summonerid|tojson }}
+</script>
 <script type="text/javascript" src="/static/js/lb2000.js"></script>
 {% endblock %}
 {% block body %}{% endblock %}
 {% block main%}
 <div class="centerdiv" >
-    <h1>Linus Blåbärsylt 2000 tools</h1></br>
+    <h1>LB 2000 </h1></br>
     <form action="" method="post" novalidate>
         {{ form.hidden_tag() }}
         <p style="color:var(--text-color)">{{ form.username.label }}: {{ form.username }} {{ form.region }}{{ form.large_region }}{{ form.submit }}</p>
@@ -19,13 +18,14 @@
         {% endif %}
     
     </form>
-    <div>
-        <p>Todo: Percentage of top and ladder rank, history, stats(win Percentage, kda, cs, winrate with users, etc) </p>
+    <div id="user_info">
         {% set icon_url = "http://ddragon.leagueoflegends.com/cdn/10.18.1/img/profileicon/" + summoner["profileIconId"]|string + ".png" %}
-        <img src={{ icon_url }} style="float:left;">
-        <div style="padding-left: 320px;">
-            <h2>{{ region }} | {{ summoner["name"] }} | Lvl {{ summoner["summonerLevel"] }} | Total Mastery {{ total_mastery}}</h2>
-            {% if ranks|length >0 %}{% for rank in ranks %}<h2>{{rank["queueType"]}}:{{rank["tier"]}}-{{rank["rank"]}}({{rank["leaguePoints"]}}LP)({{rank["wins"]}}/{{ rank["losses"] }}({{ (100*rank["wins"]/(rank["wins"]+rank["losses"]))|round }}%))</h2>{% endfor %}{% endif %}
+        <img src={{ icon_url }} style="max-height: 300px;">
+        <div>
+            <h2>{{ summoner["name"] }} | {{ region }} | Lvl {{ summoner["summonerLevel"] }} | Total Mastery {{ total_mastery}}</h2>
+            {% if ranks|length >0 %}{% for rank in ranks %}
+            <h2>{{rank["queueType"]}}:{{rank["tier"]}}-{{rank["rank"]}}-{{rank["leaguePoints"]}}LP  WR:{{rank["wins"]}}/{{ rank["losses"] }}({{ (100*rank["wins"]/(rank["wins"]+rank["losses"]))|round }}%)</h2>
+            {% endfor %}{% endif %}
             <div id="masterydiv" style="height: 193px; overflow:hidden;">
                 <div id="champion_masteryBtn">
                     <h1 id="masterydivtext">Show more</h1>
@@ -33,7 +33,7 @@
                 
                 {% for champ in mastery %}
                 {% set champname = champ_id_to_name[champ["championId"]|string]  %}
-                {% set icon_url = "http://ddragon.leagueoflegends.com/cdn/11.9.1/img/champion/" + champname + ".png" %}
+                {% set icon_url = "http://ddragon.leagueoflegends.com/cdn/11.16.1/img/champion/" + champname + ".png" %}
                 {% set seconds = (timenow-(champ['lastPlayTime']/1000))|round %}
                 <div class="mcolumn">
                     <div class="mrow">
@@ -51,17 +51,92 @@
             </div>
         </div>
     </div>
-    <div>
-        <div id="settings">
-            <div id="date">
-                <p>Date</p>
-            </div>
-            <div id="duration">
-                <p>Duration</p>
-            </div>
+    <div id="settings">
+        <div>
+            <button id="meta" onclick="settingsBtn(this.id,true)">Meta</button>
+            <button id="game_creation" onclick="settingsBtn(this.id, true)">Date</button>
+            <button id="game_duration" onclick="settingsBtn(this.id, true)">Length</button>
+            <button id="gameMode" onclick="settingsBtn(this.id, true)">Game Mode</button>
+            <button id="gameType" onclick="settingsBtn(this.id, true)">Game Type</button>
+            <button id="gameVersion" onclick="settingsBtn(this.id, true)">Game Version</button>
         </div>
+        <div>
+            <button id="champ" onclick="settingsBtn(this.id,true)">Champion</button>
+            <button id="champimg" onclick="settingsBtn(this.id, true)">Champion Images</button>
+            <button id="kills" onclick="settingsBtn(this.id, true)">Kills</button>
+            <button id="assists" onclick="settingsBtn(this.id, true)">Assists</button>
+            <button id="deaths" onclick="settingsBtn(this.id, true)">Deaths</button>
+            <button id="champLevel" onclick="settingsBtn(this.id, true)">Levels</button>
+            <button id="items" onclick="settingsBtn(this.id, true)">Items</button>
+            <button id="summoner1Id" onclick="settingsBtn(this.id, false)">First Summoner Spell</button>
+            <button id="summoner2Id" onclick="settingsBtn(this.id, false)">Second Summoner Spell</button>
+        </div>
+        <div>
+            <button id="vision" onclick="settingsBtn(this.id,true)">Vision</button>
+            <button id="detectorWardsPlaced" onclick="settingsBtn(this.id, false)">Controlwards Placed</button>
+            <button id="sightWardsBoughtInGame" onclick="settingsBtn(this.id, false)">Controlwards Bought</button>
+            <button id="visionscore" onclick="settingsBtn(this.id, true)">Vision Score</button>
+            <button id="visionWardsBoughtInGame" onclick="settingsBtn(this.id, false)">Visionwards Bought</button>
+            <button id="wardsKilled" onclick="settingsBtn(this.id, false)">Wards killed</button>
+            <button id="wardsPlaced" onclick="settingsBtn(this.id, false)">Wards placed</button>
+        </div>
+        <div>
+            <button id="multikills" onclick="settingsBtn(this.id,true)">Multikills</button>
+            <button id="detectorWardsPlaced" onclick="settingsBtn(this.id, false)">Controlwards Placed</button>
+            <button id="sightWardsBoughtInGame" onclick="settingsBtn(this.id, false)">Controlwards Bought</button>
+            <button id="visionscore" onclick="settingsBtn(this.id, true)">Vision Score</button>
+            <button id="visionWardsBoughtInGame" onclick="settingsBtn(this.id, false)">Visionwards Bought</button>
+            <button id="wardsKilled" onclick="settingsBtn(this.id, false)">Wards killed</button>
+            <button id="wardsPlaced" onclick="settingsBtn(this.id, false)">Wards placed</button>
+        </div>
+        <div>
+            <button id="damage" onclick="settingsBtn(this.id,true)">Damage</button>
+            <button id="detectorWardsPlaced" onclick="settingsBtn(this.id, false)">Controlwards Placed</button>
+            <button id="sightWardsBoughtInGame" onclick="settingsBtn(this.id, false)">Controlwards Bought</button>
+            <button id="visionscore" onclick="settingsBtn(this.id, true)">Vision Score</button>
+            <button id="visionWardsBoughtInGame" onclick="settingsBtn(this.id, false)">Visionwards Bought</button>
+            <button id="wardsKilled" onclick="settingsBtn(this.id, false)">Wards killed</button>
+            <button id="wardsPlaced" onclick="settingsBtn(this.id, false)">Wards placed</button>
+        </div>
+        <div>
+            <button id="support" onclick="settingsBtn(this.id,true)">Support</button>
+            <button id="detectorWardsPlaced" onclick="settingsBtn(this.id, false)">Controlwards Placed</button>
+            <button id="sightWardsBoughtInGame" onclick="settingsBtn(this.id, false)">Controlwards Bought</button>
+            <button id="visionscore" onclick="settingsBtn(this.id, true)">Vision Score</button>
+            <button id="visionWardsBoughtInGame" onclick="settingsBtn(this.id, false)">Visionwards Bought</button>
+            <button id="wardsKilled" onclick="settingsBtn(this.id, false)">Wards killed</button>
+            <button id="wardsPlaced" onclick="settingsBtn(this.id, false)">Wards placed</button>
+        </div>
+        <div>
+            <button id="objectives" onclick="settingsBtn(this.id,true)">Objectives</button>
+            <button id="detectorWardsPlaced" onclick="settingsBtn(this.id, false)">Controlwards Placed</button>
+            <button id="sightWardsBoughtInGame" onclick="settingsBtn(this.id, false)">Controlwards Bought</button>
+            <button id="visionscore" onclick="settingsBtn(this.id, true)">Vision Score</button>
+            <button id="visionWardsBoughtInGame" onclick="settingsBtn(this.id, false)">Visionwards Bought</button>
+            <button id="wardsKilled" onclick="settingsBtn(this.id, false)">Wards killed</button>
+            <button id="wardsPlaced" onclick="settingsBtn(this.id, false)">Wards placed</button>
+        </div>
+        <div>
+            <button id="stats" onclick="settingsBtn(this.id,true)">Stats</button>
+            <button id="detectorWardsPlaced" onclick="settingsBtn(this.id, false)">Controlwards Placed</button>
+            <button id="sightWardsBoughtInGame" onclick="settingsBtn(this.id, false)">Controlwards Bought</button>
+            <button id="visionscore" onclick="settingsBtn(this.id, true)">Vision Score</button>
+            <button id="visionWardsBoughtInGame" onclick="settingsBtn(this.id, false)">Visionwards Bought</button>
+            <button id="wardsKilled" onclick="settingsBtn(this.id, false)">Wards killed</button>
+            <button id="wardsPlaced" onclick="settingsBtn(this.id, false)">Wards placed</button>
+        </div>
+        <div>
+            <button id="event" onclick="settingsBtn(this.id,true)">Events</button>
+            <button id="detectorWardsPlaced" onclick="settingsBtn(this.id, false)">Controlwards Placed</button>
+            <button id="sightWardsBoughtInGame" onclick="settingsBtn(this.id, false)">Controlwards Bought</button>
+            <button id="visionscore" onclick="settingsBtn(this.id, true)">Vision Score</button>
+            <button id="visionWardsBoughtInGame" onclick="settingsBtn(this.id, false)">Visionwards Bought</button>
+            <button id="wardsKilled" onclick="settingsBtn(this.id, false)">Wards killed</button>
+            <button id="wardsPlaced" onclick="settingsBtn(this.id, false)">Wards placed</button>
+        </div>
+    </div>
+    <div>
         <div id="match_history" >
-            <p></p>
             {% for match in match_history %}
                 <div id="{{ match }}"><p>Loading match</p></div>
             {% endfor %}
@@ -72,7 +147,7 @@
                     {% else %}
                     <div class="amatch" style="background-image:-webkit-linear-gradient(left, var(--sub-color), var(--sub-color) 70%, transparent 70%, transparent 100%)" >
                 {% endif %}
-                {% set icon_url = "http://ddragon.leagueoflegends.com/cdn/11.9.1/img/champion/" + match1[summonerid]['champ']['championName'] + ".png" %}
+                {% set icon_url = "http://ddragon.leagueoflegends.com/cdn/11.16.1/img/champion/" + match1[summonerid]['champ']['championName'] + ".png" %}
                 <div style="width: 80px; float: left;display: flex;">
                     <p style="margin:auto;" >{{ (((timenow-(match1["meta"]["gameCreation"]/1000))/8640)|round)/10 }}d  </p>
                     <p style="margin:auto;" >&nbsp;{{ (match1["meta"]["gameDuration"]/60000)|int }}m</p>

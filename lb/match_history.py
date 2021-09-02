@@ -1,43 +1,5 @@
 import requests, json, os.path, time, sphc, os
 from datetime import datetime
-def get_summoner(region, username, api_key):
-    url = "https://" + region + ".api.riotgames.com/lol/summoner/v4/summoners/by-name/" + username + "?api_key=" + api_key
-    print("summoner url: ", url)
-    return requests.get(url).json()
-    
-
-def get_total_mastery(region, id, api_key):
-    url = "https://" + region + ".api.riotgames.com/lol/champion-mastery/v4/scores/by-summoner/" + id + "?api_key=" + api_key
-    return requests.get(url).json()
-
-def get_mastery(region, id, api_key):
-    url = "https://" + region + ".api.riotgames.com/lol/champion-mastery/v4/champion-masteries/by-summoner/" +  id + "?api_key=" + api_key
-    return requests.get(url).json()
-
-def get_rank(region, id, api_key):
-    url = "https://" + region + ".api.riotgames.com/lol/league/v4/entries/by-summoner/" +  id + "?api_key=" + api_key
-    print("rank url: ", url)
-    return requests.get(url).json()
-
-def get_match_history(region_large, puuid, api_key):
-    url = "https://" + region_large + ".api.riotgames.com/lol/match/v5/matches/by-puuid/" + puuid + "/ids?start=0&count=9&api_key=" + api_key
-    print("match history url: ", url)
-    return requests.get(url).json()  # max 100 but has filters
-
-
-def get_match(region_large, match_id, api_key):
-    url = "https://" + region_large + ".api.riotgames.com/lol/match/v5/matches/" + match_id + "?api_key=" + api_key
-    print("match url: ", url)
-    return requests.get(url).json()
-
-def get_match_timeline(region_large, match_id, api_key):
-    url = "https://" + region_large + ".api.riotgames.com/lol/match/v5/matches/" + match_id + "/timeline?api_key=" + api_key
-    print("match timeline url: ", url)
-    return requests.get(url).json()
-
-def get_live_game(region, id, api_key):
-    url = "https://" + region + ".api.riotgames.com/lol/spectator/v4/active-games/by-summoner/" + id + "?api_key=" + api_key
-    return requests.get(url).json()
 
 def jsonconvert(json_match):
     ret_json = {}
@@ -58,6 +20,9 @@ def jsonconvert(json_match):
         ret_json[player['summonerId']]['meta']['summonerId'] = player['summonerId']
         ret_json[player['summonerId']]['meta']['summonerLevel'] = player['summonerLevel']
         ret_json[player['summonerId']]['meta']['summonerName'] = player['summonerName']
+        if player['teamPosition'] == "":
+            player['teamPosition'] = "NOROLE"
+
         ret_json[player['summonerId']]['meta']['teamPosition'] = player['teamPosition']
         ret_json[player['summonerId']]['meta']['individualPosition'] = player['individualPosition']
         ret_json[player['summonerId']]['meta']['win'] = player['win']
@@ -99,18 +64,18 @@ def jsonconvert(json_match):
         ret_json[player['summonerId']]['vision']['wardsKilled'] = player['wardsKilled']
         ret_json[player['summonerId']]['vision']['wardsPlaced'] = player['wardsPlaced']
 
-        ret_json[player['summonerId']]['poppin'] = {}
-        ret_json[player['summonerId']]['poppin']['doubleKills'] = player['doubleKills']
-        ret_json[player['summonerId']]['poppin']['killingSprees'] = player['killingSprees']
-        ret_json[player['summonerId']]['poppin']['largestKillingSpree'] = player['largestKillingSpree']
-        ret_json[player['summonerId']]['poppin']['largestMultiKill'] = player['largestMultiKill']
-        ret_json[player['summonerId']]['poppin']['largestCriticalStrike'] = player['largestCriticalStrike']
-        ret_json[player['summonerId']]['poppin']['longestTimeSpentLiving'] = player['longestTimeSpentLiving']
-        ret_json[player['summonerId']]['poppin']['totalTimeSpentDead'] = player['totalTimeSpentDead']
-        ret_json[player['summonerId']]['poppin']['pentaKills'] = player['pentaKills']
-        ret_json[player['summonerId']]['poppin']['quadraKills'] = player['quadraKills']
-        ret_json[player['summonerId']]['poppin']['tripleKills'] = player['tripleKills']
-        ret_json[player['summonerId']]['poppin']['unrealKills'] = player['unrealKills']
+        ret_json[player['summonerId']]['multikills'] = {}
+        ret_json[player['summonerId']]['multikills']['doubleKills'] = player['doubleKills']
+        ret_json[player['summonerId']]['multikills']['killingSprees'] = player['killingSprees']
+        ret_json[player['summonerId']]['multikills']['largestKillingSpree'] = player['largestKillingSpree']
+        ret_json[player['summonerId']]['multikills']['largestMultiKill'] = player['largestMultiKill']
+        ret_json[player['summonerId']]['multikills']['largestCriticalStrike'] = player['largestCriticalStrike']
+        ret_json[player['summonerId']]['multikills']['longestTimeSpentLiving'] = player['longestTimeSpentLiving']
+        ret_json[player['summonerId']]['multikills']['totalTimeSpentDead'] = player['totalTimeSpentDead']
+        ret_json[player['summonerId']]['multikills']['pentaKills'] = player['pentaKills']
+        ret_json[player['summonerId']]['multikills']['quadraKills'] = player['quadraKills']
+        ret_json[player['summonerId']]['multikills']['tripleKills'] = player['tripleKills']
+        ret_json[player['summonerId']]['multikills']['unrealKills'] = player['unrealKills']
         
         ret_json[player['summonerId']]['damage'] = {}
         ret_json[player['summonerId']]['damage']['magicDamageDealt'] = player['magicDamageDealt']
@@ -123,17 +88,17 @@ def jsonconvert(json_match):
         ret_json[player['summonerId']]['damage']['totalDamageDealt'] = player['trueDamageDealtToChampions']
         ret_json[player['summonerId']]['damage']['trueDamageDealt'] = player['damageDealtToBuildings']
         ret_json[player['summonerId']]['damage']['magicDamageDealtToChampions'] = player['damageDealtToObjectives']
-        ret_json[player['summonerId']]['damage']['physicalDamageDealtToChampions'] = player['damageDealtToTurrets']
+        ret_json[player['summonerId']]['damage']['damageDealtToTurrets'] = player['damageDealtToTurrets']
         ret_json[player['summonerId']]['damage']['physicalDamageTaken'] = player['physicalDamageTaken']
         ret_json[player['summonerId']]['damage']['totalDamageTaken'] = player['totalDamageTaken']
         ret_json[player['summonerId']]['damage']['trueDamageTaken'] = player['trueDamageTaken']
 
-        ret_json[player['summonerId']]['utility'] = {}
-        ret_json[player['summonerId']]['utility']['totalDamageShieldedOnTeammates'] = player['totalDamageShieldedOnTeammates']
-        ret_json[player['summonerId']]['utility']['totalHeal'] = player['totalHeal']
-        ret_json[player['summonerId']]['utility']['totalHealsOnTeammates'] = player['totalHealsOnTeammates']
-        ret_json[player['summonerId']]['utility']['timeCCingOthers'] = player['timeCCingOthers']
-        ret_json[player['summonerId']]['utility']['totalTimeCCDealt'] = player['totalTimeCCDealt']
+        ret_json[player['summonerId']]['support'] = {}
+        ret_json[player['summonerId']]['support']['totalDamageShieldedOnTeammates'] = player['totalDamageShieldedOnTeammates']
+        ret_json[player['summonerId']]['support']['totalHeal'] = player['totalHeal']
+        ret_json[player['summonerId']]['support']['totalHealsOnTeammates'] = player['totalHealsOnTeammates']
+        ret_json[player['summonerId']]['support']['timeCCingOthers'] = player['timeCCingOthers']
+        ret_json[player['summonerId']]['support']['totalTimeCCDealt'] = player['totalTimeCCDealt']
 
         ret_json[player['summonerId']]['objectives'] = {}
         ret_json[player['summonerId']]['objectives']['neutralMinionsKilled'] = player['neutralMinionsKilled']
@@ -143,15 +108,15 @@ def jsonconvert(json_match):
         ret_json[player['summonerId']]['objectives']['objectivesStolenAssists'] = player['objectivesStolenAssists']
         ret_json[player['summonerId']]['objectives']['totalMinionsKilled'] = player['totalMinionsKilled']
         
-        ret_json[player['summonerId']]['gameobjectives'] = {}
-        ret_json[player['summonerId']]['gameobjectives']['firstBloodAssist'] = player['firstBloodAssist']
-        ret_json[player['summonerId']]['gameobjectives']['firstBloodKill'] = player['firstBloodKill']
-        ret_json[player['summonerId']]['gameobjectives']['firstTowerAssist'] = player['firstTowerAssist']
-        ret_json[player['summonerId']]['gameobjectives']['firstTowerKill'] = player['firstTowerKill']
-        ret_json[player['summonerId']]['gameobjectives']['inhibitorKills'] = player['inhibitorKills']
-        ret_json[player['summonerId']]['gameobjectives']['inhibitorsLost'] = player['inhibitorsLost']
-        ret_json[player['summonerId']]['gameobjectives']['turretKills'] = player['turretKills']
-        ret_json[player['summonerId']]['gameobjectives']['turretsLost'] = player['turretsLost']
+        ret_json[player['summonerId']]['events'] = {}
+        ret_json[player['summonerId']]['events']['firstBloodAssist'] = player['firstBloodAssist']
+        ret_json[player['summonerId']]['events']['firstBloodKill'] = player['firstBloodKill']
+        ret_json[player['summonerId']]['events']['firstTowerAssist'] = player['firstTowerAssist']
+        ret_json[player['summonerId']]['events']['firstTowerKill'] = player['firstTowerKill']
+        ret_json[player['summonerId']]['events']['inhibitorKills'] = player['inhibitorKills']
+        ret_json[player['summonerId']]['events']['inhibitorsLost'] = player['inhibitorsLost']
+        ret_json[player['summonerId']]['events']['turretKills'] = player['turretKills']
+        ret_json[player['summonerId']]['events']['turretsLost'] = player['turretsLost']
         
         ret_json[player['summonerId']]['stats'] = {}
         ret_json[player['summonerId']]['stats']['goldEarned'] = player['goldEarned']
@@ -169,9 +134,9 @@ def generate_html(match_json):
     tf = sphc.TagFactory()
     gameCreation = tf.p(str(match_json['meta']['gameCreation']) , Class='game_creation')
     gameduration = tf.p(str(round(match_json['meta']['gameDuration']/6000)/10) + 'm', Class='game_duration')
-    gamemode = tf.p('game mode:\n'+match_json['meta']['gameMode'], Class='game_mode')
-    gameType = tf.p('game type:\n'+match_json['meta']['gameType'], Class='game_type')
-    gameVersion = tf.p('game versiopn:\n'+match_json['meta']['gameVersion'], Class='game_version')
+    gamemode = tf.p('game mode:\n'+match_json['meta']['gameMode'], Class='gameMode')
+    gameType = tf.p('game type:\n'+match_json['meta']['gameType'], Class='gameType')
+    gameVersion = tf.p('game versiopn:\n'+match_json['meta']['gameVersion'], Class='gameVersion')
     meta = tf.DIV([gameCreation, gameduration, gamemode, gameType,  gameVersion], Class='meta')
 
     team1 = []
@@ -181,36 +146,40 @@ def generate_html(match_json):
         tc += 1
         if player == 'meta':
             continue
-        hero = tf.img(src="http://ddragon.leagueoflegends.com/cdn/11.9.1/img/champion/" + match_json[player]['champ']['championName'] + ".png", Class='champ')
+
+        divs = []
+        # Champions div
+        champ = tf.img(src="http://ddragon.leagueoflegends.com/cdn/11.16.1/img/champion/" + match_json[player]['champ']['championName'] + ".png", Class='champ')
         lvl = tf.p(str(match_json[player]['champ']['champLevel']), Class='lvl')
         kda  = tf.p(str(match_json[player]['champ']['kills']) + '/'+ str(match_json[player]['champ']['deaths']) + '/'+ str(match_json[player]['champ']['assists']), Class='kda')
         if match_json[player]['champ']['deaths']  == 0:
             kdacalc = tf.p('(KO)', Class='kdacalc')    
         else:
             kdacalc = tf.p('(' + str(round((10*match_json[player]['champ']['kills']+10*match_json[player]['champ']['assists'])/match_json[player]['champ']['deaths'])/10)+ ')', Class='kdacalc')
-        cs = tf.p(str(match_json[player]['objectives']['totalMinionsKilled']), Class='cs')
-        cspermin = tf.p('(' + str((round((match_json[player]['objectives']['totalMinionsKilled']*10)/((match_json['meta']['gameDuration']/6000)/10)))/10) + ')', Class='cspermin')
-        visionscore = tf.p(str(match_json[player]['vision']['visionScore']), Class='visionscore')
-        controlwards = tf.p('('+str(match_json[player]['vision']['visionWardsBoughtInGame'])+')', Class='controlwards')
-        item0 = tf.img(src="http://ddragon.leagueoflegends.com/cdn/10.18.1/img/item/" + str(match_json[player]['champ']['item0']) + ".png", Class='item')
-        item1 = tf.img(src="http://ddragon.leagueoflegends.com/cdn/10.18.1/img/item/" + str(match_json[player]['champ']['item1']) + ".png", Class='item')
-        item2 = tf.img(src="http://ddragon.leagueoflegends.com/cdn/10.18.1/img/item/" + str(match_json[player]['champ']['item2']) + ".png", Class='item')
-        item3 = tf.img(src="http://ddragon.leagueoflegends.com/cdn/10.18.1/img/item/" + str(match_json[player]['champ']['item3']) + ".png", Class='item')
-        item4 = tf.img(src="http://ddragon.leagueoflegends.com/cdn/10.18.1/img/item/" + str(match_json[player]['champ']['item4']) + ".png", Class='item')
-        item5 = tf.img(src="http://ddragon.leagueoflegends.com/cdn/10.18.1/img/item/" + str(match_json[player]['champ']['item5']) + ".png", Class='item')
-        item6 = tf.img(src="http://ddragon.leagueoflegends.com/cdn/10.18.1/img/item/" + str(match_json[player]['champ']['item6']) + ".png", Class='item')
+        
+        item0 = tf.img(src="http://ddragon.leagueoflegends.com/cdn/11.16.1/img/item/" + str(match_json[player]['champ']['item0']) + ".png", Class='item')
+        item1 = tf.img(src="http://ddragon.leagueoflegends.com/cdn/11.16.1/img/item/" + str(match_json[player]['champ']['item1']) + ".png", Class='item')
+        item2 = tf.img(src="http://ddragon.leagueoflegends.com/cdn/11.16.1/img/item/" + str(match_json[player]['champ']['item2']) + ".png", Class='item')
+        item3 = tf.img(src="http://ddragon.leagueoflegends.com/cdn/11.16.1/img/item/" + str(match_json[player]['champ']['item3']) + ".png", Class='item')
+        item4 = tf.img(src="http://ddragon.leagueoflegends.com/cdn/11.16.1/img/item/" + str(match_json[player]['champ']['item4']) + ".png", Class='item')
+        item5 = tf.img(src="http://ddragon.leagueoflegends.com/cdn/11.16.1/img/item/" + str(match_json[player]['champ']['item5']) + ".png", Class='item')
+        item6 = tf.img(src="http://ddragon.leagueoflegends.com/cdn/11.16.1/img/item/" + str(match_json[player]['champ']['item6']) + ".png", Class='item')
         
         items = tf.DIV([item0, item1, item2, item3, item4, item5, item6], Class='items')
         runes = tf.DIV('runes', Class='runes')
-        brief = tf.DIV([hero, lvl, kda, kdacalc, cs,cspermin, visionscore, controlwards, runes,items], Class='brief')
-        objectives = tf.DIV(Class='objectives')
-        spells = tf.DIV(Class='spells')
-        kills = tf.DIV(Class='kills')
-        minons = tf.DIV(Class='minons')
-        vision = tf.DIV(Class='vision')
-        damage = tf.DIV(Class='damage')
-        details = tf.DIV([objectives, spells, kills, minons, vision, damage], Class='details')
-        player = tf.DIV([brief, details], id=match_json[player]['meta']['summonerId'], Class=match_json[player]['meta']['teamPosition'])
+        divs.append(tf.DIV([champ, lvl, kda, kdacalc, runes, items], Class='champion'))
+
+        for category in match_json[player].keys():
+            if category in "champmetaperks":
+                continue
+            ps = []
+            for stat in match_json[player][category].keys():
+                if stat == "totalMinionsKilled":
+                    ps.append(tf.p('(' + str((round((match_json[player]['objectives']['totalMinionsKilled']*10)/((match_json['meta']['gameDuration']/6000)/10)))/10) + ')', Class='cspermin'))
+                ps.append(tf.p(str(match_json[player][category][stat]), Class=stat))
+            divs.append(tf.DIV(ps, Class=category))
+        divsdiv = tf.DIV(divs, Class="playerdiv")
+        player = tf.DIV(divsdiv, Class=match_json[player]['meta']['teamPosition']+" "+match_json[player]['meta']['summonerId'])
         if tc > 6:
             team2.append(player)
         else:
@@ -246,5 +215,4 @@ def download_matches(match_history, region_large, api_key):
             with open(path, 'w') as f:
                 f.write(str(div))
                 print('saved to' ,path)
-
 

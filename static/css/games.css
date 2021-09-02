@@ -1,0 +1,30 @@
+
+#leaderboard > button{
+    background-color: var(--bg-color);
+    border: none;
+    border-radius: 4px;
+    filter:brightness(1.25);
+    margin: .2%;
+    white-space: nowrap;
+    color:var(--main-color);
+    font-family: var(--main-font);
+
+
+}
+#leaderboard{
+    width:500px;
+    margin:auto;
+    display:none;
+    padding:0;
+}
+#leaderboard > input{
+    background-color: var(--bg-color);
+    border: none;
+    padding: 1px 2px;
+    filter: brightness(1.25);
+}
+.score{
+    display:flex;
+    justify-content: space-between;
+    width: 40%;
+}

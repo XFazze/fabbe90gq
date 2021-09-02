@@ -8,7 +8,7 @@
 }
 .centerdiv h2{
     font-family: var(--title-font);
-    color:var(--sub-color);
+    color:var(--main-color);
 
 }
 .centerdiv p{
@@ -34,14 +34,20 @@
     width: 60px;
     float:left;
     height: 150px;
+    background-color: var(--bg-color);
 }
 .mrow{
     text-align: center;
+}
+#user_info{
+    display: flex;
 }
 #champion_masteryBtn{
     background-color:var(--sub-color);
     font-family: var(--main-font);
     text-align: center;
+    border-radius: 2px;
+    height: 43px;
 
 }
 #champion_masteryBtn h1{
@@ -59,14 +65,18 @@
     display: flex;
 
 }
+#settings button{
+    background-color: var(--bg-color);
+    border: none;
+    border-radius: 4px;
+    filter:brightness(1.25);
+    margin: .2%;
+    white-space: nowrap;
+}
 #settings div{
     padding: 0 0 5 5;
     
 }
-
-
-
-
 
 
 
@@ -115,6 +125,11 @@
     width: 97%;
     order: 5;
 }
+.NOROLE{
+    display: none;
+    width: 97%;
+    order: 5;
+}
 .meta{
     width: 10%;
     float:left;
@@ -131,6 +146,7 @@
 }
 .game_duration{
     width: 40px;
+    margin:1%;
 }
 .game_mode{
     display: none;
@@ -145,27 +161,17 @@
     width: 90%;
     float:left;
 }
-.brief{
-    width: 100%;
-    background-color: yellow;
-    display:table;
+.playerdiv{
+    display: flex;
 }
-.brief p{
+.champion p{
     font-family: var(--main-font);
     color:var(--text-color);
-    display: inline-block;
     margin:0px;
-}
-.brief div{
-    display: inline-block;
-    float: right;
-    margin:0px;
-    padding-left: 20px;
 }
 .champ{
     width: 20;
     height: 19;
-    float: left;
 }
 .lvl{
     width: 30px;
@@ -195,12 +201,14 @@
 .item{ 
     width: 19px;
 }
+.items{
+    width: 100%;
+}
 .player{
     display: none;
 }
 .details div{
     float:left;
-    border:1px solid black;
     margin-left: 1%;
     margin-right: 1%;
 }
@@ -226,4 +234,68 @@
 .damage{
     width:30%;
     
+}
+/* meta buttons */
+#meta{
+    color:var(--main-color);
+}
+#game_creation{
+    color:var(--main-color);
+}
+#game_duration{
+    color:var(--main-color);
+}
+#gameMode{
+    color:var(--error-color);
+}
+#gameType{
+    color:var(--error-color);
+}
+#gameVersion{
+    color:var(--error-color);
+}
+
+/* champ buttons */
+#champ{
+    color:var(--main-color);
+}
+#kills{
+    color:var(--main-color)
+}
+#assists{
+    color:var(--main-color);
+}
+#deaths{
+    color:var(--main-color)
+}
+#champLevel{
+    color:var(--main-color);
+}
+#items{
+    color:var(--main-color)
+}
+#summoner1Id{
+    color:var(--error-color);
+}
+#summoner2Id{
+    color:var(--error-color)
+}
+/* Vision buttons */
+#detectorWardsPlaced{
+    color:var(--error-color)
+}
+#sightWardsBoughtInGame{
+    color:var(--error-color);
+}
+#visionScore{
+    color:var(--main-color)
+}
+#visionWardsBoughtInGame{
+    color:var(--error-color)
+}
+#wardsKilled{
+    color:var(--error-color);
+}
+#wardsPlaced{
+    color:var(--error-color)
 }
