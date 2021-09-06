@@ -12,43 +12,116 @@ window.onload = function () {
     };
 
     ctx.beginPath();
-    ctx.fillStyle = '#90ee90';
-    ctx.arc(element.left,  element.top, 25, 0, 2 * Math.PI);
-    ctx.fill();
 
     var last_time = Date.now()*10;
     var difficulty = 1;
-    var clicks = 0;
+    var snake = [[20,20]];
+    var key = 'none';
+    var started = false;
+    var dead = false;
+    var deadtail;
+    var newhead;
 
-    canvas.addEventListener('click', function (event) {
-        var x = event.pageX - canvasLeft,
-            y = event.pageY - canvasTop;
+    ctx.beginPath();
+    ctx.fillStyle = 'yellow';
+    ctx.fillRect(20, 20, 10 , 10);
 
-        if ((Math.abs(y-element.top)**2+Math.abs(x-element.left)**2)**0.5 < 25) {
-            var scoreElement = document.getElementById('score');
-            scoreElement.innerHTML = 'Score: ' + clicks.toString();
+    function gameLoop() {
+        console.log("gameLoop");
+        console.log(key);
+        move(snake,key);
+        drawhead(newhead);
+        undrawtail(deadtail);
+    }
+  
+    document.addEventListener('keydown', (event) => {
+        //console.log("PRESSED KEYup", event.key);
+        if (event.key == 'ArrowRight' || event.key == 'ArrowLeft' || event.key == 'ArrowUp' || event.key == 'ArrowDown'){
+            key = event.key;
+        } else{
+            console.log('other kwy pressed: ', key)
+        }
+        if (!started){
+            interval = setInterval(gameLoop, 253); // 33 milliseconds = ~ 30 frames per sec
+            console.log('started gameloop')
 
-            ctx.fillStyle = 'black';
-            ctx.fillRect(0, 0, 500, 300);   
+            started = true;
+        }
+    });
+    function dead(){
+        clearInterval(interval);
+        dead = true;
+        document.getElementById("leaderboard").style.display = "block";
 
-            element.left = 25+Math.random()*450;
-            element.top = 25+Math.random()*250;
+    };
+    function move(snake, key){
+        console.log("move key:", key);
+        console.log("old snake: ", snake);
+        console.log('last: ',snake[snake.length - 1]);
+        if (snake[snake.length - 1][0] === 0 || snake[snake.length - 1][0] === canvas.width || snake[snake.length - 1][1] === 0 || snake[snake.length - 1][1] === canvas.height ){
+            console.log('went into wall');
 
-            ctx.beginPath();
-            ctx.fillStyle = '#90ee90';
-            ctx.arc(element.left,  element.top, 25, 0, 2 * Math.PI);
-            ctx.fill();
-            clicks += 1;
-            if (Date.now() > last_time + difficulty*1000){
-                document.getElementById("snoop").style.display = "block";
-                document.getElementById("game-layer").style.display = "none";
-                document.getElementById("leaderboard").style.display = "block";
-            }
-            difficulty -= difficulty/10
-            last_time = Date.now()
+        };
+        if (key=="ArrowRight"){
+            newhead= [snake[snake.length - 1][0] + 10,snake[snake.length - 1][1]] 
+            if (newhead in snake){
+                console.log("you ran into yourself");
+                dead();
 
-        }});
+            } else{
+                snake.push(newhead);
+            };
+        };
+        if (key=="ArrowLeft"){
+            newhead = [snake[snake.length - 1][0] - 10,snake[snake.length - 1][1]]
+            if (newhead in snake){
+                console.log("you ran into yourself");
+                dead();
 
+            } else{
+                snake.push(newhead);
+            };
+        };
+        if (key=="ArrowUp"){
+            newhead = [snake[snake.length - 1][0],snake[snake.length - 1][1] - 10]
+            if (newhead in snake){
+                console.log("you ran into yourself");
+                dead();
+
+            } else{
+                console.log('newhead: ',newhead)
+                snake.push(newhead);
+            };
+        };
+        if (key=="ArrowDown"){
+            newhead = [snake[snake.length - 1][0],snake[snake.length - 1][1] + 10]
+            if (newhead in snake){
+                console.log("you ran into yourself");
+                dead();
+            } else{
+                snake.push(newhead);
+
+            };
+        };
+        console.log(newhead)
+        deadtail = snake.shift();
+        console.log("new snake: ", snake);
+
+    };
+    function drawhead(newhead){
+        ctx.beginPath();
+        // head
+        ctx.fillStyle = 'yellow';
+        ctx.fillRect(newhead[0], newhead[1], 10 , 10);
+
+    };
+    function undrawtail(deadtail){
+        ctx.beginPath();
+        // tail
+        ctx.fillStyle = 'blue';
+        ctx.fillRect(deadtail[0], deadtail[1], 10 , 10);
+
+    };
     document.getElementById("resetbutton").addEventListener("click", function (event) {
         last_time = Date.now()*10;
         difficulty = 1;
@@ -57,7 +130,7 @@ window.onload = function () {
         element.left = 250;
 
         var scoreElement = document.getElementById('score');
-        scoreElement.innerHTML = 'Score: hej';
+        scoreElement.innerHTML = 'Score: 0';
        
         document.getElementById("snoop").style.display = "none";
         document.getElementById("game-layer").style.display = "block";
