@@ -52,6 +52,7 @@ window.onload = function () {
         clearInterval(interval);
         dead = true;
         document.getElementById("leaderboard").style.display = "block";
+        document.getElementById("snooop").style.display = "block";
 
     };
     function move(snake, key){
@@ -137,13 +138,11 @@ window.onload = function () {
         document.getElementById("leaderboard").style.display = "none";
             
 
-        ctx.fillStyle = 'black';
-        ctx.fillRect(0, 0, 500, 300);
-
         ctx.beginPath();
-        ctx.fillStyle = '#90ee90';
-        ctx.arc(element.left,  element.top, 25, 0, 2 * Math.PI);
-        ctx.fill();
+        ctx.fillStyle = 'black';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = 'yellow';
+        ctx.fillRect(20, 20, 10 , 10);
 
     });
     

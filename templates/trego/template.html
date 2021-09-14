@@ -1,0 +1,89 @@
+<head>
+    {% block link %}{% endblock %}
+    <link rel="shortcut icon" href="/static/favicon.ico">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&family=Roboto+Mono&display=swap" rel="stylesheet">
+    <title>Fabbe90.gq</title>
+</head>
+<style>
+:root{
+    --bg-color: #212121;
+    --main-color: #feff04;
+    --sub-color: #5c4a9c;
+    --text-color: #e8e8e8;
+    --error-color: #da3333;
+    --main-font:'Roboto', sans-serif;
+    --title-font:'Roboto Mono', monospace;
+}
+.navbar{
+    float:left;
+    width: 100px;
+    justify-content:center;
+    overflow:hidden;
+}
+.navbar li a {
+    color: var(--main-color);
+    text-align: center;
+    padding-left: 30px;
+    text-decoration: none;
+    font-size: 30px;
+    font-family: var(--title-font);
+}
+.navbar li a:hover {
+color: var(--sub-color);
+}
+li{
+    list-style-type: none;
+    padding-bottom: 10px;
+}
+h1{
+    font-family: var(--title-font);
+    color: var(--main-color);
+    margin: 0px; 
+}
+h2{
+    font-family: var(--title-font);
+    color: var(--main-color);
+    margin: 0px;
+}
+a{
+    text-decoration: none;
+}
+body{
+    background-color: var(--bg-color);
+}
+button{
+    background-color: var(--bg-color);
+    border: none; 
+    padding-left: 30px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+}
+</style>
+
+<body style="background:var(--bg-color);display: flex;justify-content: center;">
+    <div id="navbar">
+        <ul>
+            <li><a href="/">
+                <h1>Trego</h1>
+            </a></li>
+            <li><a href="/">
+                <h2>Planner</h2>
+            </a></li>
+            <li><a href="/">
+                <h2>Active</h2>
+            </a></li>
+        
+            <li><button id="login">
+                <h2>Login</h2>
+            </button></li>
+            <li><button id="register">
+                <h2>Register</h2>
+            </button></li>
+        </ul>
+    </div>
+    {% block main %}
+    {% endblock %}    
+</body>
+    

@@ -11,8 +11,8 @@ app.config['SECRET_KEY'] = secret_key
 # Root
 @app.route("/")
 def index():
-    return render_template('bjornbanan_help.html')
+    return render_template('trego/concept.html')
 
 # Run the site
 if __name__ == "__main__":
-    app.run()
+    app.run(debug=True)
