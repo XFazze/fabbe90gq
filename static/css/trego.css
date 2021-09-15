@@ -1,0 +1,26 @@
+
+#main{
+    max-width: 1000px;
+    display: grid;
+    grid-auto-flow: row;
+    padding: 2rem;
+    gap: 2rem;
+    align-items: center;
+    align-content: center;
+    width: 100%;
+}
+#concept{
+    position: absolute;
+    width: 70%;
+    font-size: large;
+    color: var(--text-color);
+    font-family: var(--main-font);
+}
+#background{    
+    background-color: var(--bg-color);
+    width: 60%;
+    height: 300px;
+    margin-left: 200px;
+    margin-top: 200px;
+}
+
