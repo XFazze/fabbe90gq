@@ -183,17 +183,9 @@ window.onload = function () {
         var user = document.getElementById("leaderboard");
         data = {'game': "basicsnake",
                 'score' : snake.length,
-                'user' : user.elements[0].value}
-        $.ajax({
-        url: '/gamejs/leaderboard',
-        type: 'POST',
-        contentType: 'application/json;charset=UTF-8',
-        data: JSON.stringify(data),   // converts js value to JSON string
-        error: function(ts) { alert(ts.responseText) },
-        })
-        .done(function(result){     // on success get the return object from server
-            console.log(result)     // do whatever with it. In this case see it in console
+                'user' : user.elements[0].value};
+        $.post('/gamejs/leaderboard', {"data": JSON.stringify(data)});
         })
         
-    });
+
 };

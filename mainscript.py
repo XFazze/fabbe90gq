@@ -55,18 +55,17 @@ def gamejs():
 @app.route("/gamejs/leaderboard", methods=['GET', 'POST'])
 def leaderboard():
     if request.method == "POST":
+        jsonf = json.loads(request.form.to_dict()['data'])
+        print(jsonf)
+        print(type(jsonf))
         print("METHOD IS POST")
-        data = {}    # empty dict to store data
-        data['game'] = request.json['game']
-        data['user'] = request.json['user']
-        data['score'] = request.json['score']
         client = MongoClient('localhost', 27017)
         db = client.website
         collection = db.leaderboard
-        collection.insert_one(data)
+        collection.insert_one(jsonf)
         print("METHOD IS POST")
 
-    return
+    return redirect("")
 
 
 @app.route("/gamejs/osu", methods=['GET', 'POST'])
