@@ -90,43 +90,8 @@ def snake():
 
     return render_template('games/snake.html',  leaderboard=leaderboard)
 
-
-# PROJECTS
-@app.route("/projects/files")
-def files():
-    files = os.listdir("/home/pi/website/static/projects/")
-    return render_template('files.html', files=files)
-
-@app.route('/projects/files/<path:filename>')
-def sendfile(filename):
-    projects_path = app.static_folder + "/projects/"
-    return send_from_directory(projects_path, filename)
-
-@app.route("/projects/")
-def projects():
-    files = os.listdir("/home/pi/website/static/projects/")
-    return render_template('projects.html', files=files)
-
-@app.route("/projects/pappa", methods=['GET', 'POST'])
-def pappa():
-    return render_template('produktutveckling/pappa.html')
-
-@app.route("/projects/pappa/login", methods=['GET', 'POST'])
-def pappa_login():
-    form = pappa_login_form()
-    return render_template('produktutveckling/pappa_login.html', form=form)
-
-@app.route("/projects/pappa/register", methods=['GET', 'POST'])
-def pappa_register():
-    form = pappa_register_form()
-    if request.method == "POST":
-        return redirect('/hejda')
-    return render_template('produktutveckling/pappa_register.html', form=form)
-
-
-
-# proportions calc
-@app.route("/projects/factorio",  methods=['GET', 'POST'])
+# Factorio Proportions calc
+@app.route("/factorio",  methods=['GET', 'POST'])
 def prop_calc():
     form = factorioform()
     if form.validate_on_submit():
@@ -140,6 +105,10 @@ def prop_calc():
         return render_template('factorio_proportions.html', form=form, ratio=ratio, component=component, submitted=True,  sop=sop)
     return render_template('factorio_proportions.html', form=form, ratio="wee", component="component", submitted=False, sop="sop")
 
+# Portfolio
+@app.route("/portfolio")
+def portfolio():
+    return render_template('portfolio.html')
         
 @app.route("/lb2000/test")
 def lb2000_test():    

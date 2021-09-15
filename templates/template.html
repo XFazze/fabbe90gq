@@ -98,7 +98,63 @@ li {
         {% block main %}
         {% endblock %}
 
+    </div><div id="contact">
+        <div class='contactcontainer'>
+        <a href="https://github.com/XFazze" target="_blank" ><img src='static/pics/GitHub-Mark-32px.png'></a>
+        </div>
+        <div class='contactcontainer' id='emailcontainer'>
+            <a id="email" href="#" onclick="copy('me@fabbe90.gq')">&nbsp;me@fabbe90.gq</a>
+        </div>
+        <div class='contactcontainer'>
+        <img src='static/pics/pngwing.png' id="copySymbol" >
+        </div>
+    
     </div>
+    <script>
+        function copy(text){
+        navigator.clipboard.writeText(text);
+        copySymbol = document.getElementById('copySymbol');
+        copySymbol.style.display = 'block'
+        copySymbol.classList.toggle('transition');
+        console.log('add');
+        interval = setInterval(removeclass, 1000);
+        function removeclass(){
+            copySymbol.classList.toggle('transition');
+            console.log('removein');
+            clearInterval(interval)};
+    };
+    </script>
+    <style>
+        #contact{
+            display: flex;
+            position: absolute;
+            bottom: 1%;
+            left: 1%;
+        }
+        #contact  img{
+            width: 32px;
+            height: 32px;
+        }
+        #email{
+        position: absolute;
+        text-decoration: none;
+        color:var(--main-color);
+        font-size: 22px;
+        font-family: var(--main-font);
+        }
+        #copySymbol{
+            margin-left: 170px;
+            opacity: 0;
+            transition: all .2s ease-out;
+            margin:0;
+        }
+        #copySymbol.transition{
+            opacity: 1;
+        }
+        #emailcontainer{
+            width: 170px;
+        }
+    </style>
     
 </body>
     
