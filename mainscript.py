@@ -66,7 +66,7 @@ def leaderboard():
         collection.insert_one(data)
         print("METHOD IS POST")
 
-    return redirect('/gamejs/osu')
+    return
 
 
 @app.route("/gamejs/osu", methods=['GET', 'POST'])
