@@ -72,9 +72,9 @@ def leaderboard():
 def osu():
     client = MongoClient('localhost', 27017)
     db = client.website
-    collection = db.osu
+    collection = db.leaderboard
     leaderboard = []
-    for record in collection.find().sort("score", pymongo.DESCENDING).limit(10):
+    for record in collection.find({"game":"osu"}).sort("score", pymongo.DESCENDING).limit(10):
         leaderboard.append(record)
 
     return render_template('games/osu.html',  leaderboard=leaderboard)
@@ -83,9 +83,9 @@ def osu():
 def snake():
     client = MongoClient('localhost', 27017)
     db = client.website
-    collection = db.snake
+    collection = db.leaderboard
     leaderboard = []
-    for record in collection.find().sort("score", pymongo.DESCENDING).limit(10):
+    for record in collection.find({"game":"basicsnake"}).sort("score", pymongo.DESCENDING).limit(10):
         leaderboard.append(record)
 
     return render_template('games/snake.html',  leaderboard=leaderboard)

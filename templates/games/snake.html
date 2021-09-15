@@ -1,0 +1,34 @@
+{% extends "template.html" %}
+{% block link %}
+    <link rel="stylesheet" href="/static/css/basic.css">
+    <link rel="stylesheet" href="/static/css/games.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script type="text/javascript" src="/static/js/games/snake.js"></script>
+{% endblock %}
+{% block body %}background-color:#23856D;{% endblock %}
+{% block main%}
+<div class="centerdiv">
+    <h1>Snake</h1>
+</div>
+<div styler="display:flex" class="centerdiv">
+    <h2  id="score" style="text-align:center;" >Score: you suck Speed: ass</h2><br>
+    <canvas id="game-layer" width=500px height=300px style="margin: auto; display:block; padding:0;"></canvas><br>
+
+    <button id="resetbutton"  style="width:500px; margin:auto; display:block; padding:0;">RESET</button>
+
+    <form action="" method="post" id="leaderboard">
+        <input type="text" name="name" placeholder="name" required>
+        <button id="submit" type="submit">Submit</button>
+    </form>
+
+    <div style="margin: 20%; margin-top:0%">
+        <h1> Leaderboard</h1>
+        {% for score in leaderboard %}
+        <div class="score">
+            <p>{{ score["user"] }} </p>
+            <p> {{ score["score"] }}</p>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
