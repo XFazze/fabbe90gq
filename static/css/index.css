@@ -18,15 +18,19 @@
 }
 .project{
     cursor: pointer;
+    transition: transform 0.4s ease-in-out;
+}
+.project:hover{
+    transform: translate(-200px,0);
+
 }
 .project h1{
-    color:var(--sub-color);
+    color:var(--main-color);
     font-family: var(--title-font);
 
 }
 .project p{
-    color:var(--text-color);
+    color:var(--sub-color);
     font-size: 20px; 
     font-family: var(--main-font);
-
 }
