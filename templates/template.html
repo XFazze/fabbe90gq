@@ -25,78 +25,25 @@
     grid-template-rows: auto 1fr auto;
     width: 100%;
 }
-.navbar{
-    display:flex;
-    justify-content:center;
-    overflow:hidden;
-}
-.navbar a {
-    color: var(--main-color);
-    text-align: center;
-    padding: 16px 30px;
+#home{
+    left: 1%;
+    top: 1%;
+    position: absolute;
     text-decoration: none;
-    font-size: 30px;
-    font-family: var(--title-font);
-}
-.navbar a:hover {
-color: var(--sub-color);
-}
-
-li {
-    display: list-item;
-}
-.dropdowndiv > li > a{
     color:var(--main-color);
-    font-size: 18px; 
-    text-align: center;
-    padding: 5px;
-}
-.dropdowndiv{
-    display: none;
-    justify-content: center;
-    list-style-type: none;
-    flex-direction: column;
-    align-items: center;
-    padding-inline-start: 0;
-    
-}
-.dropdown:hover .dropdowndiv{
-    display: flex;
-}
-.dropdowndiv > a:hover{
-    color:var(--sub-color)
+    font-size: 22px;
+    font-family: var(--main-font);
+
 }
 </style>
 <body style="background:var(--bg-color);display: flex;justify-content: center;" {% block body %}{% endblock %}>
+    <a href="https://fabbe90.gq/" id="home">Sites</a>
     <div id="main">
-        <div class="navbar" >
-            <div class="dropdown" >
-            <a href="/" >&#60;Home&#62;</a>
-            </div>
-            <div class="dropdown" >
-                <a href="/projects" >&#60;Projects&#62;</a>
-                <ul class="dropdowndiv">
-                    <li><a href="/projects/pappa" >&#60;Pappa&#62;</a></li>
-                    <li><a href="/projects/factorio" >&#60;Factorio Ratio&#62;</a></li>
-                    <li><a href="/lb2000" >&#60;LB2000&#62;</a></li>
-                </ul>
-            </div>
-            <div class="dropdown" >
-                <a href="/gamejs">&#60;GameJS&#62;</a>
-                <ul class="dropdowndiv">
-                    <li><a href="/gamejs/osu" >&#60;Osu!&#62;</a></li>
-                    <li><a href="/gamejs/snake" >&#60;Snake&#62;</a></li>
-                </ul>
-            </div>
-            <div class="dropdown" >
-                <a href="/bjornbanan">&#60;Björnbanan&#62;</a>
-                <ul class="dropdowndiv">
-                    <li><a href="/bjornbanan/commands" >&#60;Commands&#62;</a></li>
-                </ul>
-            </div>
-        </div>
+       
         {% block main %}
         {% endblock %}
+
+
 
     </div><div id="contact">
         <div class='contactcontainer'>
@@ -110,51 +57,51 @@ li {
         </div>
     
     </div>
-    <script>
-        function copy(text){
-        navigator.clipboard.writeText(text);
-        copySymbol = document.getElementById('copySymbol');
-        copySymbol.style.display = 'block'
-        copySymbol.classList.toggle('transition');
-        console.log('add');
-        interval = setInterval(removeclass, 1000);
-        function removeclass(){
-            copySymbol.classList.toggle('transition');
-            console.log('removein');
-            clearInterval(interval)};
-    };
-    </script>
-    <style>
-        #contact{
-            display: flex;
-            position: absolute;
-            bottom: 1%;
-            left: 1%;
-        }
-        #contact  img{
-            width: 32px;
-            height: 32px;
-        }
-        #email{
-        position: absolute;
-        text-decoration: none;
-        color:var(--main-color);
-        font-size: 22px;
-        font-family: var(--main-font);
-        }
-        #copySymbol{
-            margin-left: 170px;
-            opacity: 0;
-            transition: all .2s ease-out;
-            margin:0;
-        }
-        #copySymbol.transition{
-            opacity: 1;
-        }
-        #emailcontainer{
-            width: 170px;
-        }
-    </style>
+   
     
 </body>
-    
+<script>
+    function copy(text){
+    navigator.clipboard.writeText(text);
+    copySymbol = document.getElementById('copySymbol');
+    copySymbol.style.display = 'block'
+    copySymbol.classList.toggle('transition');
+    console.log('add');
+    interval = setInterval(removeclass, 1000);
+    function removeclass(){
+        copySymbol.classList.toggle('transition');
+        console.log('removein');
+        clearInterval(interval)};
+};
+</script>
+<style>
+    #contact{
+        display: flex;
+        position: absolute;
+        bottom: 1%;
+        left: 1%;
+    }
+    #contact  img{
+        width: 32px;
+        height: 32px;
+    }
+    #email{
+    position: absolute;
+    text-decoration: none;
+    color:var(--main-color);
+    font-size: 22px;
+    font-family: var(--main-font);
+    }
+    #copySymbol{
+        margin-left: 170px;
+        opacity: 0;
+        transition: all .2s ease-out;
+        margin:0;
+    }
+    #copySymbol.transition{
+        opacity: 1;
+    }
+    #emailcontainer{
+        width: 170px;
+    }
+</style>
