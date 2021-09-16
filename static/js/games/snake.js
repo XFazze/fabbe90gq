@@ -22,7 +22,7 @@ window.onload = function () {
         oldkey = 'none';
         started = false;
         deadval = false;
-        speed = 1020;
+        speed = 520;
 
         ctx.fillStyle = 'black';
         ctx.fillRect(0, 0, 500, 300);
