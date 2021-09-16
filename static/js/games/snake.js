@@ -1,4 +1,5 @@
 window.onload = function () {
+    (function(){
     var canvas = document.getElementById("game-layer");
     var canvasLeft = canvas.offsetLeft + canvas.clientLeft;
     var canvasTop = canvas.offsetTop + canvas.clientTop;
@@ -201,5 +202,5 @@ window.onload = function () {
         $.post('/gamejs/leaderboard', {"data": JSON.stringify(data)});
         })
         
-
+    })();
 };
