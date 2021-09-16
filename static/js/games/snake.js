@@ -22,7 +22,7 @@ window.onload = function () {
         oldkey = 'none';
         started = false;
         deadval = false;
-        speed = 520;
+        speed = 550;
 
         ctx.fillStyle = 'black';
         ctx.fillRect(0, 0, 500, 300);
@@ -159,7 +159,7 @@ window.onload = function () {
             snake.unshift(snake[0]);
             snake.unshift(snake[0]);
             snake.unshift(snake[0]);
-            speed -= 2;
+            speed -= 1;
             var scoreElement = document.getElementById('score');
             scoreElement.innerHTML = 'Score: ' + snake.length.toString()+ ' Speed: ' + speed;
         };
