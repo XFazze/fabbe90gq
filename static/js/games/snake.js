@@ -9,6 +9,7 @@ window.onload = function () {
     var fruit;
     var snake;
     var key;
+    var oldkey;
     var started;
     var deadval;
     var speed;
@@ -17,9 +18,10 @@ window.onload = function () {
     function ready(){
         snake = [[20,20]];
         key = 'none';
+        oldkey = 'none';
         started = false;
         deadval = false;
-        speed = 1520;
+        speed = 1020;
 
         ctx.fillStyle = 'black';
         ctx.fillRect(0, 0, 500, 300);
@@ -43,6 +45,7 @@ window.onload = function () {
         eaten(snake,fruit);
         drawhead(newhead);
         undrawtail(deadtail);
+        oldkey = key;
         if (deadval){
             return;
         };
@@ -51,9 +54,13 @@ window.onload = function () {
   
     // listens for the key
     document.addEventListener('keydown', (event) => {
-        //console.log("PRESSED KEYup", event.key);
-        if (event.key == 'ArrowRight' || event.key == 'ArrowLeft' || event.key == 'ArrowUp' || event.key == 'ArrowDown'){
-            key = event.key;
+        console.log("PRESSED KEYup", event.key, key, oldkey);
+        if (key != oldkey){
+            return
+        }
+        if (event.key == 'd' || event.key == 'a' || event.key == 'w' || event.key == 's'){
+            if (event.key != oldkey){
+                key = event.key;}
         } else{
             console.log('other kwy pressed: ', key)
         }
@@ -84,16 +91,16 @@ window.onload = function () {
         if (snake[snake.length - 1][0] === 0 || snake[snake.length - 1][0] === canvas.width || snake[snake.length - 1][1] === 0 || snake[snake.length - 1][1] === canvas.height ){
             console.log('went into wall');
         };
-        if (key=="ArrowRight"){
+        if (key=="d"){
             newhead= [snake[snake.length - 1][0] + 10,snake[snake.length - 1][1]] 
         };
-        if (key=="ArrowLeft"){
+        if (key=="a"){
             newhead = [snake[snake.length - 1][0] - 10,snake[snake.length - 1][1]]
         };
-        if (key=="ArrowUp"){
+        if (key=="w"){
             newhead = [snake[snake.length - 1][0],snake[snake.length - 1][1] - 10]
         };
-        if (key=="ArrowDown"){
+        if (key=="s"){
             newhead = [snake[snake.length - 1][0],snake[snake.length - 1][1] + 10]
         };
 
@@ -114,7 +121,6 @@ window.onload = function () {
         deadtail = snake.shift();
         console.log("new snake: ", snake);
     };
-
     // to place a fruit outside of snake
     function spawnFruit(snake){
         console.log('spawnfruit')
@@ -122,11 +128,18 @@ window.onload = function () {
             let x = Math.round(Math.random()*(canvas.width-10)/10)*10
             let y =  Math.round(Math.random()*(canvas.height-10)/10)*10
             console.log('spawnfruitloop', x, y)
-            if (snake.includes([x,y])){
-                console.log('spawnfruit: in snake not valid')
-            }else{
-                console.log('spawnfruit: ate fruit')
-                speed -= 3;
+            var valid = true
+
+            // check if in snake
+            for(var i = 0; i < snake.length; i++){
+                if (x == snake[i][0] && y == snake[i][1]){
+                    console.log('spawnfruit: in snake not valid')
+                    var valid = false
+                };
+            };
+
+            // places fruit if it valid otherwise go another round
+            if(valid){
                 ctx.beginPath();
                 ctx.fillStyle = 'red';
                 console.log('fillreact', x, y)
@@ -145,6 +158,7 @@ window.onload = function () {
             snake.unshift(snake[0]);
             snake.unshift(snake[0]);
             snake.unshift(snake[0]);
+            speed -= 2;
             var scoreElement = document.getElementById('score');
             scoreElement.innerHTML = 'Score: ' + snake.length.toString()+ ' Speed: ' + speed;
         };
