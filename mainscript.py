@@ -56,6 +56,8 @@ def gamejs():
 def leaderboard():
     if request.method == "POST":
         jsonf = json.loads(request.form.to_dict()['data'])
+        if jsonf['score'] > 1985:
+            return redirect("")
         print(jsonf)
         print(type(jsonf))
         print("METHOD IS POST")
