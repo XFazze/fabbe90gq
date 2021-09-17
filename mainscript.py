@@ -187,6 +187,27 @@ def lb2000():
     return render_template('lb2000/lb2000_search.html', form=form, error=False)
 
 
+# Trego
+@app.route("/trego")
+def trego():
+    return render_template('trego/home.html')
+
+    
+@app.route("/trego/planner")
+def tregoPlanner():
+    return render_template('trego/planner.html')
+
+    
+@app.route("/trego/active")
+def tregoActive():
+    return render_template('trego/active.html')
+
+@app.route("/trego/profile")
+def tregoProfile():
+    return render_template('trego/profile.html')
+
+    
+
 
 # Run the site
 if __name__ == "__main__":

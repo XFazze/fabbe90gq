@@ -42,7 +42,7 @@ h1{
 }
 h2{
     font-family: var(--title-font);
-    color: var(--main-color);
+    color: var(--sub-color);
     margin: 0px;
 }
 a{
@@ -51,38 +51,33 @@ a{
 body{
     background-color: var(--bg-color);
 }
-button{
-    background-color: var(--bg-color);
-    border: none; 
-    padding-left: 30px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-}
 </style>
 
 <body style="background:var(--bg-color);display: flex;justify-content: center;">
     <div id="navbar">
         <ul>
-            <li><a href="/">
+            <li><a href="/trego">
                 <h1>Trego</h1>
             </a></li>
-            <li><a href="/">
+            <li><a href="/trego/planner">
                 <h2>Planner</h2>
             </a></li>
-            <li><a href="/">
+            <li><a href="/trego/active">
                 <h2>Active</h2>
             </a></li>
-        
-            <li><button id="login">
-                <h2>Login</h2>
-            </button></li>
-            <li><button id="register">
-                <h2>Register</h2>
-            </button></li>
-            <li><button id="register">
-                <h2>Profile</h2>
-            </button></li>
+            <div id="notloggedin">
+                <li><span onclick="document.getElementById('loginModal').style.display='grid';document.getElementById('concepttext').style.display='none'">
+                    <h2>Login</h2>
+                </li></span>
+                <li><a href="/trego/register">
+                    <h2>Register</h2>
+                </a></li>
+            </div>  
+            <div id="loggedin">
+                <li><a href="/trego/profile">
+                    <h2>Profile</h2>
+                </a></li>
+            </div>    
         </ul>
     </div>
     {% block main %}

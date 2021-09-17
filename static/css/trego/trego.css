@@ -9,8 +9,7 @@
     align-content: center;
     width: 100%;
 }
-#concept{
-    position: absolute;
+#home{
     width: 70%;
     font-size: large;
     color: var(--text-color);
@@ -22,6 +21,10 @@
     height: 300px;
     margin-left: 200px;
     margin-top: 200px;
+    position: absolute;
+    z-index: -1;
 }
+
+
 
 

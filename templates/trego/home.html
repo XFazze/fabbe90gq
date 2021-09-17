@@ -1,0 +1,43 @@
+{% extends "trego/template.html" %}
+{% block link %}
+<link rel="stylesheet" href="/static/css/trego/trego.css">
+<link rel="stylesheet" href="/static/css/trego/login.css">
+<script type="text/javascript" src="/static/js/trego/index.js"></script>
+{% endblock %}
+{% block body %}{% endblock %}
+{% block main%}
+
+<div id="main">
+    <div id="background">
+    </div>
+    <div id="concepttext">
+        <p id="home">Tregos goal is to create a way for commuters to plan trips together with other commuters. This saves money, time
+            and energy for you aswell as saving the enviorment and helping infrastructure by minizing the amounts of trips.</p>
+    </div>
+    
+    
+    <form id="loginModal" class="loginModal">
+        <div class="topContent">
+            <h1>Login in to trego</h1>
+        </div>
+        <div class="middleContent">
+            <label for="username"><b>Username</b></label>
+            <input type="text" placeholder="Enter Username" name="username" required>
+
+            <label for="password"><b>Password</b></label>
+            <input type="password" placeholder="Enter Password" name="password" required>
+
+
+        </div>
+        <div class="submit"> 
+            <label>
+                <input type="checkbox" checked="checked" name="remember">Remember me
+            </label>   
+            <button type="submit">Login</button>
+        </div>
+    </form>
+    
+</div>
+
+
+{% endblock %}

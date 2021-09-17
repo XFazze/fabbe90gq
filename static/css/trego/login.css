@@ -1,0 +1,41 @@
+.loginModal{
+    display: none;/*grid*/
+    width: 70vw;
+    backdrop-filter:brightness(130%);
+    position: fixed;
+    padding: 20px;
+    border-radius:6px;
+    top: 10vh;
+    left: 18vw;
+}
+.middleContent{
+    display: grid;
+    margin: 1em 0em 1em 0em;
+
+}
+label{
+    font-family: var(--title-font);
+    color: var(--sub-color)
+}
+button{
+    background: var(--bg-color);
+    color: var(--main-color);
+    padding: .5em 1.5em .5em 1.5em;
+    border: none; 
+    border-radius: .2em;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+}
+button:hover{
+    filter:brightness(1.6)
+}
+.submit{
+    display: flex;
+    align-items: center;
+    padding-top: 1em;
+    justify-content: right;
+}
+.submit > label{
+    padding-right: .5em;
+}
