@@ -21,11 +21,11 @@
             <h1>Login in to trego</h1>
         </div>
         <div class="middleContent">
-            <label for="username"><b>Username</b></label>
-            <input type="text" placeholder="Enter Username" name="username" required>
+            {{ form.username.label }}
+            {{ form.username }}
 
-            <label for="password"><b>Password</b></label>
-            <input type="password" placeholder="Enter Password" name="password" required>
+            {{ form.password.label }}
+            {{ form.password }}
 
 
         </div>

@@ -7,12 +7,14 @@ import requests
 import time
 from flask import *
 from flask_wtf import FlaskForm
+from flask_login import LoginManager
 from wtforms import Form, SelectField, validators, SubmitField, IntegerField
 from wtforms.validators import DataRequired
 from ratio_code.basic_copy import *
 from forms.pappa_form import *
 from forms.factorio_form import *
 from forms.lb2000_form import *
+from forms.trego import *
 from lb.api_calls import *
 from lb.match_history import *
 from lb.championIdtoname import *
@@ -23,12 +25,18 @@ from pymongo import MongoClient, collation
 # Initializing flask and sql
 app = Flask(__name__,  static_folder='static')
 app.config['SECRET_KEY'] = secret_key
+login_manager = LoginManager()
+login_manager.init_app(app)
+
+# flask_login setup
+@login_manager.user_loader
+def load_user(user_id):
+    return User.get(user_id)
 
 
 @app.route("/")
 def index():
     return render_template('index.html')
-
 
 # BJORNBANAN
 @app.route("/bjornbanan")
@@ -190,7 +198,18 @@ def lb2000():
 # Trego
 @app.route("/trego")
 def trego():
-    return render_template('trego/home.html')
+    form = trego_login()
+    if form.validate_on_submit():
+        login_user(user)
+
+        flask.flash('Logged in successfully.')
+
+        next = flask.request.args.get('next')
+        if not is_safe_url(next):
+            return flask.abort(400)
+
+        return flask.redirect(next or flask.url_for('index'))
+    return render_template('trego/home.html', form=form)
 
     
 @app.route("/trego/planner")
