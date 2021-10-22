@@ -69,7 +69,6 @@ def leaderboard():
 
     return redirect("")
 
-
 @app.route("/gamejs/osu", methods=['GET', 'POST'])
 def osu():
     client = MongoClient('localhost', 27017)
@@ -91,6 +90,13 @@ def snake():
         leaderboard.append(record)
 
     return render_template('games/snake.html',  leaderboard=leaderboard)
+
+# Simulations 
+# Filling triangles
+
+@app.route("/simjs/chaostriangle", methods=['GET', 'POST'])
+def chaostriangle():
+    return render_template('sims/chaostriangle.html')
 
 # Factorio Proportions calc
 @app.route("/factorio",  methods=['GET', 'POST'])
