@@ -1,12 +1,3 @@
-
-:root{
-    --bg-color: #026670 !important;
-    --main-color: #FCE181!important;
-    --sub-color: #FEF9C7!important;
-    --text-color: #9FEDD7!important;
-    --error-color: #da3333!important;
-}
-
 #main{
     max-width: 1400px !important;
 }

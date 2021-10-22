@@ -1,10 +1,3 @@
-:root{
-    --bg-color: #2B7A78 !important;
-    --main-color: #17252B !important;
-    --sub-color: #c1d6d5 !important;
-}
-
-
 
 #leaderboard > button{
     background-color: var(--bg-color);
@@ -36,7 +29,4 @@ body{
     display:flex;
     justify-content: space-between;
     width: 40%;
-}
-.allgames{
-    cursor:pointer;
 }
