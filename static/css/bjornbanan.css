@@ -1,3 +1,18 @@
+
+:root{
+    /*--bg-color: #97CAEF !important;*/
+    --main-color: #FC4445 !important;
+    --sub-color: #55BCC9 !important;
+    --text-color: #3FEEE6 !important;
+    --error-color: #CAFEFE !important;
+}
+/*FC4445
+3FEEE6
+97CAEF
+55BCC9
+CAFEFE
+
+ */
 .centerdiv p{
     font-family: var(--main-font);
     color:var(--sub-color);

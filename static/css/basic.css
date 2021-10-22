@@ -8,6 +8,11 @@
     color:var(--sub-color);
 
 }
+.centerdiv h3{
+    font-family: var(--title-font);
+    color:var(--sub-color);
+
+}
 .centerdiv p{
     font-family: var(--main-font);
     color:var(--sub-color);
