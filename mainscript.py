@@ -108,10 +108,11 @@ def prop_calc():
     return render_template('factorio_proportions.html', form=form, ratio="wee", component="component", submitted=False, sop="sop")
 
 # Portfolio
+'''
 @app.route("/portfolio")
 def portfolio():
     return render_template('portfolio.html')
-        
+'''
 @app.route("/lb2000/test")
 def lb2000_test():    
     
