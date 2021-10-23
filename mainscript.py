@@ -92,14 +92,21 @@ def snake():
 
     return render_template('games/snake.html',  leaderboard=leaderboard)
 
-@app.route("/gamejs/butterfly", methods=['GET', 'POST'])
+# SIMS
+# butterfly
+@app.route("/sims/butterfly", methods=['GET', 'POST'])
 def butterfly():
-    return render_template('games/butterfly.html')
+    return render_template('sims/butterfly.html')
 
-@app.route("/gamejs/rsa", methods=['GET', 'POST'])
+# rsa
+@app.route("/sims/rsa", methods=['GET', 'POST'])
 def rsa():
-    return render_template('games/rsa.html')
+    return render_template('sims/rsa.html')
 
+# chaos triangle
+@app.route("/sims/chaostriangle", methods=['GET', 'POST'])
+def chaostriangle():
+    return render_template('sims/chaostriangle.html')
 
 # Factorio Proportions calc
 @app.route("/factorio",  methods=['GET', 'POST'])
