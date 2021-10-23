@@ -92,6 +92,15 @@ def snake():
 
     return render_template('games/snake.html',  leaderboard=leaderboard)
 
+@app.route("/gamejs/butterfly", methods=['GET', 'POST'])
+def butterfly():
+    return render_template('games/butterfly.html')
+
+@app.route("/gamejs/rsa", methods=['GET', 'POST'])
+def rsa():
+    return render_template('games/rsa.html')
+
+
 # Factorio Proportions calc
 @app.route("/factorio",  methods=['GET', 'POST'])
 def prop_calc():

@@ -1,0 +1,40 @@
+{% extends "template.html" %}
+{% block link %}
+    <link rel="stylesheet" href="/static/css/basic.css">
+    <link rel="stylesheet" href="/static/css/games.css">
+    <link rel="stylesheet" href="/static/css/rsa.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script type="text/javascript" src="/static/js/games/rsa.js"></script>
+{% endblock %}
+{% block body %}background-color:#23856D;{% endblock %}
+{% block main%}
+<div class="centerdiv">
+    <a href="/gamejs" class="allgames"><h2>All games</h2></a>
+    <h1>Butterfly</h1>
+</div>
+<div styler="display:flex" class="centerdiv">
+    <h2>Bank</h2>
+    <input id='p' placeholder="p prime">
+    <input id='q' placeholder="q prime">
+    <button id="calcned">Calculate n, e, d</button>
+    <p>Primes examples: 61 43, 223 193, 821 751, 4091 2333, 8353 9601, 58013 47581, 146891 259907</p>
+
+    <div class="bank">
+        <p>n: </p><p id="n">unknown</p><br>
+        <p>e: </p><p id="e">unknown</p><br>
+        <p>d: </p><p id="d">unknown</p><br>
+    </div>
+
+    <h2>Encryption and decryption</h2>
+    <input id='message' placeholder="message">
+    <button id="encrypt">Encrypt</button>
+    <p id="encryptedmsg">The encrypted message</p>
+    <button id="dencrypt">Dencrypt</button>
+    <p id="decryptedmsg">The ecrypted message</p>
+
+
+    <h2>Hacking</h2>
+
+    <button id="resetbutton"  style="width:500px; margin:auto; display:block; padding:0;">RESET</button>
+</div>
+{% endblock %}

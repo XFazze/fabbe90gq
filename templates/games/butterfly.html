@@ -1,0 +1,19 @@
+{% extends "template.html" %}
+{% block link %}
+    <link rel="stylesheet" href="/static/css/basic.css">
+    <link rel="stylesheet" href="/static/css/games.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script type="text/javascript" src="/static/js/games/buttterfly.js"></script>
+{% endblock %}
+{% block body %}background-color:#23856D;{% endblock %}
+{% block main%}
+<div class="centerdiv">
+    <a href="/gamejs" class="allgames"><h2>All games</h2></a>
+    <h1>Butterfly</h1>
+</div>
+<div styler="display:flex" class="centerdiv">
+    <canvas id="game-layer" width=500px height=300px style="margin: auto; display:block; padding:0;"></canvas><br>
+
+    <button id="resetbutton"  style="width:500px; margin:auto; display:block; padding:0;">RESET</button>
+</div>
+{% endblock %}
