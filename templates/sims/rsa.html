@@ -4,20 +4,20 @@
     <link rel="stylesheet" href="/static/css/games.css">
     <link rel="stylesheet" href="/static/css/rsa.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script type="text/javascript" src="/static/js/games/rsa.js"></script>
+    <script type="text/javascript" src="/static/js/sims/rsa.js"></script>
 {% endblock %}
 {% block body %}background-color:#23856D;{% endblock %}
 {% block main%}
 <div class="centerdiv">
     <a href="/gamejs" class="allgames"><h2>All Sims</h2></a>
-    <h1>Butterfly</h1>
+    <h1>RSA encryption</h1>
 </div>
 <div styler="display:flex" class="centerdiv">
     <h2>Bank</h2>
     <input id='p' placeholder="p prime">
     <input id='q' placeholder="q prime">
     <button id="calcned">Calculate n, e, d</button>
-    <p>Primes examples: 61 43, 223 193, 821 751, 4091 2333, 8353 9601, 58013 47581, 146891 259907</p>
+    <p>Primes examples {{ plow }}, {{ p128[0] }} ||| {{ p128[1] }}</p>
 
     <div class="bank">
         <p>n: </p><p id="n">unknown</p><br>
@@ -28,13 +28,31 @@
     <h2>Encryption and decryption</h2>
     <input id='message' placeholder="message">
     <button id="encrypt">Encrypt</button>
-    <p id="encryptedmsg">The encrypted message</p>
+
+    <div class="bank">
+        <p>encrypted message: </p><p id="encryptedmsg">unknown</p>
+    </div><br>
+
+    
+    <p>JS cant do large numbers, to decrypt use wolfram or something.  (Encrypted message)^d mod n</p>
+    <!--
     <button id="dencrypt">Dencrypt</button>
-    <p id="decryptedmsg">The ecrypted message</p>
+    <div class="bank">
+        <p>decrypted message: </p><p id="decryptedmsg">unknown</p>
+    </div>
+    -->
 
 
     <h2>Hacking</h2>
+    <input id='nhack' placeholder="n">
+    <input id='ehack' placeholder="e">
+    <button id="hack">Hack</button>
+    <div class="bank">
+        <p>p: </p><p id="phack">unknown</p><br>
+        <p>q: </p><p id="qhack">unknown</p><br>
+        <p>d: </p><p id="ddhack">unknown</p><br>
+    </div><br>
 
-    <button id="resetbutton"  style="width:500px; margin:auto; display:block; padding:0;">RESET</button>
+
 </div>
 {% endblock %}

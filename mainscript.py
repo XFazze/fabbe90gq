@@ -19,6 +19,7 @@ from lb.championIdtoname import *
 from config import *
 from threading import Thread
 from pymongo import MongoClient, collation
+from Crypto.Util import number
 
 # Initializing flask and sql
 app = Flask(__name__,  static_folder='static')
@@ -58,14 +59,10 @@ def leaderboard():
         jsonf = json.loads(request.form.to_dict()['data'])
         if jsonf['score'] > 1985:
             return redirect("")
-        print(jsonf)
-        print(type(jsonf))
-        print("METHOD IS POST")
         client = MongoClient('localhost', 27017)
         db = client.website
         collection = db.leaderboard
         collection.insert_one(jsonf)
-        print("METHOD IS POST")
 
     return redirect("")
 
@@ -101,7 +98,9 @@ def butterfly():
 # rsa
 @app.route("/sims/rsa", methods=['GET', 'POST'])
 def rsa():
-    return render_template('sims/rsa.html')
+    return render_template('sims/rsa.html', plow=str(number.getPrime(4))+' ||| ' + str(number.getPrime(5)) +', ' + str(number.getPrime(5))+' ||| ' + str(number.getPrime(4)),
+    p128=[str(number.getPrime(32)), str(number.getPrime(32)),str(number.getPrime(32)),str(number.getPrime(32))])
+
 
 # chaos triangle
 @app.route("/sims/chaostriangle", methods=['GET', 'POST'])

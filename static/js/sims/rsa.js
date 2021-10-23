@@ -65,13 +65,62 @@ window.onload = function () {
         console.log(message, e, n);
         document.getElementById("encryptedmsg").innerHTML = Math.pow(message, e)%n;
     });
-    
+
+    /*
     document.getElementById("dencrypt").addEventListener("click", function (event) {
         var n = Number(document.getElementById('n').innerHTML)
         var d = Number(document.getElementById('d').innerHTML)
         var encryptedmsg = Number(document.getElementById('encryptedmsg').innerHTML)
-        console.log('decrypting', encryptedmsg, d, n, BigInt(encryptedmsg)**BigInt(d));
-        document.getElementById("decryptedmsg").innerHTML = Math.pow(encryptedmsg, d)%n;
+        var result = decrypt(encryptedmsg, d, n);
+        console.log('decrypting', encryptedmsg, d, n, result);
+        document.getElementById("decryptedmsg").innerHTML = result;
     });
+    */
+
+    document.getElementById("hack").addEventListener("click", function (event) {
+        var nhacck = Number(document.getElementById('nhack').value);
+        var ehacck = Number(document.getElementById('ehack').value);
+        var p = false;
+        var pp;
+        for(let i = 2; i < nhacck; i++){
+            if(nhacck%i == 0){
+                if (!p){
+                    p = i;
+                }else{
+                    pp = i;
+                    break;
+                }
+            }
+        };
+        console.log('succecssfull hack', p, pp)
+        document.getElementById("phack").innerHTML = p;
+        document.getElementById("qhack").innerHTML = pp;
+        
+        console.log('n: ', n);
+        var rp = (p-1)*(pp-1);
+        console.log('rp: ', rp);
+
+        var d = egcd(ehacck, rp);
+        console.log('d: ', d);
+        document.getElementById("ddhack").innerHTML = d;
+    });
+};
+
+
+function powmod(m, d, n){
+    //console.log('powmod', m,d,n);
+    for(let i = 2; i < Math.sqrt(d); i++){
+        if(d % i == 0){
+            d = d/i;
+            console.log('bbbbb', m,d,n,i);
+            m = (m**i)%n;
+            console.log('before', m,d,n);
+            m = powmod(m, d, n);
+            break;
+
+        };
+
+    };
+    return (m** d)%n
 
 };
