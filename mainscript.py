@@ -89,6 +89,10 @@ def snake():
 
     return render_template('games/snake.html',  leaderboard=leaderboard)
 
+@app.route("/gamejs/dino", methods=['GET', 'POST'])
+def dino():
+    return render_template('games/dino.html')
+
 # SIMS
 # butterfly
 @app.route("/sims/butterfly", methods=['GET', 'POST'])
