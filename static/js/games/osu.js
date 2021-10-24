@@ -74,20 +74,4 @@ window.onload = function () {
 
     });
     
-    document.getElementById("submit").addEventListener("click", function (event) {
-        var user = document.getElementById("leaderboard");
-        data = {'game': "osu",
-                'score' : clicks,
-                'user' : user.elements[0].value}
-        $.ajax({
-        url: '/gamejs/leaderboard',
-        type: 'POST',
-        contentType: 'application/json;charset=UTF-8',
-        data: JSON.stringify(data),   // converts js value to JSON string
-        })
-        .done(function(result){     // on success get the return object from server
-            console.log(result)     // do whatever with it. In this case see it in console
-        })
-        
-    });
 };

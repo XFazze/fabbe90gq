@@ -193,14 +193,7 @@ window.onload = function () {
 
     });
     
-    document.getElementById("submit").addEventListener("click", function (event) {
-        console.log('submitted')
-        var user = document.getElementById("leaderboard");
-        data = {'game': "basicsnake",
-                'score' : snake.length,
-                'user' : user.elements[0].value};
-        $.post('/gamejs/leaderboard', {"data": JSON.stringify(data)});
-        })
+    
         
     })();
 };
