@@ -1,0 +1,20 @@
+{% extends "template.html" %}
+{% block link %}
+    <link rel="stylesheet" href="/static/css/basic.css">
+    <link rel="stylesheet" href="/static/css/games.css">
+    <script type="text/javascript" src="/static/js/games/bouncingballs.js"></script>
+{% endblock %}
+{% block body %}background-color:#23856D;{% endblock %}
+{% block main%}
+<div class="centerdiv">
+    <a href="/gamejs" class="allgames"><h2>All games</h2></a>
+    <h1>Bouncing Balls</h1>
+    <p>Press a and d to move the platform. Dont let the balls go behind the platform.</p>
+</div>
+<div styler="display:flex" class="centerdiv">
+    <h2  id="score" style="text-align:center;" >Score: start the game jackass</h2><br>
+    <canvas id="game-layer" width=700px height=500px style="margin: auto; display:block; padding:0;"></canvas><br>
+
+
+</div>
+{% endblock %}

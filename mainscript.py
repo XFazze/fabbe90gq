@@ -79,23 +79,22 @@ def snake():
 def dino():
     return render_template('games/dino.html')
 
+@app.route("/gamejs/bouncingballs", methods=['GET', 'POST'])
+def bouncingballs():
+    return render_template('games/bouncingballs.html')
+    
 # SIMS
-# butterfly
-@app.route("/sims/butterfly", methods=['GET', 'POST'])
-def butterfly():
-    return render_template('sims/butterfly.html')
-
 # rsa
 @app.route("/sims/rsa", methods=['GET', 'POST'])
 def rsa():
     return render_template('sims/rsa.html', plow=str(number.getPrime(4))+' ||| ' + str(number.getPrime(5)) +', ' + str(number.getPrime(5))+' ||| ' + str(number.getPrime(4)),
     p128=[str(number.getPrime(32)), str(number.getPrime(32)),str(number.getPrime(32)),str(number.getPrime(32))])
 
-
 # chaos triangle
 @app.route("/sims/chaostriangle", methods=['GET', 'POST'])
 def chaostriangle():
     return render_template('sims/chaostriangle.html')
+    
 
 # Factorio Proportions calc
 @app.route("/factorio",  methods=['GET', 'POST'])
