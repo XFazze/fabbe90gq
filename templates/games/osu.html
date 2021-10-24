@@ -10,6 +10,7 @@
 <div class="centerdiv">
     <a href="/gamejs" class="allgames"><h2>All games</h2></a>
     <h1>Osu</h1>
+    <p>Click the circles fast. If you are too slow you lose.</p>
 </div>
 <div styler="display:flex" class="centerdiv">
     <h2  id="score" style="text-align:center;" >Score: you suck</h2><br>
@@ -18,19 +19,4 @@
 
     <button id="resetbutton"  style="width:500px; margin:auto; display:block; padding:0;">RESET</button>
 
-    <form action="" method="post" id="leaderboard">
-        <input type="text" name="name" placeholder="name" required>
-        <button id="submit" type="submit">Submit</button>
-    </form>
-
-    <div style="margin: 20%; margin-top:0%">
-        <h1> Leaderboard</h1>
-        {% for score in leaderboard %}
-        <div class="score">
-            <p>{{ score["user"] }} </p>
-            <p> {{ score["score"] }}</p>
-        </div>
-        {% endfor %}
-    </div>
-</div>
 {% endblock %}

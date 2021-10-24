@@ -69,25 +69,11 @@ def leaderboard():
 
 @app.route("/gamejs/osu", methods=['GET', 'POST'])
 def osu():
-    client = MongoClient('localhost', 27017)
-    db = client.website
-    collection = db.leaderboard
-    leaderboard = []
-    for record in collection.find({"game":"osu"}).sort("score", pymongo.DESCENDING).limit(10):
-        leaderboard.append(record)
-
-    return render_template('games/osu.html',  leaderboard=leaderboard)
+    return render_template('games/osu.html')
 
 @app.route("/gamejs/snake", methods=['GET', 'POST'])
 def snake():
-    client = MongoClient('localhost', 27017)
-    db = client.website
-    collection = db.leaderboard
-    leaderboard = []
-    for record in collection.find({"game":"basicsnake"}).sort("score", pymongo.DESCENDING).limit(10):
-        leaderboard.append(record)
-
-    return render_template('games/snake.html',  leaderboard=leaderboard)
+    return render_template('games/snake.html')
 
 @app.route("/gamejs/dino", methods=['GET', 'POST'])
 def dino():
