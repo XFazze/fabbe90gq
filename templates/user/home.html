@@ -1,0 +1,15 @@
+{% extends "template.html" %}
+{% block link %}
+    <link rel="stylesheet" href="/static/css/basic.css">
+    <script type="text/javascript" src="/static/js/games/home.js"></script>
+{% endblock %}
+{% block body %}background-color:#23856D;{% endblock %}
+{% block main%}
+<div class="centerdiv">
+    <h1>Home</h1>
+    <a href="/user/login" ><h2>Login</h2></a><br>
+    <a href="/user/register" ><h2>Register</h2></a><br>
+    <a href="/user/forgotpassw" ><h2>Forgot Password</h2></a><br>
+    {{ session["email"]}}
+</div>
+{% endblock %}

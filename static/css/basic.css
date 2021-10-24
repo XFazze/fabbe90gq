@@ -41,3 +41,19 @@
 
 
 }
+#register {
+    background-color: var(--bg-color);
+    border: none;
+    border-radius: 4px;
+    filter: brightness(1.25);
+    color: var(--main-color);
+    font-family: var(--main-font);
+}
+#login {
+    background-color: var(--bg-color);
+    border: none;
+    border-radius: 4px;
+    filter: brightness(1.25);
+    color: var(--main-color);
+    font-family: var(--main-font);
+}

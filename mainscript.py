@@ -9,10 +9,12 @@ from flask import *
 from flask_wtf import FlaskForm
 from wtforms import Form, SelectField, validators, SubmitField, IntegerField
 from wtforms.validators import DataRequired
+from forms.user_form import login_form, register_form
 from ratio_code.basic_copy import *
 from forms.pappa_form import *
 from forms.factorio_form import *
 from forms.lb2000_form import *
+from forms.user_form import *
 from lb.api_calls import *
 from lb.match_history import *
 from lb.championIdtoname import *
@@ -82,7 +84,7 @@ def dino():
 @app.route("/gamejs/bouncingballs", methods=['GET', 'POST'])
 def bouncingballs():
     return render_template('games/bouncingballs.html')
-    
+
 # SIMS
 # rsa
 @app.route("/sims/rsa", methods=['GET', 'POST'])
@@ -162,6 +164,34 @@ def lb2000():
                                     match_history=match_history,region_large=region_large, summonerid=summoner['id'])
     return render_template('lb2000/lb2000_search.html', form=form, error=False)
 
+# register and login
+@app.route("/user", methods=['GET', 'POST'])
+def user():
+    return render_template('user/home.html')
+
+@app.route("/user/register", methods=['GET', 'POST'])
+def userRegister():
+    form=register_form()
+    if form.validate_on_submit():
+        result = form.femail.data, form.passw.data
+        print(result)
+        render_template('user/home.html')
+    return render_template('user/register.html', form=form)
+   
+@app.route("/user/login", methods=['GET', 'POST'])
+def userLogin():
+    form=login_form()
+    if form.validate_on_submit():
+        result = form.femail.data, form.passw.data
+        session["email"] = form.femail.data
+        print(result)
+        return render_template('user/home.html')
+
+    return render_template('user/login.html', form=form)
+
+@app.route("/user/forgotpassw", methods=['GET', 'POST'])
+def userForgotpassw():
+    return render_template('user/forgotpassw.html')
 
 
 # Run the site
