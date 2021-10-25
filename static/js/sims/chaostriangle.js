@@ -1,5 +1,5 @@
 var ctx;
-var triangles = [];
+var triangles = [], oldtriangles = [];
 var PP = 0;
 var newt;
 var t0 = [[0,700], [1000,700], [500,0], 1];
@@ -21,7 +21,38 @@ window.onload = function () {
 
 
 };
+function levelfill(){
+    ctx.fillStyle = 'white';
+    ctx.fillRect(0, 0, 1000, 700);
+    console.log('levelfill called')
+    pone(t0);
+    triangles = [];
+    oldtriangles = [];
+    var temp = create(t0);
+    var rng;
+    for (let i = 0; i < 1234; i++) {
+        // paint middle 
+        pone(temp[2]);
 
+        // add triangles to all
+        for (let i = 0; i < temp.length; i++) {
+            //console.log(temp[i][3]);
+            oldtriangles.push(temp[i]);
+        };
+        if(triangles.length == 0){
+            triangles = oldtriangles;
+            oldtriangles = [];
+        }
+        // get a random new triangle
+        rng =  getRndInteger(triangles.length);
+        var tempt = triangles[rng];
+        triangles.pop(rng, 1);
+
+        // create 4 new triangles in the new triangle
+        temp = create(tempt)
+    };
+
+}
 function randomfill(){
     ctx.fillStyle = 'white';
     ctx.fillRect(0, 0, 1000, 700);
