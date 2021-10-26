@@ -8,7 +8,7 @@ import time
 import random
 from flask import *
 from flask_wtf import FlaskForm
-#from werkzeug.datastructures import ContentSecurityPolicy
+#git from werkzeug.datastructures import ContentSecurityPolicy
 from wtforms import Form, SelectField, validators, SubmitField, IntegerField
 from wtforms.validators import DataRequired
 from forms.user_form import login_form, register_form
@@ -207,10 +207,10 @@ def afkNotifId(id='a'):
         id = int(id)
     except:
         pass
-
     if type(id) == int:
         return render_template('afknotif/alert.html', id=int(id))
-    return redirect('/afknotif')
+    else:
+        return redirect('/afknotif')
 
 @app.route("/afknotif/start", methods=['GET', 'POST'])
 def afkNotifStart():
@@ -228,7 +228,6 @@ def afkNotifStart():
 def afkNotifAlert():
     if request.method == "POST":
         student_id = int(request.get_data().decode()[3:])
-        print(student_id)
         client = MongoClient('localhost', 27017)
         db = client.website
         collection = db.afknotif
@@ -240,7 +239,6 @@ def afkNotifAlert():
 def afkNotifCheck():
     if request.method == "POST":
         student_id = int(request.get_data().decode()[3:])
-        print(student_id)
         client = MongoClient('localhost', 27017)
         db = client.website
         collection = db.afknotif
