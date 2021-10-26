@@ -1,0 +1,74 @@
+{% extends "template.html" %}
+{% block link %}
+    <link rel="stylesheet" href="/static/css/basic.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+{% endblock %}
+{% block body %}background-color:#23856D;{% endblock %}
+{% block main%}
+<div class="centerdiv">
+    <canvas id='flashingLayer' width='10px' height="10px"></canvas>
+    <h1>AFK Notification</h1>
+    <p>When others click the link the screen will flash.</p>
+    <p>Link: <a href="#" onclick="copy('https://fabbe90.gq/afknotif/id/'+{{ id }})">copy</a> </p>
+    
+    <h2>In progress, you can leave the screen</h2>
+    
+    <a href="/afknotif"><button><h2>Exit</h2></button></a>
+
+</div>
+<script>
+var id = {{id}}, c, ctx;
+function copy(text){
+    navigator.clipboard.writeText(text);
+    copySymbol = document.getElementById('copySymbol');
+    copySymbol.style.display = 'block'
+    copySymbol.classList.toggle('transition');
+    console.log('add');
+    interval = setInterval(removeclass, 1000);
+    function removeclass(){
+        copySymbol.classList.toggle('transition');
+        console.log('removein');
+        clearInterval(interval)};
+};
+function check(){
+    console.log('called check on ', id)
+    $.ajax({
+        type : 'POST',
+        url : "/afknotif/check",
+        contentType: 'application/json;charset=UTF-8',
+        data : {'id':id},
+        success: function(response){
+            console.log(response)
+            if(response['success']){
+                console.log('still success');
+                flash();
+            }else{
+                console.log('still failtijng');
+                setTimeout(check, 10000);
+            }
+        }
+        });
+        
+}
+function flash(){
+    console.log('flashing');
+    var canvas = document.getElementById("flashingLayer");
+    ctx = canvas.getContext("2d");
+    ctx.canvas.width  = window.innerWidth;
+    ctx.canvas.height = window.innerHeight;
+    fill(ctx, 'white');
+}
+function fill(){
+    ctx.fillStyle = c;
+    ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+    if(c == 'white'){
+        c= 'black';
+    }else{
+        c= 'white';
+    }
+    setTimeout(fill, 1000);
+
+}
+check();
+</script>
+{% endblock %}

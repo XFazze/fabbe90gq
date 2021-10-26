@@ -1,0 +1,27 @@
+{% extends "template.html" %}
+{% block link %}
+    <link rel="stylesheet" href="/static/css/basic.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+{% endblock %}
+{% block body %}background-color:#23856D;{% endblock %}
+{% block main%}
+<div class="centerdiv">
+    <h1>AFK Notification</h1>
+    
+    
+    <button onclick="alert({{id}})"><h2>Alert the afker</h2></button>
+    <h2 id="success" class="hidden">Success, the screen is flashing</h2>
+</div>
+<script>
+function alert(id){
+    console.log('alerted called', id);
+    $.ajax({
+        type : 'POST',
+        url : "/afknotif/alert",
+        contentType: 'application/json;charset=UTF-8',
+        data : {'id':id}
+        });
+    document.getElementById('success').style.display = 'block';
+}
+</script>
+{% endblock %}
