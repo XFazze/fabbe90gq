@@ -210,6 +210,7 @@ def afkNotifId(id='a'):
     if type(id) == int:
         return render_template('afknotif/alert.html', id=int(id))
     else:
+        print('invalid type returning')
         return redirect('/afknotif')
 
 @app.route("/afknotif/start", methods=['GET', 'POST'])
