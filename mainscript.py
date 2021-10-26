@@ -8,7 +8,7 @@ import time
 import random
 from flask import *
 from flask_wtf import FlaskForm
-from werkzeug.datastructures import ContentSecurityPolicy
+#from werkzeug.datastructures import ContentSecurityPolicy
 from wtforms import Form, SelectField, validators, SubmitField, IntegerField
 from wtforms.validators import DataRequired
 from forms.user_form import login_form, register_form
