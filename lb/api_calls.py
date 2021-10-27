@@ -9,10 +9,6 @@ def testget():
     print('http fabbe90')
     requests.get('https://fabbe90.gq')
     print('https fabbe90')
-    requests.get('http://eun1.api.riotgames.com/lol/summoner/v4/summoners/by-name/kuuro2?api_key=RGAPI-d43c7a90-2ba2-4145-a138-c3720c0c09cc')
-    print('http lol')
-    requests.get('https://EUN1.api.riotgames.com/lol/summoner/v4/summoners/by-name/kuuro2?api_key=RGAPI-d43c7a90-2ba2-4145-a138-c3720c0c09cc')
-    print('https lol')
     
 
 def get_summoner(region, username, api_key):
