@@ -1,7 +1,22 @@
 import requests, json, os.path, time, sphc, os
 from datetime import datetime
+def testget():
+    requests.get('http://google.com')
+    print('http google')
+    requests.get('https://google.com')
+    print('https google')
+    requests.get('http://fabbe90.gq')
+    print('http fabbe90')
+    requests.get('https://fabbe90.gq')
+    print('https fabbe90')
+    requests.get('http://eun1.api.riotgames.com/lol/summoner/v4/summoners/by-name/kuuro2?api_key=RGAPI-d43c7a90-2ba2-4145-a138-c3720c0c09cc')
+    print('http lol')
+    requests.get('https://EUN1.api.riotgames.com/lol/summoner/v4/summoners/by-name/kuuro2?api_key=RGAPI-d43c7a90-2ba2-4145-a138-c3720c0c09cc')
+    print('https lol')
+    
+
 def get_summoner(region, username, api_key):
-    requests.adapters.DEFAULT_RETRIES = 1
+    #requests.adapters.DEFAULT_RETRIES = 1
     url = "https://" + region + ".api.riotgames.com/lol/summoner/v4/summoners/by-name/" + username + "?api_key=" + api_key
     print("summoner url: ", url)
     return requests.get(url).json()
@@ -41,3 +56,5 @@ def get_live_game(region, id, api_key):
     return requests.get(url).json()
 
 
+if __name__ == '__main__':
+    testget()
