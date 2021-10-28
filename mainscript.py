@@ -99,11 +99,15 @@ def rsa():
 def chaostriangle():
     return render_template('sims/chaostriangle.html')
 
-# chaos triangle
+# sortingalgorithms
 @app.route("/sims/sortingalgorithms", methods=['GET', 'POST'])
 def sortingalgorithms():
     return render_template('sims/sortingalgorithms.html')
     
+# random number genenrator
+@app.route("/sims/rng", methods=['GET', 'POST'])
+def rng():
+    return render_template('sims/rng.html')
 
 # Factorio Proportions calc
 @app.route("/factorio",  methods=['GET', 'POST'])

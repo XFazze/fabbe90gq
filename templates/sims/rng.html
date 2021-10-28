@@ -1,0 +1,30 @@
+{% extends "template.html" %}
+{% block link %}
+    <link rel="stylesheet" href="/static/css/basic.css">
+    <link rel="stylesheet" href="/static/css/games.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script type="text/javascript" src="/static/js/sims/rng.js"></script>
+{% endblock %}
+{% block body %}background-color:#23856D;{% endblock %}
+{% block main%}
+<div class="centerdiv">
+    <a href="/gamejs" class="allgames"><h2>All Sims</h2></a>
+    <h1>Random generator</h1>
+</div>
+<div styler="display:flex" class="centerdiv">
+    <label for="lown"><p class="inline">Lower number: </p></label>
+    <input type="text" id="lown" name="lown" value="1"><br>
+    <label for="highn"><p class="inline">High number:</p></label>
+    <input type="text" id="highn" name="highn" value="1000"><br>
+    <button id="trianglefill" onclick="rngnumber()">Random number</button>
+    <p id="resRngNum" class="inline"></p><br><br><br><br><br>
+
+    <textarea id='word'></textarea><br>
+    <label for="nwords"><p class="inline">Number of words </p></label>
+    <input type="text" id="nwords" name="nwords" value="1"><br>
+    <button id="trianglefill" onclick="spacedwords()">Random words by spaces</button>
+    <p id="resSpaceWords" class="inline"></p><br>
+    <button id="trianglefill" onclick="nlwords()">Random words by enters/new lines</button>
+    <p id="resNlWords" class="inline"></p><br>
+</div>
+{% endblock %}
