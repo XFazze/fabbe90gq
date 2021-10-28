@@ -57,3 +57,17 @@
     color: var(--main-color);
     font-family: var(--main-font);
 }
+button{
+    background-color: var(--bg-color);
+    border: none;
+    border-radius: 4px;
+    filter:brightness(1.25);
+    margin: .2%;
+    white-space: nowrap;
+}
+.copy:hover{
+    cursor: copy;
+}
+.hidden{
+    display: none;
+}

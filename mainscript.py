@@ -5,8 +5,10 @@ import ast
 import pymongo
 import requests
 import time
+import random
 from flask import *
 from flask_wtf import FlaskForm
+from werkzeug.datastructures import ContentSecurityPolicy
 from wtforms import Form, SelectField, validators, SubmitField, IntegerField
 from wtforms.validators import DataRequired
 from forms.user_form import login_form, register_form
@@ -192,6 +194,63 @@ def userLogin():
 @app.route("/user/forgotpassw", methods=['GET', 'POST'])
 def userForgotpassw():
     return render_template('user/forgotpassw.html')
+
+# AFK notif
+# TO leave computer and have the screen flash when someone presses a button
+@app.route("/afknotif", methods=['GET', 'POST'])
+def afkNotif():
+    return render_template('afknotif/home.html')
+
+@app.route("/afknotif/id/<id>", methods=['GET', 'POST'])
+def afkNotifId(id='a'):
+    try:
+        id = int(id)
+    except:
+        pass
+
+    if type(id) == int:
+        return render_template('afknotif/alert.html', id=int(id))
+    return redirect('/afknotif')
+
+@app.route("/afknotif/start", methods=['GET', 'POST'])
+def afkNotifStart():
+    data = {
+        'id' : random.randint(1000000000,10000000000),
+        'alert' : False
+    }
+    client = MongoClient('localhost', 27017)
+    db = client.website
+    collection = db.afknotif
+    collection.insert_one(data)
+    return render_template('afknotif/start.html', id=data['id'])
+
+@app.route("/afknotif/alert", methods=['GET', 'POST'])
+def afkNotifAlert():
+    if request.method == "POST":
+        student_id = int(request.get_data().decode()[3:])
+        print(student_id)
+        client = MongoClient('localhost', 27017)
+        db = client.website
+        collection = db.afknotif
+        newdata = {'id':student_id, 'alert': True}
+        object = collection.replace_one({'id':student_id}, newdata)
+        return jsonify(status="success")
+    
+@app.route("/afknotif/check", methods=['GET', 'POST'])
+def afkNotifCheck():
+    if request.method == "POST":
+        student_id = int(request.get_data().decode()[3:])
+        print(student_id)
+        client = MongoClient('localhost', 27017)
+        db = client.website
+        collection = db.afknotif
+        object = collection.find_one({'id':student_id})
+        if object['alert']:
+            print('returning alerted')
+            return jsonify(success=True)
+
+        return jsonify(success=False)
+
 
 
 # Run the site
