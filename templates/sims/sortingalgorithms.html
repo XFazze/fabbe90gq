@@ -1,0 +1,23 @@
+{% extends "template.html" %}
+{% block link %}
+    <link rel="stylesheet" href="/static/css/basic.css">
+    <link rel="stylesheet" href="/static/css/games.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script type="text/javascript" src="/static/js/sims/sortingalgorithms.js"></script>
+{% endblock %}
+{% block body %}background-color:#23856D;{% endblock %}
+{% block main%}
+<div class="centerdiv">
+    <a href="/gamejs" class="allgames"><h2>All Sims</h2></a>
+    <h1>Sorting Algorithms</h1>
+</div>
+<div styler="display:flex" class="centerdiv">
+    <button id="trianglefill" onclick="stop()">Stop</button>
+    <label for="speed"><p class="inline">Speed:</p></label>
+    <input type="range" id="speed" name="speed">
+    <button id="trianglefill" onclick="insertionsort()">Insertion Sort</button>
+    <button id="trianglefill" onclick="selectionsort()">Selection Sort</button>
+    <button id="trianglefill" onclick="bubbelsort()">Bubbel Sort</button>
+    <canvas id="game-layer" width=1000px height=700px style="margin: auto; display:block; padding:0;"></canvas><br>
+</div>
+{% endblock %}

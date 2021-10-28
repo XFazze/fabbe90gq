@@ -98,6 +98,11 @@ def rsa():
 @app.route("/sims/chaostriangle", methods=['GET', 'POST'])
 def chaostriangle():
     return render_template('sims/chaostriangle.html')
+
+# chaos triangle
+@app.route("/sims/sortingalgorithms", methods=['GET', 'POST'])
+def sortingalgorithms():
+    return render_template('sims/sortingalgorithms.html')
     
 
 # Factorio Proportions calc
