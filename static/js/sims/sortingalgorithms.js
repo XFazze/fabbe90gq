@@ -1,4 +1,4 @@
-var ctx, poles, canvasTop, canvasLeft, sorted = true, speed, smallest, smallestIndex,progression = 0, stopvar = false;
+var ctx, poles, canvasTop, canvasLeft, sorted = true, speed, smallest, smallestIndex,progression = 0, stopvar = false, t0;
 window.onload = function () {
     var canvas = document.getElementById("game-layer");
     var canvasLeft = canvas.offsetLeft + canvas.clientLeft;
@@ -36,10 +36,21 @@ function paint(){
     }
 }
 
+function insertionsortcall(){
+    ready();
+    t0 = Date.now()
+    insertionsort();
+    console.log('here')
+}
+
+function timestamp(){
+    t1 = Math.floor((Date.now()-t0))
+    ctx.font = "30px Arial";
+    ctx.fillStyle = "red";
+    ctx.fillText(t1, 200, 150);
+
+}
 function insertionsort(){
-    if(sorted){
-        ready();
-    };
     sorted = true;
     for(let i = 0; i < 99; i++){
         //console.log('checking ', poles[i], poles[i+1])
@@ -57,16 +68,19 @@ function insertionsort(){
         setTimeout(insertionsort, speed);
     }else{
         sorted = true;
+        timestamp();
     }
 
 }
 
-function selectionsort(){
-    if(sorted){
-        ready();
-        progression = 0;
-    };
+function selectionsortcall(){
+    ready();
+    progression = 0;
+    t0 = Date.now();
+    selectionsort();
+}
 
+function selectionsort(){
     smallest = 1000;
     smallestIndex = 0;
     for(let i = progression; i < 100; i++){
@@ -85,14 +99,18 @@ function selectionsort(){
         setTimeout(selectionsort, speed);
     }else{
         sorted = true;
+        timestamp();
     }
 
 }
 
+function bubbelsortcall(){
+    ready();
+    t0 = Date.now();
+    bubbelsort();
+}
 function bubbelsort(){
-    if(sorted){
-        ready();
-    };
+    console.log('called')
     sorted = true;
     for(let i = 0; i < 99; i++){
         if(poles[i] > poles[i+1]){
@@ -104,10 +122,10 @@ function bubbelsort(){
     }
     paint();
     if(!sorted && !stopvar){
-        console.log(poles)
         setTimeout(bubbelsort, speed);
     }else{
         sorted = true;
+        timestamp();
     }
 
 }
