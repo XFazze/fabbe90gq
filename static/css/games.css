@@ -16,10 +16,6 @@
     color:var(--main-color);
     font-family: var(--main-font);
 }
-body{
-    overflow: hidden;
-
-}
 #leaderboard{
     width:500px;
     margin:auto;
