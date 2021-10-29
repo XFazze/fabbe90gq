@@ -2,7 +2,10 @@
 import os
 import json
 import ast
+from typing import SupportsComplex
 import pymongo
+from pymongo import collection
+from pymongo.errors import CollectionInvalid
 import requests
 import time
 import random
@@ -87,7 +90,7 @@ def dino():
 def bouncingballs():
     return render_template('games/bouncingballs.html')
 
-# SIMS
+# SIMS  
 # rsa
 @app.route("/sims/rsa", methods=['GET', 'POST'])
 def rsa():
@@ -254,6 +257,46 @@ def afkNotifCheck():
             return jsonify(success=True)
 
         return jsonify(success=False)
+
+
+
+@app.route("/spotify", methods=['GET', 'POST'])
+def spotifyLogin():
+    client_id = 'd3a17cc496724a538a7b2af6024b0a26'
+    client_secret = spotify_client_secret
+    redirect_uri = 'http://localhost:5000/callback'
+    scopes = 'user-read-private user-read-email'
+
+    form=login_form()
+    if form.validate_on_submit():
+        result = form.femail.data, form.passw.data
+        
+        print('from validated')
+        state = str(random.randint(10**16,9*10**16))
+        
+        client = MongoClient('localhost', 27017)
+        collection = client.website.spotifystate
+        collection.insert_one({'state':state})
+        url = 'https://accounts.spotify.com/authorize?' + 'response_type='+ 'code' + '&client_id=' + client_id + '&scope=' + scopes + '&redirect_uri=' + redirect_uri + '&state' + state
+        print(url)
+        return redirect(url)
+
+    return render_template('spotify/login.html', form=form)
+
+@app.route("/callback", methods=['GET', 'POST'])
+def spotifyProfile():
+    code = request.args.get('code')
+    state = request.args.get('state')
+    client = MongoClient('localhost', 27017)
+    collection = client.website.spotifystate
+    if (collection.find({'state':state})):
+        print('state is the same', collection.find({'state':state}))
+    else:
+        print('state not same', {'state':state})
+
+    print(code,state)
+
+    return render_template('spotify/profile.html')
 
 
 

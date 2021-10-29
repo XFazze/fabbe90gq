@@ -50,7 +50,3 @@ def get_match_timeline(region_large, match_id, api_key):
 def get_live_game(region, id, api_key):
     url = "https://" + region + ".api.riotgames.com/lol/spectator/v4/active-games/by-summoner/" + id + "?api_key=" + api_key
     return requests.get(url).json()
-
-
-if __name__ == '__main__':
-    testget()
