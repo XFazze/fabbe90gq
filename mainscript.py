@@ -5,20 +5,25 @@ import ast
 import pymongo
 import requests
 import time
+import random
 from flask import *
 from flask_wtf import FlaskForm
+#git from werkzeug.datastructures import ContentSecurityPolicy
 from wtforms import Form, SelectField, validators, SubmitField, IntegerField
 from wtforms.validators import DataRequired
+from forms.user_form import login_form, register_form
 from ratio_code.basic_copy import *
 from forms.pappa_form import *
 from forms.factorio_form import *
 from forms.lb2000_form import *
+from forms.user_form import *
 from lb.api_calls import *
 from lb.match_history import *
 from lb.championIdtoname import *
 from config import *
 from threading import Thread
 from pymongo import MongoClient, collation
+from Crypto.Util import number
 
 # Initializing flask and sql
 app = Flask(__name__,  static_folder='static')
@@ -55,78 +60,57 @@ def gamejs():
 @app.route("/gamejs/leaderboard", methods=['GET', 'POST'])
 def leaderboard():
     if request.method == "POST":
-        print("METHOD IS POST")
-        data = {}    # empty dict to store data
-        data['game'] = request.json['game']
-        data['user'] = request.json['user']
-        data['score'] = request.json['score']
+        jsonf = json.loads(request.form.to_dict()['data'])
+        if jsonf['score'] > 1985:
+            return redirect("")
         client = MongoClient('localhost', 27017)
         db = client.website
-        collection = db.osu
-        collection.insert_one(data)
+        collection = db.leaderboard
+        collection.insert_one(jsonf)
 
-    return redirect('/gamejs/osu')
+    return redirect("")
 
 
 @app.route("/gamejs/osu", methods=['GET', 'POST'])
 def osu():
-    client = MongoClient('localhost', 27017)
-    db = client.website
-    collection = db.osu
-    leaderboard = []
-    for record in collection.find().sort("score", pymongo.DESCENDING).limit(10):
-        leaderboard.append(record)
-
-    return render_template('games/osu.html',  leaderboard=leaderboard)
+    return render_template('games/osu.html')
 
 @app.route("/gamejs/snake", methods=['GET', 'POST'])
 def snake():
-    client = MongoClient('localhost', 27017)
-    db = client.website
-    collection = db.snake
-    leaderboard = []
-    for record in collection.find().sort("score", pymongo.DESCENDING).limit(10):
-        leaderboard.append(record)
+    return render_template('games/snake.html')
 
-    return render_template('games/snake.html',  leaderboard=leaderboard)
+@app.route("/gamejs/dino", methods=['GET', 'POST'])
+def dino():
+    return render_template('games/dino.html')
 
+@app.route("/gamejs/bouncingballs", methods=['GET', 'POST'])
+def bouncingballs():
+    return render_template('games/bouncingballs.html')
 
-# PROJECTS
-@app.route("/projects/files")
-def files():
-    files = os.listdir("/home/pi/website/static/projects/")
-    return render_template('files.html', files=files)
+# SIMS
+# rsa
+@app.route("/sims/rsa", methods=['GET', 'POST'])
+def rsa():
+    return render_template('sims/rsa.html', plow=str(number.getPrime(4))+' ||| ' + str(number.getPrime(5)) +', ' + str(number.getPrime(5))+' ||| ' + str(number.getPrime(4)),
+    p128=[str(number.getPrime(32)), str(number.getPrime(32)),str(number.getPrime(32)),str(number.getPrime(32))])
 
-@app.route('/projects/files/<path:filename>')
-def sendfile(filename):
-    projects_path = app.static_folder + "/projects/"
-    return send_from_directory(projects_path, filename)
+# chaos triangle
+@app.route("/sims/chaostriangle", methods=['GET', 'POST'])
+def chaostriangle():
+    return render_template('sims/chaostriangle.html')
 
-@app.route("/projects/")
-def projects():
-    files = os.listdir("/home/pi/website/static/projects/")
-    return render_template('projects.html', files=files)
+# sortingalgorithms
+@app.route("/sims/sortingalgorithms", methods=['GET', 'POST'])
+def sortingalgorithms():
+    return render_template('sims/sortingalgorithms.html')
+    
+# random number genenrator
+@app.route("/sims/rng", methods=['GET', 'POST'])
+def rng():
+    return render_template('sims/rng.html')
 
-@app.route("/projects/pappa", methods=['GET', 'POST'])
-def pappa():
-    return render_template('produktutveckling/pappa.html')
-
-@app.route("/projects/pappa/login", methods=['GET', 'POST'])
-def pappa_login():
-    form = pappa_login_form()
-    return render_template('produktutveckling/pappa_login.html', form=form)
-
-@app.route("/projects/pappa/register", methods=['GET', 'POST'])
-def pappa_register():
-    form = pappa_register_form()
-    if request.method == "POST":
-        return redirect('/hejda')
-    return render_template('produktutveckling/pappa_register.html', form=form)
-
-
-
-# proportions calc
-@app.route("/projects/factorio",  methods=['GET', 'POST'])
+# Factorio Proportions calc
+@app.route("/factorio",  methods=['GET', 'POST'])
 def prop_calc():
     form = factorioform()
     if form.validate_on_submit():
@@ -140,7 +124,12 @@ def prop_calc():
         return render_template('factorio_proportions.html', form=form, ratio=ratio, component=component, submitted=True,  sop=sop)
     return render_template('factorio_proportions.html', form=form, ratio="wee", component="component", submitted=False, sop="sop")
 
-        
+# Portfolio
+'''
+@app.route("/portfolio")
+def portfolio():
+    return render_template('portfolio.html')
+'''
 @app.route("/lb2000/test")
 def lb2000_test():    
     
@@ -185,6 +174,86 @@ def lb2000():
             return render_template('lb2000/lb2000_base.html', summoner=summoner, region=region, mastery=mastery, total_mastery=total_mastery, champ_id_to_name=champ_id_to_name, timenow=timenow,ranks=ranks,form=form,
                                     match_history=match_history,region_large=region_large, summonerid=summoner['id'])
     return render_template('lb2000/lb2000_search.html', form=form, error=False)
+
+# register and login
+@app.route("/user", methods=['GET', 'POST'])
+def user():
+    return render_template('user/home.html')
+
+@app.route("/user/register", methods=['GET', 'POST'])
+def userRegister():
+    form=register_form()
+    if form.validate_on_submit():
+        result = form.femail.data, form.passw.data
+        print(result)
+        render_template('user/home.html')
+    return render_template('user/register.html', form=form)
+   
+@app.route("/user/login", methods=['GET', 'POST'])
+def userLogin():
+    form=login_form()
+    if form.validate_on_submit():
+        result = form.femail.data, form.passw.data
+        session["email"] = form.femail.data
+        print(result)
+        return render_template('user/home.html')
+
+    return render_template('user/login.html', form=form)
+
+@app.route("/user/forgotpassw", methods=['GET', 'POST'])
+def userForgotpassw():
+    return render_template('user/forgotpassw.html')
+
+# AFK notif
+# TO leave computer and have the screen flash when someone presses a button
+@app.route("/afknotif", methods=['GET', 'POST'])
+def afkNotif():
+    return render_template('afknotif/home.html')
+
+@app.route("/afknotif/id/<id>", methods=['GET', 'POST'])
+def afkNotifId(id='a'):
+    try:
+        id = int(id)
+        return render_template('afknotif/alert.html', id=int(id))
+    except:
+        return redirect('/afknotif')
+
+@app.route("/afknotif/start", methods=['GET', 'POST'])
+def afkNotifStart():
+    data = {
+        'id' : random.randint(1000000000,10000000000),
+        'alert' : False
+    }
+    client = MongoClient('localhost', 27017)
+    db = client.website
+    collection = db.afknotif
+    collection.insert_one(data)
+    return render_template('afknotif/start.html', id=data['id'])
+
+@app.route("/afknotif/alert", methods=['GET', 'POST'])
+def afkNotifAlert():
+    if request.method == "POST":
+        student_id = int(request.get_data().decode()[3:])
+        client = MongoClient('localhost', 27017)
+        db = client.website
+        collection = db.afknotif
+        newdata = {'id':student_id, 'alert': True}
+        object = collection.replace_one({'id':student_id}, newdata)
+        return jsonify(status="success")
+    
+@app.route("/afknotif/check", methods=['GET', 'POST'])
+def afkNotifCheck():
+    if request.method == "POST":
+        student_id = int(request.get_data().decode()[3:])
+        client = MongoClient('localhost', 27017)
+        db = client.website
+        collection = db.afknotif
+        object = collection.find_one({'id':student_id})
+        if object['alert']:
+            print('returning alerted')
+            return jsonify(success=True)
+
+        return jsonify(success=False)
 
 
 

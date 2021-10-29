@@ -8,6 +8,11 @@
     color:var(--sub-color);
 
 }
+.centerdiv h3{
+    font-family: var(--title-font);
+    color:var(--sub-color);
+
+}
 .centerdiv p{
     font-family: var(--main-font);
     color:var(--sub-color);
@@ -35,4 +40,37 @@
     font-family: var(--main-font);
 
 
+}
+#register {
+    background-color: var(--bg-color);
+    border: none;
+    border-radius: 4px;
+    filter: brightness(1.25);
+    color: var(--main-color);
+    font-family: var(--main-font);
+}
+#login {
+    background-color: var(--bg-color);
+    border: none;
+    border-radius: 4px;
+    filter: brightness(1.25);
+    color: var(--main-color);
+    font-family: var(--main-font);
+}
+button{
+    background-color: var(--bg-color);
+    border: none;
+    border-radius: 4px;
+    filter:brightness(1.25);
+    margin: .2%;
+    white-space: nowrap;
+}
+.copy:hover{
+    cursor: copy;
+}
+.hidden{
+    display: none;
+}
+.inline{
+    display: inline;
 }

@@ -1,0 +1,19 @@
+{% extends "template.html" %}
+{% block link %}
+    <link rel="stylesheet" href="/static/css/basic.css">
+    <link rel="stylesheet" href="/static/css/games.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script type="text/javascript" src="/static/js/sims/chaostriangle.js"></script>
+{% endblock %}
+{% block body %}background-color:#23856D;{% endblock %}
+{% block main%}
+<div class="centerdiv">
+    <a href="/gamejs" class="allgames"><h2>All Sims</h2></a>
+    <h1>Chaos triangle</h1>
+</div>
+<div styler="display:flex" class="centerdiv">
+    <button id="trianglefill" onclick="randomfill()">Random Fill</button>
+    <button id="trianglefill" onclick="levelfill()">Level Fill</button>
+    <canvas id="game-layer" width=1000px height=700px style="margin: auto; display:block; padding:0;"></canvas><br>
+</div>
+{% endblock %}

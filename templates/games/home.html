@@ -1,14 +1,21 @@
 {% extends "template.html" %}
 {% block link %}
+    <link rel="stylesheet" href="/static/css/games.css">
     <link rel="stylesheet" href="/static/css/basic.css">
-    <link rel="stylesheet" href="/static/css/basics.css">
     <script type="text/javascript" src="/static/js/games/home.js"></script>
 {% endblock %}
 {% block body %}background-color:#23856D;{% endblock %}
 {% block main%}
 <div class="centerdiv">
-    <h1 style=" font-size: 20px; font-family: 'Roboto', sans-serif;">GameJS</h1>
-    <a href="/gamejs/osu" >Osu!</a><br>
-    <a href="/gamejs/snake" >Snake</a>
+    <h1>Games</h1>
+    <a href="/gamejs/osu" ><h2>Osu!</h2></a><br>
+    <a href="/gamejs/snake" ><h2>Snake</h2></a><br>
+    <a href="/gamejs/dino" ><h2>Dino</h2></a><br>
+    <a href="/gamejs/bouncingballs" ><h2>Bouncing balls</h2></a><br>
+    <h1>Sims</h1>
+    <a href="/sims/rsa" ><h2>Rsa</h2></a><br>
+    <a href="/sims/chaostriangle" ><h2>Chaos Triangle</h2></a><br>
+    <a href="/sims/sortingalgorithms" ><h2>Sorting Algorithms</h2></a><br>
+    <a href="/sims/rng" ><h2>Random generator</h2></a><br>
 </div>
 {% endblock %}

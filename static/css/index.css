@@ -12,36 +12,25 @@
     font-size: 20px; 
     font-family: var(--main-font);
 }
-
-.contact{
-    text-decoration: none;
-    color:var(--text-color);
-    font-size: 22px;
-    font-family: var(--main-font);
-}
-#rotating1{
-    animation: fadeIn 25s infinite;
-    opacity: 0;
-}
-#rotating2{
-    animation: fadeIn 25s infinite;
-    opacity: 0;
-    animation-delay: 8.3s;
-}
 .main_div{
     max-width: 1000px;
     display: grid;
 }
-#rotating3{
-    animation: fadeIn 25s infinite;
-    opacity: 0;
-    animation-delay:16.7s;
+.project{
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out;
 }
+.project:hover{
+    transform: translate(-20px,0);
 
-@keyframes fadeIn {
-    0%{opacity:0;}
-    10%{opacity: 1;}
-    30% {opacity:1;}
-    40% {opacity:0;}
-    100% {opacity:0;}
-  }
+}
+.project h1{
+    color:var(--main-color);
+    font-family: var(--title-font);
+
+}
+.project p{
+    color:var(--sub-color);
+    font-size: 20px; 
+    font-family: var(--main-font);
+}

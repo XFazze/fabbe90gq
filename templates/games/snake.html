@@ -2,21 +2,20 @@
 {% block link %}
     <link rel="stylesheet" href="/static/css/basic.css">
     <link rel="stylesheet" href="/static/css/games.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script type="text/javascript" src="/static/js/games/osu.js"></script>
+    <script type="text/javascript" src="/static/js/games/snake.js"></script>
 {% endblock %}
 {% block body %}background-color:#23856D;{% endblock %}
 {% block main%}
 <div class="centerdiv">
     <a href="/gamejs" class="allgames"><h2>All games</h2></a>
-    <h1>Osu</h1>
-    <p>Click the circles fast. If you are too slow you lose.</p>
+    <h1>Snake</h1>
+    <p>Use wasd keys to move. Dont run into walls or yourself.</p>
 </div>
 <div styler="display:flex" class="centerdiv">
-    <h2  id="score" style="text-align:center;" >Score: you suck</h2><br>
-    <img id="snoop" src='/static/pics/snoop_dog.gif' width=500px height=300px style="margin: auto; display:none; padding:0;">
+    <h2  id="score" style="text-align:center;" >Score: you suck Speed: ass</h2><br>
     <canvas id="game-layer" width=500px height=300px style="margin: auto; display:block; padding:0;"></canvas><br>
 
     <button id="resetbutton"  style="width:500px; margin:auto; display:block; padding:0;">RESET</button>
 
+</div>
 {% endblock %}
