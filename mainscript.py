@@ -1,14 +1,8 @@
 
-import os
-import json
-import ast
+import os, json, ast, pymongo, requests, time, random, base64
 from typing import SupportsComplex
-import pymongo
 from pymongo import collection
 from pymongo.errors import CollectionInvalid
-import requests
-import time
-import random
 from flask import *
 from flask_wtf import FlaskForm
 #git from werkzeug.datastructures import ContentSecurityPolicy
@@ -262,9 +256,7 @@ def afkNotifCheck():
 
 @app.route("/spotify", methods=['GET', 'POST'])
 def spotifyLogin():
-    client_id = 'd3a17cc496724a538a7b2af6024b0a26'
     client_secret = spotify_client_secret
-    redirect_uri = 'http://localhost:5000/callback'
     scopes = 'user-read-private user-read-email'
 
     form=login_form()
@@ -278,7 +270,6 @@ def spotifyLogin():
         collection = client.website.spotifystate
         collection.insert_one({'state':state})
         url = 'https://accounts.spotify.com/authorize?' + 'response_type='+ 'code' + '&client_id=' + client_id + '&scope=' + scopes + '&redirect_uri=' + redirect_uri + '&state' + state
-        print(url)
         return redirect(url)
 
     return render_template('spotify/login.html', form=form)
@@ -286,6 +277,8 @@ def spotifyLogin():
 @app.route("/callback", methods=['GET', 'POST'])
 def spotifyProfile():
     code = request.args.get('code')
+    if code == 'access_denied': return '<div>Backend spotify authorization failed</div>'
+
     state = request.args.get('state')
     client = MongoClient('localhost', 27017)
     collection = client.website.spotifystate
@@ -294,7 +287,33 @@ def spotifyProfile():
     else:
         print('state not same', {'state':state})
 
-    print(code,state)
+    print('success code and state', code,state)
+
+    url = 'https://accounts.spotify.com/api/token'
+    idsecret = client_id +':'+client_secret
+    headers = {
+        'Authorization': 'Basic ' + idsecret
+
+    }
+    params = {
+        'code': code,
+        'redirect_uri': redirect_uri,
+        'grant_type': 'authorization_code'
+      }
+    resp = requests.Request(url,headers=headers, params=params)
+    print('\nheaders', resp.headers, '\nparams', resp.params,)
+
+    #this = resp.text
+    #print('resopise', this, type(this))
+    '''
+    access_token = response['form']['access_token']
+    token_type = response.get('token_type')
+    print('two worked', access_token)
+    scope = response.args.get('scope')
+    expires_in = response.args.get('expires_in')
+    refresh_token = response.args.get('refresh_token')
+    '''
+
 
     return render_template('spotify/profile.html')
 
