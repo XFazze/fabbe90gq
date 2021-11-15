@@ -273,7 +273,7 @@ def afkNotifCheck():
 
 @app.route("/spotify", methods=['GET', 'POST'])
 def spotifyAuth():
-    scopes = "user-read-recently-played user-top-read playlist-read-private user-read-private user-read-email user-library-read"
+    scopes = "user-read-recently-played user-top-read user-read-private user-read-email user-library-read user-follow-read"
     state = str(random.randint(10**16, 9*10**16))
     client = MongoClient('localhost', 27017)
     collection = client.website.spotifystate
