@@ -11,3 +11,8 @@ class register_form(Form):
     femail = StringField('email', validators=[DataRequired()], render_kw={"placeholder": "email"})
     passw = PasswordField('passw', validators=[DataRequired()], render_kw={"placeholder": "password"})
     register = SubmitField('Register')
+
+
+class search_form(FlaskForm):
+    search_field = StringField("Search", render_kw={"placeholder": "spotify username"})
+    search = SubmitField("Login")

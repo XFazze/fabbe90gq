@@ -1,5 +1,5 @@
 
-import os, json, ast, pymongo, requests, time, random, base64
+import os, json, ast, pymongo, requests, time, random, base64, spotipy, operator, collections
 from typing import SupportsComplex
 from pymongo import collection
 from pymongo.errors import CollectionInvalid
@@ -20,7 +20,7 @@ from lb.championIdtoname import *
 from config import *
 from threading import Thread
 from pymongo import MongoClient, collation
-from Crypto.Util import number
+#from Crypto.Util import number
 
 # Initializing flask and sql
 app = Flask(__name__,  static_folder='static')
@@ -255,24 +255,16 @@ def afkNotifCheck():
 
 
 @app.route("/spotify", methods=['GET', 'POST'])
-def spotifyLogin():
-    scopes = 'user-read-private user-read-email'
+def spotifyAuth():
+    scopes = "user-read-recently-played user-top-read playlist-read-private user-read-private user-read-email user-library-read"
+    state = str(random.randint(10**16,9*10**16))
+    client = MongoClient('localhost', 27017)
+    collection = client.website.spotifystate
+    collection.insert_one({'state':state})
+    url = 'https://accounts.spotify.com/authorize?' + 'response_type='+ 'code' + '&client_id=' + client_id + '&scope=' + scopes + '&redirect_uri=' + redirect_uri + '&state' + state
+    return redirect(url)
 
-    form=login_form()
-    if form.validate_on_submit():
-        result = form.femail.data, form.passw.data
-        
-        print('from validated')
-        state = str(random.randint(10**16,9*10**16))
-        
-        client = MongoClient('localhost', 27017)
-        collection = client.website.spotifystate
-        collection.insert_one({'state':state})
-        url = 'https://accounts.spotify.com/authorize?' + 'response_type='+ 'code' + '&client_id=' + client_id + '&scope=' + scopes + '&redirect_uri=' + redirect_uri + '&state' + state
-        return redirect(url)
-
-    return render_template('spotify/login.html', form=form)
-
+    
 @app.route("/callback", methods=['GET', 'POST'])
 def spotifyCallback():
     code = request.args.get('code')
@@ -285,6 +277,8 @@ def spotifyCallback():
         print('state is the same', collection.find({'state':state}))
     else:
         print('state not same', {'state':state})
+        return '<div> State not same stop hacking</div>'
+        
 
     print('success code and state', code, state)
 
@@ -296,7 +290,6 @@ def spotifyCallback():
       }
     resp = requests.post(url, auth=(client_id, client_secret), data=params)
     respData = resp.json()
-    print('status code', resp.status_code)
     
     access_token = respData['access_token']
     refresh_token = respData['refresh_token']
@@ -325,9 +318,7 @@ def spotifyRefresh():
 
 @app.route('/spotify/profile')
 def spotifyP():
-    if 'tokens' not in session:
-        app.logger.error('No tokens in session.')
-        abort(400)
+    if 'tokens' not in session: return redirect("/spotify")
 
     # Get profile info
     headers = {'Authorization': f"Bearer {session['tokens'].get('access_token')}"}
@@ -342,6 +333,10 @@ def spotifyP():
         abort(res.status_code)
 
     return render_template('spotify/profile.html', data=res_data,image=res_data['images'][0]['url'], tokens=session.get('tokens'))
+
+
+
+
 # Run the site
 if __name__ == "__main__":
     app.run(debug=True)
