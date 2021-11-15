@@ -328,6 +328,7 @@ def spotifyP():
     headers = {
         'Authorization': "Bearer "+str(session['tokens'].get('access_token'))}
     user = requests.get('https://api.spotify.com/v1/me', headers=headers)
+    print(user)
     user_data = user.json()
 
     artist_short = requests.get(
