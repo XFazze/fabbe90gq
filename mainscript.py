@@ -332,46 +332,29 @@ def spotifyP():
 
     artist_short = requests.get(
         'https://api.spotify.com/v1/me/top/artists?limit=50&time_range=short_term', headers=headers)
-    if not 'error' in artist_short.keys():
-        artist_short_data = artist_short.json()
-    else:
-        artist_short_data = {'items':[{"names":'somethging went wrong'}]}
+    artist_short_data = artist_short.json()
 
     artist_medium = requests.get(
         'https://api.spotify.com/v1/me/top/artists?limit=50&time_range=medium_term', headers=headers)
-    if not 'error' in artist_medium.keys():
-        artist_medium_data = artist_medium.json()
-    else:
-        artist_medium_data = {'items':[{"names":'somethging went wrong'}]}
+    artist_medium_data = artist_medium.json()
 
     artist_long = requests.get(
         'https://api.spotify.com/v1/me/top/artists?limit=50&time_range=long_term', headers=headers)
-    if not 'error' in artist_long.keys():
-        artist_long_data = artist_long.json()
-    else:
-        artist_long_data = {'items':[{"names":'somethging went wrong'}]}
+    artist_long_data = artist_long.json()
 
     song_short = requests.get(
         'https://api.spotify.com/v1/me/top/tracks?limit=50&time_range=short_term', headers=headers)
-    if not 'error' in song_short.keys():
-        song_short_data = song_short.json()
-    else:
-        song_short_data = {'items':[{"names":'somethging went wrong'}]}
+    song_short_data = song_short.json()
 
     song_medium = requests.get(
         'https://api.spotify.com/v1/me/top/tracks?limit=50&time_range=medium_term', headers=headers)
-    if not 'error' in song_medium.keys():
-        song_medium_data = song_medium.json()
-    else:
-        song_medium_data = {'items':[{"names":'somethging went wrong'}]}
+    artist_short_data = song_medium.json()
 
+    song_medium_data = song_medium.json()
     song_long = requests.get(
         'https://api.spotify.com/v1/me/top/tracks?limit=50&time_range=long_term', headers=headers)
-    if not 'error' in song_long.keys():
-        song_long_data = song_long.json()
-    else:
-        song_long_data = {'items':[{"names":'somethging went wrong'}]}
-
+    artist_short_data = artist_short.json()
+    song_long_data = song_long.json()
     return render_template('spotify/profile.html',
                            user_data=user_data, image=user_data['images'][0]['url'],
                            tokens=session.get('tokens'),
