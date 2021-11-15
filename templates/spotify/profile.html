@@ -6,7 +6,9 @@
 {% block main%}
 <div class="centerdiv" >
     <a href="/spotify" ><h2>Login again </h2></a>
-    <h1>Profile</h1>
+    <a href="/spotify/refresh"><h2>Refresh</h2></a>
+    <h1>{{ data['display_name']}}</h1>
+    <img src="{{ image }}">
     </div>
 </div>
 {% endblock %}

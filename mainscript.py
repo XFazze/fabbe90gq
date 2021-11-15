@@ -256,7 +256,6 @@ def afkNotifCheck():
 
 @app.route("/spotify", methods=['GET', 'POST'])
 def spotifyLogin():
-    client_secret = spotify_client_secret
     scopes = 'user-read-private user-read-email'
 
     form=login_form()
@@ -275,7 +274,7 @@ def spotifyLogin():
     return render_template('spotify/login.html', form=form)
 
 @app.route("/callback", methods=['GET', 'POST'])
-def spotifyProfile():
+def spotifyCallback():
     code = request.args.get('code')
     if code == 'access_denied': return '<div>Backend spotify authorization failed</div>'
 
@@ -287,38 +286,62 @@ def spotifyProfile():
     else:
         print('state not same', {'state':state})
 
-    print('success code and state', code,state)
+    print('success code and state', code, state)
 
     url = 'https://accounts.spotify.com/api/token'
-    idsecret = client_id +':'+client_secret
-    headers = {
-        'Authorization': 'Basic ' + idsecret
-
-    }
     params = {
         'code': code,
         'redirect_uri': redirect_uri,
         'grant_type': 'authorization_code'
       }
-    resp = requests.Request(url,headers=headers, params=params)
-    print('\nheaders', resp.headers, '\nparams', resp.params,)
+    resp = requests.post(url, auth=(client_id, client_secret), data=params)
+    respData = resp.json()
+    print('status code', resp.status_code)
+    
+    access_token = respData['access_token']
+    refresh_token = respData['refresh_token']
 
-    #this = resp.text
-    #print('resopise', this, type(this))
-    '''
-    access_token = response['form']['access_token']
-    token_type = response.get('token_type')
-    print('two worked', access_token)
-    scope = response.args.get('scope')
-    expires_in = response.args.get('expires_in')
-    refresh_token = response.args.get('refresh_token')
-    '''
+    session['tokens'] = {
+        'access_token': access_token,
+        'refresh_token': refresh_token,
+    }
+    return redirect('spotify/profile')
 
+@app.route("/spotify/refresh", methods=['GET', 'POST'])
+def spotifyRefresh():
+    url = 'https://accounts.spotify.com/api/token'
+    params = {
+        'refresh_token': session.get('tokens').get('refresh_token'),
+        'grant_type': 'authorization_code'
+      }
+    resp = requests.post(url, auth=(client_id, client_secret), data=params)
+    #print('\nheaders', resp.headers, '\nparams', resp.params,)
+    respData = resp.json()
+    print('status code', resp.status_code)
 
-    return render_template('spotify/profile.html')
+    session['tokens']['access_token'] = respData.get('access_token')
 
+    return json.dumps(session['tokens'])
 
+@app.route('/spotify/profile')
+def spotifyP():
+    if 'tokens' not in session:
+        app.logger.error('No tokens in session.')
+        abort(400)
 
+    # Get profile info
+    headers = {'Authorization': f"Bearer {session['tokens'].get('access_token')}"}
+
+    res = requests.get('https://api.spotify.com/v1/me', headers=headers)
+    res_data = res.json()
+    if res.status_code != 200:
+        app.logger.error(
+            'Failed to get profile info: %s',
+            res_data.get('error', 'No error message returned.'),
+        )
+        abort(res.status_code)
+
+    return render_template('spotify/profile.html', data=res_data,image=res_data['images'][0]['url'], tokens=session.get('tokens'))
 # Run the site
 if __name__ == "__main__":
     app.run(debug=True)
