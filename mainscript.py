@@ -326,7 +326,7 @@ def spotifyP():
     if 'tokens' not in session:
         return redirect("/spotify")
     headers = {
-        'Authorization': f"Bearer {session['tokens'].get('access_token')}"}
+        'Authorization': "Bearer "+str(session['tokens'].get('access_token'))}
     user = requests.get('https://api.spotify.com/v1/me', headers=headers)
     user_data = user.json()
 
@@ -365,40 +365,3 @@ def spotifyP():
 if __name__ == "__main__":
     app.run(debug=True)
 
-
-a = {'external_urls': {'spotify': 'https://open.spotify.com/artist/4MCBfE4596Uoi2O4DtmEMz'},
-     'followers': {'href': None, 'total': 20528527},
-     'genres': [
-         'chicago rap',
-         'melodic rap'
-],
-    'href': 'https://api.spotify.com/v1/artists/4MCBfE4596Uoi2O4DtmEMz',
-    'id': '4MCBfE4596Uoi2O4DtmEMz',
-    'images': [
-    {'height': 640, 'url': 'https://i.scdn.co/image/ab6761610000e5eb1908e1a8b79abf71d5598944', 'width': 640},
-    {'height': 320, 'url': 'https://i.scdn.co/image/ab676161000051741908e1a8b79abf71d5598944', 'width': 320},
-    {'height': 160, 'url': 'https://i.scdn.co/image/ab6761610000f1781908e1a8b79abf71d5598944', 'width': 160}
-],
-    'name': 'Juice WRLD',
-    'popularity': 94,
-    'type': 'artist',
-    'uri': 'spotify:artist:4MCBfE4596Uoi2O4DtmEMz'}
-
-
-b = {'album': {'album_type': 'SINGLE',
-               'artists': [{'external_urls': {'spotify': 'https://open.spotify.com/artist/6UZvJbrEJxkycbgUznMIF9'},
-                            'href': 'https://api.spotify.com/v1/artists/6UZvJbrEJxkycbgUznMIF9', 'id': '6UZvJbrEJxkycbgUznMIF9',
-                            'name': 'Behmer',
-                            'type': 'artist', 'uri': 'spotify:artist:6UZvJbrEJxkycbgUznMIF9'}],
-               'available_markets': ['AD', 'AE', 'AR', 'AT', 'AU', 'BE', 'BG', 'BH', 'BO', 'BR', 'CA', 'CH', 'CL', 'CO', 'CR', 'CY', 'CZ', 'DE', 'DK', 'DO', 'DZ', 'EC', 'EE', 'EG', 'ES', 'FI', 'FR', 'GB', 'GR', 'GT', 'HK', 'HN', 'HU', 'ID', 'IE', 'IL', 'IN', 'IS', 'IT', 'JO', 'JP', 'KW', 'LB', 'LI', 'LT', 'LU', 'LV', 'MA', 'MC', 'MT', 'MX', 'MY', 'NI', 'NL', 'NO', 'NZ', 'OM', 'PA', 'PE', 'PH', 'PL', 'PS', 'PT', 'PY', 'QA', 'RO', 'SA', 'SE', 'SG', 'SK', 'SV', 'TH', 'TN', 'TR', 'TW', 'US', 'UY', 'VN', 'ZA'], 'external_urls': {'spotify': 'https://open.spotify.com/album/5mqRXfsNEmAmfsQjIYqDiA'}, 'href': 'https://api.spotify.com/v1/albums/5mqRXfsNEmAmfsQjIYqDiA', 'id': '5mqRXfsNEmAmfsQjIYqDiA', 'images': [{'height': 640, 'url': 'https://i.scdn.co/image/ab67616d0000b2733407bd55343e4284f68a42f1', 'width': 640}, {'height': 300, 'url': 'https://i.scdn.co/image/ab67616d00001e023407bd55343e4284f68a42f1', 'width': 300},
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      {'height': 64, 'url': 'https://i.scdn.co/image/ab67616d000048513407bd55343e4284f68a42f1', 'width': 64}], 'name': 'Clowntown 2017', 'release_date': '2016-06-13', 'release_date_precision': 'day',
-               'total_tracks': 1,
-               'type': 'album',
-               'uri': 'spotify:album:5mqRXfsNEmAmfsQjIYqDiA'},
-     'artists': [{'external_urls': {'spotify': 'https://open.spotify.com/artist/6UZvJbrEJxkycbgUznMIF9'},
-                  'href': 'https://api.spotify.com/v1/artists/6UZvJbrEJxkycbgUznMIF9',
-                  'id': '6UZvJbrEJxkycbgUznMIF9',
-                  'name': 'Behmer',
-                  'type': 'artist',
-                  'uri': 'spotify:artist:6UZvJbrEJxkycbgUznMIF9'}],
-     'available_markets': ['AD', 'AE', 'AR', 'AT', 'AU', 'BE', 'BG', 'BH', 'BO', 'BR', 'CA', 'CH', 'CL', 'CO', 'CR', 'CY', 'CZ', 'DE', 'DK', 'DO', 'DZ', 'EC', 'EE', 'EG', 'ES', 'FI', 'FR', 'GB', 'GR', 'GT', 'HK', 'HN', 'HU', 'ID', 'IE', 'IL', 'IN', 'IS', 'IT', 'JO', 'JP', 'KW', 'LB', 'LI', 'LT', 'LU', 'LV', 'MA', 'MC', 'MT', 'MX', 'MY', 'NI', 'NL', 'NO', 'NZ', 'OM', 'PA', 'PE', 'PH', 'PL', 'PS', 'PT', 'PY', 'QA', 'RO', 'SA', 'SE', 'SG', 'SK', 'SV', 'TH', 'TN', 'TR', 'TW', 'US', 'UY', 'VN', 'ZA'], 'disc_number': 1, 'duration_ms': 158408, 'explicit': False, 'external_ids': {'isrc': 'TCACP1634444'}, 'external_urls': {'spotify': 'https://open.spotify.com/track/4NRC69MmOk6HOXcAWRWlD9'}, 'href': 'https://api.spotify.com/v1/tracks/4NRC69MmOk6HOXcAWRWlD9', 'id': '4NRC69MmOk6HOXcAWRWlD9', 'is_local': False, 'name': 'Clowntown 2017', 'popularity': 55, 'preview_url': 'https://p.scdn.co/mp3-preview/71e1ce99161670d9d3ae71c8a8c3ad3d7ba157d5?cid=d3a17cc496724a538a7b2af6024b0a26', 'track_number': 1, 'type': 'track', 'uri': 'spotify:track:4NRC69MmOk6HOXcAWRWlD9'}
