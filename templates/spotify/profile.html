@@ -1,17 +1,98 @@
 {% extends "template.html" %}
 {% block link %}
 <link rel="stylesheet" href="/static/css/basic.css">
+<link rel="stylesheet" href="/static/css/spotify.css">
+<script type="text/javascript" src="/static/js/spotify.js"></script>
 {% endblock %}
 {% block body %}background:#222;{% endblock %}
 {% block main%}
 <div class="centerdiv">
-    <a href="/spotify" ><h2>Login again </h2></a>
-    <div style="float: left;">
-    <h1>{{ data["display_name"] }}</h1>
-        <img style="height:200px; width:200px" class="inline" src="{{ data["images"][0]["url"] }}" alt="">
+    <div>
+        <a href="/spotify" ><h2>Login again </h2></a>
+        <a href="https://open.spotify.com/" ><h2>Change account on this site</h2></a>
+
+        <div style="float: left;">
+            <img style="height:200px; width:200px; float:left; margin-right: 2ch;" class="inline" src="{{ user_data["images"][0]["url"] }}" alt="">
+        </div>
+        <div style="float: left;">
+            <h1>{{ user_data["display_name"] }}</h1>
+            <h2> Followers:{{ user_data["followers"]["total"] }}</h2>
+            <h2> Country:{{ user_data["country"] }}</h2>
+        </div>
     </div>
-    <div style="float: left;">
-        anal
+</div>
+<div>
+    <button onclick="topartist()">Top artists</button>
+    <button onclick="topsongs()">Top songs</button>
+</div>
+<div id="artistdiv">
+    <h1>Top artist</h1>
+    <div class="column3">
+        <div>
+            <h3>4 weeks</h3>
+            <ul>
+                {% for i in artist_short_data %}
+                <li>
+                    {{ i["name"] }}
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div>
+            <h3>6 months</h3>
+            <ul>
+                {% for i in artist_medium_data %}
+                <li>
+                    {{ i["name"] }}
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div>
+            <h3>Years</h3>
+            <ul>
+                {% for i in artist_long_data %}
+                <li>
+                    {{ i["name"] }}
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</div>
+<div id="topsongs">
+    <h1>Top songs</h1>
+    <div class="column3">
+        <div>
+            <h3>4 weeks</h3>
+            <ul>
+                {% for i in song_short_data %}
+                <li>
+                    {{ i["name"] }}
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div>
+            <h3>6 months</h3>
+            <ul>
+                {% for i in song_medium_data %}
+                <li>
+                    {{ i["name"] }}
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div>
+            <h3>Years</h3>
+            <ul>
+                {% for i in song_long_data %}
+                <li>
+                    {{ i["name"] }}
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
     </div>
 </div>
 {% endblock %}

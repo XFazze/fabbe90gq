@@ -1,0 +1,24 @@
+.column3{
+    display: flex;
+}
+.column3 div{
+    width: 33%;
+}
+.column3 div ul{
+    list-style-type:decimal;
+}
+.column3 ul li{
+    font-family: var(--main-font);
+    color:var(--text-color);
+
+}
+
+h1{
+    font-family: var(--title-font);
+    color:var(--main-color);
+
+}
+h3{
+    font-family: var(--title-font);
+    color:var(--sub-color);
+}
