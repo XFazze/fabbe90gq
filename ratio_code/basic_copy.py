@@ -2,7 +2,7 @@ import json
 import math
 
 
-items = json.load(open('ratio_code/items.json', 'r'))
+#items = json.load(open('ratio_code/items.json', 'r'))
 
 
 def get_components(item, amount, smelter, assembler):
