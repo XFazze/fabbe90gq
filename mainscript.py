@@ -327,35 +327,59 @@ def spotifyP():
         return redirect("/spotify")
     headers = {
         'Authorization': "Bearer "+str(session['tokens'].get('access_token'))}
-    user = requests.get('https://api.spotify.com/v1/me', headers=headers)
-    print(user)
-    user_data = user.json()
+    try:
+        user = requests.get('https://api.spotify.com/v1/me', headers=headers)
+        print(user)
+        user_data = user.json()
+    except:
+        user_data = {'items':[{'name':'something wrong'}]}
 
-    artist_short = requests.get(
-        'https://api.spotify.com/v1/me/top/artists?limit=50&time_range=short_term', headers=headers)
-    artist_short_data = artist_short.json()
+    try:
+        artist_short = requests.get(
+            'https://api.spotify.com/v1/me/top/artists?limit=50&time_range=short_term', headers=headers)
+        artist_short_data = artist_short.json()
+    except:
+        artist_short_data = {'items':[{'name':'something wrong'}]}
 
-    artist_medium = requests.get(
-        'https://api.spotify.com/v1/me/top/artists?limit=50&time_range=medium_term', headers=headers)
-    artist_medium_data = artist_medium.json()
+    try:
+        artist_medium = requests.get(
+            'https://api.spotify.com/v1/me/top/artists?limit=50&time_range=medium_term', headers=headers)
+        artist_medium_data = artist_medium.json()
+    except:
+        artist_medium_data = {'items':[{'name':'something wrong'}]}
 
-    artist_long = requests.get(
-        'https://api.spotify.com/v1/me/top/artists?limit=50&time_range=long_term', headers=headers)
-    artist_long_data = artist_long.json()
+    try:
+        artist_long = requests.get(
+            'https://api.spotify.com/v1/me/top/artists?limit=50&time_range=long_term', headers=headers)
+        artist_long_data = artist_long.json()
+    except:
+        artist_long_data = {'items':[{'name':'something wrong'}]}
 
-    song_short = requests.get(
-        'https://api.spotify.com/v1/me/top/tracks?limit=50&time_range=short_term', headers=headers)
-    song_short_data = song_short.json()
+    try:
+        song_short = requests.get(
+            'https://api.spotify.com/v1/me/top/tracks?limit=50&time_range=short_term', headers=headers)
+        song_short_data = song_short.json()
+    except:
+        song_short_data = {'items':[{'name':'something wrong'}]}
 
-    song_medium = requests.get(
+    try:
+        song_medium = requests.get(
         'https://api.spotify.com/v1/me/top/tracks?limit=50&time_range=medium_term', headers=headers)
-    artist_short_data = song_medium.json()
+        song_medium_data = song_medium.json()
+    except:
+        user_data = {'items':[{'name':'something wrong'}]}
 
-    song_medium_data = song_medium.json()
-    song_long = requests.get(
-        'https://api.spotify.com/v1/me/top/tracks?limit=50&time_range=long_term', headers=headers)
-    artist_short_data = artist_short.json()
-    song_long_data = song_long.json()
+    try:
+        song_long = requests.get(
+            'https://api.spotify.com/v1/me/top/tracks?limit=50&time_range=long_term', headers=headers)
+        song_long_data = song_long.json()
+    except:
+        song_long_data = {'items':[{'name':'something wrong'}]}
+
+
+
+
+
     return render_template('spotify/profile.html',
                            user_data=user_data, image=user_data['images'][0]['url'],
                            tokens=session.get('tokens'),
