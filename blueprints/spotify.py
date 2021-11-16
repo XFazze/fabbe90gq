@@ -62,6 +62,7 @@ def spotifyP():
         return redirect("/spotify")
     headers = {'Authorization': "Bearer "+str(session['tokens'].get('access_token'))}
     user = requests.get('https://api.spotify.com/v1/me', headers=headers)
+    print('spotify status code', user.status_code)
     if user.status_code > 300:
         return render_template('notwhitelisted.html')
 
