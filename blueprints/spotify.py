@@ -71,37 +71,37 @@ def spotifyP():
     artist_short = requests.get('https://api.spotify.com/v1/me/top/artists?limit=50&time_range=short_term', headers=headers)
     if artist_short.status_code > 300:
         print('somethingf went wrong in artist_short', artist_short.status_code)
-        return render_template('error.html')
+        return render_template('serror.html')
     data['artist_short_data'] = artist_short.json()['items']
 
     artist_medium = requests.get('https://api.spotify.com/v1/me/top/artists?limit=50&time_range=medium_term', headers=headers)
     if artist_medium.status_code > 300:
         print('somethingf went wrong in artist_medium', artist_medium.status_code)
-        return render_template('error.html')
+        return render_template('serror.html')
     data['artist_medium_data'] = artist_medium.json()['items']
 
     artist_long = requests.get('https://api.spotify.com/v1/me/top/artists?limit=50&time_range=long_term', headers=headers)
     if artist_long.status_code > 300:
         print('somethingf went wrong in artist_long', artist_long.status_code)
-        return render_template('error.html')
+        return render_template('serror.html')
     data['artist_long_data'] = artist_long.json()['items']
 
     song_short = requests.get('https://api.spotify.com/v1/me/top/tracks?limit=50&time_range=short_term', headers=headers)
     if song_short.status_code > 300:
         print('somethingf went wrong in song_short', song_short.status_code)
-        return render_template('error.html')
+        return render_template('serror.html')
     data['song_short_data'] = song_short.json()['items']
 
     song_medium = requests.get('https://api.spotify.com/v1/me/top/tracks?limit=50&time_range=medium_term', headers=headers)
     if song_medium.status_code > 300:
         print('somethingf went wrong in song_medium', song_medium.status_code)
-        return render_template('error.html')
+        return render_template('serror.html')
     data['song_medium_data'] = song_medium.json()['items']
 
     song_long = requests.get('https://api.spotify.com/v1/me/top/tracks?limit=50&time_range=long_term', headers=headers)
     if song_long.status_code > 300:
         print('somethingf went wrong in song_long', song_long.status_code)
-        return render_template('error.html')
+        return render_template('sserror.html')
     data['song_long_data'] = song_long.json()['items']
 
     return render_template('spotify/profile.html',
