@@ -69,6 +69,7 @@ def spotifyP():
     user_data = user.json()
     data = {}
     artist_short = requests.get('https://api.spotify.com/v1/me/top/artists?limit=50&time_range=short_term', headers=headers)
+    print(artist_short)
     data['artist_short_data'] = artist_short.json()['items']
     artist_medium = requests.get('https://api.spotify.com/v1/me/top/artists?limit=50&time_range=medium_term', headers=headers)
     data['artist_medium_data'] = artist_medium.json()['items']

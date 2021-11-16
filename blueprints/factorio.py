@@ -1,7 +1,7 @@
 from flask import *
 from config import *
-from ratio_code.basic_copy import *
-from forms.factorio_form import *
+from ..ratio_code.basic_copy import *
+from ..forms.factorio_form import *
 
 factorio = Blueprint('factorio', __name__)
 
