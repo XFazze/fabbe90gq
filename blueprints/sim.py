@@ -1,7 +1,7 @@
 from flask import *
 from pymongo import MongoClient
 from config import *
-from Crypto.Util import number
+#from Crypto.Util import number
 
 sim = Blueprint('sim', __name__)
 

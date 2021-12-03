@@ -32,8 +32,8 @@
                 </div>
                 
                 {% for champ in mastery %}
-                {% set champname = champ_id_to_name[champ["championId"]|string]  %}
-                {% set icon_url = "http://ddragon.leagueoflegends.com/cdn/11.16.1/img/champion/" + champname + ".png" %}
+                {% set champname = champ_id_to_name[champ["championId"]]  %}
+                {% set icon_url = "http://ddragon.leagueoflegends.com/cdn/11.23.1/img/champion/" + champname + ".png" %}
                 {% set seconds = (timenow-(champ['lastPlayTime']/1000))|round %}
                 <div class="mcolumn">
                     <div class="mrow">
@@ -140,25 +140,6 @@
             {% for match in match_history %}
                 <div id="{{ match }}"><p>Loading match</p></div>
             {% endfor %}
-
-            {# 
-            {% if (match1[summonerid]['meta']['win']) %}
-                    <div class="amatch" style="background-image:-webkit-linear-gradient(left, var(--error-color), var(--error-color) 70%, transparent 70%, transparent 100%);" >
-                    {% else %}
-                    <div class="amatch" style="background-image:-webkit-linear-gradient(left, var(--sub-color), var(--sub-color) 70%, transparent 70%, transparent 100%)" >
-                {% endif %}
-                {% set icon_url = "http://ddragon.leagueoflegends.com/cdn/11.16.1/img/champion/" + match1[summonerid]['champ']['championName'] + ".png" %}
-                <div style="width: 80px; float: left;display: flex;">
-                    <p style="margin:auto;" >{{ (((timenow-(match1["meta"]["gameCreation"]/1000))/8640)|round)/10 }}d  </p>
-                    <p style="margin:auto;" >&nbsp;{{ (match1["meta"]["gameDuration"]/60000)|int }}m</p>
-                </div>
-                <img src={{ icon_url }}  style="width: 60;float:left">
-                
-                </div>
-            </div>
-             #}
-
-
         
         </div>
 

@@ -99,6 +99,7 @@
 .match{
     width: 100%;
     display: flex;
+    margin:1ch;
 }
 .meta{
     width: 10%;
@@ -142,12 +143,15 @@
 .meta{
     width: 10%;
     float:left;
+    display:flex;
+    flex-direction: column;
 }
 .meta p{
     font-family: var(--main-font);
     color:var(--text-color);
     font-size: 12;
     float: left;
+    margin:0;
 
 }
 .game_creation{
@@ -163,15 +167,37 @@
 .game_type{
     display: none;
 }
+.gameType{
+    display:none;
+}
+.gameVersion{
+    display: none;
+}
 .game_version{
     display: none;
 }
+
+.detaildiv div p{
+    display:none;
+}
+
+
 .players{
     width: 90%;
     float:left;
 }
 .playerdiv{
     display: flex;
+    flex-direction: column;
+    gap:1ch;
+}
+.detaildiv{
+    display:flex;
+}
+.champion{
+    display:flex;
+    gap:1ch;
+
 }
 .champion p{
     font-family: var(--main-font);

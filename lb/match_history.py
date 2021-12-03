@@ -132,11 +132,11 @@ def jsonconvert(json_match):
 
 def generate_html(match_json):
     tf = sphc.TagFactory()
-    gameCreation = tf.p(str(match_json['meta']['gameCreation']) , Class='game_creation')
-    gameduration = tf.p(str(round(match_json['meta']['gameDuration']/6000)/10) + 'm', Class='game_duration')
-    gamemode = tf.p('game mode:\n'+match_json['meta']['gameMode'], Class='gameMode')
-    gameType = tf.p('game type:\n'+match_json['meta']['gameType'], Class='gameType')
-    gameVersion = tf.p('game versiopn:\n'+match_json['meta']['gameVersion'], Class='gameVersion')
+    gameCreation = tf.p(str(match_json['meta']['gameCreation']) , Class='game_creation')    
+    gameduration = tf.p(str(round(match_json['meta']['gameDuration']/6)/10) + 'm', Class='game_duration')
+    gamemode = tf.p(match_json['meta']['gameMode'], Class='gameMode')
+    gameType = tf.p(match_json['meta']['gameType'], Class='gameType')
+    gameVersion = tf.p(match_json['meta']['gameVersion'], Class='gameVersion')
     meta = tf.DIV([gameCreation, gameduration, gamemode, gameType,  gameVersion], Class='meta')
 
     team1 = []
@@ -149,25 +149,23 @@ def generate_html(match_json):
 
         divs = []
         # Champions div
-        champ = tf.img(src="http://ddragon.leagueoflegends.com/cdn/11.16.1/img/champion/" + match_json[player]['champ']['championName'] + ".png", Class='champ')
+        champ = tf.img(src="http://ddragon.leagueoflegends.com/cdn/11.23.1/img/champion/" + match_json[player]['champ']['championName'] + ".png", Class='champ')
         lvl = tf.p(str(match_json[player]['champ']['champLevel']), Class='lvl')
         kda  = tf.p(str(match_json[player]['champ']['kills']) + '/'+ str(match_json[player]['champ']['deaths']) + '/'+ str(match_json[player]['champ']['assists']), Class='kda')
         if match_json[player]['champ']['deaths']  == 0:
             kdacalc = tf.p('(KO)', Class='kdacalc')    
         else:
             kdacalc = tf.p('(' + str(round((10*match_json[player]['champ']['kills']+10*match_json[player]['champ']['assists'])/match_json[player]['champ']['deaths'])/10)+ ')', Class='kdacalc')
-        
-        item0 = tf.img(src="http://ddragon.leagueoflegends.com/cdn/11.16.1/img/item/" + str(match_json[player]['champ']['item0']) + ".png", Class='item')
-        item1 = tf.img(src="http://ddragon.leagueoflegends.com/cdn/11.16.1/img/item/" + str(match_json[player]['champ']['item1']) + ".png", Class='item')
-        item2 = tf.img(src="http://ddragon.leagueoflegends.com/cdn/11.16.1/img/item/" + str(match_json[player]['champ']['item2']) + ".png", Class='item')
-        item3 = tf.img(src="http://ddragon.leagueoflegends.com/cdn/11.16.1/img/item/" + str(match_json[player]['champ']['item3']) + ".png", Class='item')
-        item4 = tf.img(src="http://ddragon.leagueoflegends.com/cdn/11.16.1/img/item/" + str(match_json[player]['champ']['item4']) + ".png", Class='item')
-        item5 = tf.img(src="http://ddragon.leagueoflegends.com/cdn/11.16.1/img/item/" + str(match_json[player]['champ']['item5']) + ".png", Class='item')
-        item6 = tf.img(src="http://ddragon.leagueoflegends.com/cdn/11.16.1/img/item/" + str(match_json[player]['champ']['item6']) + ".png", Class='item')
-        
-        items = tf.DIV([item0, item1, item2, item3, item4, item5, item6], Class='items')
+        itemss = ['item0', 'item1','item2', 'item3','item4', 'item5', 'items6']
+        itemdiv = []
+        for it in itemss:
+            if str(match_json[player]['champ']['item0']) == '0':
+                itemdiv.append(tf.img(src="http://ddragon.leagueoflegends.com/cdn/11.23.1/img/item/" + str(match_json[player]['champ'][it]) + ".png", Class=it))
+            else:
+                itemdiv.append(tf.img(src="http://ddragon.leagueoflegends.com/cdn/11.23.1/img/item/" + str(match_json[player]['champ'][it]) + ".png", Class=it))
+
+        items = tf.DIV(itemdiv, Class='items')
         runes = tf.DIV('runes', Class='runes')
-        divs.append(tf.DIV([champ, lvl, kda, kdacalc, runes, items], Class='champion'))
 
         for category in match_json[player].keys():
             if category in "champmetaperks":
@@ -175,11 +173,16 @@ def generate_html(match_json):
             ps = []
             for stat in match_json[player][category].keys():
                 if stat == "totalMinionsKilled":
-                    ps.append(tf.p('(' + str((round((match_json[player]['objectives']['totalMinionsKilled']*10)/((match_json['meta']['gameDuration']/6000)/10)))/10) + ')', Class='cspermin'))
+                    ps.append(tf.p('(' + str((round(((match_json[player]['objectives']['totalMinionsKilled']*60)/match_json['meta']['gameDuration'])))) + ')', Class='cspermin'))
                 ps.append(tf.p(str(match_json[player][category][stat]), Class=stat))
             divs.append(tf.DIV(ps, Class=category))
-        divsdiv = tf.DIV(divs, Class="playerdiv")
+            
+        championdiv = tf.DIV([champ, lvl, kda, kdacalc, runes, items], Class='champion')
+        innerdiv = tf.DIV(divs, Class="detaildiv")
+
+        divsdiv = tf.DIV([championdiv, innerdiv], Class="playerdiv")
         player = tf.DIV(divsdiv, Class=match_json[player]['meta']['teamPosition']+" "+match_json[player]['meta']['summonerId'])
+
         if tc > 6:
             team2.append(player)
         else:
@@ -212,7 +215,7 @@ def download_matches(match_history, region_large, api_key):
             #print('\n\n\npringint folder pand ')
             #for f in os.listdir("/home/pi/website/static/lolgames_html/"):
 	        #    print(f)
-            with open(path, 'w') as f:
+            with open(path, 'w+') as f:
                 f.write(str(div))
                 print('saved to' ,path)
 

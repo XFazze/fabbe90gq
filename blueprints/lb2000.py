@@ -31,8 +31,9 @@ def lb2000_index():
         username = form.username.data
         region = form.region.data
         region_large = form.large_region.data
-        summoner = get_summoner(region, username, api_key)
+        summoner = get_summoner(region, username, api_key)  
         if "status" in summoner.keys():
+            print(summoner)
             return render_template('lb2000/lb2000_search.html', form=form, error=True)
         else:
             mastery = get_mastery(region, summoner['id'], api_key)
@@ -45,6 +46,8 @@ def lb2000_index():
             thread.start()
             timenow = time.time()
             form = lb2000_getuser()
+            for i in mastery:
+                i["championId"] = str(i["championId"])
             return render_template('lb2000/lb2000_base.html', summoner=summoner, region=region, mastery=mastery, total_mastery=total_mastery, champ_id_to_name=champ_id_to_name, timenow=timenow, ranks=ranks, form=form,
-                                   match_history=match_history, region_large=region_large, summonerid=summoner['id'])
+                                   match_history=match_history, region_large=region_large, summonerid=str(summoner['id']))
     return render_template('lb2000/lb2000_search.html', form=form, error=False)
