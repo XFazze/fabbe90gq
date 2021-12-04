@@ -1,7 +1,7 @@
 function rngnumber(){
     lown = document.getElementById('lown').value;
     highn = document.getElementById('highn').value;
-    res = Math.floor(getRndInteger(lown, highn).toString());
+    res = Math.round(getRndInteger(lown, highn).toString());
     res = res.toString();
     document.getElementById('resRngNum').innerHTML = res;
     console.log('res', res)
