@@ -28,12 +28,13 @@ function showplayer() {
 };
 
 function loadmatches() {
+  console.log('lodamatces is called')
   var ancestor = document.getElementById('match_history');
   var childNodes = ancestor.getElementsByTagName('*');
   var i, e, d;
   for (i = 0; i < childNodes.length; ++i) {
     gameid = String(childNodes[i].id).split('_');
-    path = 'static/lolgames_html/'+gameid[0] + '/' + gameid[1] + '.txt'
+    path = '/static/lolgames_html/'+gameid[0] + '/' + gameid[1] + '.txt'
     //console.log(path, childNodes[i].id)
     e = childNodes[i];
     //console.log("new match")
@@ -55,7 +56,7 @@ function loadmatches() {
 }
 
 function loadDoc(path, e) {
-  //console.log(path)
+  console.log(path)
   var xhttp = new XMLHttpRequest();
   xhttp.addEventListener('load', showplayer);
   xhttp.onreadystatechange = function () {
