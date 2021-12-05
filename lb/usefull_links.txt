@@ -1,5 +1,11 @@
+brightness
+https://github.com/communitydragon/docs/blob/master/assets.md
+
+
 runes and img links: 
 http://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/v1/perks.json
+
+
 champ images:
 http://ddragon.leagueoflegends.com/cdn/11.9.1/img/champion/"
 item images(little opld):

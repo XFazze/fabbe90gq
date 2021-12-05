@@ -44,7 +44,7 @@ function loadmatches() {
       if (breakCondition) {            
           break;
       }
-      sleep(1000);
+      sleep(2000);
     }
     //console.log('made it here')
     loadDoc(path,e);
@@ -104,7 +104,7 @@ function settingsBtn(id, default_on){
     element.style.color = 'var(--main-color)';
     var element = document.getElementsByClassName(id);
     for (i=0; i< element.length; i++) {
-      element[i].style.display = '';
+      element[i].style.display = 'flex';
   }}
   else{
     if(default_on){
@@ -118,9 +118,31 @@ function settingsBtn(id, default_on){
       element.style.color = 'var(--main-color)';
       var element = document.getElementsByClassName(id);
       for (i=0; i< element.length; i++) {
-        element[i].style.display = '';
+        element[i].style.display = 'flex';
 
     }}
   }
   console.log('button pressed', id)
+}
+function taskbarBtn(id){
+  var element = document.getElementsByClassName(id);
+  var childs = document.getElementById('contents').children;
+  console.log(childs)
+  for (i=0; i< childs.length; i++) {
+    childs[i].style.display = 'none';
+  }
+  for (i=0; i< element.length; i++) {
+    element[i].style.display = 'block';
+  }
+
+  var element = document.getElementById(id);
+  var childs = document.getElementById('taskbarinner').children;
+  for (i=0; i< childs.length; i++) {
+    console.log('claslist1', childs[i].classList)
+    childs[i].classList.remove("bg-gray-800");
+    console.log('claslist2', childs[i].classList)
+  }
+  console.log('claslist3', element.classList)
+  element.classList.add("bg-gray-800");
+  console.log('claslist3', element.classList)
 }

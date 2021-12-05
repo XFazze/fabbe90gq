@@ -4,6 +4,7 @@ from lb.api_calls import *
 from lb.match_history import *
 from lb.championIdtoname import *
 from forms.lb2000_form import *
+from lb.runes import *
 from threading import Thread
 
 lb2000 = Blueprint('lb2000', __name__)
@@ -31,18 +32,18 @@ def lb2000_index():
         username = form.username.data
         region = form.region.data
         region_large = form.large_region.data
-        summoner = get_summoner(region, username, api_key)  
+        summoner = get_summoner(region, username, riot_api_key)
         if "status" in summoner.keys():
             print(summoner)
             return render_template('lb2000/lb2000_search.html', form=form, error=True)
         else:
-            mastery = get_mastery(region, summoner['id'], api_key)
-            total_mastery = get_total_mastery(region, summoner['id'], api_key)
-            ranks = get_rank(region, summoner['id'], api_key)
+            mastery = get_mastery(region, summoner['id'], riot_api_key)
+            total_mastery = get_total_mastery(region, summoner['id'], riot_api_key)
+            ranks = get_rank(region, summoner['id'], riot_api_key)
             match_history = get_match_history(
-                region_large, summoner['puuid'], api_key)
+                region_large, summoner['puuid'], riot_api_key)
             thread = Thread(target=download_matches, args=(
-                match_history, region_large, api_key))
+                match_history, region_large, riot_api_key, runeIdToName))
             thread.start()
             timenow = time.time()
             form = lb2000_getuser()

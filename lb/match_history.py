@@ -1,7 +1,7 @@
 import requests, json, os.path, time, sphc, os
 from datetime import datetime
 
-def jsonconvert(json_match):
+def jsonconvert(json_match, runeIdToName):
     ret_json = {}
     ret_json["meta"] ={}
     ret_json["meta"]["gameCreation"] = datetime.fromtimestamp(json_match["info"]["gameCreation"]/1000).strftime("%H:%m[%d/%m]")
@@ -44,17 +44,18 @@ def jsonconvert(json_match):
         ret_json[player['summonerId']]['champ']['summoner2Id'] = player['summoner2Id']
                     
         ret_json[player['summonerId']]['perks'] = {}
-        ret_json[player['summonerId']]['perks']['statPerks'] = player['perks']['statPerks']
-        ret_json[player['summonerId']]['perks']['primaryStyle'] = {}
-        ret_json[player['summonerId']]['perks']['primaryStyle']['statPerks'] = player['perks']['styles'][0]['style']
-        ret_json[player['summonerId']]['perks']['primaryStyle']['statPerks'] = player['perks']['styles'][0]["selections"][0]
-        ret_json[player['summonerId']]['perks']['primaryStyle']['statPerks'] = player['perks']['styles'][0]["selections"][1]
-        ret_json[player['summonerId']]['perks']['primaryStyle']['statPerks'] = player['perks']['styles'][0]["selections"][2]
-        ret_json[player['summonerId']]['perks']['primaryStyle']['statPerks'] = player['perks']['styles'][0]["selections"][3]
-        ret_json[player['summonerId']]['perks']['subStyle'] = {}
-        ret_json[player['summonerId']]['perks']['subStyle']['statPerks'] = player['perks']['styles'][1]['style']
-        ret_json[player['summonerId']]['perks']['subStyle']['statPerks'] = player['perks']['styles'][1]["selections"][0]
-        ret_json[player['summonerId']]['perks']['subStyle']['statPerks'] = player['perks']['styles'][1]["selections"][1]
+        ret_json[player['summonerId']]['perks']['statPerks'] = []
+        for i, statperk in player['perks']['statPerks'].items():
+            ret_json[player['summonerId']]['perks']['statPerks'].append(runeIdToName[str(statperk)])
+
+        ret_json[player['summonerId']]['perks']['primaryStyle'] = []
+        for statperk in player['perks']['styles'][0]["selections"]:
+            ret_json[player['summonerId']]['perks']['primaryStyle'].append(runeIdToName[str(statperk['perk'])])
+
+        ret_json[player['summonerId']]['perks']['subStyle'] = []
+        for statperk in player['perks']['styles'][1]["selections"]:
+            ret_json[player['summonerId']]['perks']['subStyle'].append(runeIdToName[str(statperk['perk'])])
+        
 
         ret_json[player['summonerId']]['vision'] = {}
         ret_json[player['summonerId']]['vision']['detectorWardsPlaced'] = player['detectorWardsPlaced']
@@ -126,13 +127,13 @@ def jsonconvert(json_match):
         ret_json[player['summonerId']]['stats']['spell2Casts'] = player['spell2Casts']
         ret_json[player['summonerId']]['stats']['spell3Casts'] = player['spell3Casts']
         ret_json[player['summonerId']]['stats']['spell4Casts'] = player['spell4Casts']
-        ret_json[player['summonerId']]['stats']['summoner1Casts'] = player['summoner1Casts']
+        ret_json[player['summonerId']]['stats']['summoner1Casts'] = player['summoner1Casts'] #TODO move this to champion
         ret_json[player['summonerId']]['stats']['summoner2Casts'] = player['summoner2Casts']
     return ret_json
 
 def generate_html(match_json):
     tf = sphc.TagFactory()
-    gameCreation = tf.p(str(match_json['meta']['gameCreation']) , Class='game_creation')    
+    gameCreation = tf.p(str(match_json['meta']['gameCreation']) , Class='game_creation')
     gameduration = tf.p(str(round(match_json['meta']['gameDuration']/6)/10) + 'm', Class='game_duration')
     gamemode = tf.p(match_json['meta']['gameMode'], Class='gameMode')
     gameType = tf.p(match_json['meta']['gameType'], Class='gameType')
@@ -156,16 +157,27 @@ def generate_html(match_json):
             kdacalc = tf.p('(KO)', Class='kdacalc')    
         else:
             kdacalc = tf.p('(' + str(round((10*match_json[player]['champ']['kills']+10*match_json[player]['champ']['assists'])/match_json[player]['champ']['deaths'])/10)+ ')', Class='kdacalc')
-        itemss = ['item0', 'item1','item2', 'item3','item4', 'item5', 'items6']
+        kdaboth = tf.DIV([kda,kdacalc], Class='kdaboth')
+
+        itemss = ['item0', 'item1','item2', 'item3','item4', 'item5', 'item6']
         itemdiv = []
         for it in itemss:
-            if str(match_json[player]['champ']['item0']) == '0':
-                itemdiv.append(tf.img(src="http://ddragon.leagueoflegends.com/cdn/11.23.1/img/item/" + str(match_json[player]['champ'][it]) + ".png", Class=it))
+            if str(match_json[player]['champ'][it]) == '0':
+                itemdiv.append(tf.img(src="/static/pics/poor.jpg", Class=it))
             else:
                 itemdiv.append(tf.img(src="http://ddragon.leagueoflegends.com/cdn/11.23.1/img/item/" + str(match_json[player]['champ'][it]) + ".png", Class=it))
 
         items = tf.DIV(itemdiv, Class='items')
-        runes = tf.DIV('runes', Class='runes')
+
+        runes = []
+        for pr in match_json[player]['perks']['primaryStyle']:
+            runes.append(tf.img(src=pr, Class=it))
+        for pr in match_json[player]['perks']['subStyle']:
+            runes.append(tf.img(src=pr, Class=it))
+        for pr in match_json[player]['perks']['statPerks']:
+            runes.append(tf.img(src=pr, Class=it))
+
+        runes = tf.DIV(runes, Class='runes')
 
         for category in match_json[player].keys():
             if category in "champmetaperks":
@@ -177,7 +189,7 @@ def generate_html(match_json):
                 ps.append(tf.p(str(match_json[player][category][stat]), Class=stat))
             divs.append(tf.DIV(ps, Class=category))
             
-        championdiv = tf.DIV([champ, lvl, kda, kdacalc, runes, items], Class='champion')
+        championdiv = tf.DIV([champ, lvl, kdaboth, runes, items], Class='champion')
         innerdiv = tf.DIV(divs, Class="detaildiv")
 
         divsdiv = tf.DIV([championdiv, innerdiv], Class="playerdiv")
@@ -194,7 +206,7 @@ def generate_html(match_json):
     doc = tf.DIV([meta, players], Class="match")
     return doc
 
-def download_matches(match_history, region_large, api_key):
+def download_matches(match_history, region_large, api_key, runeIdToName):
         for match in match_history:
             match_name = match.split('_')
             path = '/home/pi/website/static/lolgames_html/' + match_name[0] + '/' + match_name[1] + '.txt'
@@ -209,7 +221,7 @@ def download_matches(match_history, region_large, api_key):
             if "status" in json_match.keys():
                 continue
 
-            ret_json = jsonconvert(json_match)
+            ret_json = jsonconvert(json_match, runeIdToName)
             div = generate_html(ret_json)
 
             #print('\n\n\npringint folder pand ')
