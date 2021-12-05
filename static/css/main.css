@@ -6127,7 +6127,7 @@ video {
 }
 
 .inline {
-  display: inline;
+  display: inline-block;
 }
 
 .flex {
@@ -6683,7 +6683,7 @@ video {
 }
 
 .w-72 {
-  width: 18rem;
+  width: 19rem;
 }
 
 .w-80 {

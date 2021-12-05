@@ -4,6 +4,9 @@
 <link rel="stylesheet" href="/static/css/lb2000.css">
 <script type="text/javascript" >
     var summonerid = {{ summonerid|tojson }}
+    var summoneridt = {{ summonerid|tojson }}+'t'
+    stylesheet = document.styleSheets[0]
+    stylesheet.insertRule("."+summonerid+"t {order:-1;}", 0);
 </script>
 <script type="text/javascript" src="/static/js/lb2000.js"></script>
 {% endblock %}
@@ -67,8 +70,19 @@
 
             {% endfor %}
         </div>
-        <div class="matchHistory" >
-            <button id="settings" class="bg-gray-600 m-1" style="color: red;" onclick="settingsBtn(this.id, true)">Settings</button>
+        <div class="matchHistory flex flex-col" >
+            <button id='teamates' class="bg-gray-500 hover:bg-gray-600 focus:ring-4 focus:ring-gray-300 px-2 py-1 text-center mr-3 mb-3" style="color: var(--error-color);" onclick="settingsBtn('teamates', true)">Team settings</button>
+            <div class="teamates hidden">
+                <button onclick="showhideBtn(['TOP','JUNGLE', 'MIDDLE', 'BOTTOM', 'UTILITY'], [])" class="bg-gray-500 hover:bg-gray-600 focus:ring-4 focus:ring-gray-300 px-2 py-1 text-center mr-3 mb-3">Show all</button>
+                <button onclick='showhideBtn([{{ summonerid|tojson }}], ["TOP","JUNGLE", "MIDDLE", "BOTTOM", "UTILITY"])' class="bg-gray-500 hover:bg-gray-600 focus:ring-4 focus:ring-gray-300 px-2 py-1 text-center mr-3 mb-3">Show only you</button>
+                <button onclick='showmatchup({{ summonerid|tojson }})'' class="bg-gray-500 hover:bg-gray-600 focus:ring-4 focus:ring-gray-300 px-2 py-1 text-center mr-3 mb-3"> Show matchup</button>
+                <button onclick="showhideBtn(['TOP'],[])" class="bg-gray-500 hover:bg-gray-600 focus:ring-4 focus:ring-gray-300 px-2 py-1 text-center mr-3 mb-3">Show top</button>
+                <button onclick="showhideBtn(['JUNGLE'],[])" class="bg-gray-500 hover:bg-gray-600 focus:ring-4 focus:ring-gray-300 px-2 py-1 text-center mr-3 mb-3">Show jg</button>
+                <button onclick="showhideBtn(['MIDDLE'],[])" class="bg-gray-500 hover:bg-gray-600 focus:ring-4 focus:ring-gray-300 px-2 py-1 text-center mr-3 mb-3">Show mid</button>
+                <button onclick="showhideBtn(['BOTTOM'],[])" class="bg-gray-500 hover:bg-gray-600 focus:ring-4 focus:ring-gray-300 px-2 py-1 text-center mr-3 mb-3">Show bot</button>
+                <button onclick="showhideBtn(['UTILITY'],[])" class="bg-gray-500 hover:bg-gray-600 focus:ring-4 focus:ring-gray-300 px-2 py-1 text-center mr-3 mb-3">Show supp</button>
+            </div>
+            <button id="settings" class="bg-gray-500 hover:bg-gray-600 focus:ring-4 focus:ring-gray-300 px-2 py-1 text-center mr-3 mb-3" style="color: var(--error-color);" onclick="settingsBtn(this.id, true)">Stat settings</button>
             <div class="text-xs settings hidden">
                 <div class="meta">
                     <button id="game_creation" class="game_duration" onclick="settingsBtn(this.id, true)">Date</button>

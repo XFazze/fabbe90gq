@@ -3,18 +3,6 @@ window.onload = function () {
   loadmatches()
   console.log('done')
 
-  document.getElementById("champion_masteryBtn").onclick = function () {
-    var element = document.getElementsByClassName(summonerid);
-    console.log("elemment len:"+ element.length)
-    console.log("button clicked")
-    if (document.getElementById("masterydiv").style.overflow == "hidden") {
-      document.getElementById("masterydiv").style.overflow = "visible";
-      document.getElementById("masterydivtext").innerHTML = "Hide";
-    } else {
-      document.getElementById("masterydiv").style.overflow = "hidden";
-      document.getElementById("masterydivtext").innerHTML = "Show all";
-    }
-  }
 
 };;
 
@@ -22,7 +10,7 @@ function showplayer() {
   var element = document.getElementsByClassName(summonerid);
   for (i=0; i< element.length; i++) {
     element[i].style.display = 'block';
-    element[i].parentElement.style.float = 'left';
+    //element[i].parentElement.style.float = 'left';
     //element[i].parentElement.parentElement.parentElement.style.color match element
   }
 };
@@ -145,4 +133,40 @@ function taskbarBtn(id){
   console.log('claslist3', element.classList)
   element.classList.add("bg-gray-800");
   console.log('claslist3', element.classList)
+}
+
+function showhideBtn(show, hide){
+  for (i=0; i< hide.length; i++) {
+    temp = hide[i];
+    var element = document.getElementsByClassName(temp);
+    for (o=0; o< element.length; o++) {
+      element[o].style.display = 'none';
+    }
+
+  }
+  for (i=0; i< show.length; i++) {
+    temp = show[i];
+    var element = document.getElementsByClassName(temp);
+    for (o=0; o< element.length; o++) {
+      element[o].style.display = 'block';
+    }
+
+  }
+}
+function showmatchup(id){
+  var hide = ['TOP','JUNGLE', 'MIDDLE', 'BOTTOM', 'UTILITY']
+  for (i=0; i< hide.length; i++) {
+    temp = hide[i];
+    var element = document.getElementsByClassName(temp);
+    for (o=0; o< element.length; o++) {
+      element[o].style.display = 'none';
+    }
+  }
+  var usermatches = document.getElementsByClassName(id);
+  for (i=0; i< usermatches.length; i++) {
+    parentElement = usermatches[i].parentElement.children;
+    for (o=0; o< parentElement.length; o++) {
+      parentElement[o].style.display = 'block';
+    }
+  }
 }
