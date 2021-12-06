@@ -18,5 +18,6 @@
   "homepage": "https://github.com/XFazze/website#readme",
   "dependencies": {
     "tailwindcss": "^2.2.19"
-  }
+  },
+  "devDependencies": {}
 }

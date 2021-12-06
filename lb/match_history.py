@@ -287,7 +287,7 @@ def generate_html(match_json):
         for pr in match_json[player]['perks']['statPerks']:
             runes.append(tf.img(src=pr, Class=it+' w-8'))
 
-        runes = tf.DIV(runes, Class='runes w-72 flex')
+        runes = tf.DIV(runes, Class='runes w-72 flex') #TODO remove all but keystone and make button to show ontop
 
         for category in match_json[player].keys():
             if category in "champmetaperks":
@@ -336,7 +336,7 @@ def generate_html(match_json):
     players = tf.DIV([TOP_matchup, JUNGLE_matchup, MIDDLE_matchup,
                      BOTTOM_matchup, UTILITY_matchup], Class='players')
 
-    doc = tf.DIV([meta, players], Class="match")
+    doc = tf.DIV([meta, players], Class="match") #TODO add all playerid + w or l for color
     return doc
 
 
