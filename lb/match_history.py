@@ -245,7 +245,7 @@ def generate_html(match_json):
             t['t100'] += str(match_json[player]['meta']['summonerId'] + 't ')
         else:
             t['t200'] += str(match_json[player]['meta']['summonerId'] + 't ')
-
+    winnerlost = ' '
     for player in match_json:
         tc += 1
         if player == 'meta':
@@ -317,6 +317,8 @@ def generate_html(match_json):
             playerdiv = tf.DIV( divsdiv, Class= str(match_json[player]['meta']['summonerId'])+' lost '+t['t' + match_json[player]['meta']['teamPosition'] + ' ' + str(match_json[player]['meta']['teamId'])])
             matchups['lost'].append(playerdiv)
 
+        
+
     for p in matchups['lost']:
         for key in matchups.keys():
             if match_json[player]['meta']['teamId'] in key and matchups[key] == 0:
@@ -338,7 +340,7 @@ def generate_html(match_json):
 
     doc = tf.DIV([meta, players], Class="match") #TODO add all playerid + w or l for color
     return doc
-
+#TODO summoner spells
 
 def download_matches(match_history, region_large, api_key, runeIdToName):
     for match in match_history:
