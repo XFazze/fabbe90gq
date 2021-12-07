@@ -8,7 +8,23 @@ from lb.runes import *
 from threading import Thread
 
 lb2000 = Blueprint('lb2000', __name__)
+#TODO connect accounts by verifying with pfp
+#TODO player Tags
+# champs player wr for champs/length
 
+region_converter = {
+    'eun1':'EUROPE',
+    'euw1' : 'EUROPE',
+    'ru' : 'EUROPE',
+    'tr1' : 'EUROPE',
+    'br1' : 'AMERICAS',
+    'na1' : 'AMERICAS',
+    'la1' : 'AMERICAS',
+    'la2' : 'AMERICAS',
+    'jp1' : 'ASIA',
+    'kr' : 'ASIA',
+    'oc1' : 'ASIA',
+}
 
 @lb2000.route("/test")
 def lb2000_test():
@@ -26,29 +42,40 @@ def lb2000_test():
 
 
 @lb2000.route("/", methods=['GET', 'POST'])
-def lb2000_index():
+@lb2000.route("/<region>/<summonername>", methods=['GET', 'POST'])
+def lb2000_index(region='noregion', summonername='nouser'):
     form = lb2000_getuser()
     if form.validate_on_submit():
         username = form.username.data
         region = form.region.data
-        region_large = form.large_region.data
-        summoner = get_summoner(region, username, riot_api_key)
-        if "status" in summoner.keys():
-            print(summoner)
-            return render_template('lb2000/lb2000_search.html', form=form, error=True)
-        else:
-            mastery = get_mastery(region, summoner['id'], riot_api_key)
-            total_mastery = get_total_mastery(region, summoner['id'], riot_api_key)
-            ranks = get_rank(region, summoner['id'], riot_api_key)
-            match_history = get_match_history(
-                region_large, summoner['puuid'], riot_api_key)
-            thread = Thread(target=download_matches, args=(
-                match_history, region_large, riot_api_key, runeIdToName))
-            thread.start()
-            timenow = time.time()
-            form = lb2000_getuser()
-            for i in mastery:
-                i["championId"] = str(i["championId"])
-            return render_template('lb2000/lb2000_base.html', summoner=summoner, region=region, mastery=mastery, total_mastery=total_mastery, champ_id_to_name=champ_id_to_name, timenow=timenow, ranks=ranks, form=form,
-                                   match_history=match_history, region_large=region_large, summonerid=str(summoner['id']))
-    return render_template('lb2000/lb2000_search.html', form=form, error=False)
+        return redirect ('/lb2000/' + region + '/'+ username)
+
+    res = render_template('lb2000/lb2000_search.html', form=form, error=False)
+    if summonername != 'nouser' or region != 'noregion':
+        res = returnprofile(summonername, region)
+    if not res:
+        res = render_template('lb2000/lb2000_search.html', form=form, error=True)
+    return res
+
+def returnprofile(summonername, region):
+    region_large = region_converter[region]
+    form = lb2000_getuser
+    summoner = get_summoner(region, summonername, riot_api_key)
+    if "status" in summoner.keys():
+        return False
+    else:
+        mastery = get_mastery(region, summoner['id'], riot_api_key)
+        total_mastery = get_total_mastery(region, summoner['id'], riot_api_key)
+        ranks = get_rank(region, summoner['id'], riot_api_key)
+        match_history = get_match_history(
+            region_large, summoner['puuid'], riot_api_key)
+        thread = Thread(target=download_matches, args=(
+            match_history, region, riot_api_key, runeIdToName, region_converter))
+        thread.start()
+        timenow = time.time()
+        form = lb2000_getuser()
+        for i in mastery:
+            i["championId"] = str(i["championId"])
+        print('successdd')
+        return render_template('lb2000/lb2000_base.html', summoner=summoner, region=region, mastery=mastery, total_mastery=total_mastery, champ_id_to_name=champ_id_to_name, timenow=timenow, ranks=ranks, form=form,
+                                match_history=match_history, region_large=region_large, summonerid=str(summoner['id']))

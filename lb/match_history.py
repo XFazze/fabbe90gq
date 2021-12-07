@@ -6,6 +6,7 @@ from datetime import datetime
 
 
 def jsonconvert(json_match, runeIdToName):
+# game meta
     ret_json = {}
     ret_json["meta"] = {}
     ret_json["meta"]["gameCreation"] = datetime.fromtimestamp(
@@ -16,6 +17,7 @@ def jsonconvert(json_match, runeIdToName):
     ret_json["meta"]["gameVersion"] = json_match["info"]["gameVersion"]
 
     for player in json_match["info"]["participants"]:
+# player meta
         ret_json[player['summonerId']] = {}
         ret_json[player['summonerId']]['meta'] = {}
         ret_json[player['summonerId']]['meta']['lane'] = player['lane']
@@ -38,7 +40,7 @@ def jsonconvert(json_match, runeIdToName):
                  ]['meta']['individualPosition'] = player['individualPosition']
         ret_json[player['summonerId']]['meta']['teamId'] = player['teamId']
         ret_json[player['summonerId']]['meta']['win'] = player['win']
-
+# champ
         ret_json[player['summonerId']]['champ'] = {}
         ret_json[player['summonerId']
                  ]['champ']['championName'] = player['championName']
@@ -59,14 +61,17 @@ def jsonconvert(json_match, runeIdToName):
         ret_json[player['summonerId']
                  ]['champ']['summoner2Id'] = player['summoner2Id']
 
+# runes
         ret_json[player['summonerId']]['perks'] = {}
         ret_json[player['summonerId']]['perks']['statPerks'] = []
+        ret_json[player['summonerId']]['perks']['keystone'] = runeIdToName[str(player['perks']['styles'][0]["selections"][0]['perk'])]
+
         for i, statperk in player['perks']['statPerks'].items():
             ret_json[player['summonerId']]['perks']['statPerks'].append(
                 runeIdToName[str(statperk)])
 
         ret_json[player['summonerId']]['perks']['primaryStyle'] = []
-        for statperk in player['perks']['styles'][0]["selections"]:
+        for statperk in player['perks']['styles'][0]["selections"][1:]:
             ret_json[player['summonerId']]['perks']['primaryStyle'].append(
                 runeIdToName[str(statperk['perk'])])
 
@@ -74,7 +79,7 @@ def jsonconvert(json_match, runeIdToName):
         for statperk in player['perks']['styles'][1]["selections"]:
             ret_json[player['summonerId']]['perks']['subStyle'].append(
                 runeIdToName[str(statperk['perk'])])
-
+# vision
         ret_json[player['summonerId']]['vision'] = {}
         ret_json[player['summonerId']
                  ]['vision']['detectorWardsPlaced'] = player['detectorWardsPlaced']
@@ -88,7 +93,7 @@ def jsonconvert(json_match, runeIdToName):
                  ]['vision']['wardsKilled'] = player['wardsKilled']
         ret_json[player['summonerId']
                  ]['vision']['wardsPlaced'] = player['wardsPlaced']
-
+# multikills
         ret_json[player['summonerId']]['multikills'] = {}
         ret_json[player['summonerId']
                  ]['multikills']['doubleKills'] = player['doubleKills']
@@ -112,7 +117,7 @@ def jsonconvert(json_match, runeIdToName):
                  ]['multikills']['tripleKills'] = player['tripleKills']
         ret_json[player['summonerId']
                  ]['multikills']['unrealKills'] = player['unrealKills']
-
+# damage
         ret_json[player['summonerId']]['damage'] = {}
         ret_json[player['summonerId']
                  ]['damage']['magicDamageDealt'] = player['magicDamageDealt']
@@ -142,7 +147,7 @@ def jsonconvert(json_match, runeIdToName):
                  ]['damage']['totalDamageTaken'] = player['totalDamageTaken']
         ret_json[player['summonerId']
                  ]['damage']['trueDamageTaken'] = player['trueDamageTaken']
-
+# support
         ret_json[player['summonerId']]['support'] = {}
         ret_json[player['summonerId']
                  ]['support']['totalDamageShieldedOnTeammates'] = player['totalDamageShieldedOnTeammates']
@@ -154,7 +159,7 @@ def jsonconvert(json_match, runeIdToName):
                  ]['support']['timeCCingOthers'] = player['timeCCingOthers']
         ret_json[player['summonerId']
                  ]['support']['totalTimeCCDealt'] = player['totalTimeCCDealt']
-
+# objectives
         ret_json[player['summonerId']]['objectives'] = {}
         ret_json[player['summonerId']
                  ]['objectives']['neutralMinionsKilled'] = player['neutralMinionsKilled']
@@ -168,7 +173,7 @@ def jsonconvert(json_match, runeIdToName):
                  ]['objectives']['objectivesStolenAssists'] = player['objectivesStolenAssists']
         ret_json[player['summonerId']
                  ]['objectives']['totalMinionsKilled'] = player['totalMinionsKilled']
-
+#events
         ret_json[player['summonerId']]['events'] = {}
         ret_json[player['summonerId']
                  ]['events']['firstBloodAssist'] = player['firstBloodAssist']
@@ -186,7 +191,7 @@ def jsonconvert(json_match, runeIdToName):
                  ]['events']['turretKills'] = player['turretKills']
         ret_json[player['summonerId']
                  ]['events']['turretsLost'] = player['turretsLost']
-
+# stats
         ret_json[player['summonerId']]['stats'] = {}
         ret_json[player['summonerId']
                  ]['stats']['goldEarned'] = player['goldEarned']
@@ -202,7 +207,6 @@ def jsonconvert(json_match, runeIdToName):
                  ]['stats']['spell3Casts'] = player['spell3Casts']
         ret_json[player['summonerId']
                  ]['stats']['spell4Casts'] = player['spell4Casts']
-        # TODO move this to champion
         ret_json[player['summonerId']
                  ]['stats']['summoner1Casts'] = player['summoner1Casts']
         ret_json[player['summonerId']
@@ -210,7 +214,8 @@ def jsonconvert(json_match, runeIdToName):
     return ret_json
 
 
-def generate_html(match_json):
+def generate_html(match_json, region):
+# meta
     tf = sphc.TagFactory()
     gameCreation = tf.p(
         str(match_json['meta']['gameCreation']), Class='game_creation')
@@ -227,17 +232,20 @@ def generate_html(match_json):
                 'MIDDLE_matchup_100':  0,
                 'BOTTOM_matchup_100': 0,
                 'UTILITY_matchup_100':  0,
+                'NOROLE_matchup_100':  -15,
                 'TOP_matchup_200': 0,
                 'JUNGLE_matchup_200': 0,
                 'MIDDLE_matchup_200':  0,
                 'BOTTOM_matchup_200': 0,
                 'UTILITY_matchup_200':  0,
+                'NOROLE_matchup_200':  -15,
                 'lost': []
                 }
     tc = 0
     # add all classnames (summonerid +'t') to 2 strings
     t = {'t100': '',
          't200': ''}
+    winnerlost = ' '
     for player in match_json:
         if player == 'meta':
             continue
@@ -245,12 +253,18 @@ def generate_html(match_json):
             t['t100'] += str(match_json[player]['meta']['summonerId'] + 't ')
         else:
             t['t200'] += str(match_json[player]['meta']['summonerId'] + 't ')
-    winnerlost = ' '
+
+        if match_json[player]['meta']['win']:
+            winnerlost += str(match_json[player]['meta']['summonerId'] + 'w ')
+        else:
+            winnerlost += str(match_json[player]['meta']['summonerId'] + 'l ')
+
     for player in match_json:
         tc += 1
         if player == 'meta':
             continue
-
+        
+# basic champ
         divs = []
         # Champions div
         champ = tf.img(src="http://ddragon.leagueoflegends.com/cdn/11.23.1/img/champion/" +
@@ -260,12 +274,12 @@ def generate_html(match_json):
         kda = tf.p(str(match_json[player]['champ']['kills']) + '/' + str(match_json[player]
                    ['champ']['deaths']) + '/' + str(match_json[player]['champ']['assists']), Class='kda w-16 text-right mr-1')
         if match_json[player]['champ']['deaths'] == 0:
-            kdacalc = tf.p('(KO)', Class='kdacalc')
+            kdacalc = tf.p('(KO)', Class='kdacalc w-12')
         else:
             kdacalc = tf.p('(' + str(round((10*match_json[player]['champ']['kills']+10*match_json[player]
                            ['champ']['assists'])/match_json[player]['champ']['deaths'])/10) + ')', Class='kdacalc w-12')
         kdaboth = tf.DIV([kda, kdacalc], Class='kdaboth flex')
-
+# items
         itemss = ['item0', 'item1', 'item2',
                   'item3', 'item4', 'item5', 'item6']
         itemdiv = []
@@ -278,17 +292,20 @@ def generate_html(match_json):
                                str(match_json[player]['champ'][it]) + ".png", Class=it+' w-8'))
 
         items = tf.DIV(itemdiv, Class='items flex w-60')
-
+# runes
         runes = []
         for pr in match_json[player]['perks']['primaryStyle']:
-            runes.append(tf.img(src=pr, Class=it+' w-8'))
+            runes.append(tf.img(src=pr, Class='w-8'))
         for pr in match_json[player]['perks']['subStyle']:
-            runes.append(tf.img(src=pr, Class=it+' w-8'))
+            runes.append(tf.img(src=pr, Class='w-8'))
         for pr in match_json[player]['perks']['statPerks']:
-            runes.append(tf.img(src=pr, Class=it+' w-8'))
+            runes.append(tf.img(src=pr, Class='w-8'))
 
-        runes = tf.DIV(runes, Class='runes w-72 flex') #TODO remove all but keystone and make button to show ontop
-
+        keystoneimg = tf.img(src=match_json[player]['perks']['keystone'], Class='keystone w-8')
+        keystone = tf.DIV([keystoneimg])
+        runestree = tf.DIV(runes, Class='runestree group-hover:flex w-64 flex') #TODO get full runes to show on hover
+        runes = tf.DIV([keystone, runestree], Class='group runes flex') #TODO remove all but keystone and make button to show ontop
+# detailsdiv
         for category in match_json[player].keys():
             if category in "champmetaperks":
                 continue
@@ -300,25 +317,27 @@ def generate_html(match_json):
                 ps.append(
                     tf.p(str(match_json[player][category][stat]), Class=stat))
             divs.append(tf.DIV(ps, Class=category + ' w-24'))
-
-        summonername = tf.p(unicodedata.normalize('NFKD', match_json[player]['meta']['summonerName']).encode('ascii', 'ignore'), Class='w-16 text-right overflow-hidden whitespace-nowrap')#TODO fix to work with all unicode names 
+# divstuff stuff
+        username = unicodedata.normalize('NFKD', match_json[player]['meta']['summonerName']).encode('ascii', 'ignore')
+        summonername = tf.p(username, Class='w-16 text-right overflow-hidden whitespace-nowrap')#TODO fix to work with all unicode names 
+        summonernamediv = tf.A(summonername, href='http://127.0.0.1:5000/lb2000/'+region+'/'+username)
         championdiv = tf.DIV(
-            [summonername, champ, lvl, kdaboth, runes, items], Class='champion')
+            [summonernamediv, champ, lvl, kdaboth, runes, items], Class='champion')
         innerdiv = tf.DIV(divs, Class="detaildiv")
 
-        divsdiv = tf.DIV([championdiv, innerdiv], Class="playerdiv")
+        divsdiv = tf.DIV([championdiv, innerdiv], Class="playerdiv flex flex-col justify-items-center")
 
         teampos = match_json[player]['meta']['teamPosition'] + \
             '_matchup_' + str(match_json[player]['meta']['teamId'])
         if matchups[teampos] == 0:
-            playerdiv = tf.DIV( divsdiv, Class= str(match_json[player]['meta']['summonerId'])+' ' + teampos +' ' + match_json[player]['meta']['teamPosition'] + ' '+t['t' + str(match_json[player]['meta']['teamId'])])
+            playerdiv = tf.DIV( divsdiv, Class= str(match_json[player]['meta']['summonerId'])+' items-center hidden ' + teampos +' ' + match_json[player]['meta']['teamPosition'] + ' '+t['t' + str(match_json[player]['meta']['teamId'])])
             matchups[teampos] = playerdiv
         else:
-            playerdiv = tf.DIV( divsdiv, Class= str(match_json[player]['meta']['summonerId'])+' lost '+t['t' + match_json[player]['meta']['teamPosition'] + ' ' + str(match_json[player]['meta']['teamId'])])
+            playerdiv = tf.DIV(divsdiv, Class=str(match_json[player]['meta']['summonerId'])+' items-center lost  hidden     ' + match_json[player]['meta']['teamPosition'] + ' ' +t['t' + str(match_json[player]['meta']['teamId'])])
             matchups['lost'].append(playerdiv)
 
         
-
+# matchups
     for p in matchups['lost']:
         for key in matchups.keys():
             if match_json[player]['meta']['teamId'] in key and matchups[key] == 0:
@@ -336,13 +355,13 @@ def generate_html(match_json):
     UTILITY_matchup = tf.DIV([matchups['UTILITY_matchup_100'],
                              matchups['UTILITY_matchup_200']], Class='UTILITY_matchup flex')
     players = tf.DIV([TOP_matchup, JUNGLE_matchup, MIDDLE_matchup,
-                     BOTTOM_matchup, UTILITY_matchup], Class='players')
+                     BOTTOM_matchup, UTILITY_matchup], Class='players flex flex-col items-center')
 
-    doc = tf.DIV([meta, players], Class="match") #TODO add all playerid + w or l for color
+    doc = tf.DIV([meta, players], Class=winnerlost+"match flex items-center rounded border-2 border-gray-800 gap-0.5")
     return doc
 #TODO summoner spells
 
-def download_matches(match_history, region_large, api_key, runeIdToName):
+def download_matches(match_history, region, api_key, runeIdToName, region_converter):
     for match in match_history:
         match_name = match.split('_')
         path = '/home/pi/website/static/lolgames_html/' + \
@@ -352,7 +371,7 @@ def download_matches(match_history, region_large, api_key, runeIdToName):
         # continue
         time.sleep(1/5)
         ret_json = {}
-        url = "https://" + region_large + \
+        url = "https://" + region_converter[region] + \
             ".api.riotgames.com/lol/match/v5/matches/" + match + "?api_key=" + api_key
         print(url)
         json_match = requests.get(url).json()
@@ -360,7 +379,7 @@ def download_matches(match_history, region_large, api_key, runeIdToName):
             continue
 
         ret_json = jsonconvert(json_match, runeIdToName)
-        div = generate_html(ret_json)
+        div = generate_html(ret_json, region)
 
         #print('\n\n\npringint folder pand ')
         # for f in os.listdir("/home/pi/website/static/lolgames_html/"):

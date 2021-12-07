@@ -87,11 +87,6 @@ textarea {
   display: flex;
   align-items: center;
 }
-.match {
-  width: 100%;
-  display: flex;
-  margin: 1ch;
-}
 .team {
   width: 50%;
   float: left;
@@ -145,11 +140,6 @@ textarea {
 
 .detaildiv div p {
   display: none;
-}
-
-.players {
-  width: 90%;
-  float: left;
 }
 .playerdiv {
   display: flex;
@@ -254,38 +244,6 @@ textarea {
 .vision button {
   color: var(--error-color);
 }
-
-.TOP_matchup_100{
-    display: none;
-}
-.TOP_matchup_200{
-    display: none;
-}
-.JUNGLE_matchup_100{
-    display: none;
-}
-.JUNGLE_matchup_200{
-    display: none;
-}
-.MIDDLE_matchup_100{
-    display: none;
-}
-.MIDDLE_matchup_200{
-    display: none;
-}
-.BOTTOM_matchup_100{
-    display: none;
-}
-.BOTTOM_matchup_200{
-    display: none;
-}
-.UTILITY_matchup_100{
-    display: none;
-}
-.UTILITY_matchup_200{
-    display: none;
-}
-
 .TOP_matchup{
     order: 1;
 }

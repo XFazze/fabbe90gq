@@ -4,9 +4,10 @@
 <link rel="stylesheet" href="/static/css/lb2000.css">
 <script type="text/javascript" >
     var summonerid = {{ summonerid|tojson }}
-    var summoneridt = {{ summonerid|tojson }}+'t'
     stylesheet = document.styleSheets[0]
     stylesheet.insertRule("."+summonerid+"t {order:-1;}", 0);
+    stylesheet.insertRule("."+summonerid+"w {background:#24a5ea;}", 0);
+    stylesheet.insertRule("."+summonerid+"l {background:#ea3924;}", 0);
 </script>
 <script type="text/javascript" src="/static/js/lb2000.js"></script>
 {% endblock %}
@@ -16,7 +17,7 @@
     <h1>LB 2000 </h1></br>
     <form action="" method="post" novalidate>
         {{ form.hidden_tag() }}
-        <p>{{ form.username.label }}: {{ form.username }} {{ form.region }}{{ form.large_region }}{{ form.submit }}</p>
+        <p>{{ form.username.label }}: {{ form.username }} {{ form.region }}{{ form.submit }}</p>
         {% if error %}
         <p style="color:var(--error-color)">User doesnt exit, your bad</p>
         {% endif %}
@@ -32,7 +33,7 @@
             {% endfor %}{% endif %}
         </div>
     </div>
-    <div class="taskbar">
+    <div class="taskbar mb- ">
         <ul id="taskbarinner" class="flex flex-row ">
             <li id="matchHistory" class="p-1 bg-gray-600 bg-gray-800">
                 <div>
@@ -71,16 +72,10 @@
             {% endfor %}
         </div>
         <div class="matchHistory flex flex-col" >
-            <button id='teamates' class="bg-gray-500 hover:bg-gray-600 focus:ring-4 focus:ring-gray-300 px-2 py-1 text-center mr-3 mb-3" style="color: var(--error-color);" onclick="settingsBtn('teamates', true)">Team settings</button>
-            <div class="teamates hidden">
-                <button onclick="showhideBtn(['TOP','JUNGLE', 'MIDDLE', 'BOTTOM', 'UTILITY'], [])" class="bg-gray-500 hover:bg-gray-600 focus:ring-4 focus:ring-gray-300 px-2 py-1 text-center mr-3 mb-3">Show all</button>
-                <button onclick='showhideBtn([{{ summonerid|tojson }}], ["TOP","JUNGLE", "MIDDLE", "BOTTOM", "UTILITY"])' class="bg-gray-500 hover:bg-gray-600 focus:ring-4 focus:ring-gray-300 px-2 py-1 text-center mr-3 mb-3">Show only you</button>
+            <div class="teamates">
+                <button onclick='showhideBtn([{{ summonerid|tojson }}, "runestree"], ["TOP","JUNGLE", "MIDDLE", "BOTTOM", "UTILITY"])' class="bg-gray-500 hover:bg-gray-600 focus:ring-4 focus:ring-gray-300 px-2 py-1 text-center mr-3 mb-3">Show only you</button>
+                <button onclick="showhideBtn(['TOP','JUNGLE', 'MIDDLE', 'BOTTOM', 'UTILITY'], ['runestree'])" class="bg-gray-500 hover:bg-gray-600 focus:ring-4 focus:ring-gray-300 px-2 py-1 text-center mr-3 mb-3">Show all</button>
                 <button onclick='showmatchup({{ summonerid|tojson }})'' class="bg-gray-500 hover:bg-gray-600 focus:ring-4 focus:ring-gray-300 px-2 py-1 text-center mr-3 mb-3"> Show matchup</button>
-                <button onclick="showhideBtn(['TOP'],[])" class="bg-gray-500 hover:bg-gray-600 focus:ring-4 focus:ring-gray-300 px-2 py-1 text-center mr-3 mb-3">Show top</button>
-                <button onclick="showhideBtn(['JUNGLE'],[])" class="bg-gray-500 hover:bg-gray-600 focus:ring-4 focus:ring-gray-300 px-2 py-1 text-center mr-3 mb-3">Show jg</button>
-                <button onclick="showhideBtn(['MIDDLE'],[])" class="bg-gray-500 hover:bg-gray-600 focus:ring-4 focus:ring-gray-300 px-2 py-1 text-center mr-3 mb-3">Show mid</button>
-                <button onclick="showhideBtn(['BOTTOM'],[])" class="bg-gray-500 hover:bg-gray-600 focus:ring-4 focus:ring-gray-300 px-2 py-1 text-center mr-3 mb-3">Show bot</button>
-                <button onclick="showhideBtn(['UTILITY'],[])" class="bg-gray-500 hover:bg-gray-600 focus:ring-4 focus:ring-gray-300 px-2 py-1 text-center mr-3 mb-3">Show supp</button>
             </div>
             <button id="settings" class="bg-gray-500 hover:bg-gray-600 focus:ring-4 focus:ring-gray-300 px-2 py-1 text-center mr-3 mb-3" style="color: var(--error-color);" onclick="settingsBtn(this.id, true)">Stat settings</button>
             <div class="text-xs settings hidden">
@@ -97,7 +92,8 @@
                         <button id="lvl" class="lvl" onclick="settingsBtn(this.id, true)">Levels</button>
                         <button id="kda" class="kda" onclick="settingsBtn(this.id, true)">kda</button>
                         <button id="kdacalc" class="kdacalc" onclick="settingsBtn(this.id, true)">kda avg</button>
-                        <button id="runes" class="runes" onclick="settingsBtn(this.id, true)">Runes</button>
+                        <button id="keystone" class="keystone" onclick="settingsBtn(this.id, true)">keystone</button>
+                        <button id="runestree" class="runestree" onclick="settingsBtn(this.id, true)">runes</button>
                         <button id="items" class="items" onclick="settingsBtn(this.id, true)">Items</button>
                     </div>
                     <div class="detaildiv">
@@ -175,7 +171,8 @@
                     </div>
                 </div>
             </div>
-            <div id="match_history" >
+            <div id="match_history" class="flex flex-col items-start" >
+                <div class="height-0 border-gray-800 border-t-0"></div>
                 {% for match in match_history %}
                     <div id="{{ match }}"><p>Loading match</p></div>
                 {% endfor %}
