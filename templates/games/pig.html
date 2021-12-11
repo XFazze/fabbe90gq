@@ -2,7 +2,7 @@
 {% block link %}
     <link rel="stylesheet" href="/static/css/basic.css">
     <link rel="stylesheet" href="/static/css/games.css">
-    <script type="text/javascript" src="/static/js/games/dino.js"></script>
+    <script type="text/javascript" src="/static/js/games/pig.js"></script>
 {% endblock %}
 {% block body %}background-color:#23856D;{% endblock %}
 {% block main%}
@@ -11,12 +11,14 @@
     <h1>Dino</h1>
     <p>Press space to start playing and to restart after you died. Dont hit the objects stupid.</p>
     <div class='flex flex-row'>
-        <input id='player' type='range' class='w-10' placeholder=1 min=1 max=30  value=2 oninput="this.nextElementSibling.value = this.value">
-        <output>2</output>
+        <p>
+            <input id='player' type='range' class='w-10' placeholder=1 min=1 max=30  value=2 oninput="this.nextElementSibling.value = this.value">
+            <output>2</output>
+        </p>
+        <button onclick="start()">Start</button>
     </div>
 </div>
 <div styler="display:flex" class="centerdiv">
-    <h2  id="score" style="text-align:center;" >Score: start the game jackass</h2><br>
     <canvas id="game-layer" width=900px height=300px style="margin: auto; display:block; padding:0;"></canvas><br>
 
 

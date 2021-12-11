@@ -9,6 +9,27 @@ window.onload = function () {
     })();
 };
 
+function start(){
+    var playercount = document.getElementById('player').value
+    ctx.beginPath();
+    ctx.fillStyle = 'white';
+    ctx.fillRect(0,0,900,300);
+    var x = 900/Math.min(playercount, 10)
+    var y = 1
+    for (let i = 0; i < playercount; i++) {
+        if(i == 10){
+            y = 100
+        }else if(i == 20){
+            y = -100
+        }
+        ctx.beginPath();
+        ctx.fillStyle = 'black';
+        console.log(10+(i%10)*x,150+y)
+        ctx.fillRect(10+(i%10)*x,150+y,20,10);
+        
+        
+    }
+}
 function move(player) {
     undraw(player)
     if (player[1] >= 300 - player[3] && key) {
@@ -54,85 +75,6 @@ function enemymove(enemy) {
     }
 }
 
-function createDeleteEnemy(enemy) {
-    var width, height;
-    for (let i = 0; i < enemy.length; i++) {
-        if (enemy[i][0] + enemy[i][2] < 0) {
-            enemy.shift();
-            i--;
-            width = getRndInteger(20, 50);
-            height = getRndInteger(20, 70);
-            fromfloor = getRndInteger(220, 300);
-            enemy[enemy.length] = [900, fromfloor - height, width, height];
-            score++;
-            document.getElementById('score').innerHTML = 'Score: ' + score;
-        }
-    }
-    if(score == 5 && firststage){
-        //console.log('firststage left')
-        width = getRndInteger(20, 70);
-        height = getRndInteger(20, 70);
-        fromfloor = getRndInteger(230, 300);
-        enemy[enemy.length] = [1350, fromfloor - height, width, height];
-        firststage = false;
-        secondstage = true;
-        bgc = '#ff99a0';
-        ctx.beginPath();
-        ctx.fillStyle = '#ff99a0';
-        ctx.fillRect(0, 0, 900, 300);
-        draw(player);
-        for (let i = 0; i < enemy.length; i++) {
-            draw(enemy[i]);
-        }
-
-    }
-    if(score == 15 && secondstage){
-        //console.log('secondstage left')
-        width = getRndInteger(20, 70);
-        height = getRndInteger(20, 70);
-        fromfloor = getRndInteger(220, 300);
-        enemy[enemy.length] = [1025, fromfloor - height, width, height];
-        secondstage = false;
-        thirdstage = true;
-        bgc = '#ff5964';
-        ctx.beginPath();
-        ctx.fillStyle = '#ff5964';
-        ctx.fillRect(0, 0, 900, 300);
-        draw(player);
-        for (let i = 0; i < enemy.length; i++) {
-            draw(enemy[i]);
-        }
-
-    }
-    if(score == 25 && thirdstage){
-        //console.log('thirdstage left')
-        width = getRndInteger(20, 70);
-        height = getRndInteger(20, 70);
-        fromfloor = getRndInteger(220, 300);
-        enemy[enemy.length] = [1025, fromfloor - height, width, height];
-        thirdstage = false;
-        bgc = '#eb0010';
-        ctx.beginPath();
-        ctx.fillStyle = '#eb0010';
-        ctx.fillRect(0, 0, 900, 300);
-        draw(player);
-        for (let i = 0; i < enemy.length; i++) {
-            draw(enemy[i]);
-        }
-
-    }
-    return enemy
-}
-
-function checkcollition(enemy, player) {
-    for (let i = 0; i < enemy.length; i++) {
-        // first 2 checks if its in x range then y
-        if (enemy[i][0] < player[0] + player[2] && enemy[i][0] + enemy[i][2] > player[0] &&
-            enemy[i][1] < player[1] + player[3] && enemy[i][1] + enemy[i][3] > player[1]) {
-            dead();
-        }
-    }
-};
 function gameLoop() {
     player = move(player);
     enemy = createDeleteEnemy(enemy);
