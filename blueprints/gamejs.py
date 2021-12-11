@@ -40,3 +40,7 @@ def dino():
 @gamejs.route("/bouncingballs", methods=['GET', 'POST'])
 def bouncingballs():
     return render_template('games/bouncingballs.html')
+
+@gamejs.route("/pig", methods=['GET', 'POST'])
+def pig():
+    return render_template('games/pig.html')
