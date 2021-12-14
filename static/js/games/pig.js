@@ -36,9 +36,12 @@ function roll(){
     document.getElementById('rolling').style.display = 'block';
     document.getElementById('won').style.display = 'none';
     document.getElementById('boom').style.display = 'none';
-    var gain = document.getElementById('gain').value;
+    var gain = document.getElementById('gain').innerHTML;
+    console.log(gain)
     if (gain == 'Winnings') {
         gain = 0;
+    }else{
+        gain = Number(gain);
     }
     rn = getRndInteger(1,6)
     document.getElementById('rolling').style.display = 'none';
@@ -48,7 +51,10 @@ function roll(){
     }else{
         var won = document.getElementById('won');
         won.style.display = 'block';
-        won.innerHTML = rn
+        won.innerHTML = rn;
+        console.log(Number(gain)+rn)
+        gain += rn;
+        document.getElementById('gain').innerHTML = gain;
 
     }
 
