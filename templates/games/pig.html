@@ -9,33 +9,59 @@
 {% block main%}
 <div class="centerdiv space-x-4 space-y-4">
     <a href="/gamejs" class="allgames"><h2>All games</h2></a>
-    <h1>Dino</h1>
-    <p>Press space to start playing and to restart after you died. Dont hit the objects stupid.</p>
-    <div class='''>
+    <h1>Pig</h1>
+    <h2>Instructions</h2>
+    <p class='w-2/3'>Chose amount of players then press start. You aim to get the most point.<br>
+        On your turn you can chose to roll a six sided dice.<br>
+        If that value is larger than 1 it gets added to your pool.<br>
+        If that value is 1, you get zero points this round and its the next players turn.<br>
+        Instead of rolling you can chose to Hold, this adds you pool to your total and its the next players turn.
+
+    </p>
+    <h2>Game</h2>
+    <div class=''>
         <p>
-            <input id='player' type='range' class='w-10' placeholder=1 min=1 max=30  value=2 oninput="this.nextElementSibling.value = this.value">
+            <input id='player' type='range' class='w-32' placeholder=1 min=1 max=30  value=2 oninput="this.nextElementSibling.value = this.value">
+            Playercount:
             <output>2</output>
         </p>
-        <button onclick="start()">Start</button>
+        <button onclick="start()" class='bg-slate-200'>Start</button>
     </div>
     <div id='play' class='hidden' >
-        <p id='pname'>Player 1-10</p>
-        <p id='gain'>Winnings</p>
-
-        <button onclick='roll()'>Roll</button>
-        <button onclick='hold()'>Hold</button>
+        <h2>Round</h2>
+        <p id='playerNum' class='hidden'>1</p>
+        <p id='pname'>Player 1</p>
+        <div class='flex' id='pool'>
+            <p>Pool:</p>
+            <p id='gain'>0</p>
+        </div>
+        <div id='buttons'>
+            <button onclick='roll()'>Roll</button>
+            <button onclick='hold()'>Hold</button>
+        </div>
         <p id='rolling' class='hidden'>
             rolling
         </p>
-        <p id='boom' class='hidden'>
-            haha u rolled 1 go boom
-        </p>
-        <p id='won' class='hidden'>
-            0
-        </p>
+        <div>
+        <p id='boom' class='hidden'>You busted</p>
+        <button onclick='hold()' id='next' class='hidden'>Next Player</button>
+        <img id='boom1' class="hidden w-80" src='https://i.giphy.com/media/cr9vIO7NsP5cY/giphy.webp' alt='You Busted'>
+        <img id='boom2' class="hidden w-80" src='https://media3.giphy.com/media/l0ExeAkpaMaEAuX5e/giphy-downsized-large.gif' alt='You Busted'>
+        <img id='boom3' class="hidden w-80" src='https://i.giphy.com/media/3oEdv8Qtdp1Wq4w7ok/giphy.webp' alt='You Busted'>
+
+        <div id='wonDiv' class='hidden'>
+            <p>You rolled:</p>
+            <p id='won' >
+                0
+            </p>
+        </div>
+        <div id='winner' class='hidden'>
+            <h3>WINNER</h3>
+            <img src='https://c.tenor.com/COsinGRLiV4AAAAd/ursos-fritando-bear.gif' alt='You won'>
+        </div>
     </div>
-    <div>   
-        <h2>Players</h2>
+    <div>
+        <h3>Players</h3>
         <div id='players' class="flex flex-wrap justify-center">
     </div>
 
