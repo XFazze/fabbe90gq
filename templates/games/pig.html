@@ -2,25 +2,44 @@
 {% block link %}
     <link rel="stylesheet" href="/static/css/basic.css">
     <link rel="stylesheet" href="/static/css/games.css">
+    <link rel="stylesheet" href="{{url_for('static',filename='css/main.css')}}" />
     <script type="text/javascript" src="/static/js/games/pig.js"></script>
 {% endblock %}
 {% block body %}background-color:#23856D;{% endblock %}
 {% block main%}
-<div class="centerdiv">
+<div class="centerdiv space-x-4 space-y-4">
     <a href="/gamejs" class="allgames"><h2>All games</h2></a>
     <h1>Dino</h1>
     <p>Press space to start playing and to restart after you died. Dont hit the objects stupid.</p>
-    <div class='flex flex-row'>
+    <div class='''>
         <p>
             <input id='player' type='range' class='w-10' placeholder=1 min=1 max=30  value=2 oninput="this.nextElementSibling.value = this.value">
             <output>2</output>
         </p>
         <button onclick="start()">Start</button>
     </div>
-</div>
-<div styler="display:flex" class="centerdiv">
-    <canvas id="game-layer" width=900px height=300px style="margin: auto; display:block; padding:0;"></canvas><br>
+    <div id='play' class='hidden' >
+        <p id='pname'>Player 1-10</p>
+        <p id='gain'>Winnings</p>
 
+        <button onclick='roll()'>Roll</button>
+        <button onclick='hold()'>Hold</button>
+        <p id='rolling' class='hidden'>
+            rolling
+        </p>
+        <p id='boom' class='hidden'>
+            haha u rolled 1 go boom
+        </p>
+        <p id='won' class='hidden'>
+            0
+        </p>
+    </div>
+    <div>   
+        <h2>Players</h2>
+        <div id='players' class="flex flex-wrap justify-center">
+    </div>
+
+    </div>
 
 </div>
 {% endblock %}

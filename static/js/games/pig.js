@@ -1,119 +1,58 @@
-var ctx, key, speed, score, player, enemy, firststage, v = 0, bgc;
+var playing, p;
 window.onload = function () {
-    (function () {
-        var canvas = document.getElementById("game-layer");
-        ctx = canvas.getContext("2d");
-        ready();
 
 
-    })();
-};
+    }();
 
 function start(){
     var playercount = document.getElementById('player').value
-    ctx.beginPath();
-    ctx.fillStyle = 'white';
-    ctx.fillRect(0,0,900,300);
-    var x = 900/Math.min(playercount, 10)
-    var y = 1
-    for (let i = 0; i < playercount; i++) {
-        if(i == 10){
-            y = 100
-        }else if(i == 20){
-            y = -100
-        }
-        ctx.beginPath();
-        ctx.fillStyle = 'black';
-        console.log(10+(i%10)*x,150+y)
-        ctx.fillRect(10+(i%10)*x,150+y,20,10);
-        
-        
-    }
-}
-function move(player) {
-    undraw(player)
-    if (player[1] >= 300 - player[3] && key) {
-        //console.log(player,'on ground should jumpp');
-        v = 20;
-        player[1] = player[1] - v;
+    var div = document.getElementById('players')
+    div.innerHTML = ''
+    //console.log(div)
+    
+    for (let index = 1; index <= playercount; index++) {
+        var newdiv = document.createElement('div');
+    
+       
+        var poop = document.createElement('p');
+        poop.innerHTML = 'Player '+index+"-"
+        poop.classList.add('name')
+        newdiv.appendChild(poop) 
 
-    } else if (player[1] < 300 - player[3]) {
-        player[1] = player[1] - v;
-        if (player[1] > 300 - player[3]) {
-            player[1] = 300 - player[3];
-        }
-        v = v - 1;
-        //console.log(player, 'in air do physics');
-        key = false;
-    }
+        var poop = document.createElement('p');
+        poop.innerHTML = '10'
+        poop.classList.add('money')
+        newdiv.appendChild(poop)
 
-    draw(player)
-    return player
-};
-
-
-// paints the new head
-function draw(e) {
-    ctx.beginPath();
-    ctx.fillStyle = 'black';
-    ctx.fillRect(e[0], e[1], e[2], e[3]);
-};
-
-// unpaints the tail
-function undraw(e) {
-    ctx.beginPath();
-    ctx.fillStyle = bgc;
-    ctx.fillRect(e[0], e[1], e[2], e[3]);
-};
-
-// move enemies closer 
-function enemymove(enemy) {
-    for (let i = 0; i < enemy.length; i++) {
-        undraw(enemy[i]);
-        enemy[i][0] = enemy[i][0] - 4;
-        draw(enemy[i]);
-    }
+        newdiv.id = 'p'+index
+        newdiv.style.display = 'flex';
+        newdiv.style.padding = '1rem';
+        div.appendChild(newdiv)
+    }        
+    document.getElementById('play').style.display = 'block';
 }
 
-function gameLoop() {
-    player = move(player);
-    enemy = createDeleteEnemy(enemy);
-    enemymove(enemy);
-    checkcollition(enemy, player);
-    if (deadval) {
-        return;
-    };
-    setTimeout(gameLoop, speed / 40);
+function roll(){
+    document.getElementById('rolling').style.display = 'block';
+    document.getElementById('won').style.display = 'none';
+    document.getElementById('boom').style.display = 'none';
+    var gain = document.getElementById('gain').value;
+    if (gain == 'Winnings') {
+        gain = 0;
+    }
+    rn = getRndInteger(1,6)
+    document.getElementById('rolling').style.display = 'none';
+    if (rn == 1) {
+        document.getElementById('boom').style.display = 'block';
+
+    }else{
+        var won = document.getElementById('won');
+        won.style.display = 'block';
+        won.innerHTML = rn
+
+    }
+
 }
-
-function ready() {
-    console.log('ready is called')
-    player = [10, 280, 20, 120];
-    key = 'none';
-    started = false;
-    deadval = false;
-    speed = 550;
-    enemy = [[900, 250, 50, 50]];
-    score = 0;
-    firststage = true;
-    bgc = 'white';
-
-    ctx.beginPath();
-    ctx.fillStyle = 'white';
-    ctx.fillRect(0, 0, 900, 300);
-
-    ctx.beginPath();
-    ctx.fillStyle = 'black';
-    ctx.fillRect(0, 300, 100, 280);
-};
-
-function dead() {
-    deadval = true;
-    ctx.font = "30px Arial";
-    ctx.fillStyle = "red";
-    ctx.fillText('Dead', 200, 150)
-};
-
 function getRndInteger(min, max) {
     return Math.floor(Math.random() * (max - min)) + min;
 }
