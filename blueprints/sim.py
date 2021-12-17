@@ -16,6 +16,11 @@ def rsa():
 def chaostriangle():
     return render_template('sims/chaostriangle.html')
 
+# chaos triangle
+@sim.route("/chaoscircle", methods=['GET', 'POST'])
+def chaoscircle():
+    return render_template('sims/chaoscircle.html')
+
 # sortingalgorithms
 
 
