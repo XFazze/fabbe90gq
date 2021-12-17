@@ -1,4 +1,4 @@
-var ctx, ya, ys, xs, xPos, yPos, oldYPos, oldXPos, oldPos = [], size = 100;
+var ctx, ya, ys, xs, xPos, yPos, oldYPos, oldXPos, oldPos = [], size = 100, aproachAngle;
 var speed = 100
 window.onload = function () {
     var canvas = document.getElementById("game-layer");
@@ -85,14 +85,29 @@ function draw(){
 }
 
 function checkCollition(){
+    var xinverse, yinverse
     xDiff = Math.abs(xPos/size-400);
     yDiff = Math.abs(yPos/size-350);
     if(Math.sqrt(xDiff**2 + yDiff**2) > 295){
-        aproachAngle = Math.atan((xPos-oldPos[0][0])/ (yPos-oldPos[0][1]))
-        console.log(aproachAngle, (xPos-oldPos[0][0])/(yPos-oldPos[0][1]))
+        // find attack angle
+        // find circle angle
+        // find difference
+        // calculate x and y parts
+        if((xPos-oldPos[0][0]) < 0){
+            xinverse = true
+        }
+        xdelta = Math.abs(xPos-oldPos[0][0])
+        if((yPos-oldPos[0][1]) < 0){
+            yinverse = true;
+        }
+        ydelta = Math.abs(yPos-oldPos[0][1])
 
-        slopeAngle = Math.atan(xPos/yPos)
-        console.log(slopeAngle, (xPos/yPos))
+
+        aproachAngle = Math.atan(xdelta/ydelta)*180/Math.PI
+        console.log('aprochangle', aproachAngle, xdelta, ydelta)
+
+        slopeAngle = Math.atan(Math.abs(xPos-400*size)/Math.abs(yPos-350*size))      
+        console.log('slopeangle', slopeAngle, Math.abs  (xPos-400*size),Math.abs(yPos-350*size))
         xs = -Math.abs(xs)
         ys = -Math.abs(ys)
         console.log('out of boundss',xDiff**2, yDiff**2)
