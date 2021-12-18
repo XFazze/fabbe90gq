@@ -1,0 +1,24 @@
+{% extends "template.html" %}
+{% block link %}
+<link rel="stylesheet" href="/static/css/basic.css">
+{% endblock %}
+{% block body %}background:#222;{% endblock %}
+{% block main%}
+<div class="centerdiv">
+    <div>
+        <div style="float: left;">
+            <img style="height:200px; width:200px; float:left; margin-right: 2ch;" class="inline" src="{{ user_data["avatar_url"] }}" alt="">
+        </div>
+        <div style="float: left;">
+            <h1>{{ user_data["username"] }}</h1>
+            <h2>PP:{{ user_data["statistics"]["pp"] }}</h2>
+            <h2>Rank:{{ user_data['statistics']['global_rank'] }}</h2>
+            <h2>Acc:{{ user_data["statistics"]["hit_accuracy"] }}%</h2>
+            {% if user_data['is_bot'] %}
+            <h2>Bot</h2>
+            {% endif %}
+        </div>
+    </div>
+</div>
+<div>
+{% endblock %}

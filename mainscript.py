@@ -1,6 +1,7 @@
 from flask import *
 from config import *
 from blueprints.spotify import spotify
+from blueprints.urbanOsu import urbanOsu
 from blueprints.bjornbanan import bjornbanan
 from blueprints.gamejs import gamejs
 from blueprints.sim import sim
@@ -15,6 +16,7 @@ app = Flask(__name__,  static_folder='static')
 app.config['SECRET_KEY'] = secret_key
 
 app.register_blueprint(spotify, url_prefix='/spotify')
+app.register_blueprint(urbanOsu, url_prefix='/urbanOsu')
 app.register_blueprint(bjornbanan, url_prefix='/bjornbanan')
 app.register_blueprint(gamejs, url_prefix='/gamejs')
 app.register_blueprint(sim, url_prefix='/sims')

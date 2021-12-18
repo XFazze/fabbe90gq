@@ -64,7 +64,7 @@ function draw(){
     ctx.fillStyle = 'white';
     ctx.arc(400, 350, 295, 0, 2 * Math.PI);
     ctx.fill();
-    
+
     ctx.beginPath();
     ctx.fillStyle = 'black';
     ctx.arc(xPos/size, yPos/size, 10, 0, 2 * Math.PI);
@@ -74,7 +74,6 @@ function draw(){
         ctx.fillStyle = 'red';
         ctx.arc(element[0]/size, element[1]/size, 3, 0, 2 * Math.PI);
         ctx.fill();
-                
     });
     oldPos.unshift([xPos, yPos])
     if (oldPos.length > 100){
@@ -103,14 +102,23 @@ function checkCollition(){
         ydelta = Math.abs(yPos-oldPos[0][1])
 
 
-        aproachAngle = Math.atan(xdelta/ydelta)*180/Math.PI
+        aproachAngle = Math.atan(xdelta/ydelta)
         console.log('aprochangle', aproachAngle, xdelta, ydelta)
 
-        slopeAngle = Math.atan(Math.abs(xPos-400*size)/Math.abs(yPos-350*size))      
-        console.log('slopeangle', slopeAngle, Math.abs  (xPos-400*size),Math.abs(yPos-350*size))
+        slopeAngle = Math.atan((xPos-400*size)/(yPos-350*size))
+        console.log('slopeangle', slopeAngle, Math.abs(xPos-400*size)/Math.abs(yPos-350*size))
+        totalAngle = slopeAngle+aproachAngle
+        console.log('totalAngle', totalAngle)
+
+        totalSpeed = xs+ys
+        diff = Math.tan(totalAngle)
+        console.log('diff', diff)
+        xs = Math.sin(totalAngle)/totalSpeed
+        ys = Math.cos(totalAngle)/totalSpeed
+
         xs = -Math.abs(xs)
         ys = -Math.abs(ys)
-        console.log('out of boundss',xDiff**2, yDiff**2)
+        //console.log('out of boundss',xDiff**2, yDiff**2)
     }
 }
 function getRndInteger(max) {
