@@ -39,6 +39,7 @@ def urbanOsuCallback():
         'grant_type': 'authorization_code'
     }
     resp = requests.post(url, data=params)
+    print(resp)
     respData = resp.json()
     print('response data', respData)
     session['tokens'] = {
