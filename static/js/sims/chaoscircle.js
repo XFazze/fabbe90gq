@@ -1,5 +1,5 @@
-var ctx, ya, ys, xs, xPos, yPos, oldYPos, oldXPos, oldPos = [], size = 100, aproachAngle;
-var speed = 100
+var ctx, ya, ys, xs, xPos, yPos, oldYPos, oldXPos, oldPos = [], size = 100, aproachAngle, xinverse, yinverse;
+var speed = 1000, touching = false;
 window.onload = function () {
     var canvas = document.getElementById("game-layer");
     ctx = canvas.getContext("2d");
@@ -52,7 +52,7 @@ function gameLoop(){
     xPos += xs;
     checkCollition();
     draw();
-    if(yPos < 80000){
+    if(yPos > 80000 || yPos > 0 || xPos < 0 ||xPos>80000){
         setTimeout(gameLoop, speed/10);
     }
 }
@@ -87,40 +87,55 @@ function checkCollition(){
     var xinverse, yinverse
     xDiff = Math.abs(xPos/size-400);
     yDiff = Math.abs(yPos/size-350);
-    if(Math.sqrt(xDiff**2 + yDiff**2) > 295){
+    if(Math.sqrt(xDiff**2 + yDiff**2) > 295 && !touching) {
+        oxDiff = Math.abs(oldPos[oldPos.length-1][0]/size-400);
+        oyDiff = Math.abs(oldPos[oldPos.length-1][1]/size-400);
+        touching = true
         // find attack angle
         // find circle angle
         // find difference
         // calculate x and y parts
-        if((xPos-oldPos[0][0]) < 0){
+        if((xPos-oldPos[oldPos.length-1][0]) < 0){
             xinverse = true
+        }else{
+            xinverse = false
         }
-        xdelta = Math.abs(xPos-oldPos[0][0])
-        if((yPos-oldPos[0][1]) < 0){
+        xdelta = xPos-oldPos[oldPos.length-1][0]
+        if((yPos-oldPos[oldPos.length-1][1]) < 0){
             yinverse = true;
+        }else{
+            yinverse = false
         }
-        ydelta = Math.abs(yPos-oldPos[0][1])
+        ydelta = yPos-oldPos[oldPos.length-1][1]
 
 
         aproachAngle = Math.atan(xdelta/ydelta)
-        console.log('aprochangle', aproachAngle, xdelta, ydelta)
-
+        //console.log('aprochangle', aproachAngle, xdelta, ydelta)
         slopeAngle = Math.atan((xPos-400*size)/(yPos-350*size))
-        console.log('slopeangle', slopeAngle, Math.abs(xPos-400*size)/Math.abs(yPos-350*size))
-        totalAngle = slopeAngle+aproachAngle
-        console.log('totalAngle', totalAngle)
+        //console.log('slopeangle', slopeAngle, Math.abs(xPos-400*size)/Math.abs(yPos-350*size))
+        totalAngle = aproachAngle+slopeAngle
+        console.log('totalAngle', Math.floor(100*aproachAngle)/100, Math.floor(100*slopeAngle)/100, Math.floor(100*totalAngle)/100)
 
         totalSpeed = xs+ys
         diff = Math.tan(totalAngle)
-        console.log('diff', diff)
-        xs = Math.sin(totalAngle)/totalSpeed
-        ys = Math.cos(totalAngle)/totalSpeed
-
-        xs = -Math.abs(xs)
+        //console.log('diff', diff)
+        xs = diff*totalSpeed/(1+diff)
+        ys = totalSpeed - xs
+        //console.log('inveses,', xinverse, Math.floor(xPos-oldPos[oldPos.length-1][0]),yinverse, Math.floor(yPos-oldPos[oldPos.length-1][1]))
+        if (!xinverse){
+            xs = -xs;
+        }
+        if (yinverse){
+            ys = -ys;
+        }
         ys = -Math.abs(ys)
         //console.log('out of boundss',xDiff**2, yDiff**2)
+    }else if(touching & Math.sqrt(xDiff**2 + yDiff**2) < 295){
+        //console.log('remove touch')
+        touching = false
     }
 }
+
 function getRndInteger(max) {
     return Math.floor(Math.random() * max);
   }
