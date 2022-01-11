@@ -48,7 +48,7 @@ window.onload = function () {
             last_time = Date.now()
 
         }});
-
+        //FIXME reset button doesnt work
     document.getElementById("resetbutton").addEventListener("click", function (event) {
         last_time = Date.now()*10;
         difficulty = 1;

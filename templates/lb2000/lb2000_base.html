@@ -24,7 +24,7 @@
     
     </form>
     <div id="user_info">
-        {% set icon_url = "http://ddragon.leagueoflegends.com/cdn/11.23.1/img/profileicon/" + summoner["profileIconId"]|string + ".png" %}
+        {% set icon_url = "http://ddragon.leagueoflegends.com/cdn/12.1.1/img/profileicon/" + summoner["profileIconId"]|string + ".png" %}
         <img src={{ icon_url }} class="pfppic">
         <div>
             <h2>{{ summoner["name"] }} | {{ region }} | Lvl {{ summoner["summonerLevel"] }} | Total Mastery {{ total_mastery}}</h2>
@@ -34,7 +34,7 @@
         </div>
     </div>
     <div class="taskbar mb- ">
-        <ul id="taskbarinner" class="flex flex-row ">
+        <ul id="taskbarinner" class="flex flex-row gap-1.5 m-2">
             <li id="matchHistory" class="p-1 bg-gray-600 bg-gray-800">
                 <div>
                     <button onclick="taskbarBtn('matchHistory')"><h2>Match History</h2></button>
@@ -43,6 +43,16 @@
             <li  id="mastery" class="p-1 bg-gray-600">
                 <div>
                     <button  onclick="taskbarBtn('mastery')"><h2>Mastery</h2></button>
+                </div>
+            </li>
+            <li  id="mmr" class="p-1 bg-gray-600">
+                <div>
+                    <button  onclick="taskbarBtn('mmr')"><h2>MMR</h2></button>
+                </div>
+            </li>
+            <li  id="analysis" class="p-1 bg-gray-600">
+                <div>
+                    <button  onclick="taskbarBtn('analysis')"><h2>Analysis</h2></button>
                 </div>
             </li>
         </ul>
@@ -55,7 +65,7 @@
             
             {% for champ in mastery %}
             {% set champname = champ_id_to_name[champ["championId"]]  %}
-            {% set icon_url = "http://ddragon.leagueoflegends.com/cdn/11.23.1/img/champion/" + champname + ".png" %}
+            {% set icon_url = "http://ddragon.leagueoflegends.com/cdn/12.1.1/img/champion/" + champname + ".png" %}
             {% set seconds = (timenow-(champ['lastPlayTime']/1000))|round %}
             <div class="mcolumn">
                 <div class="mrow">
@@ -172,11 +182,49 @@
                 </div>
             </div>
             <div id="match_history" class="flex flex-col items-start" >
-                <div class="height-0 border-gray-800 border-t-0"></div>
+                <!--<div class="height-0 border-gray-800 border-t-0"></div>-->
                 {% for match in match_history %}
                     <div id="{{ match }}"><p>Loading match</p></div>
                 {% endfor %}
             </div>
+        </div>
+        <div class="MMR hidden">
+            <ul class="mb-8">
+                <li>
+                    <h2>SoloQ</h2>
+                    {% if mmr['soloq']['elo'] %}
+                        <p>Elo: {{ mmr['soloq']['elo'] }} ±{{ mmr['soloq']['err'] }}</p>
+                        <p>Closest Rank: {{ mmr['soloq']['closestRank'] }}</p>
+                        <p>Percentile: {{ mmr['soloq']['percentile'] }}%</p>
+
+                    {% else %}
+                        <p>There is no data</p>
+                    {% endif %}
+                </li>
+                <li>
+                    <h2>Normals</h2>
+                    {% if mmr['normals']['elo'] %}
+                        <p>Elo: {{ mmr['normals']['elo'] }} ±{{ mmr['soloq']['err'] }}</p>
+                        <p>Closest Rank: {{ mmr['normals']['closestRank'] }}</p>
+                        <p>Percentile: {{ mmr['normals']['percentile'] }}%</p>
+
+                    {% else %}
+                        <p>There is no data</p>
+                    {% endif %}
+                </li>
+                <li>
+                    <h2>ARAM</h2>
+                    {% if mmr['aram']['elo'] %}
+                        <p>Elo: {{ mmr['aram']['elo'] }} ±{{ mmr['soloq']['err'] }}</p>
+                        <p>Closest Rank: {{ mmr['aram']['closestRank'] }}</p>
+                        <p>Percentile: {{ mmr['aram']['percentile'] }}%</p>
+
+                    {% else %}
+                        <p>There is no data</p>
+                    {% endif %}
+                </li>
+            </ul>
+            <a href={{"https://eune.whatismymmr.com/"~summoner["name"]}} target='#' class='hover:text-gray-800'>Data is gather from WhatIsMyMMR public API</a>
         </div>
     </div>
 </div>

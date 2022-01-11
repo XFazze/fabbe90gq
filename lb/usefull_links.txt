@@ -8,5 +8,8 @@ http://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/defaul
 
 champ images:
 http://ddragon.leagueoflegends.com/cdn/11.9.1/img/champion/"
-item images(little opld):
+item images(little opld):   
 http://ddragon.leagueoflegends.com/cdn/10.18.1/img/item/
+
+mmmr:
+https://dev.whatismymmr.com/

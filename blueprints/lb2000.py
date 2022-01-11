@@ -4,13 +4,18 @@ from lb.api_calls import *
 from lb.match_history import *
 from lb.championIdtoname import *
 from forms.lb2000_form import *
+from lb.mmr import get_mmrs
 from lb.runes import *
+from lb.mmr import *
 from threading import Thread
 
 lb2000 = Blueprint('lb2000', __name__)
 #TODO connect accounts by verifying with pfp
 #TODO player Tags
 # champs player wr for champs/length
+#TODO amont+wr of total, gamemode, role, champ
+#TODO graph
+
 
 region_converter = {
     'eun1':'EUROPE',
@@ -67,6 +72,7 @@ def returnprofile(summonername, region):
         mastery = get_mastery(region, summoner['id'], riot_api_key)
         total_mastery = get_total_mastery(region, summoner['id'], riot_api_key)
         ranks = get_rank(region, summoner['id'], riot_api_key)
+        mmr = get_mmrs(region, summoner['name'])
         match_history = get_match_history(
             region_large, summoner['puuid'], riot_api_key)
         thread = Thread(target=download_matches, args=(
@@ -78,4 +84,4 @@ def returnprofile(summonername, region):
             i["championId"] = str(i["championId"])
         print('successdd')
         return render_template('lb2000/lb2000_base.html', summoner=summoner, region=region, mastery=mastery, total_mastery=total_mastery, champ_id_to_name=champ_id_to_name, timenow=timenow, ranks=ranks, form=form,
-                                match_history=match_history, region_large=region_large, summonerid=str(summoner['id']))
+                                match_history=match_history, region_large=region_large, summonerid=str(summoner['id']), mmr=mmr)

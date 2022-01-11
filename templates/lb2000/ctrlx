@@ -4,7 +4,7 @@
                     {% else %}
                     <div class="amatch" style="background-image:-webkit-linear-gradient(left, var(--sub-color), var(--sub-color) 70%, transparent 70%, transparent 100%)" >
                 {% endif %}
-                {% set icon_url = "http://ddragon.leagueoflegends.com/cdn/11.23.1/img/champion/" + match1[summonerid]['champ']['championName'] + ".png" %}
+                {% set icon_url = "http://ddragon.leagueoflegends.com/cdn/12.1.1/img/champion/" + match1[summonerid]['champ']['championName'] + ".png" %}
                 <div style="width: 80px; float: left;display: flex;">
                     <p style="margin:auto;" >{{ (((timenow-(match1["meta"]["gameCreation"]/1000))/8640)|round)/10 }}d  </p>
                     <p style="margin:auto;" >&nbsp;{{ (match1["meta"]["gameDuration"]/60000)|int }}m</p>

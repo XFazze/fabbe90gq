@@ -2,6 +2,7 @@ import requests
 import time
 import sphc
 import unicodedata
+import os
 from datetime import datetime
 
 
@@ -267,7 +268,9 @@ def generate_html(match_json, region):
 # basic champ
         divs = []
         # Champions div
-        champ = tf.img(src="http://ddragon.leagueoflegends.com/cdn/11.23.1/img/champion/" +
+        if match_json[player]['champ']['championName'] == 'FiddleSticks':
+            match_json[player]['champ']['championName'] = 'Fiddlesticks'
+        champ = tf.img(src="http://ddragon.leagueoflegends.com/cdn/12.1.1/img/champion/" +
                        match_json[player]['champ']['championName'] + ".png", Class='champ')
         lvl = tf.p(str(match_json[player]['champ']
                    ['champLevel']), Class='lvl w-4')
@@ -286,9 +289,9 @@ def generate_html(match_json, region):
         for it in itemss:
             if str(match_json[player]['champ'][it]) == '0':
                 itemdiv.append(
-                    tf.img(src="/static/pics/poor.jpg", Class=it+' w-8'))
+                    tf.img(src="/static/pics/poor.jpg", Class=it+' w-8 opacity-0'))
             else:
-                itemdiv.append(tf.img(src="http://ddragon.leagueoflegends.com/cdn/11.23.1/img/item/" +
+                itemdiv.append(tf.img(src="http://ddragon.leagueoflegends.com/cdn/12.1.1/img/item/" +
                                str(match_json[player]['champ'][it]) + ".png", Class=it+' w-8'))
 
         items = tf.DIV(itemdiv, Class='items flex w-60')
@@ -333,14 +336,18 @@ def generate_html(match_json, region):
             playerdiv = tf.DIV( divsdiv, Class= str(match_json[player]['meta']['summonerId'])+' items-center hidden ' + teampos +' ' + match_json[player]['meta']['teamPosition'] + ' '+t['t' + str(match_json[player]['meta']['teamId'])])
             matchups[teampos] = playerdiv
         else:
-            playerdiv = tf.DIV(divsdiv, Class=str(match_json[player]['meta']['summonerId'])+' items-center lost  hidden     ' + match_json[player]['meta']['teamPosition'] + ' ' +t['t' + str(match_json[player]['meta']['teamId'])])
+            playerdiv = tf.DIV(divsdiv, Class=str(match_json[player]['meta']['summonerId'])+' items-center lost  hidden ' + match_json[player]['meta']['teamPosition'] + ' ' +t['t' + str(match_json[player]['meta']['teamId'])])
             matchups['lost'].append(playerdiv)
 
         
-# matchups
+    # matchups
+    # checks if aram
+    if len(matchups['lost']) == 10:
+        pass
+
     for p in matchups['lost']:
         for key in matchups.keys():
-            if match_json[player]['meta']['teamId'] in key and matchups[key] == 0:
+            if matchups[key] == 0:
                 matchups[key] = p
                 break
 
@@ -366,9 +373,9 @@ def download_matches(match_history, region, api_key, runeIdToName, region_conver
         match_name = match.split('_')
         path = '/home/pi/website/static/lolgames_html/' + \
             match_name[0] + '/' + match_name[1] + '.txt'
-        # if os.path.isfile(path):
-        #print('skipped already downloaded game')
-        # continue
+        #if os.path.isfile(path):
+        #    print('skipped already downloaded game')
+        #    continue
         time.sleep(1/5)
         ret_json = {}
         url = "https://" + region_converter[region] + \
