@@ -9,7 +9,10 @@ from blueprints.factorio import factorio
 from blueprints.lb2000 import lb2000
 from blueprints.user import user
 from blueprints.afknotif import afknotif
+from blueprints.files import files
 from celery import Celery
+from functools import wraps
+from authlib.integrations.flask_client import OAuth
 
 # Initializing flask and sql
 app = Flask(__name__,  static_folder='static')
@@ -24,6 +27,59 @@ app.register_blueprint(factorio, url_prefix='/factorio')
 app.register_blueprint(lb2000, url_prefix='/lb2000')
 app.register_blueprint(user, url_prefix='/user')
 app.register_blueprint(afknotif, url_prefix='/afknotif')
+#app.register_blueprint(files, url_prefix='/files')
+
+# auth0 files 
+oauth = OAuth(app)
+auth0 = oauth.register(
+    'auth0',
+    client_id=filesAuth0Id,
+    client_secret=filesAuth0Secret,
+    api_base_url='https://dicespace.eu.auth0.com',
+    access_token_url='https://dicespace.eu.auth0.com/oauth/token',
+    authorize_url='https://dicespace.eu.auth0.com/authorize',
+    client_kwargs={
+        'scope': 'openid profile email',
+    },
+)
+
+def requires_auth(f):
+  @wraps(f)
+  def decorated(*args, **kwargs):
+    if 'profile' not in session:
+      # Redirect to Login page here
+      return redirect('/')
+    return f(*args, **kwargs)
+
+  return decorated
+
+@app.route("/files/callback")
+def filesCallback():
+    # Handles response from token endpoint
+    auth0.authorize_access_token()
+    resp = auth0.get('userinfo')
+    userinfo = resp.json()
+
+    # Store the user information in flask session.
+    session['jwt_payload'] = userinfo
+    session['profile'] = {
+        'user_id': userinfo['sub'],
+        'name': userinfo['name'],
+        'picture': userinfo['picture']
+    }
+    return redirect('/files/dashboard')
+
+@app.route("/files/login")
+def filesLogin():
+    return auth0.authorize_redirect(redirect_uri=filesAuth0CallbackUrl)
+
+@app.route("/files/dashboard")
+@requires_auth
+def filesDashboard():
+    return render_template('files/dashboard.html',
+                           userinfo=session['profile'],
+                           userinfo_pretty=json.dumps(session['jwt_payload'], indent=4))
+
 
 # celery background task for discordbot plots
 #TODO fix image hosting and updating of discord plots
