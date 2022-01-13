@@ -6,14 +6,16 @@ def get_summoner(region, username, api_key):
     url = "https://" + region + ".api.riotgames.com/lol/summoner/v4/summoners/by-name/" + username + "?api_key=" + api_key
     print("summoner url: ", url)
     return requests.get(url).json()
-    
+
 
 def get_total_mastery(region, id, api_key):
     url = "https://" + region + ".api.riotgames.com/lol/champion-mastery/v4/scores/by-summoner/" + id + "?api_key=" + api_key
+    print('total mastery url', url)
     return requests.get(url).json()
 
 def get_mastery(region, id, api_key):
     url = "https://" + region + ".api.riotgames.com/lol/champion-mastery/v4/champion-masteries/by-summoner/" +  id + "?api_key=" + api_key
+    print('mastery url', url)
     return requests.get(url).json()
 
 def get_rank(region, id, api_key):

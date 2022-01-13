@@ -23,34 +23,41 @@
         {% endif %}
     
     </form>
+    <h2>{{ summoner["name"] }}#{{ region }}</h2>
     <div id="user_info">
         {% set icon_url = "http://ddragon.leagueoflegends.com/cdn/12.1.1/img/profileicon/" + summoner["profileIconId"]|string + ".png" %}
-        <img src={{ icon_url }} class="pfppic">
+        <div class="relative pr-4 pb-4">
+            <img src={{ icon_url }} class="pfppic">
+            <div  class='bottom-4 w-full flex justify-center absolute text-center'>
+                <div class="bg-black opacity-75 px-2">
+                    <h2 class='inset-x-1/2 text-black'>{{ summoner["summonerLevel"] }}</h2>
+                </div>
+            </div>
+        </div>
         <div>
-            <h2>{{ summoner["name"] }} | {{ region }} | Lvl {{ summoner["summonerLevel"] }} | Total Mastery {{ total_mastery}}</h2>
             {% if ranks|length >0 %}{% for rank in ranks %}
             <h2>{{rank["queueType"]}}:{{rank["tier"]}}-{{rank["rank"]}}-{{rank["leaguePoints"]}}LP  WR:{{rank["wins"]}}/{{ rank["losses"] }}({{ (100*rank["wins"]/(rank["wins"]+rank["losses"]))|round }}%)</h2>
             {% endfor %}{% endif %}
         </div>
     </div>
     <div class="taskbar mb- ">
-        <ul id="taskbarinner" class="flex flex-row gap-1.5 m-2">
-            <li id="matchHistory" class="p-1 bg-gray-600 bg-gray-800">
+        <ul id="taskbarinner" class="flex flex-row gap-1.5 mr-2">
+            <li id="matchHistory" class="p-1 bg-gray-600 bg-gray-800 mr-0 my-1">
                 <div>
                     <button onclick="taskbarBtn('matchHistory')"><h2>Match History</h2></button>
                 </div>
             </li>
-            <li  id="mastery" class="p-1 bg-gray-600">
+            <li  id="mastery" class="p-1 bg-gray-600 my-1">
                 <div>
                     <button  onclick="taskbarBtn('mastery')"><h2>Mastery</h2></button>
                 </div>
             </li>
-            <li  id="mmr" class="p-1 bg-gray-600">
+            <li  id="mmr" class="p-1 bg-gray-600 my-1">
                 <div>
                     <button  onclick="taskbarBtn('mmr')"><h2>MMR</h2></button>
                 </div>
             </li>
-            <li  id="analysis" class="p-1 bg-gray-600">
+            <li  id="analysis" class="p-1 bg-gray-600 my-1">
                 <div>
                     <button  onclick="taskbarBtn('analysis')"><h2>Analysis</h2></button>
                 </div>
@@ -59,9 +66,10 @@
     </div>
     <div id="contents">
         <div id="masterydiv" class="mastery" style="height: 193px;  display: none;">
-            <!--<div id="champion_masteryBtn">
-                <h1 id="masterydivtext">Show more</h1>
-            </div>-->
+            <h3>Total Mastery {{ total_mastery}}</h3>
+            <h3>Total mastery points {{ masterPoints }}k</h3>
+            <h3>Total mastery levels {{ masteryLevels }}</h3>
+            <!-- TODO fix smaller informaion boxes-->
             
             {% for champ in mastery %}
             {% set champname = champ_id_to_name[champ["championId"]]  %}
@@ -72,7 +80,13 @@
                     <img src={{ icon_url }}  style="width: 60;">
                 </div>
                 <div class="mrow" >
+                    {% if champ['championPoints'] > 10000 %}
                     <p>{{ (champ['championPoints']/1000)|int }}k({{ champ['championLevel'] }})</p>
+                    {% elif champ['championPoints'] > 1000 %}
+                    <p>{{ ((champ['championPoints']/100)|int)/10 }}k({{ champ['championLevel'] }})</p>
+                    {% else %}
+                    <p>{{ (champ['championPoints'])|int }}({{ champ['championLevel'] }})</p>
+                    {% endif %}
                 </div>
                 <div class="mrow" >
                     <p>{{ (((seconds/86400)*10)|round)/10 }}d</p>
@@ -194,8 +208,7 @@
                     <h2>SoloQ</h2>
                     {% if mmr['soloq']['elo'] %}
                         <p>Elo: {{ mmr['soloq']['elo'] }} ±{{ mmr['soloq']['err'] }}</p>
-                        <p>Closest Rank: {{ mmr['soloq']['closestRank'] }}</p>
-                        <p>Percentile: {{ mmr['soloq']['percentile'] }}%</p>
+                        <p>Rank: {{ mmr['soloq']['percentile'] }} {{ mmr['soloq']['closestRank'] }}</p>
 
                     {% else %}
                         <p>There is no data</p>
@@ -205,8 +218,7 @@
                     <h2>Normals</h2>
                     {% if mmr['normals']['elo'] %}
                         <p>Elo: {{ mmr['normals']['elo'] }} ±{{ mmr['soloq']['err'] }}</p>
-                        <p>Closest Rank: {{ mmr['normals']['closestRank'] }}</p>
-                        <p>Percentile: {{ mmr['normals']['percentile'] }}%</p>
+                        <p> Rank:  {{ mmr['normals']['percentile'] }} {{ mmr['normals']['closestRank'] }}</p>
 
                     {% else %}
                         <p>There is no data</p>
@@ -216,8 +228,7 @@
                     <h2>ARAM</h2>
                     {% if mmr['aram']['elo'] %}
                         <p>Elo: {{ mmr['aram']['elo'] }} ±{{ mmr['soloq']['err'] }}</p>
-                        <p>Closest Rank: {{ mmr['aram']['closestRank'] }}</p>
-                        <p>Percentile: {{ mmr['aram']['percentile'] }}%</p>
+                        <p>Rank: {{ mmr['aram']['percentile'] }} {{ mmr['aram']['closestRank'] }} </p>
 
                     {% else %}
                         <p>There is no data</p>

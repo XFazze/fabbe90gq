@@ -8,6 +8,7 @@ from lb.mmr import get_mmrs
 from lb.runes import *
 from lb.mmr import *
 from threading import Thread
+from ratelimit import limits, sleep_and_retry
 
 lb2000 = Blueprint('lb2000', __name__)
 #TODO connect accounts by verifying with pfp
@@ -69,19 +70,25 @@ def returnprofile(summonername, region):
     if "status" in summoner.keys():
         return False
     else:
-        mastery = get_mastery(region, summoner['id'], riot_api_key)
-        total_mastery = get_total_mastery(region, summoner['id'], riot_api_key)
-        ranks = get_rank(region, summoner['id'], riot_api_key)
+        mastery = call(get_mastery, (region, summoner['id'], riot_api_key))
+        masterPoints = int(sum([item['championPoints'] for item in mastery ])/1000)
+        masteryLevels = sum([item['championLevel'] for item in mastery ])
+        total_mastery = call(get_total_mastery, (region, summoner['id'], riot_api_key))
+        ranks = call(get_rank, (region, summoner['id'], riot_api_key))
         mmr = get_mmrs(region, summoner['name'])
-        match_history = get_match_history(
+        match_history =  get_match_history(
             region_large, summoner['puuid'], riot_api_key)
-        thread = Thread(target=download_matches, args=(
-            match_history, region, riot_api_key, runeIdToName, region_converter))
-        thread.start()
+        call(multiDownloadMatches, (match_history, region, riot_api_key, runeIdToName, region_converter))
         timenow = time.time()
         form = lb2000_getuser()
         for i in mastery:
             i["championId"] = str(i["championId"])
-        print('successdd')
+        print('profile success')
         return render_template('lb2000/lb2000_base.html', summoner=summoner, region=region, mastery=mastery, total_mastery=total_mastery, champ_id_to_name=champ_id_to_name, timenow=timenow, ranks=ranks, form=form,
-                                match_history=match_history, region_large=region_large, summonerid=str(summoner['id']), mmr=mmr)
+                      match_history=match_history, region_large=region_large, summonerid=str(summoner['id']), mmr=mmr, masterPoints=masterPoints, masteryLevels=masteryLevels)
+
+
+@sleep_and_retry
+@limits(calls=10, period=60)
+def call(function, args):
+    return function(*args)

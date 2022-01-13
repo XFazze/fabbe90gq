@@ -58,7 +58,6 @@ button {
 .pfppic {
   max-height: 10rem;
   min-width: 10rem;
-  padding: 1rem;
 }
 #champion_masteryBtn {
   background-color: var(--sub-color);
