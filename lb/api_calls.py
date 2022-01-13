@@ -23,16 +23,24 @@ def get_rank(region, id, api_key):
     print("rank url: ", url)
     return requests.get(url).json()
 
-def get_match_history(region_large, puuid, api_key):
-    url = "https://" + region_large + ".api.riotgames.com/lol/match/v5/matches/by-puuid/" + puuid + "/ids?start=0&count=9&api_key=" + api_key
+def get_match_history(region_large, puuid, api_key, start, count):
+    url = "https://" + region_large + ".api.riotgames.com/lol/match/v5/matches/by-puuid/" + puuid + "/ids"
+    params = {
+            'start': start,
+            'count': count,
+            'api_key': api_key
+    }
     print("match history url: ", url)
-    return requests.get(url).json()  # max 100 but has filters
+    return requests.get(url, params=params).json()  # max 100 but has filters
 
 
 def get_match(region_large, match_id, api_key):
-    url = "https://" + region_large + ".api.riotgames.com/lol/match/v5/matches/" + match_id + "?api_key=" + api_key
+    url = "https://" + region_large + ".api.riotgames.com/lol/match/v5/matches/" + match_id
+    params = {
+        'api_key': api_key
+    }
     print("match url: ", url)
-    return requests.get(url).json()
+    return requests.get(url, params=params).json()
 
 def get_match_timeline(region_large, match_id, api_key):
     url = "https://" + region_large + ".api.riotgames.com/lol/match/v5/matches/" + match_id + "/timeline?api_key=" + api_key

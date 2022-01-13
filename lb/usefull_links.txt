@@ -13,3 +13,8 @@ http://ddragon.leagueoflegends.com/cdn/10.18.1/img/item/
 
 mmmr:
 https://dev.whatismymmr.com/
+
+game constatns:
+https://developer.riotgames.com/docs/lol#general_game-constants
+https://static.developer.riotgames.com/docs/lol/queues.json
+http://ddragon.leagueoflegends.com/cdn/12.1.1/data/en_US/champion.json

@@ -1,5 +1,7 @@
 from flask import *
 from config import *
+from threading import Thread
+from ratelimit import limits, sleep_and_retry
 from lb.api_calls import *
 from lb.match_history import *
 from lb.championIdtoname import *
@@ -7,8 +9,7 @@ from forms.lb2000_form import *
 from lb.mmr import get_mmrs
 from lb.runes import *
 from lb.mmr import *
-from threading import Thread
-from ratelimit import limits, sleep_and_retry
+from lb.analysis import *
 
 lb2000 = Blueprint('lb2000', __name__)
 #TODO connect accounts by verifying with pfp
@@ -72,23 +73,23 @@ def returnprofile(summonername, region):
     else:
         mastery = call(get_mastery, (region, summoner['id'], riot_api_key))
         masterPoints = int(sum([item['championPoints'] for item in mastery ])/1000)
-        masteryLevels = sum([item['championLevel'] for item in mastery ])
         total_mastery = call(get_total_mastery, (region, summoner['id'], riot_api_key))
         ranks = call(get_rank, (region, summoner['id'], riot_api_key))
         mmr = get_mmrs(region, summoner['name'])
         match_history =  get_match_history(
-            region_large, summoner['puuid'], riot_api_key)
+            region_large, summoner['puuid'], riot_api_key, 0, 9)
         call(multiDownloadMatches, (match_history, region, riot_api_key, runeIdToName, region_converter))
+
         timenow = time.time()
         form = lb2000_getuser()
         for i in mastery:
             i["championId"] = str(i["championId"])
         print('profile success')
         return render_template('lb2000/lb2000_base.html', summoner=summoner, region=region, mastery=mastery, total_mastery=total_mastery, champ_id_to_name=champ_id_to_name, timenow=timenow, ranks=ranks, form=form,
-                      match_history=match_history, region_large=region_large, summonerid=str(summoner['id']), mmr=mmr, masterPoints=masterPoints, masteryLevels=masteryLevels)
+                      match_history=match_history, region_large=region_large, summonerid=str(summoner['id']), mmr=mmr, masterPoints=masterPoints)
 
 
 @sleep_and_retry
-@limits(calls=10, period=60)
+@limits(calls=30, period=60)
 def call(function, args):
     return function(*args)

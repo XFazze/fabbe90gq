@@ -42,7 +42,7 @@
     </div>
     <div class="taskbar mb- ">
         <ul id="taskbarinner" class="flex flex-row gap-1.5 mr-2">
-            <li id="matchHistory" class="p-1 bg-gray-600 bg-gray-800 mr-0 my-1">
+            <li id="matchHistory" class="p-1 bg-gray-600  mr-0 my-1">
                 <div>
                     <button onclick="taskbarBtn('matchHistory')"><h2>Match History</h2></button>
                 </div>
@@ -68,7 +68,6 @@
         <div id="masterydiv" class="mastery" style="height: 193px;  display: none;">
             <h3>Total Mastery {{ total_mastery}}</h3>
             <h3>Total mastery points {{ masterPoints }}k</h3>
-            <h3>Total mastery levels {{ masteryLevels }}</h3>
             <!-- TODO fix smaller informaion boxes-->
             
             {% for champ in mastery %}
