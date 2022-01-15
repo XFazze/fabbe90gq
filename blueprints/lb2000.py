@@ -8,9 +8,7 @@ from lb.api_calls import *
 from lb.match_history import *
 from lb.championIdtoname import *
 from forms.lb2000_form import *
-from lb.mmr import get_mmrs
 from lb.runes import *
-from lb.mmr import *
 from lb.analysis import *
 from lb.popular import *
 from lb.regions import *
@@ -57,7 +55,6 @@ def returnprofile(summonername, region, popular):
         masterPoints = int(sum([item['championPoints'] for item in mastery ])/1000)
         total_mastery = get_total_mastery(region, summoner['id'], riot_api_key)
         ranks = get_rank(region, summoner['id'], riot_api_key)
-        mmr = get_mmrs(region, summoner['name'])
         match_history =  get_match_history(
             region_large, summoner['puuid'], riot_api_key, 0, 9)
         Thread(target=download_matches, args=(match_history, region, riot_api_key, runeIdToName)).start()
@@ -68,7 +65,7 @@ def returnprofile(summonername, region, popular):
             i["championId"] = str(i["championId"])
         print('profile success')
         return render_template('lb2000/lb2000_base.html', summoner=summoner, region=region, mastery=mastery, total_mastery=total_mastery, champ_id_to_name=champ_id_to_name, timenow=timenow, ranks=ranks, form=form,
-                      match_history=match_history, region_large=region_large, summonerid=str(summoner['id']), mmr=mmr, masterPoints=masterPoints, popular=popular)
+                      match_history=match_history, region_large=region_large, summonerid=str(summoner['id']),  masterPoints=masterPoints, popular=popular)
 
 @lb2000.route("/wr", methods=['GET', 'POST'])
 def ajax_wr():
@@ -108,6 +105,10 @@ def ajax_match():
     
 
     return send_file(filename, mimetype='txt')
+
+@lb2000.route("/example", methods=['GET', 'POST'])
+def example():
+    return render_template('lb2000/example.html')
 
 '''
 @lb2000.route("/riot.txt", methods=['GET', 'POST'])
