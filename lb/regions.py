@@ -1,5 +1,5 @@
 
-region_converter = {
+regionConverter1 = {
     'eun1':'EUROPE',
     'euw1' : 'EUROPE',
     'ru' : 'EUROPE',

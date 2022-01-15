@@ -7,7 +7,8 @@ from datetime import datetime
 from threading import Thread
 from ratelimit import limits
 from queueId import *
-
+from api_calls import *
+from regions import *
 #TODO put boots always on most right item slot
 
 def jsonconvert(json_match, runeIdToName):
@@ -374,13 +375,8 @@ def generate_html(match_json, region):
     return doc
 #TODO summoner spells
 
-#FIXME GET CALL FROM LB20000!!
-@limits(calls=10, period=120)
-def multiDownloadMatches(match_history, region, riot_api_key, runeIdToName, region_converter):
-    thread = Thread(target=download_matches, args=(match_history, region, riot_api_key, runeIdToName, region_converter))
-    thread.start()
 
-def download_matches(match_history, region, api_key, runeIdToName, region_converter):
+def download_matches(match_history, region, api_key, runeIdToName):
     for match in match_history:
         match_name = match.split('_')
         path = '/home/pi/website/static/lolgames_html/' + \
@@ -390,12 +386,9 @@ def download_matches(match_history, region, api_key, runeIdToName, region_conver
         #    continue
         time.sleep(1/5)
         ret_json = {}
-        url = "https://" + region_converter[region] + \
-            ".api.riotgames.com/lol/match/v5/matches/" + match + "?api_key=" + api_key
-        #print(url)
-        json_match = requests.get(url).json()
-        if "status" in json_match.keys():
-            continue
+
+        json_match = get_match(regionConverter1[region],  match, api_key)
+
 
         ret_json = jsonconvert(json_match, runeIdToName)
         div = generate_html(ret_json, region)

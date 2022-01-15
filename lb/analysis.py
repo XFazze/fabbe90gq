@@ -10,7 +10,6 @@ from queueId import queueIdConverter
 from championIdtoname import champNames
 from api_calls import *
 
-
 # what scores?
 
 # gametype
@@ -40,44 +39,51 @@ from api_calls import *
 # avg = avgold +(valuenew+avgold)/newsize
 
 
-def multiDetails(puuid, region_large, api_key):
-    thread = Thread(target=get_details, args=(puuid, region_large, api_key))
-    thread.start()
-
 def get_details(puuid, region_large, api_key):
     client = MongoClient('localhost', 27017)
     db = client.loldetails
     collection = db[puuid]
     meta = list(collection.find({'type':'meta'}))
-    downloadedMatches = len(list(collection.find({'type':'game'})))
+    try:
+        if meta[0]['downloading']:
+            print('stop downloading')
+            return
+        else:
+            print('not downloading ')
+    except:
+        print('new user  start downloading')
+
+    downloadedMatches = [f['id'] for f in list(collection.find({'type':'game'}, {'id' : 1}))]
     matches = get_MatchHistory(puuid, region_large, api_key)
+
     if meta == []: 
         meta = {
                     'type' : 'meta',
                     'latestTime' : time.time(),
-                    'downloadedMatchesAmount' : downloadedMatches,
+                    'downloadedMatchesAmount' : len(downloadedMatches),
                     'totalMatchesAmount' : len(matches),
                     'analazyedMatchesAmount' : 0,
-                    'brokenMatchesAmount' : 0
+                    'brokenMatchesAmount' : 0,
+                    'downloading' : True
                 }
         collection.insert(meta)
     else:
         meta = meta[0]
+        meta['downloading'] = True
+        meta['totalMatchesAmount'] = len(matches)
+        collection.update({'type':'meta'}, meta)
 
+    notDownloadedMatches = list(set(matches)- set(downloadedMatches))
+    print('there have already been analyzed matches. New matches :', len(notDownloadedMatches))
 
-    newMatchesAmount = len(matches)-downloadedMatches-meta['brokenMatchesAmount']
-    print('there have already been analyzed matches. New matches :', newMatchesAmount)
+    if notDownloadedMatches:
+         get_allMatches(puuid, region_large, api_key, notDownloadedMatches)
 
-    if 0 == newMatchesAmount:
-        print('no new matches returning')
-        return 
-    matches = matches[meta['downloadedMatchesAmount']:]
-
-    if meta['downloadedMatchesAmount'] != meta['totalMatchesAmount']:
-         get_allMatches(puuid, region_large, api_key, matches)
-
-    if meta['analazyedMatchesAmount'] != meta['totalMatchesAmount']:
+    if meta['analazyedMatchesAmount'] != len(matches):
         updateUserDetails(puuid)
+    print('updating ')
+    collection.update_one({'type':'meta'}, {'$set' :{'downloading':False}})
+    
 
 
 def get_MatchHistory(puuid, region_large, api_key):
@@ -107,13 +113,13 @@ def get_allMatches(puuid, region_large, api_key, matches):
 
     meta = list(collection.find({'type':'meta'}))[0]
     for matchId in matches:
-        #print('game:', matchId, round(100*matches.index(matchId))/len(matches))
         match, lastResult, streak = insertMatch(region_large, matchId, puuid, lastResult, streak, api_key)
+
         if match and len(list(collection.find({'type':'game', 'id':matchId}))) == 0:
             collection.insert_one(match)
         elif not match:
-            print('broken match')
             meta['brokenMatchesAmount'] += 1
+            print('broken match', meta['brokenMatchesAmount'])
 
         time.sleep(1)
         print('matchdownload progress: ', matches.index(matchId), round(matches.index(
@@ -123,8 +129,7 @@ def get_allMatches(puuid, region_large, api_key, matches):
         meta['latestTime'] = time.time()
         meta['downloadedMatchesAmount'] = meta['downloadedMatchesAmount']+1
         collection.update({'type' : 'meta'}, meta, True)
-    return meta['downloadedMatchesAmount']
-
+    return 
 
 
 def insertMatch(region_large, matchId, puuid, lastResult, streak, api_key):
