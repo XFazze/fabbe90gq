@@ -23,7 +23,7 @@ lb2000 = Blueprint('lb2000', __name__)
 #TODO graph
 
 
-'''
+
 
 @lb2000.route("/", methods=['GET', 'POST'])
 @lb2000.route("/<region>/<summonername>", methods=['GET', 'POST'])
@@ -114,3 +114,4 @@ def ajax_match():
 def riot():
     filename = 'static/riot.txt'
     return send_file(filename, mimetype='txt')
+'''
