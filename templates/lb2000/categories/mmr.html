@@ -1,0 +1,36 @@
+
+        <div class="MMR hidden">
+            <ul class="mb-8">
+                <li>
+                    <h2>SoloQ</h2>
+                    {% if mmr['soloq']['elo'] %}
+                        <p>Elo: {{ mmr['soloq']['elo'] }} ±{{ mmr['soloq']['err'] }}</p>
+                        <p>Rank: {{ mmr['soloq']['percentile'] }} {{ mmr['soloq']['closestRank'] }}</p>
+
+                    {% else %}
+                        <p>There is no data</p>
+                    {% endif %}
+                </li>
+                <li>
+                    <h2>Normals</h2>
+                    {% if mmr['normals']['elo'] %}
+                        <p>Elo: {{ mmr['normals']['elo'] }} ±{{ mmr['soloq']['err'] }}</p>
+                        <p> Rank:  {{ mmr['normals']['percentile'] }} {{ mmr['normals']['closestRank'] }}</p>
+
+                    {% else %}
+                        <p>There is no data</p>
+                    {% endif %}
+                </li>
+                <li>
+                    <h2>ARAM</h2>
+                    {% if mmr['aram']['elo'] %}
+                        <p>Elo: {{ mmr['aram']['elo'] }} ±{{ mmr['soloq']['err'] }}</p>
+                        <p>Rank: {{ mmr['aram']['percentile'] }} {{ mmr['aram']['closestRank'] }} </p>
+
+                    {% else %}
+                        <p>There is no data</p>
+                    {% endif %}
+                </li>
+            </ul>
+            <a href={{"https://eune.whatismymmr.com/"~summoner["name"]}} target='#' class='hover:text-gray-800'>Data is gather from WhatIsMyMMR public API</a>
+        </div>

@@ -1,0 +1,29 @@
+<div id="masterydiv" class="mastery" style="height: 193px;  display: none;">
+    <h3>Total Mastery {{ total_mastery}}</h3>
+    <h3>Total mastery points {{ masterPoints }}k</h3>
+    <!-- TODO fix smaller informaion boxes-->
+    
+    {% for champ in mastery %}
+    {% set champname = champ_id_to_name[champ["championId"]]  %}
+    {% set icon_url = "http://ddragon.leagueoflegends.com/cdn/12.1.1/img/champion/" + champname + ".png" %}
+    {% set seconds = (timenow-(champ['lastPlayTime']/1000))|round %}
+    <div class="mcolumn">
+        <div class="mrow">
+            <img src={{ icon_url }}  style="width: 60;">
+        </div>
+        <div class="mrow" >
+            {% if champ['championPoints'] > 10000 %}
+            <p>{{ (champ['championPoints']/1000)|int }}k({{ champ['championLevel'] }})</p>
+            {% elif champ['championPoints'] > 1000 %}
+            <p>{{ ((champ['championPoints']/100)|int)/10 }}k({{ champ['championLevel'] }})</p>
+            {% else %}
+            <p>{{ (champ['championPoints'])|int }}({{ champ['championLevel'] }})</p>
+            {% endif %}
+        </div>
+        <div class="mrow" >
+            <p>{{ (((seconds/86400)*10)|round)/10 }}d</p>
+        </div>
+    </div>
+
+    {% endfor %}
+</div>

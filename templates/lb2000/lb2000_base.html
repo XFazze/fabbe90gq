@@ -4,25 +4,52 @@
 <link rel="stylesheet" href="/static/css/lb2000.css">
 <script type="text/javascript" >
     var summonerid = {{ summonerid|tojson }}
+    var summoner = {{ summoner|tojson }}
     stylesheet = document.styleSheets[0]
     stylesheet.insertRule("."+summonerid+"t {order:-1;}", 0);
     stylesheet.insertRule("."+summonerid+"w {background:#24a5ea;}", 0);
     stylesheet.insertRule("."+summonerid+"l {background:#ea3924;}", 0);
+    
 </script>
-<script type="text/javascript" src="/static/js/lb2000.js"></script>
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script>
+    window.jQuery || document.write('<script src="{{url_for('static', filename='jquery.js') }}">\x3C/script>')
+    $SCRIPT_ROOT = {{ request.script_root|tojson }};
+</script>
+<script type="text/javascript" src="/static/js/lb2000/main.js"></script>
+<script type="text/javascript" src="/static/js/lb2000/matchHistoryNew.js"></script>
+<script type="text/javascript" src="/static/js/lb2000/analysis.js"></script>
 {% endblock %}
 {% block body %}{% endblock %}
 {% block main%}
 <div class="centerdiv" >
-    <h1>LB 2000 </h1></br>
-    <form action="" method="post" novalidate>
-        {{ form.hidden_tag() }}
-        <p>{{ form.username.label }}: {{ form.username }} {{ form.region }}{{ form.submit }}</p>
-        {% if error %}
-        <p style="color:var(--error-color)">User doesnt exit, your bad</p>
-        {% endif %}
-    
+    <h1><a href='/lb2000'>LB 2000 </a></h1></br>
+    <form action="{{ url_for('lb2000.lb2000_index') }}" method='POST' class='flex flex-row mb-1' >
+        <input type="text" placeholder="Username (Default EUNE)"  class='w-1/4 rounded-lg h-8 text-center  mr-1' name='userName'>
+        <div>
+            <input type="submit" name='region' value="EUNE" class='rounded-lg p-1 hover:bg-gray-600 cursor-pointer active:bg-white w-12'>
+            <input type="submit" name='region' value="EUW" class='rounded-lg p-1 hover:bg-gray-600 cursor-pointer active:bg-white w-12'>
+            <input type="submit" name='region' value="KR" class='rounded-lg p-1 hover:bg-gray-600 cursor-pointer active:bg-white w-12'>
+            <input type="submit" name='region' value="NA" class='rounded-lg p-1 hover:bg-gray-600 cursor-pointer active:bg-white w-12'>
+            <input type="submit" name='region' value="BR" class='rounded-lg p-1 hover:bg-gray-600 cursor-pointer active:bg-white w-12'>
+            <input type="submit" name='region' value="LAN" class='rounded-lg p-1 hover:bg-gray-600 cursor-pointer active:bg-white w-12'>
+            <input type="submit" name='region' value="LAS" class='rounded-lg p-1 hover:bg-gray-600 cursor-pointer active:bg-white w-12'>
+            <input type="submit" name='region' value="OCE" class='rounded-lg p-1 hover:bg-gray-600 cursor-pointer active:bg-white w-12'>
+            <input type="submit" name='region' value="RU" class='rounded-lg p-1 hover:bg-gray-600 cursor-pointer active:bg-white w-12'>
+            <input type="submit" name='region' value="TR" class='rounded-lg p-1 hover:bg-gray-600 cursor-pointer active:bg-white w-12'>
+            <input type="submit" name='region' value="JA" class='rounded-lg p-1 hover:bg-gray-600 cursor-pointer active:bg-white w-12'>
+        </div>
     </form>
+    <div id='popular' class="flex flex-row gap-4">
+        {% for user in popular %}
+        <div >
+            <a href='/lb2000/{{ user['region'] }}/{{ user['summonerName'] }}'>
+                <p>{{ user['summonerName'] }}#{{ user['region'] }}</p>
+            </a>
+        </div>
+        {% endfor %}
+    </div>
     <h2>{{ summoner["name"] }}#{{ region }}</h2>
     <div id="user_info">
         {% set icon_url = "http://ddragon.leagueoflegends.com/cdn/12.1.1/img/profileicon/" + summoner["profileIconId"]|string + ".png" %}
@@ -65,176 +92,10 @@
         </ul>
     </div>
     <div id="contents">
-        <div id="masterydiv" class="mastery" style="height: 193px;  display: none;">
-            <h3>Total Mastery {{ total_mastery}}</h3>
-            <h3>Total mastery points {{ masterPoints }}k</h3>
-            <!-- TODO fix smaller informaion boxes-->
-            
-            {% for champ in mastery %}
-            {% set champname = champ_id_to_name[champ["championId"]]  %}
-            {% set icon_url = "http://ddragon.leagueoflegends.com/cdn/12.1.1/img/champion/" + champname + ".png" %}
-            {% set seconds = (timenow-(champ['lastPlayTime']/1000))|round %}
-            <div class="mcolumn">
-                <div class="mrow">
-                    <img src={{ icon_url }}  style="width: 60;">
-                </div>
-                <div class="mrow" >
-                    {% if champ['championPoints'] > 10000 %}
-                    <p>{{ (champ['championPoints']/1000)|int }}k({{ champ['championLevel'] }})</p>
-                    {% elif champ['championPoints'] > 1000 %}
-                    <p>{{ ((champ['championPoints']/100)|int)/10 }}k({{ champ['championLevel'] }})</p>
-                    {% else %}
-                    <p>{{ (champ['championPoints'])|int }}({{ champ['championLevel'] }})</p>
-                    {% endif %}
-                </div>
-                <div class="mrow" >
-                    <p>{{ (((seconds/86400)*10)|round)/10 }}d</p>
-                </div>
-            </div>
-
-            {% endfor %}
-        </div>
-        <div class="matchHistory flex flex-col" >
-            <div class="teamates">
-                <button onclick='showhideBtn([{{ summonerid|tojson }}, "runestree"], ["TOP","JUNGLE", "MIDDLE", "BOTTOM", "UTILITY"])' class="bg-gray-500 hover:bg-gray-600 focus:ring-4 focus:ring-gray-300 px-2 py-1 text-center mr-3 mb-3">Show only you</button>
-                <button onclick="showhideBtn(['TOP','JUNGLE', 'MIDDLE', 'BOTTOM', 'UTILITY'], ['runestree'])" class="bg-gray-500 hover:bg-gray-600 focus:ring-4 focus:ring-gray-300 px-2 py-1 text-center mr-3 mb-3">Show all</button>
-                <button onclick='showmatchup({{ summonerid|tojson }})'' class="bg-gray-500 hover:bg-gray-600 focus:ring-4 focus:ring-gray-300 px-2 py-1 text-center mr-3 mb-3"> Show matchup</button>
-            </div>
-            <button id="settings" class="bg-gray-500 hover:bg-gray-600 focus:ring-4 focus:ring-gray-300 px-2 py-1 text-center mr-3 mb-3" style="color: var(--error-color);" onclick="settingsBtn(this.id, true)">Stat settings</button>
-            <div class="text-xs settings hidden">
-                <div class="meta">
-                    <button id="game_creation" class="game_duration" onclick="settingsBtn(this.id, true)">Date</button>
-                    <button id="game_duration" class="gameMode" onclick="settingsBtn(this.id, true)">Length</button>
-                    <button id="gameMode" class="gameType" onclick="settingsBtn(this.id, true)">Game Mode</button>
-                    <button id="gameType" class="gameVersion" onclick="settingsBtn(this.id, false)">Game Type</button>
-                    <button id="gameVersion" class="" onclick="settingsBtn(this.id, false)">Game Version</button>
-                    </div>
-                <div class="playerdiv">
-                    <div class="champion">
-                        <button id="champ" class="champ" onclick="settingsBtn(this.id, true)">Champion Images</button>
-                        <button id="lvl" class="lvl" onclick="settingsBtn(this.id, true)">Levels</button>
-                        <button id="kda" class="kda" onclick="settingsBtn(this.id, true)">kda</button>
-                        <button id="kdacalc" class="kdacalc" onclick="settingsBtn(this.id, true)">kda avg</button>
-                        <button id="keystone" class="keystone" onclick="settingsBtn(this.id, true)">keystone</button>
-                        <button id="runestree" class="runestree" onclick="settingsBtn(this.id, true)">runes</button>
-                        <button id="items" class="items" onclick="settingsBtn(this.id, true)">Items</button>
-                    </div>
-                    <div class="detaildiv">
-                        <div class="multikills">
-                            <button id="pentaKills" class="pentaKills" onclick="settingsBtn(this.id, false)">pentaKills</button>
-                            <button id="unrealkills" class="unrealkills" onclick="settingsBtn(this.id, false)">unrealkills</button>
-                            <button id="doubleKills" class="doubleKills" onclick="settingsBtn(this.id, false)">doubleKills</button>
-                            <button id="largestCriticalStrike" class="largestCriticalStrike" onclick="settingsBtn(this.id, true)">largestCriticalStrike</button>
-                            <button id="largestMultiKill" class="largestMultiKill" onclick="settingsBtn(this.id, false)">largestMultiKill</button>
-                            <button id="largestKillingSpree" class="largestKillingSpree" onclick="settingsBtn(this.id, false)">largestKillingSpree</button>
-                            <button id="quadraKills" class="quadraKills" onclick="settingsBtn(this.id, false)">quadraKills</button>
-                            <button id="totalTimeSpentDead" class="totalTimeSpentDead" onclick="settingsBtn(this.id, true)">totalTimeSpentDead</button>
-                            <button id="tripleKills" class="tripleKills" onclick="settingsBtn(this.id, false)">tripleKills</button>
-                            <button id="longestTimeSpentLiving" class="longestTimeSpentLiving" onclick="settingsBtn(this.id, false)">longestTimeSpentLiving</button>
-                            <button id="killingSprees" class="killingSprees" onclick="settingsBtn(this.id, false)">killingSprees</button>
-                        </div>
-                        <div class="stats">
-                            <button id="spell4Casts" class="spell4Casts" onclick="settingsBtn(this.id, false)">spell4Casts</button>
-                            <button id="summoner2Casts" class="summoner2Casts" onclick="settingsBtn(this.id, false)">summoner2Casts</button>
-                            <button id="spell3Casts" class="spell3Casts" onclick="settingsBtn(this.id, true)">spell3Casts</button>
-                            <button id="goldEarned" class="goldEarned" onclick="settingsBtn(this.id, false)">goldEarned</button>
-                            <button id="itemsPurchased" class="itemsPurchased" onclick="settingsBtn(this.id, false)">itemsPurchased</button>
-                            <button id="summoner1Casts" class="summoner1Casts" onclick="settingsBtn(this.id, false)">summoner1Casts</button>
-                            <button id="spell1Casts" class="spell1Casts" onclick="settingsBtn(this.id, false)">spell1Casts</button>
-                            <button id="goldSpent" class="goldSpent" onclick="settingsBtn(this.id, false)">goldSpent</button>
-                            <button id="spell2Casts" class="spell2Casts" onclick="settingsBtn(this.id, false)">spell2Casts</button>
-                        </div>
-                        <div class="support">
-                            <button id="totalHealsOnTeammates" class="totalHealsOnTeammates" onclick="settingsBtn(this.id, false)">totalHealsOnTeammates</button>
-                            <button id="totalDamageShieldedOnTeammates" class="totalDamageShieldedOnTeammates" onclick="settingsBtn(this.id, false)">totalDamageShieldedOnTeammates</button>
-                            <button id="totalHeal" class="totalHeal" onclick="settingsBtn(this.id, true)">totalHeal</button>
-                            <button id="totalTimeCCDealt" class="totalTimeCCDealt" onclick="settingsBtn(this.id, false)">totalTimeCCDealt</button>
-                            <button id="timeCCingOthers" class="timeCCingOthers" onclick="settingsBtn(this.id, false)">timeCCingOthers</button>
-                        </div>
-                        <div class="damage">
-                            <button id="trueDamageDealt" class="trueDamageDealt" onclick="settingsBtn(this.id, false)">trueDamageDealt</button>
-                            <button id="magicDamageDealt" class="magicDamageDealt" onclick="settingsBtn(this.id, false)">magicDamageDealt</button>
-                            <button id="trueDamageTaken" class="trueDamageTaken" onclick="settingsBtn(this.id, true)">trueDamageTaken</button>
-                            <button id="totalDamageDealt" class="totalDamageDealt" onclick="settingsBtn(this.id, false)">totalDamageDealt</button>
-                            <button id="magicDamageDealtToChampions" class="magicDamageDealtToChampions" onclick="settingsBtn(this.id, false)">magicDamageDealtToChampions</button>
-                            <button id="physicalDamageDealt" class="physicalDamageDealt" onclick="settingsBtn(this.id, false)">physicalDamageDealt</button>
-                            <button id="totalDamageDealtToChampions" class="totalDamageDealtToChampions" onclick="settingsBtn(this.id, false)">totalDamageDealtToChampions</button>
-                            <button id="damageDealtToTurrets" class="damageDealtToTurrets" onclick="settingsBtn(this.id, false)">damageDealtToTurrets</button>
-                            <button id="totalDamageTaken" class="totalDamageTaken" onclick="settingsBtn(this.id, false)">totalDamageTaken</button>
-                            <button id="physicalDamageDealtToChampions" class="physicalDamageDealtToChampions" onclick="settingsBtn(this.id, false)">physicalDamageDealtToChampions</button>
-                            <button id="physicalDamageTaken" class="physicalDamageTaken" onclick="settingsBtn(this.id, false)">physicalDamageTaken</button>
-                        </div>
-                        <div class="events">
-                            <button id="firstTowerAssist" class="firstTowerAssist" onclick="settingsBtn(this.id, false)">firstTowerAssist</button>
-                            <button id="firstTowerKill" class="firstTowerKill" onclick="settingsBtn(this.id, false)">firstTowerKill</button>
-                            <button id="turretsLost" class="turretsLost" onclick="settingsBtn(this.id, false)">turretsLost</button>
-                            <button id="firstBloodAssist" class="firstBloodAssist" onclick="settingsBtn(this.id, false)">firstBloodAssist</button>
-                            <button id="turretKills" class="turretKills" onclick="settingsBtn(this.id, false)">turretKills</button>
-                            <button id="inhibitorKills" class="inhibitorKills" onclick="settingsBtn(this.id, false)">inhibitorKills</button>
-                            <button id="firstBloodKill" class="firstBloodKill" onclick="settingsBtn(this.id, false)">firstBloodKill</button>
-                            <button id="inhibitorsLost" class="inhibitorsLost" onclick="settingsBtn(this.id, false)">inhibitorsLost</button>
-                        </div>
-                        <div class="objectives">
-                            <button id="objectivesStolenAssists" class="objectivesStolenAssists" onclick="settingsBtn(this.id, false)">objectivesStolenAssists</button>
-                            <button id="baronKills" class="baronKills" onclick="settingsBtn(this.id, false)">baronKills</button>
-                            <button id="cspermin" class="cspermin" onclick="settingsBtn(this.id, false)">cspermin</button>
-                            <button id="totalMinionsKilled" class="totalMinionsKilled" onclick="settingsBtn(this.id, false)">totalMinionsKilled</button>
-                            <button id="dragonKills" class="dragonKills" onclick="settingsBtn(this.id, false)">dragonKills</button>
-                            <button id="neutralMinionsKilled" class="neutralMinionsKilled" onclick="settingsBtn(this.id, false)">neutralMinionsKilled</button>
-                            <button id="objectivesStolen" class="objectivesStolen" onclick="settingsBtn(this.id, false)">objectivesStolen</button>
-                        </div>
-                        <div class="vision">
-                            <button id="visionScore" class="visionScore" onclick="settingsBtn(this.id, false)">visionScore</button>
-                            <button id="detectorWardsPlaced" class="detectorWardsPlaced" onclick="settingsBtn(this.id, false)">detectorWardsPlaced</button>
-                            <button id="wardsPlaced" class="wardsPlaced" onclick="settingsBtn(this.id, true)">wardsPlaced</button>
-                            <button id="sightWardsBoughtInGame" class="sightWardsBoughtInGame" onclick="settingsBtn(this.id, false)">sightWardsBoughtInGame</button>
-                            <button id="visionWardsBoughtInGame" class="visionWardsBoughtInGame" onclick="settingsBtn(this.id, false)">visionWardsBoughtInGame</button>
-                            <button id="wardsKilled" class="wardsKilled" onclick="settingsBtn(this.id, false)">wardsKilled</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div id="match_history" class="flex flex-col items-start" >
-                <!--<div class="height-0 border-gray-800 border-t-0"></div>-->
-                {% for match in match_history %}
-                    <div id="{{ match }}"><p>Loading match</p></div>
-                {% endfor %}
-            </div>
-        </div>
-        <div class="MMR hidden">
-            <ul class="mb-8">
-                <li>
-                    <h2>SoloQ</h2>
-                    {% if mmr['soloq']['elo'] %}
-                        <p>Elo: {{ mmr['soloq']['elo'] }} ±{{ mmr['soloq']['err'] }}</p>
-                        <p>Rank: {{ mmr['soloq']['percentile'] }} {{ mmr['soloq']['closestRank'] }}</p>
-
-                    {% else %}
-                        <p>There is no data</p>
-                    {% endif %}
-                </li>
-                <li>
-                    <h2>Normals</h2>
-                    {% if mmr['normals']['elo'] %}
-                        <p>Elo: {{ mmr['normals']['elo'] }} ±{{ mmr['soloq']['err'] }}</p>
-                        <p> Rank:  {{ mmr['normals']['percentile'] }} {{ mmr['normals']['closestRank'] }}</p>
-
-                    {% else %}
-                        <p>There is no data</p>
-                    {% endif %}
-                </li>
-                <li>
-                    <h2>ARAM</h2>
-                    {% if mmr['aram']['elo'] %}
-                        <p>Elo: {{ mmr['aram']['elo'] }} ±{{ mmr['soloq']['err'] }}</p>
-                        <p>Rank: {{ mmr['aram']['percentile'] }} {{ mmr['aram']['closestRank'] }} </p>
-
-                    {% else %}
-                        <p>There is no data</p>
-                    {% endif %}
-                </li>
-            </ul>
-            <a href={{"https://eune.whatismymmr.com/"~summoner["name"]}} target='#' class='hover:text-gray-800'>Data is gather from WhatIsMyMMR public API</a>
+        {% include 'lb2000/categories/matchHistory.html' %}
+        {% include 'lb2000/categories/mastery.html' %}
+        {% include 'lb2000/categories/mmr.html' %}
+        {% include 'lb2000/categories/analysis.html' %}
         </div>
     </div>
 </div>

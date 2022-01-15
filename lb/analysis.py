@@ -3,7 +3,7 @@ import time
 import datetime
 from pprint import pprint
 from pymongo import MongoClient
-import ..blueprints
+from threading import Thread
 
 from seasonsSplits import seasonsDates
 from queueId import queueIdConverter
@@ -40,58 +40,96 @@ from api_calls import *
 # avg = avgold +(valuenew+avgold)/newsize
 
 
+def multiDetails(puuid, region_large, api_key):
+    thread = Thread(target=get_details, args=(puuid, region_large, api_key))
+    thread.start()
+
 def get_details(puuid, region_large, api_key):
-    # downloading and inserting matches into mongodb
-    matchesAmount = get_allMatches(puuid, region_large, api_key)
-    updateUserDetails(puuid, matchesAmount)
-
-
-def get_allMatches(puuid, region_large, api_key):
-    matches = get_MatchHistory(puuid, region_large, api_key)
-    matchesClean = []
-    lastResult = False
-    streak = 0
-    time0 = 1
-    for matchId in matches:
-        #print('game:', matchId, round(100*matches.index(matchId))/len(matches))
-        # TODO skip already analysed matches
-        match, lastResult, streak = call(
-            (insertMatch), (region_large, matchId, puuid, lastResult, streak, api_key))
-        if match:
-            matchesClean.append(match)
-        time.sleep(1)
-        print(matches.index(matchId), round(matches.index(
-            matchId)*100/len(matches)), time.time()-time0)
-        time0 = time.time()
-
     client = MongoClient('localhost', 27017)
     db = client.loldetails
     collection = db[puuid]
-    collection.insert_many(matchesClean)
-    return len(matches)
+    meta = list(collection.find({'type':'meta'}))
+    downloadedMatches = len(list(collection.find({'type':'game'})))
+    matches = get_MatchHistory(puuid, region_large, api_key)
+    if meta == []: 
+        meta = {
+                    'type' : 'meta',
+                    'latestTime' : time.time(),
+                    'downloadedMatchesAmount' : downloadedMatches,
+                    'totalMatchesAmount' : len(matches),
+                    'analazyedMatchesAmount' : 0,
+                    'brokenMatchesAmount' : 0
+                }
+        collection.insert(meta)
+    else:
+        meta = meta[0]
+
+
+    newMatchesAmount = len(matches)-downloadedMatches-meta['brokenMatchesAmount']
+    print('there have already been analyzed matches. New matches :', newMatchesAmount)
+
+    if 0 == newMatchesAmount:
+        print('no new matches returning')
+        return 
+    matches = matches[meta['downloadedMatchesAmount']:]
+
+    if meta['downloadedMatchesAmount'] != meta['totalMatchesAmount']:
+         get_allMatches(puuid, region_large, api_key, matches)
+
+    if meta['analazyedMatchesAmount'] != meta['totalMatchesAmount']:
+        updateUserDetails(puuid)
 
 
 def get_MatchHistory(puuid, region_large, api_key):
     matches = []
     index = 0
     while True:
-        #FIXME get call !!
-        tempmatch = call(get_match_history, (puuid, api_key,index*100, '100')).json()
+        tempmatch = get_match_history(region_large, puuid, api_key, index*100, '100')
         print('matches length', len(matches))
         if len(tempmatch) == 0:
             print
             break
         matches.extend(tempmatch)
         index += 1
-        time.sleep(1)
-        break
+        time.sleep(0.5)
     matches.reverse()
     return matches
 
 
+def get_allMatches(puuid, region_large, api_key, matches):
+    lastResult = False
+    streak = 0
+    time0 = 1
+
+    client = MongoClient('localhost', 27017)
+    db = client.loldetails
+    collection = db[puuid]
+
+    meta = list(collection.find({'type':'meta'}))[0]
+    for matchId in matches:
+        #print('game:', matchId, round(100*matches.index(matchId))/len(matches))
+        match, lastResult, streak = insertMatch(region_large, matchId, puuid, lastResult, streak, api_key)
+        if match and len(list(collection.find({'type':'game', 'id':matchId}))) == 0:
+            collection.insert_one(match)
+        elif not match:
+            print('broken match')
+            meta['brokenMatchesAmount'] += 1
+
+        time.sleep(1)
+        print('matchdownload progress: ', matches.index(matchId), round(matches.index(
+            matchId)*100/len(matches)), time.time()-time0, puuid)
+        time0 = time.time()
+
+        meta['latestTime'] = time.time()
+        meta['downloadedMatchesAmount'] = meta['downloadedMatchesAmount']+1
+        collection.update({'type' : 'meta'}, meta, True)
+    return meta['downloadedMatchesAmount']
+
+
+
 def insertMatch(region_large, matchId, puuid, lastResult, streak, api_key):
     #print('match url', url, )
-    response = call(get_match, (region_large, matchId, api_key)).json()
+    response = get_match(region_large, matchId, api_key)
     while 'info' not in response.keys():
         print('error', response['status'], matchId)
         if response['status']['status_code'] == 404:
@@ -99,8 +137,7 @@ def insertMatch(region_large, matchId, puuid, lastResult, streak, api_key):
             return False, lastResult, streak
 
         print('error or rate limited pulling out')
-        time.sleep(120)
-        response = requests.get(url, params=params).json()
+        return False
     # print(response)
     player = next(
         item for item in response['info']['participants'] if item["puuid"] == puuid)
@@ -108,6 +145,7 @@ def insertMatch(region_large, matchId, puuid, lastResult, streak, api_key):
     response['info']['participants'].remove(player)
     res = {
         'type': 'game',
+        'id' : matchId,
         'gameMode': response['info']['gameMode'],
         'gameType': response['info']['gameType'],
         'queueId': response['info']['queueId'],
@@ -195,38 +233,40 @@ def insertMatch(region_large, matchId, puuid, lastResult, streak, api_key):
     return res, player['win'], streak
 
 
-def updateUserDetails(puuid, matchesAmount):
+def updateUserDetails(puuid):
     client = MongoClient('localhost', 27017)
     db = client.loldetails
     collection = db[puuid]
+    meta = collection.find({'type' : 'meta'})[0]
+    meta['latestTime'] = time.time()
     details = analyzeMatches(collection, {'type': 'game'})
-    retCollection = db['DONE'+puuid]
-    retCollection.replace_one({'type' : 'details'}, details)
-    meta = {
-        'type' : 'meta',
-        'latestTime' : time.time(),
-        'matchesAmount' : matchesAmount
-    }
-    retCollection.insert( meta)
+    collection.update({'type' : 'wr'}, details, True)
+    meta['analazyedMatchesAmount'] = meta['downloadedMatchesAmount']
+    print('update analyzed match', meta['downloadedMatchesAmount'])
+    collection.update({'type' : 'meta'}, meta, True)
 
 
 def analyzeMatches(collection, query):
     res = {
-        'type' : 'details'
+        'type' : 'wr'
     }
     res['wr'] = analyzeWR(collection, query)
+    print('wr alnalyze complete')
     res['timeOfDay'] = analyzeTimeOfDay(collection,query)
+    print('time of dayalnalyze complete')
     return res
 
 
 def analyzeWR(collection, query):
     res = {
+        'total' : 0,
         'wins': 0,
         'losses': 0
     }
     for queueType in queueIdConverter.keys():
         query['queueId'] = int(queueType)
         queueTypeDict = {
+            'total' : 0,
             'wins': 0,
             'losses': 0
         }
@@ -234,6 +274,7 @@ def analyzeWR(collection, query):
         for teamPosition in ['MIDDLE', 'TOP', 'JUNGLE', 'BOTTOM', 'UTILITY', '']:
             query['teamPosition'] = teamPosition
             teamPositionDict = {
+                'total' : 0,
                 'wins': 0,
                 'losses': 0
                 }
@@ -248,6 +289,7 @@ def analyzeWR(collection, query):
                 queueTypeDict['wins'] += wins
                 teamPositionDict['wins'] += wins
                 res['wins'] += wins
+
                 query['win'] = False
                 losses = collection.find(query).count()
                 teamPositionDict[champ]['losses'] = losses
@@ -255,7 +297,11 @@ def analyzeWR(collection, query):
                 teamPositionDict['losses'] += losses
                 res['losses'] += losses
 
-            queueTypeDict[champ] = teamPositionDict
+                teamPositionDict[champ]['total'] = (losses+wins)
+                queueTypeDict['total'] += (losses+wins)
+                teamPositionDict['total'] += (losses+wins)
+                res['total'] += (losses+wins)
+            queueTypeDict[teamPosition] = teamPositionDict
         res[queueIdConverter[queueType]] = queueTypeDict
 
     #print(res['wins'], res['losses'])
@@ -298,7 +344,7 @@ def analyzeTimeOfDay(collection, query):
 
 
 if __name__ == '__main__':
-    get_allMatches('3VCS6KTBoaESKYP4ZMpUiBY-sTRJ27gLwjbyWlpNotMgrj_NRWSxWVYwcQPKWxA_ZJtcL49vrGe35g', 'EUROPE', 'RGAPI-8ecdf5ca-c236-4566-adda-bd355002807b')
+    #get_allMatches('3VCS6KTBoaESKYP4ZMpUiBY-sTRJ27gLwjbyWlpNotMgrj_NRWSxWVYwcQPKWxA_ZJtcL49vrGe35g', 'EUROPE', )
     #updateUserDetails('3VCS6KTBoaESKYP4ZMpUiBY-sTRJ27gLwjbyWlpNotMgrj_NRWSxWVYwcQPKWxA_ZJtcL49vrGe35g', 100)
-    #get_details('3VCS6KTBoaESKYP4ZMpUiBY-sTRJ27gLwjbyWlpNotMgrj_NRWSxWVYwcQPKWxA_ZJtcL49vrGe35g', 'EUROPE', riot_api_key)
+    get_details('3VCS6KTBoaESKYP4ZMpUiBY-sTRJ27gLwjbyWlpNotMgrj_NRWSxWVYwcQPKWxA_ZJtcL49vrGe35g', 'EUROPE', 'RGAPI-ebe09c71-4d3e-4de2-ac7a-affc9b730f04')
     #analyzeMatches()

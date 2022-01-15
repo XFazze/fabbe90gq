@@ -4,6 +4,6 @@ from wtforms.validators import DataRequired
 regions = ["eun1","euw1","BR1",  "JP1", "KR", "LA1", "LA2", "NA1", "OC1", "RU", "TR1"]
 large_regions = ["EUROPE", "AMERICAS", "ASIA"]
 class lb2000_getuser(FlaskForm):
-    username = StringField('Username', validators=[DataRequired()])
+    username = StringField('Username', validators=[DataRequired()], render_kw={"placeholder": "Username"})
     region = SelectField('Region', validators=[DataRequired()], choices = regions)
     submit = SubmitField('Get profile')

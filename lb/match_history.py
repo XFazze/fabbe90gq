@@ -6,6 +6,9 @@ import os
 from datetime import datetime
 from threading import Thread
 from ratelimit import limits
+from queueId import *
+
+#TODO put boots always on most right item slot
 
 def jsonconvert(json_match, runeIdToName):
 # game meta
@@ -16,6 +19,7 @@ def jsonconvert(json_match, runeIdToName):
     ret_json["meta"]["gameDuration"] = json_match["info"]["gameDuration"]
     ret_json["meta"]["gameMode"] = json_match["info"]["gameMode"]
     ret_json["meta"]["gameType"] = json_match["info"]["gameType"]
+    ret_json["meta"]["queueId"] = queueIdConverter[str(json_match["info"]["queueId"])]
     ret_json["meta"]["gameVersion"] = json_match["info"]["gameVersion"]
 
     for player in json_match["info"]["participants"]:
@@ -225,8 +229,9 @@ def generate_html(match_json, region):
         str(round(match_json['meta']['gameDuration']/6)/10) + 'm', Class='game_duration')
     gamemode = tf.p(match_json['meta']['gameMode'], Class='gameMode')
     gameType = tf.p(match_json['meta']['gameType'], Class='gameType')
+    queueId = tf.p(match_json['meta']['queueId'], Class='queueId')
     gameVersion = tf.p(match_json['meta']['gameVersion'], Class='gameVersion')
-    meta = tf.DIV([gameCreation, gameduration, gamemode,
+    meta = tf.DIV([gameCreation, gameduration, queueId, gamemode,
                   gameType,  gameVersion], Class='meta w-20')
 
     matchups = {'TOP_matchup_100': 0,
@@ -397,4 +402,4 @@ def download_matches(match_history, region, api_key, runeIdToName, region_conver
 
         with open(path, 'w+') as f:
             f.write(str(div))
-            print('saved to', path)
+            #print('saved to', path)

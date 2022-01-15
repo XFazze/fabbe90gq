@@ -4,7 +4,9 @@
   variants: {
     extend: {
       display: ['hover'],
-    }
+    }, 
+    height: {
+      'fit-content': 'fit-content'
   },
     theme: {
       extend: {

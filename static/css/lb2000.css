@@ -130,6 +130,9 @@ textarea {
 .gameType {
   display: none;
 }
+.gameMode {
+  display: none;
+}
 .gameVersion {
   display: none;
 }
