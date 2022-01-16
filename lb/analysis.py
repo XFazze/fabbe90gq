@@ -330,6 +330,7 @@ def analyzeWR(collection, query):
 
 
 def analyzeTimeOfDay(collection, query):
+    #FIXME broken
     res = {
         'wins': 0,
         'losses': 0

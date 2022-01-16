@@ -12,6 +12,7 @@ $(function () {
         async: false,
         success: function(data) {
             $("#" + game).html(data);
+            $('.'+summonerid).show()
         },
     });
   });

@@ -1,3 +1,4 @@
+
 $(function () {
   // on load
   WR();
@@ -438,10 +439,10 @@ function timeOfDay(data){//FIXME all hours are the same
         continue;
       }
       // loops throught every game mode
-      losses += value["losses"];
-      wins += value["wins"];
-      total += value["total"];
-      console.log('lwt', losses,wins,total, index, gamemode)
+      losses += value[index]["losses"];
+      wins += value[index]["wins"];
+      total += value[index]["wins"]+value[index]["losses"];
+      console.log('lwt', losses,wins,total, index, gamemode,value)
     }
     $("#timeOfDayTable").append(`
         <tr id='hour${index}' class='shadow-lg bg-white'>

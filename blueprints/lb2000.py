@@ -29,6 +29,9 @@ lb2000 = Blueprint('lb2000', __name__)
 
 #TODO redo get matches by saving raw matchdata in mongodb and reqiuesting with ajax
 
+#TODO cache more summonerdata
+
+
 
 @lb2000.route("/", methods=['GET', 'POST'])
 @lb2000.route("/<region>/<summonername>", methods=['GET', 'POST'])
@@ -86,6 +89,8 @@ def ajax_wr():
         print('cant find wr for puuid: ', puuid)
         return '0'
     return json.loads(json_util.dumps(wr[0]))
+
+    
 
 
 @lb2000.route("/progress", methods=['GET', 'POST'])
