@@ -1,9 +1,9 @@
 :root {
   --bg-color: #026670 !important;
-  --main-color: #fce181 !important;
-  --sub-color: #fef9c7 !important;
-  --text-color: #9fedd7 !important;
-  --error-color: #da3333 !important;
+  --main-color: rgb(24, 24, 24) !important;
+  --sub-color: rgb(48, 48, 48) !important;
+  --text-color: rgb(24, 24, 24) !important;
+  --error-color: rgb(24, 24, 24) !important;
 } /*
 :root{
     --bg-color: #ff007d !important;
@@ -36,6 +36,15 @@ button {
   text-decoration: none;
   color: var(--text-color);
 }
+.nicebutton{
+  font-family: var(--main-font);
+  text-decoration: none;
+  color: #000;
+  border-radius: 0.5rem;
+  padding: 0.25rem;
+  background-color: rgb(229 231 235);
+  cursor: pointer;
+}
 .centerdiv pre {
   font-family: var(--main-font);
   color: var(--text-color);
@@ -47,7 +56,6 @@ button {
   width: 60px;
   float: left;
   height: 150px;
-  background-color: var(--bg-color);
 }
 .mrow {
   text-align: center;
@@ -206,17 +214,18 @@ textarea {
 .settings button {
   display: block !important;
   width: min-content;
-  background-color: var(--bg-color);
-  border: none;
-  border-radius: 4px;
-  filter: brightness(1.25);
   margin: 0.2%;
   white-space: nowrap;
+  float: left;
 }
 .settings > div {
   display: flex !important;
   flex-direction: column;
   gap: 0;
+}
+.multikills{
+  display: flex;
+  flex-direction: column;
 }
 /* meta buttons */
 .meta button {

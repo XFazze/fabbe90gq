@@ -1,8 +1,8 @@
-<div id="masterydiv" class="mastery" style="height: 193px;  display: none;">
+<div id="masterydiv" class="mastery hidden" >
     <h3>Total Mastery {{ total_mastery}}</h3>
     <h3>Total mastery points {{ masterPoints }}k</h3>
     <!-- TODO fix smaller informaion boxes-->
-    
+    <div class='flex flex-row flex-wrap'>
     {% for champ in mastery %}
     {% set champname = champ_id_to_name[champ["championId"]]  %}
     {% set icon_url = "http://ddragon.leagueoflegends.com/cdn/12.1.1/img/champion/" + champname + ".png" %}
@@ -26,4 +26,5 @@
     </div>
 
     {% endfor %}
+    </div>  
 </div>

@@ -17,10 +17,17 @@ lb2000 = Blueprint('lb2000', __name__)
 #TODO connect accounts by verifying with pfp
 #TODO player Tags
 # champs player wr for champs/length
-#TODO amont+wr of total, gamemode, role, champ
-#TODO graph
+#TODO timeframes in analysis
 
+#TODO Live game viewing
 
+#TODO Lp graph search every night
+
+#TODO summoner top champ background
+
+#TODO get live lobby/game
+
+#TODO redo get matches by saving raw matchdata in mongodb and reqiuesting with ajax
 
 
 @lb2000.route("/", methods=['GET', 'POST'])
@@ -64,8 +71,8 @@ def returnprofile(summonername, region, popular):
         for i in mastery:
             i["championId"] = str(i["championId"])
         print('profile success')
-        return render_template('lb2000/lb2000_base.html', summoner=summoner, region=region, mastery=mastery, total_mastery=total_mastery, champ_id_to_name=champ_id_to_name, timenow=timenow, ranks=ranks, form=form,
-                      match_history=match_history, region_large=region_large, summonerid=str(summoner['id']),  masterPoints=masterPoints, popular=popular)
+        return render_template('lb2000/lb2000_base.html', summoner=summoner, region=region, region_large=region_large, niceRegion=regionConverter4[region], mastery=mastery, total_mastery=total_mastery, champ_id_to_name=champ_id_to_name, timenow=timenow, ranks=ranks, form=form,
+                      match_history=match_history, summonerid=str(summoner['id']),  masterPoints=masterPoints, popular=popular)
 
 @lb2000.route("/wr", methods=['GET', 'POST'])
 def ajax_wr():
@@ -77,7 +84,7 @@ def ajax_wr():
 
     if len(wr) == 0:
         print('cant find wr for puuid: ', puuid)
-        return 'no wr'
+        return '0'
     return json.loads(json_util.dumps(wr[0]))
 
 
@@ -91,7 +98,7 @@ def ajax_progress():
 
     if len(doc) == 0:
         print('cant find wr for puuid: ', puuid)
-        return 'no doc'
+        return '0'
     return json.loads(json_util.dumps(doc[0]))
 
 @lb2000.route("/match", methods=['GET', 'POST'])

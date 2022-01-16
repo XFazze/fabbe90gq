@@ -1,0 +1,96 @@
+<head>
+    {% block link %}{% endblock %}
+    <link rel="shortcut icon" href="/static/favicon.ico">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&family=Roboto+Mono&display=swap" rel="stylesheet">
+  
+    <title>Fabbe90.gq</title>
+</head>
+<style>
+:root{
+    --bg-color: #212121;
+    --main-color: #feff04;
+    --sub-color: #5c4a9c;
+    --text-color: #e8e8e8;
+    --error-color: #da3333;
+    --main-font:'Roboto', sans-serif;
+    --title-font:'Roboto Mono', monospace;
+}
+#main{
+    max-width: 1000px;
+    display: grid;
+    grid-auto-flow: row;
+    gap: 2rem;
+    align-items: center;
+    grid-template-rows: auto 1fr auto;
+    width: 100%;
+}
+</style>
+
+
+<body style="display: flex;justify-content: center;" class='bg-gray-300' {% block body %}{% endblock %}>
+
+    <div id="main">
+        {% block main %}
+        {% endblock %}
+    </div>
+
+    <div id="contact">
+        <div class='contactcontainer'>
+        <a href="https://github.com/XFazze" target="_blank" ><img src='/static/pics/GitHub-Mark-32px.png'></a>
+        </div>
+        <div class='contactcontainer' id='emailcontainer'>
+            <a id="email" href="#" onclick="copy('me@fabbe90.gq')">&nbsp;me@fabbe90.gq</a>
+        </div>
+        <div class='contactcontainer'>
+        <img src='/static/pics/pngwing.png' id="copySymbol" >
+        </div>
+    </div>
+</body>
+
+
+<script>
+    function copy(text){
+    navigator.clipboard.writeText(text);
+    copySymbol = document.getElementById('copySymbol');
+    copySymbol.style.display = 'block'
+    copySymbol.classList.toggle('transition');
+    console.log('add');
+    interval = setInterval(removeclass, 1000);
+    function removeclass(){
+        copySymbol.classList.toggle('transition');
+        console.log('removein');
+        clearInterval(interval)};
+};
+</script>
+<style>
+    #contact{
+        display: flex;
+        position: fixed;
+        bottom: 1%;
+        left: 1%;
+    }
+    #contact  img{
+        width: 32px;
+        height: 32px;
+    }
+    #email{
+    position: absolute;
+    text-decoration: none;
+    color:var(--main-color);
+    font-size: 22px;
+    font-family: var(--main-font);
+    }
+    #copySymbol{
+        margin-left: 170px;
+        opacity: 0;
+        transition: all .2s ease-out;
+        margin:0;
+    }
+    #copySymbol.transition{
+        opacity: 1;
+    }
+    #emailcontainer{
+        width: 170px;
+    }
+</style>

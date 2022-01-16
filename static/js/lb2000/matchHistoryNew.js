@@ -1,6 +1,6 @@
 $(function () {
   const divIds = $.map($("#match_history > div"), (div) => div.id);
-  console.log(divIds);
+  //console.log(divIds);
   divIds.forEach((game) => {
     $.ajax({
         type: 'GET', 

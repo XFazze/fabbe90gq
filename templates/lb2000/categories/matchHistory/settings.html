@@ -1,0 +1,94 @@
+<div class="text-xs settings hidden">
+    <div class="meta">
+        <button class='bg-gray-400 ' id="game_creation" class="game_duration" onclick="settingsBtn(this.id, true)">Date</button>
+        <button class='bg-gray-400 ' id="game_duration" class="gameMode" onclick="settingsBtn(this.id, true)">Length</button>
+        <button class='' id="gameMode" class="gameType" onclick="settingsBtn(this.id, true)">Game Mode</button>
+        <button class='' id="gameType" class="gameVersion" onclick="settingsBtn(this.id, false)">Game Type</button>
+        <button class='' id="gameVersion" class="" onclick="settingsBtn(this.id, false)">Game Version</button>
+        <button class='bg-gray-400' id="queueId" class="" onclick="settingsBtn(this.id, false)">Queue Id</button>
+        </div>
+    <div class="playerdiv">
+        <div class="champion">
+            <button class='bg-gray-400' id="champ" class="champ" onclick="settingsBtn(this.id, true)">Champion Images</button>
+            <button class='bg-gray-400' id="lvl" class="lvl" onclick="settingsBtn(this.id, true)">Levels</button>
+            <button class='bg-gray-400' id="kda" class="kda" onclick="settingsBtn(this.id, true)">kda</button>
+            <button class='bg-gray-400' id="kdacalc" class="kdacalc" onclick="settingsBtn(this.id, true)">kda avg</button>
+            <button class='bg-gray-400' id="keystone" class="keystone" onclick="settingsBtn(this.id, true)">keystone</button>
+            <button class='bg-gray-400' id="runestree" class="runestree" onclick="settingsBtn(this.id, true)">runes</button>
+            <button class='bg-gray-400' id="items" class="items" onclick="settingsBtn(this.id, true)">Items</button>
+        </div>
+        <div class="detaildiv">
+            <div class="multikills">
+                <button class='' id="pentaKills" class="pentaKills" onclick="settingsBtn(this.id, false)">pentaKills</button>
+                <button class='' id="unrealkills" class="unrealkills" onclick="settingsBtn(this.id, false)">unrealkills</button>
+                <button class='' id="doubleKills" class="doubleKills" onclick="settingsBtn(this.id, false)">doubleKills</button>
+                <button class='' id="largestCriticalStrike" class="largestCriticalStrike" onclick="settingsBtn(this.id, true)">largestCriticalStrike</button>
+                <button class='' id="largestMultiKill" class="largestMultiKill" onclick="settingsBtn(this.id, false)">largestMultiKill</button>
+                <button class='' id="largestKillingSpree" class="largestKillingSpree" onclick="settingsBtn(this.id, false)">largestKillingSpree</button>
+                <button class='' id="quadraKills" class="quadraKills" onclick="settingsBtn(this.id, false)">quadraKills</button>
+                <button class='' id="totalTimeSpentDead" class="totalTimeSpentDead" onclick="settingsBtn(this.id, true)">totalTimeSpentDead</button>
+                <button class='' id="tripleKills" class="tripleKills" onclick="settingsBtn(this.id, false)">tripleKills</button>
+                <button class='' id="longestTimeSpentLiving" class="longestTimeSpentLiving" onclick="settingsBtn(this.id, false)">longestTimeSpentLiving</button>
+                <button class='' id="killingSprees" class="killingSprees" onclick="settingsBtn(this.id, false)">killingSprees</button>
+            </div>
+            <div class="stats">
+                <button class='' id="spell4Casts" class="spell4Casts" onclick="settingsBtn(this.id, false)">spell4Casts</button>
+                <button class='' id="summoner2Casts" class="summoner2Casts" onclick="settingsBtn(this.id, false)">summoner2Casts</button>
+                <button class='' id="spell3Casts" class="spell3Casts" onclick="settingsBtn(this.id, true)">spell3Casts</button>
+                <button class='' id="goldEarned" class="goldEarned" onclick="settingsBtn(this.id, false)">goldEarned</button>
+                <button class='' id="itemsPurchased" class="itemsPurchased" onclick="settingsBtn(this.id, false)">itemsPurchased</button>
+                <button class='' id="summoner1Casts" class="summoner1Casts" onclick="settingsBtn(this.id, false)">summoner1Casts</button>
+                <button class='' id="spell1Casts" class="spell1Casts" onclick="settingsBtn(this.id, false)">spell1Casts</button>
+                <button class='' id="goldSpent" class="goldSpent" onclick="settingsBtn(this.id, false)">goldSpent</button>
+                <button class='' id="spell2Casts" class="spell2Casts" onclick="settingsBtn(this.id, false)">spell2Casts</button>
+            </div>
+            <div class="support">
+                <button class='' id="totalHealsOnTeammates" class="totalHealsOnTeammates" onclick="settingsBtn(this.id, false)">totalHealsOnTeammates</button>
+                <button class='' id="totalDamageShieldedOnTeammates" class="totalDamageShieldedOnTeammates" onclick="settingsBtn(this.id, false)">totalDamageShieldedOnTeammates</button>
+                <button class='' id="totalHeal" class="totalHeal" onclick="settingsBtn(this.id, true)">totalHeal</button>
+                <button class='' id="totalTimeCCDealt" class="totalTimeCCDealt" onclick="settingsBtn(this.id, false)">totalTimeCCDealt</button>
+                <button class='' id="timeCCingOthers" class="timeCCingOthers" onclick="settingsBtn(this.id, false)">timeCCingOthers</button>
+            </div>
+            <div class="damage">
+                <button class='' id="trueDamageDealt" class="trueDamageDealt" onclick="settingsBtn(this.id, false)">trueDamageDealt</button>
+                <button class='' id="magicDamageDealt" class="magicDamageDealt" onclick="settingsBtn(this.id, false)">magicDamageDealt</button>
+                <button class='' id="trueDamageTaken" class="trueDamageTaken" onclick="settingsBtn(this.id, true)">trueDamageTaken</button>
+                <button class='' id="totalDamageDealt" class="totalDamageDealt" onclick="settingsBtn(this.id, false)">totalDamageDealt</button>
+                <button class='' id="magicDamageDealtToChampions" class="magicDamageDealtToChampions" onclick="settingsBtn(this.id, false)">magicDamageDealtToChampions</button>
+                <button class='' id="physicalDamageDealt" class="physicalDamageDealt" onclick="settingsBtn(this.id, false)">physicalDamageDealt</button>
+                <button class='' id="totalDamageDealtToChampions" class="totalDamageDealtToChampions" onclick="settingsBtn(this.id, false)">totalDamageDealtToChampions</button>
+                <button class='' id="damageDealtToTurrets" class="damageDealtToTurrets" onclick="settingsBtn(this.id, false)">damageDealtToTurrets</button>
+                <button class='' id="totalDamageTaken" class="totalDamageTaken" onclick="settingsBtn(this.id, false)">totalDamageTaken</button>
+                <button class='' id="physicalDamageDealtToChampions" class="physicalDamageDealtToChampions" onclick="settingsBtn(this.id, false)">physicalDamageDealtToChampions</button>
+                <button class='' id="physicalDamageTaken" class="physicalDamageTaken" onclick="settingsBtn(this.id, false)">physicalDamageTaken</button>
+            </div>
+            <div class="events">
+                <button class='' id="firstTowerAssist" class="firstTowerAssist" onclick="settingsBtn(this.id, false)">firstTowerAssist</button>
+                <button class='' id="firstTowerKill" class="firstTowerKill" onclick="settingsBtn(this.id, false)">firstTowerKill</button>
+                <button class='' id="turretsLost" class="turretsLost" onclick="settingsBtn(this.id, false)">turretsLost</button>
+                <button class='' id="firstBloodAssist" class="firstBloodAssist" onclick="settingsBtn(this.id, false)">firstBloodAssist</button>
+                <button class='' id="turretKills" class="turretKills" onclick="settingsBtn(this.id, false)">turretKills</button>
+                <button class='' id="inhibitorKills" class="inhibitorKills" onclick="settingsBtn(this.id, false)">inhibitorKills</button>
+                <button class='' id="firstBloodKill" class="firstBloodKill" onclick="settingsBtn(this.id, false)">firstBloodKill</button>
+                <button class='' id="inhibitorsLost" class="inhibitorsLost" onclick="settingsBtn(this.id, false)">inhibitorsLost</button>
+            </div>
+            <div class="objectives">
+                <button class='' id="objectivesStolenAssists" class="objectivesStolenAssists" onclick="settingsBtn(this.id, false)">objectivesStolenAssists</button>
+                <button class='' id="baronKills" class="baronKills" onclick="settingsBtn(this.id, false)">baronKills</button>
+                <button class='' id="cspermin" class="cspermin" onclick="settingsBtn(this.id, false)">cspermin</button>
+                <button class='' id="totalMinionsKilled" class="totalMinionsKilled" onclick="settingsBtn(this.id, false)">totalMinionsKilled</button>
+                <button class='' id="dragonKills" class="dragonKills" onclick="settingsBtn(this.id, false)">dragonKills</button>
+                <button class='' id="neutralMinionsKilled" class="neutralMinionsKilled" onclick="settingsBtn(this.id, false)">neutralMinionsKilled</button>
+                <button class='' id="objectivesStolen" class="objectivesStolen" onclick="settingsBtn(this.id, false)">objectivesStolen</button>
+            </div>
+            <div class="vision">
+                <button class='' id="visionScore" class="visionScore" onclick="settingsBtn(this.id, false)">visionScore</button>
+                <button class='' id="detectorWardsPlaced" class="detectorWardsPlaced" onclick="settingsBtn(this.id, false)">detectorWardsPlaced</button>
+                <button class='' id="wardsPlaced" class="wardsPlaced" onclick="settingsBtn(this.id, true)">wardsPlaced</button>
+                <button class='' id="sightWardsBoughtInGame" class="sightWardsBoughtInGame" onclick="settingsBtn(this.id, false)">sightWardsBoughtInGame</button>
+                <button class='' id="visionWardsBoughtInGame" class="visionWardsBoughtInGame" onclick="settingsBtn(this.id, false)">visionWardsBoughtInGame</button>
+                <button class='' id="wardsKilled" class="wardsKilled" onclick="settingsBtn(this.id, false)">wardsKilled</button>
+            </div>
+        </div>
+    </div>
+</div>

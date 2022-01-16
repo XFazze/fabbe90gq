@@ -9,9 +9,11 @@ from ratelimit import limits
 from queueId import *
 from api_calls import *
 from regions import *
+from summonerSpells import *
 #TODO put boots always on most right item slot
+#TODO add average rank
 
-def jsonconvert(json_match, runeIdToName):
+def jsonconvert(json_match, runeIdToName, region, api_key):
 # game meta
     ret_json = {}
     ret_json["meta"] = {}
@@ -25,6 +27,8 @@ def jsonconvert(json_match, runeIdToName):
 
     for player in json_match["info"]["participants"]:
 # player meta
+        ranks = get_rank(region, player['summonerId'], api_key)
+        
         ret_json[player['summonerId']] = {}
         ret_json[player['summonerId']]['meta'] = {}
         ret_json[player['summonerId']]['meta']['lane'] = player['lane']
@@ -54,6 +58,9 @@ def jsonconvert(json_match, runeIdToName):
         ret_json[player['summonerId']]['champ']['assists'] = player['assists']
         ret_json[player['summonerId']
                  ]['champ']['champLevel'] = player['champLevel']
+                 
+        ret_json[player['summonerId']]['champ']['summoner1'] = player['summoner1Id']
+        ret_json[player['summonerId']]['champ']['summoner2'] = player['summoner2Id']
         ret_json[player['summonerId']]['champ']['deaths'] = player['deaths']
         ret_json[player['summonerId']]['champ']['kills'] = player['kills']
         ret_json[player['summonerId']]['champ']['item0'] = player['item0']
@@ -279,6 +286,9 @@ def generate_html(match_json, region):
             match_json[player]['champ']['championName'] = 'Fiddlesticks'
         champ = tf.img(src="http://ddragon.leagueoflegends.com/cdn/12.1.1/img/champion/" +
                        match_json[player]['champ']['championName'] + ".png", Class='champ')
+        summoner1 = tf.img(src=summonerIdToImg[str(match_json[player]['champ']['summoner1Id'])], Class='w-4')
+        summoner2 = tf.img(src=summonerIdToImg[str(match_json[player]['champ']['summoner2Id'])], Class='w-4')
+        summoners = tf.DIV([summoner1, summoner2])
         lvl = tf.p(str(match_json[player]['champ']
                    ['champLevel']), Class='lvl w-4')
         kda = tf.p(str(match_json[player]['champ']['kills']) + '/' + str(match_json[player]
@@ -332,7 +342,7 @@ def generate_html(match_json, region):
         summonername = tf.p(username, Class='w-16 text-right overflow-hidden whitespace-nowrap')#TODO fix to work with all unicode names 
         summonernamediv = tf.A(summonername, href='http://127.0.0.1:5000/lb2000/'+region+'/'+username)
         championdiv = tf.DIV(
-            [summonernamediv, champ, lvl, kdaboth, runes, items], Class='champion')
+            [summonernamediv, champ, summoners, lvl, kdaboth, runes, items], Class='champion')
         innerdiv = tf.DIV(divs, Class="detaildiv")
 
         divsdiv = tf.DIV([championdiv, innerdiv], Class="playerdiv flex flex-col justify-items-center")
@@ -373,12 +383,11 @@ def generate_html(match_json, region):
 
     doc = tf.DIV([meta, players], Class=winnerlost+"match flex items-center rounded border-2 border-gray-800 gap-0.5")
     return doc
-#TODO summoner spells
 
 
 def download_matches(match_history, region, api_key, runeIdToName):
-    for match in match_history:
-        match_name = match.split('_')
+    for matchid in match_history:
+        match_name = matchid.split('_')
         path = '/home/pi/website/static/lolgames_html/' + \
             match_name[0] + '/' + match_name[1] + '.txt'
         #if os.path.isfile(path):
@@ -387,10 +396,10 @@ def download_matches(match_history, region, api_key, runeIdToName):
         time.sleep(1/5)
         ret_json = {}
 
-        json_match = get_match(regionConverter1[region],  match, api_key)
+        json_match = get_match(regionConverter1[region],  matchid, api_key)
 
 
-        ret_json = jsonconvert(json_match, runeIdToName)
+        ret_json = jsonconvert(json_match, runeIdToName,region, api_key)
         div = generate_html(ret_json, region)
 
         with open(path, 'w+') as f:

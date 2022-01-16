@@ -2,9 +2,8 @@ import requests, json, os.path, time, sphc, os
 from datetime import datetime
 from ratelimit import limits, sleep_and_retry
 
-
 @sleep_and_retry
-@limits(calls=30, period=60)
+@limits(calls=50, period=60)
 def call(url, params={}, headers={}):
     return requests.get(url, params=params, headers=headers).json()
 
@@ -77,3 +76,7 @@ def get_live_game(region, id, api_key):
     #print("live game url: ", url)
     return call(url, params=params)
 
+if __name__ == '__main__':
+    x = get_rank('EUN1','nmbjtla69-VM-0IVtbgJ6skxP6PDQZa_3imnDmNUfC9G-S0', api_ke )
+    z = next(item for item in x if item["queueType"] == "RANKED_SOLO_5x5")
+    print(z)

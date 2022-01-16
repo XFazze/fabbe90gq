@@ -28,3 +28,18 @@ regionConverter3 = {
 
 
 }
+regionConverter4 = {
+    'eun1' : 'EUNE',
+    'euw1' : 'EUW',
+    'kr' : 'KR',
+    'na1' : 'NA',
+    'br1' : 'BR',
+    'la1' : 'LAN',
+    'la2' : 'LAS',
+    'oc1' : 'OCE',
+    'ru' : 'RU',
+    'tr1' : 'TR',
+    'jp1' : 'JA'
+
+
+}

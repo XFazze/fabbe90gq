@@ -1,0 +1,20 @@
+<div id="user_info" class="flex flex-col pt-4">
+    
+    <h2>{{ summoner["name"] }}#{{ niceRegion }}</h2>
+    <div class="flex flex-row">
+        {% set icon_url = "http://ddragon.leagueoflegends.com/cdn/12.1.1/img/profileicon/" + summoner["profileIconId"]|string + ".png" %}
+        <div class="relative pr-4 pb-4">
+            <img src={{ icon_url }} class="pfppic">
+            <div  class='bottom-4 w-full flex justify-center absolute text-center'>
+                <div class="bg-gray-300 opacity-90 px-2">
+                    <h2 class='inset-x-1/2 text-black opacity-1'>{{ summoner["summonerLevel"] }}</h2>
+                </div>
+            </div>
+        </div>
+        <div>
+            {% if ranks|length >0 %}{% for rank in ranks %}
+            <h2>{{rank["queueType"]}}:{{rank["tier"]}}-{{rank["rank"]}}-{{rank["leaguePoints"]}}LP  WR:{{rank["wins"]}}/{{ rank["losses"] }}({{ (100*rank["wins"]/(rank["wins"]+rank["losses"]))|round }}%)</h2>
+            {% endfor %}{% endif %}
+        </div>
+    </div>
+</div>

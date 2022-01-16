@@ -1,19 +1,16 @@
-  // tailwind.config.js
+// tailwind.config.js
 
-  module.exports = {
-  variants: {
+module.exports = {
+  content: [
+    './**/*.{html,js}',
+    './**/**/*.{html,js}',
+    './**/**/**/*.{html,js}',],
+  theme: {
     extend: {
-      display: ['hover'],
-    }, 
-    height: {
-      'fit-content': 'fit-content'
+        '76': "19rem"
+      },
+      display: ["hover"],
+    },
   },
-    theme: {
-      extend: {
-       spacing: {
-         '76': '19rem',
-       }
-      }
-    }
-  }
+  plugins: [],
 }

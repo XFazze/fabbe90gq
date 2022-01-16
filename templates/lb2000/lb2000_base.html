@@ -1,4 +1,4 @@
-{% extends "template.html" %}
+{% extends "templateLb2000.html" %}
 {% block link %}
 <link rel="stylesheet" href="{{url_for('static',filename='css/main.css')}}" />
 <link rel="stylesheet" href="/static/css/lb2000.css">
@@ -23,70 +23,14 @@
 {% endblock %}
 {% block body %}{% endblock %}
 {% block main%}
-<div class="centerdiv" >
-    <h1><a href='/lb2000'>LB 2000 </a></h1></br>
-    <form action="{{ url_for('lb2000.lb2000_index') }}" method='POST' class='flex flex-row mb-1' >
-        <input type="text" placeholder="Username (Default EUNE)"  class='w-1/4 rounded-lg h-8 text-center  mr-1' name='userName'>
-        <div>
-            <input type="submit" name='region' value="EUNE" class='rounded-lg p-1 hover:bg-gray-600 cursor-pointer active:bg-white w-12'>
-            <input type="submit" name='region' value="EUW" class='rounded-lg p-1 hover:bg-gray-600 cursor-pointer active:bg-white w-12'>
-            <input type="submit" name='region' value="KR" class='rounded-lg p-1 hover:bg-gray-600 cursor-pointer active:bg-white w-12'>
-            <input type="submit" name='region' value="NA" class='rounded-lg p-1 hover:bg-gray-600 cursor-pointer active:bg-white w-12'>
-            <input type="submit" name='region' value="BR" class='rounded-lg p-1 hover:bg-gray-600 cursor-pointer active:bg-white w-12'>
-            <input type="submit" name='region' value="LAN" class='rounded-lg p-1 hover:bg-gray-600 cursor-pointer active:bg-white w-12'>
-            <input type="submit" name='region' value="LAS" class='rounded-lg p-1 hover:bg-gray-600 cursor-pointer active:bg-white w-12'>
-            <input type="submit" name='region' value="OCE" class='rounded-lg p-1 hover:bg-gray-600 cursor-pointer active:bg-white w-12'>
-            <input type="submit" name='region' value="RU" class='rounded-lg p-1 hover:bg-gray-600 cursor-pointer active:bg-white w-12'>
-            <input type="submit" name='region' value="TR" class='rounded-lg p-1 hover:bg-gray-600 cursor-pointer active:bg-white w-12'>
-            <input type="submit" name='region' value="JA" class='rounded-lg p-1 hover:bg-gray-600 cursor-pointer active:bg-white w-12'>
-        </div>
-    </form>
-    <div id='popular' class="flex flex-row gap-4">
-        {% for user in popular %}
-        <div >
-            <a href='/lb2000/{{ user['region'] }}/{{ user['summonerName'] }}'>
-                <p>{{ user['summonerName'] }}#{{ user['region'] }}</p>
-            </a>
-        </div>
-        {% endfor %}
+<div class="centerdiv " >
+    <div class="bg-gray-300  pt-4">
+        <h1><a href='/lb2000'>LB 2000 </a></h1></br>
+        {% include 'lb2000/base/searchBar.html' %}
+        {% include 'lb2000/base/user.html' %}
+        {% include 'lb2000/base/mainNav.html' %}
     </div>
-    <h2>{{ summoner["name"] }}#{{ region }}</h2>
-    <div id="user_info">
-        {% set icon_url = "http://ddragon.leagueoflegends.com/cdn/12.1.1/img/profileicon/" + summoner["profileIconId"]|string + ".png" %}
-        <div class="relative pr-4 pb-4">
-            <img src={{ icon_url }} class="pfppic">
-            <div  class='bottom-4 w-full flex justify-center absolute text-center'>
-                <div class="bg-black opacity-75 px-2">
-                    <h2 class='inset-x-1/2 text-black'>{{ summoner["summonerLevel"] }}</h2>
-                </div>
-            </div>
-        </div>
-        <div>
-            {% if ranks|length >0 %}{% for rank in ranks %}
-            <h2>{{rank["queueType"]}}:{{rank["tier"]}}-{{rank["rank"]}}-{{rank["leaguePoints"]}}LP  WR:{{rank["wins"]}}/{{ rank["losses"] }}({{ (100*rank["wins"]/(rank["wins"]+rank["losses"]))|round }}%)</h2>
-            {% endfor %}{% endif %}
-        </div>
-    </div>
-    <div class="taskbar mb- ">
-        <ul id="taskbarinner" class="flex flex-row gap-1.5 mr-2">
-            <li id="matchHistory" class="p-1 bg-gray-600  mr-0 my-1">
-                <div>
-                    <button onclick="taskbarBtn('matchHistory')"><h2>Match History</h2></button>
-                </div>
-            </li>
-            <li  id="mastery" class="p-1 bg-gray-600 my-1">
-                <div>
-                    <button  onclick="taskbarBtn('mastery')"><h2>Mastery</h2></button>
-                </div>
-            </li>
-            <li  id="analysis" class="p-1 bg-gray-600 my-1">
-                <div>
-                    <button  onclick="taskbarBtn('analysis')"><h2>Analysis</h2></button>
-                </div>
-            </li>
-        </ul>
-    </div>
-    <div id="contents">
+    <div id="contents" class="p-4 pt-0 bg-gray-600 " style="width: fit-content;">
         {% include 'lb2000/categories/matchHistory.html' %}
         {% include 'lb2000/categories/mastery.html' %}
         {% include 'lb2000/categories/analysis.html' %}

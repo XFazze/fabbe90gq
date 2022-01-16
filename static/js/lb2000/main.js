@@ -1,5 +1,6 @@
 
 function settingsBtn(id, default_on) {
+  $('#'+id).toggleClass('bg-gray-400')
     //console.log('settingsbtn')
     element = document.getElementById(id)
     //console.log("color: ", element.style.color)
@@ -54,35 +55,36 @@ function settingsBtn(id, default_on) {
     var childs = document.getElementById('taskbarinner').children;
     for (i = 0; i < childs.length; i++) {
       //console.log('claslist1', childs[i].classList)
-      childs[i].classList.remove("bg-gray-800");
+      childs[i].classList.remove("bg-gray-600");
       //console.log('claslist2', childs[i].classList)
     }
     //console.log('claslist3', element.classList)
-    element.classList.add("bg-gray-800");
+    element.classList.add("bg-gray-600");
     //console.log('claslist3', element.classList)
   };
   
-  function showhideBtn(show, hide) {
+  function showhideBtn(show, hide, id) {
     //console.log('showhidebtn')
     for (i = 0; i < hide.length; i++) {
-      temp = hide[i];
-      var element = document.getElementsByClassName(temp);
-      for (o = 0; o < element.length; o++) {
-        element[o].style.display = 'none';
+      $('.'+hide[i]).hide();
       }
   
-    }
+    
     for (i = 0; i < show.length; i++) {
       temp = show[i];
-      var element = document.getElementsByClassName(temp);
-      for (o = 0; o < element.length; o++) {
-        element[o].style.display = 'flex';
-      }
+      $("."+temp).css("display", "flex");
+      };
   
-    }
+    
+      $('#teammatesButtons').children().removeClass("bg-gray-600")
+      $('#'+id).addClass("bg-gray-600")
+    
   };
   
   function showmatchup(id) {
+    $('#teammatesButtons').children().removeClass("bg-gray-600")
+    $('#showMatchup').addClass("bg-gray-600")
+
     var element = document.getElementsByClassName('runestree');
     for (i = 0; i < element.length; i++) {
       element[i].style.display = 'none';

@@ -43,7 +43,7 @@ def get_details(puuid, region_large, api_key):
     client = MongoClient('localhost', 27017)
     db = client.loldetails
     collection = db[puuid]
-    meta = list(collection.find({'type':'meta'}))
+    meta = list(collection.find({'type': 'meta'}))
     try:
         if meta[0]['downloading']:
             print('stop downloading')
@@ -53,47 +53,59 @@ def get_details(puuid, region_large, api_key):
     except:
         print('new user  start downloading')
 
-    downloadedMatches = [f['id'] for f in list(collection.find({'type':'game'}, {'id' : 1}))]
+    downloadedMatches = [f['id'] for f in list(
+        collection.find({'type': 'game'}, {'id': 1}))]
     matches = get_MatchHistory(puuid, region_large, api_key)
 
-    if meta == []: 
+    if meta == []:
         meta = {
-                    'type' : 'meta',
-                    'latestTime' : time.time(),
-                    'downloadedMatchesAmount' : len(downloadedMatches),
-                    'totalMatchesAmount' : len(matches),
-                    'analazyedMatchesAmount' : 0,
-                    'brokenMatchesAmount' : 0,
-                    'downloading' : True
-                }
+            'type': 'meta',
+            'latestTime': time.time(),
+                    'downloadedMatchesAmount': len(downloadedMatches),
+                    'totalMatchesAmount': len(matches),
+                    'analazyedMatchesAmount': 0,
+                    'brokenMatchesAmount': 0,
+                    'downloading': True
+        }
         collection.insert(meta)
     else:
         meta = meta[0]
-        meta['downloading'] = True
-        meta['totalMatchesAmount'] = len(matches)
-        collection.update({'type':'meta'}, meta)
+        collection.update({'type': 'meta'}, {'$set':
+            {'downloading': True,
+            'totalMatchesAmount': len(matches)}
+        })
 
-    notDownloadedMatches = list(set(matches)- set(downloadedMatches))
-    print('there have already been analyzed matches. New matches :', len(notDownloadedMatches))
+    collection.update({'type': 'brokenMatches'},
+                      {'$set' : {'type': 'brokenMatches'},
+                      '$setOnInsert': {'matches': []}}, upsert=True)
 
-    if notDownloadedMatches:
-         get_allMatches(puuid, region_large, api_key, notDownloadedMatches)
+    brokenMatches = list(collection.find({'type': 'brokenMatches'}))[0]['matches']
 
-    if meta['analazyedMatchesAmount'] != len(matches):
-        updateUserDetails(puuid)
-    print('updating ')
-    collection.update_one({'type':'meta'}, {'$set' :{'downloading':False}})
-    
+    notDownloadedMatches = list(
+        set(list(set(matches) - set(downloadedMatches)))-set(brokenMatches))
+    print('there have already been analyzed matches. New matches :',
+          len(notDownloadedMatches), ' and broken: ', len(brokenMatches))
+    try:
+        if len(notDownloadedMatches):
+            get_allMatches(puuid, region_large, api_key, notDownloadedMatches)
+
+        if meta['analazyedMatchesAmount'] != len(matches):
+            updateUserDetails(puuid)
+    except:
+        print('GOT ERROR')
+        pass
+    collection.update_one({'type': 'meta'}, {'$set': {'downloading': False}})
+    print('done with analysis')
 
 
 def get_MatchHistory(puuid, region_large, api_key):
     matches = []
     index = 0
     while True:
-        tempmatch = get_match_history(region_large, puuid, api_key, index*100, '100')
+        tempmatch = get_match_history(
+            region_large, puuid, api_key, index*100, '100')
         print('matches length', len(matches))
         if len(tempmatch) == 0:
-            print
             break
         matches.extend(tempmatch)
         index += 1
@@ -111,15 +123,17 @@ def get_allMatches(puuid, region_large, api_key, matches):
     db = client.loldetails
     collection = db[puuid]
 
-    meta = list(collection.find({'type':'meta'}))[0]
+    meta = list(collection.find({'type': 'meta'}))[0]
     for matchId in matches:
-        match, lastResult, streak = insertMatch(region_large, matchId, puuid, lastResult, streak, api_key)
+        match, lastResult, streak = insertMatch(
+            region_large, matchId, puuid, lastResult, streak, api_key)
 
-        if match and len(list(collection.find({'type':'game', 'id':matchId}))) == 0:
+        if match and len(list(collection.find({'type': 'game', 'id': matchId}))) == 0:
             collection.insert_one(match)
         elif not match:
+            collection.find_one_and_update({'type': 'brokenMatches'},
+                                           {'$push': {'matches': matchId}})
             meta['brokenMatchesAmount'] += 1
-            print('broken match', meta['brokenMatchesAmount'])
 
         time.sleep(1)
         print('matchdownload progress: ', matches.index(matchId), round(matches.index(
@@ -128,21 +142,22 @@ def get_allMatches(puuid, region_large, api_key, matches):
 
         meta['latestTime'] = time.time()
         meta['downloadedMatchesAmount'] = meta['downloadedMatchesAmount']+1
-        collection.update({'type' : 'meta'}, meta, True)
-    return 
+        collection.update({'type': 'meta'}, meta, True)
+    return
 
 
 def insertMatch(region_large, matchId, puuid, lastResult, streak, api_key):
-    #print('match url', url, )
+    # print('match url', url, )
     response = get_match(region_large, matchId, api_key)
     while 'info' not in response.keys():
-        print('error', response['status'], matchId)
+        # print('error', response['status'], matchId)
         if response['status']['status_code'] == 404:
-            print('match not found skipping')
+            print('broken')
             return False, lastResult, streak
 
-        print('error or rate limited pulling out')
-        return False
+        print('error or rate limited pulling out', response['status']['status_code'])
+
+        return False, lastResult, streak
     # print(response)
     player = next(
         item for item in response['info']['participants'] if item["puuid"] == puuid)
@@ -150,7 +165,7 @@ def insertMatch(region_large, matchId, puuid, lastResult, streak, api_key):
     response['info']['participants'].remove(player)
     res = {
         'type': 'game',
-        'id' : matchId,
+        'id': matchId,
         'gameMode': response['info']['gameMode'],
         'gameType': response['info']['gameType'],
         'queueId': response['info']['queueId'],
@@ -242,36 +257,35 @@ def updateUserDetails(puuid):
     client = MongoClient('localhost', 27017)
     db = client.loldetails
     collection = db[puuid]
-    meta = collection.find({'type' : 'meta'})[0]
+    meta = collection.find({'type': 'meta'})[0]
     meta['latestTime'] = time.time()
     details = analyzeMatches(collection, {'type': 'game'})
-    collection.update({'type' : 'wr'}, details, True)
+    collection.update({'type': 'wr'}, details, True)
     meta['analazyedMatchesAmount'] = meta['downloadedMatchesAmount']
-    print('update analyzed match', meta['downloadedMatchesAmount'])
-    collection.update({'type' : 'meta'}, meta, True)
+    collection.update({'type': 'meta'}, meta, True)
 
 
 def analyzeMatches(collection, query):
     res = {
-        'type' : 'wr'
+        'type': 'wr'
     }
     res['wr'] = analyzeWR(collection, query)
     print('wr alnalyze complete')
-    res['timeOfDay'] = analyzeTimeOfDay(collection,query)
-    print('time of dayalnalyze complete')
+    res['timeOfDay'] = analyzeTimeOfDay(collection, query)
+    print('time of daya lnalyze complete')
     return res
 
 
 def analyzeWR(collection, query):
     res = {
-        'total' : 0,
+        'total': 0,
         'wins': 0,
         'losses': 0
     }
     for queueType in queueIdConverter.keys():
         query['queueId'] = int(queueType)
         queueTypeDict = {
-            'total' : 0,
+            'total': 0,
             'wins': 0,
             'losses': 0
         }
@@ -279,11 +293,11 @@ def analyzeWR(collection, query):
         for teamPosition in ['MIDDLE', 'TOP', 'JUNGLE', 'BOTTOM', 'UTILITY', '']:
             query['teamPosition'] = teamPosition
             teamPositionDict = {
-                'total' : 0,
+                'total': 0,
                 'wins': 0,
                 'losses': 0
-                }
-            
+            }
+
             for champ in champNames:
                 query['champ.name'] = champ
                 query['win'] = True
@@ -309,8 +323,8 @@ def analyzeWR(collection, query):
             queueTypeDict[teamPosition] = teamPositionDict
         res[queueIdConverter[queueType]] = queueTypeDict
 
-    #print(res['wins'], res['losses'])
-    #for i in queueIdConverter.values():
+    # print(res['wins'], res['losses'])
+    # for i in queueIdConverter.values():
     #    print(i, res[ i]['wins'], res[ i]['losses'])
     return res
 
@@ -323,7 +337,7 @@ def analyzeTimeOfDay(collection, query):
     for queueType in queueIdConverter.keys():
         query['queueId'] = int(queueType)
         queueTypeDict = {
-            'wins' : 0,
+            'wins': 0,
             'losses': 0
         }
         for part in range(24):
@@ -340,7 +354,7 @@ def analyzeTimeOfDay(collection, query):
 
             queueTypeDict[str(part)] = {
                 'wins': wins,
-                'losses' : losses
+                'losses': losses
             }
 
         res[queueIdConverter[queueType]] = queueTypeDict
@@ -349,7 +363,8 @@ def analyzeTimeOfDay(collection, query):
 
 
 if __name__ == '__main__':
-    #get_allMatches('3VCS6KTBoaESKYP4ZMpUiBY-sTRJ27gLwjbyWlpNotMgrj_NRWSxWVYwcQPKWxA_ZJtcL49vrGe35g', 'EUROPE', )
-    #updateUserDetails('3VCS6KTBoaESKYP4ZMpUiBY-sTRJ27gLwjbyWlpNotMgrj_NRWSxWVYwcQPKWxA_ZJtcL49vrGe35g', 100)
-    get_details('3VCS6KTBoaESKYP4ZMpUiBY-sTRJ27gLwjbyWlpNotMgrj_NRWSxWVYwcQPKWxA_ZJtcL49vrGe35g', 'EUROPE', 'RGAPI-ebe09c71-4d3e-4de2-ac7a-affc9b730f04')
-    #analyzeMatches()
+    # get_allMatches('3VCS6KTBoaESKYP4ZMpUiBY-sTRJ27gLwjbyWlpNotMgrj_NRWSxWVYwcQPKWxA_ZJtcL49vrGe35g', 'EUROPE', )
+    # updateUserDetails('3VCS6KTBoaESKYP4ZMpUiBY-sTRJ27gLwjbyWlpNotMgrj_NRWSxWVYwcQPKWxA_ZJtcL49vrGe35g', 100)
+    get_details('3VCS6KTBoaESKYP4ZMpUiBY-sTRJ27gLwjbyWlpNotMgrj_NRWSxWVYwcQPKWxA_ZJtcL49vrGe35g','EUROPE', 'RGAPI-ebe09c71-4d3e-4de2-ac7a-affc9b730f04')
+    # analyzeMatches()
+    
