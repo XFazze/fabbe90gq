@@ -1,44 +1,105 @@
+
 from requests import get
 from api_calls import *
 from config import *
-from pymongo import MongoClient
+from pymongo import MongoClient, DESCENDING
+from ranks import *
+import math
 
 
-#TODO get what matches need download
-#TODO 
+def getMatches(puuid, region_large, region, riot_api_key):
+    newAmount = updateMatchHistory(puuid, region_large, region, riot_api_key)
+    print('donw with updateMatchHistory:', newAmount)
+    newAmount = downloadMatches(puuid, region_large, region, riot_api_key)
+    print('donw with downloadMatches', newAmount)
 
 
-'''
-matchTrackingDoc = {
-
-}
-
-'''
-def findMatches(puuid, region, riot_api_key):
+def updateMatchHistory(puuid, region_large, region, riot_api_key):
     client = MongoClient('localhost', 27017)
     db = client.newMatches
     collection = db.matchTracking
-    new100Matches = get_match_history(region, puuid, riot_api_key, 0, 100)
-    users = collection.find({'puuid':puuid})
-    if not users.count():
+    if not collection.Collection.count_documents({'puuid': puuid}):
         print('new user')
         user = {
-            'puuid' : puuid,
-            'matchAmount' : 0,
-            'matches' : []
+            'puuid': puuid,
+            'matchAmount': 0,
+            'matches': []
 
         }
     else:
-        user = list(users)[0]
-        list(set(new100Matches)-set(user['matches']))
+        users = collection.find({'puuid': puuid})
+
+    notDownloadedMatches = []
+    for i in range(11):
+        new100Matches = get_match_history(
+            region_large, puuid, riot_api_key, i*100, 100)
+
+        newNotDownloadedMatches = list(set(new100Matches)-set(user['matches']))
+
+        # print('new matches amount:', len(newNotDownloadedMatches), 'round: ', i)
+        notDownloadedMatches.extend(newNotDownloadedMatches)
+
+        if len(newNotDownloadedMatches) != 100:
+            break
+
+    user['matches'].extend(notDownloadedMatches)
+    user['matchAmount'] = len(user['matches'])
+    collection.replace_one({'puuid': puuid}, user, upsert=True)
+    return len(notDownloadedMatches)
 
 
+def downloadMatches(puuid, region_large, region, riot_api_key):
+    client = MongoClient('localhost', 27017)
+    rankedPlayersDB = client.newMatches
+    newMatchesDB = client.newMatches
+    matchTrackingColl = newMatchesDB.matchTracking
+    matchesColl = newMatchesDB.matches
+    brokenMatchesColl = newMatchesDB.brokenMatches
+    user = list(matchTrackingColl.find({'puuid': puuid}))[0]
+    downloadedMatches = list(matchesColl.find(
+        {'metadata': {'participants': {'$in': [puuid]}}}, {'matchId': 1}))
+    brokenMatches = list(brokenMatchesColl.find({'puuid': {'$in': [puuid]}}))
+    print('downlaodedMatches', downloadedMatches)
+    newMatches = list(set(user['matches']) - set(downloadedMatches))
 
-    return
+    if newMatches == False:
+        print('no new matches not downloaded')
+        return
 
+    for matchId in newMatches:
+        print('downlloading match', matchId, round(1000*(newMatches.index(matchId) /
+              len(newMatches))), newMatches.index(matchId), len(newMatches))
+        if list(matchesColl.find({'metadata': {'matchId': matchId}})):
+            print('match already downloaded. Simultaneusly download is happening')
+            break
+        if matchId in brokenMatches:
+            print('known broken match ignored')
+            break
 
-def downloadMatches(puuid, riot_api_key):
-    return
+        match = get_match(region_large, matchId, riot_api_key)
+        if not match:
+            brokenMatchesColl.insert({'matchId': matchId, 'puuid': [puuid]})
+            return
+            
+        totalRank = 0
+        for player in match['info']['participants']:
+            playerRank = rankedPlayersDB[region].find_one(
+                {'summonerId': player['summonerId']}, sort=[('time', DESCENDING)])
+            if not playerRank:
+                print('user not found')
+                continue
+            player['rank'] = playerRank
+
+            totalRank += tiers.index(playerRank['tier'])*4 + divisions.index(playerRank['rank'])
+        match['metadata']['averageRank'] = {
+            'tier': tiers[math.floor(totalRank / 4)],
+        'division': divisions[math.floor(totalRank % 4)]
+        }
+
+        matchesColl.insert(match)
+    return len(newMatches)
+
 
 if __name__ == '__main__':
-    findMatches('r8ShSO0Y7ADEG-nBNQwIVZ4S4cXx8AJxtTsCwyui2V34DMO4MYkXL-eyo7C4PDF8yGXH0PwVgOSnSQ', 'EUROPE', riot_api_key)
+    getMatches('r8ShSO0Y7ADEG-nBNQwIVZ4S4cXx8AJxtTsCwyui2V34DMO4MYkXL-eyo7C4PDF8yGXH0PwVgOSnSQ',
+               'EUROPE', 'EUN1', riot_api_key)

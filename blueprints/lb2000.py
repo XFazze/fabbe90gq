@@ -31,7 +31,9 @@ lb2000 = Blueprint('lb2000', __name__)
 
 #TODO cache more summonerdata
 
-
+#TODO rank distribution
+#TODO average rank of champion
+#TODO users top %
 
 @lb2000.route("/", methods=['GET', 'POST'])
 @lb2000.route("/<region>/<summonername>", methods=['GET', 'POST'])
@@ -91,8 +93,6 @@ def ajax_wr():
     return json.loads(json_util.dumps(wr[0]))
 
     
-
-
 @lb2000.route("/progress", methods=['GET', 'POST'])
 def ajax_progress():
     puuid = request.args.get('puuid', 0, type=str)
@@ -106,6 +106,7 @@ def ajax_progress():
         return '0'
     return json.loads(json_util.dumps(doc[0]))
 
+
 @lb2000.route("/match", methods=['GET', 'POST'])
 def ajax_match():
     matchId = request.args.get('id', 0, type=str)
@@ -118,10 +119,19 @@ def ajax_match():
 
     return send_file(filename, mimetype='txt')
 
-@lb2000.route("/example", methods=['GET', 'POST'])
-def example():
-    return render_template('lb2000/example.html')
 
+@lb2000.route("/newMatch", methods=['GET', 'POST'])
+def ajax_newMatch():
+    matchId = request.args.get('id', 0, type=str)
+    client = MongoClient('localhost', 27017)
+    db = client.newMatches
+    collection = db.matches
+    match = collection.find_one({'metadata':{'matchId': matchId}})
+    if not match:
+        print('match not found')
+        return '0'
+    return json.loads(json_util.dumps(match))
+    
 '''
 @lb2000.route("/riot.txt", methods=['GET', 'POST'])
 def riot():

@@ -3,11 +3,11 @@ from datetime import datetime
 from ratelimit import limits, sleep_and_retry
 
 @sleep_and_retry
-@limits(calls=50, period=60)
+@limits(calls=40, period=60)
 def call(url, params={}, headers={}):
     response = requests.get(url, params=params, headers=headers)
     while response.status_code > 200:
-        print('error occured', response)
+        print('error occured', url, response)
         if response.status_code == 404:
             return False
         time.sleep(20)
@@ -85,7 +85,18 @@ def get_live_game(region, id, api_key):
     #print("live game url: ", url)
     return call(url, params=params)
 
+def get_league(region, tier, division, queue,page, api_key):
+    url = 'https://'+region+'.api.riotgames.com/lol/league/v4/entries/'+queue+'/'+tier+'/' + division
+    params = {
+            'api_key': api_key,
+            'page' : page
+    }
+    #print("live game url: ", url)
+    return call(url, params=params)
+    # 200 users per page
+
+    
 if __name__ == '__main__':
-    x = get_rank('EUN1','nmbjtla69-VM-0IVtbgJ6skxP6PDQZa_3imnDmNUfC9G-S0', api_key )
+    x = get_rank('EUN1','nmbjtla69-VM-0IVtbgJ6skxP6PDQZa_3imnDmNUfC9G-S0', riot_api_key )
     z = next(item for item in x if item["queueType"] == "RANKED_SOLO_5x5")
     print(z)
