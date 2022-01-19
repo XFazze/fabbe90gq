@@ -1,7 +1,8 @@
 
 $(function () {
   // on load
-  WR();
+  //WR();
+  //FIXME this is not wokring
 });
 
 $(function () {

@@ -6,10 +6,10 @@ import os
 from datetime import datetime
 from threading import Thread
 from ratelimit import limits
-from queueId import *
-from api_calls import *
-from regions import *
-from summonerSpells import *
+from lb.queueId import *
+from lb.api_calls import *
+from lb.regions import *
+from lb.summonerSpells import *
 #TODO put boots always on most right item slot
 #TODO add average rank
 

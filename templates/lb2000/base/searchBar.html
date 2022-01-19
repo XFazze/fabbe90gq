@@ -1,6 +1,6 @@
 
-    <form action="{{ url_for('lb2000.lb2000_index') }}" method='POST' class='flex flex-row mb-1' >
-        <input type="text" placeholder="Username (Default EUNE)"  class='w-1/4 rounded-lg h-8 text-center  mr-1' name='userName'>
+    <form action="{{ url_for('lb2000.lb2000_index') }}" method='POST' class='flex flex-col mb-1' >
+        <input type="text" placeholder="Username (Default EUNE)"  class='rounded-lg h-8 text-center  m-2' name='userName' required>
         <div>
             <input type="submit" name='region' value="EUNE" class='rounded-lg p-1 hover:bg-gray-600 cursor-pointer active:bg-white w-12'>
             <input type="submit" name='region' value="EUW" class='rounded-lg p-1 hover:bg-gray-600 cursor-pointer active:bg-white w-12'>

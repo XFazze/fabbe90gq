@@ -1,10 +1,10 @@
 
 from requests import get
-from api_calls import *
-from config import *
-from pymongo import MongoClient, DESCENDING
-from ranks import *
 import math
+from pymongo import MongoClient, DESCENDING
+from lb.ranks import *
+from lb.api_calls import *
+from config import *
 
 
 def getMatches(puuid, region_large, region, riot_api_key):
@@ -24,10 +24,9 @@ def updateMatchHistory(puuid, region_large, region, riot_api_key):
             'puuid': puuid,
             'matchAmount': 0,
             'matches': []
-
         }
     else:
-        users = collection.find({'puuid': puuid})
+        user = collection.find({'puuid': puuid})
 
     notDownloadedMatches = []
     for i in range(11):
@@ -67,7 +66,7 @@ def downloadMatches(puuid, region_large, region, riot_api_key):
         return
 
     for matchId in newMatches:
-        print('downlloading match', matchId, round(1000*(newMatches.index(matchId) /
+        print('downloading match', matchId, round(100*(newMatches.index(matchId) /
               len(newMatches))), newMatches.index(matchId), len(newMatches))
         if list(matchesColl.find({'metadata': {'matchId': matchId}})):
             print('match already downloaded. Simultaneusly download is happening')
@@ -86,14 +85,14 @@ def downloadMatches(puuid, region_large, region, riot_api_key):
             playerRank = rankedPlayersDB[region].find_one(
                 {'summonerId': player['summonerId']}, sort=[('time', DESCENDING)])
             if not playerRank:
-                print('user not found')
+                #print('user not found')
                 continue
             player['rank'] = playerRank
 
             totalRank += tiers.index(playerRank['tier'])*4 + divisions.index(playerRank['rank'])
         match['metadata']['averageRank'] = {
-            'tier': tiers[math.floor(totalRank / 4)],
-        'division': divisions[math.floor(totalRank % 4)]
+            'tier': tiers[int(math.floor(totalRank // 4))],
+        'division': divisions[int(math.floor(totalRank % 4))]
         }
 
         matchesColl.insert(match)

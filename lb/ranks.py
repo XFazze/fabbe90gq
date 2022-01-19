@@ -1,10 +1,9 @@
 
-from lib2to3.pytree import Leaf
-from api_calls import *
+from lb.api_calls import *
 from config import *
 from pymongo import MongoClient
 import time
-from seasonsSplits import *
+from lb.seasonsSplits import *
 
 
 queues = ['RANKED_SOLO_5x5', 'RANKED_FLEX_SR']

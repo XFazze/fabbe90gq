@@ -7,34 +7,10 @@
 {% block main%}
 <div class="centerdiv flex items-center mt-72 flex-col ">
         <h1>LB2000</h1></br>
-            <form action="{{ url_for('lb2000.lb2000_index') }}" method='POST' >
-                <input type="text" placeholder="Username (Default EUNE)"  class='w-full rounded-lg h-8 text-center mb-2' name='userName'>
-                <div>
-                    <input type="submit" name='region' value="EUNE" class='rounded-lg p-1 hover:bg-gray-600 cursor-pointer active:bg-white w-12'>
-                    <input type="submit" name='region' value="EUW" class='rounded-lg p-1 hover:bg-gray-600 cursor-pointer active:bg-white w-12'>
-                    <input type="submit" name='region' value="KR" class='rounded-lg p-1 hover:bg-gray-600 cursor-pointer active:bg-white w-12'>
-                    <input type="submit" name='region' value="NA" class='rounded-lg p-1 hover:bg-gray-600 cursor-pointer active:bg-white w-12'>
-                    <input type="submit" name='region' value="BR" class='rounded-lg p-1 hover:bg-gray-600 cursor-pointer active:bg-white w-12'>
-                    <input type="submit" name='region' value="LAN" class='rounded-lg p-1 hover:bg-gray-600 cursor-pointer active:bg-white w-12'>
-                    <input type="submit" name='region' value="LAS" class='rounded-lg p-1 hover:bg-gray-600 cursor-pointer active:bg-white w-12'>
-                    <input type="submit" name='region' value="OCE" class='rounded-lg p-1 hover:bg-gray-600 cursor-pointer active:bg-white w-12'>
-                    <input type="submit" name='region' value="RU" class='rounded-lg p-1 hover:bg-gray-600 cursor-pointer active:bg-white w-12'>
-                    <input type="submit" name='region' value="TR" class='rounded-lg p-1 hover:bg-gray-600 cursor-pointer active:bg-white w-12'>
-                    <input type="submit" name='region' value="JA" class='rounded-lg p-1 hover:bg-gray-600 cursor-pointer active:bg-white w-12'>
-                </div>
-        </form>
+        {% include 'lb2000/base/searchBar.html' %}
         {% if error %}
         <p style="color:var(--error-color)">User doesnt exit, your bad</p>
         {% endif %}
-        
-        <div id='popular' class="flex flex-row gap-4">
-            {% for user in popular %}
-            <div >
-                <a href='/lb2000/{{ user['region'] }}/{{ user['summonerName'] }}'>
-                    <p>{{ user['summonerName'] }}#{{ user['region'] }}</p>
-                </a>
-            </div>
-            {% endfor %}
     </div>
 </div>
 {% endblock %}

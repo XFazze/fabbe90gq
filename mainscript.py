@@ -30,6 +30,7 @@ app.register_blueprint(afknotif, url_prefix='/afknotif')
 #app.register_blueprint(files, url_prefix='/files')
 
 # auth0 files 
+'''
 oauth = OAuth(app)
 auth0 = oauth.register(
     'auth0',
@@ -80,7 +81,7 @@ def filesDashboard():
                            userinfo=session['profile'],
                            userinfo_pretty=json.dumps(session['jwt_payload'], indent=4))
 
-
+'''
 # celery background task for discordbot plots
 #TODO fix image hosting and updating of discord plots
 '''
