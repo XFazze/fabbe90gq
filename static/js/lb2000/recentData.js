@@ -4,9 +4,7 @@ $(document).ready(function () {
 });
 
 async function start() {
-  console.log("starteed");
   data = await getRecentData(summoner["puuid"]);
-  console.log(data["420"]);
   let soloqtable = $(`<table></table>`).addClass('soloqTable')
   soloqtable.append(createTableRecentData(data["420"]["24h"], '24h'));
   soloqtable.append(createTableRecentData(data["420"]["3d"], '3d'));

@@ -41,11 +41,11 @@ def get_recentData(puuid):
     newData = analyzeData(puuid, matchesColl)
     newData['type'] = 'data'
     newData['puuid'] = puuid
-    print('newdata')
+    #print('newdata')
     # pprint(newData)
     recentDataColl.update_one({'$and': [{'type': 'meta'}, {'puuid': puuid}]}, {
                               '$set': {'lastMatch': lastMatch}})
-    print(recentDataColl.find_one({'type': 'data', 'puuid': puuid}))
+    #print(recentDataColl.find_one({'type': 'data', 'puuid': puuid}))
     recentDataColl.replace_one({'type': 'data', 'puuid': puuid},  newData)
     return 1
 

@@ -37,7 +37,26 @@ async function getMatchHistory(){
         },
         url: $SCRIPT_ROOT + 'newMatchHistory',
         cache: false,
-        async: false
+        async: false,
+        tryCount : 0,
+        retryLimit : 10,
+        error : function(xhr, textStatus, errorThrown ) {
+            console.log('there was an error in ajax', textStatus)
+            if (textStatus == 'match not found' || true) {
+                console.log('awas told to ret')
+                this.tryCount++;
+                if (this.tryCount <= this.retryLimit) {
+                    console.log('trying')
+                    //try again
+                    setTimeout(() => {
+                        $.ajax(this);
+                        
+                    }, 500);
+                    return;
+                }            
+                return;
+            }
+        }
         
     });
 }
@@ -52,7 +71,7 @@ async function loadTen(matches){
 }
 
 async function loadOne(matchId){
-    return $.ajax({
+    let ajaxSettings = {
         type: 'GET', 
         data: { 
             id: matchId
@@ -61,20 +80,9 @@ async function loadOne(matchId){
         cache: false,
         async: false,
         tryCount : 0,
-        retryLimit : 10,
-        error : function(xhr, textStatus, errorThrown ) {
-            if (textStatus == 'match not found') {
-                console.log('awas told to ret')
-                this.tryCount++;
-                if (this.tryCount <= this.retryLimit) {
-                    console.log('trying')
-                    //try again
-                    $.ajax(this);
-                    return;
-                }            
-                return;
-            }
-        }
+        retryLimit : 10}
+
+        $.ajax(ajaxSettings).fail
     });
 }
 
@@ -108,11 +116,11 @@ function createMatchDiv(match){
     '200' : match['info']['teams'][1]['objectives']['champion']['kills']}
     var userPos 
     let goldMatchups = {
-        'TOP' : {},
-        'JUNGLE' : {},
-        'MIDDLE' : {},
-        'BOTTOM' : {},
-        'UTILITY' : {},
+        'TOP' : {'100':0,'200':0},
+        'JUNGLE' : {'100':0,'200':0},
+        'MIDDLE' : {'100':0,'200':0},
+        'BOTTOM' : {'100':0,'200':0},
+        'UTILITY' : {'100':0,'200':0},
     }
     match['info']['participants'].forEach(player => {
         teamsPlayers[player['teamId']] = teamsPlayers[player['teamId']] +' '+ player['puuid']

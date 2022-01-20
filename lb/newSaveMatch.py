@@ -54,25 +54,29 @@ def downloadMatches(puuid, region_large, region, riot_api_key):
     matchTrackingColl = newMatchesDB.matchTracking
     matchesColl = newMatchesDB.matches
     brokenMatchesColl = newMatchesDB.brokenMatches
+
     user = list(matchTrackingColl.find({'puuid': puuid}))[0]
+
     downloadedMatches = list(matchesColl.find(
         {'metadata': {'participants': {'$in': [puuid]}}}, {'matchId': 1}))
+
     brokenMatches = list(brokenMatchesColl.find({'puuid': {'$in': [puuid]}}))
     print('downlaodedMatches', downloadedMatches)
-    newMatches = [matchId for matchId in user['matches'] if matchId not in downloadedMatches]
+    newMatches = [matchId for matchId in user['matches'] if matchId not in downloadedMatches and matchId not in brokenMatches]
 
     if newMatches == False:
-        print('no new matches not downloaded')
+        print('no new matches not downloaded returning')
         return
+
     for matchId in  newMatches:
         print('downloading match', matchId, round(100*(newMatches.index(matchId) /
               len(newMatches))), '%', newMatches.index(matchId), len(newMatches))
         if list(matchesColl.find({'metadata.matchId': matchId})):
             print('match already downloaded. Simultaneusly download is happening')
-            break
+            continue
         if matchId in brokenMatches:
             print('known broken match ignored')
-            break
+            continue
 
         match = get_match(region_large, matchId, riot_api_key)
         if not match:

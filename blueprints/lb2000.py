@@ -106,14 +106,22 @@ def ajax_wr():
 def ajax_progress():
     puuid = request.args.get('puuid', 0, type=str)
     client = MongoClient('localhost', 27017)
-    db = client.loldetails
-    collection = db[str(puuid)]
-    doc = list(collection.find({'type': 'meta'}))
+    db = client.newMatches
+    matchesColl = db.matches
+    matchTrackingColl = db.matchTracking
+    matchesDownloaded = matchesColl.count_documents({'metadata.participants': {'$in': [puuid]}})
+    tracking = matchTrackingColl.find_one({'puuid':puuid}, {'matchAmount':1})
+    if not tracking:
+        print('user matches not found')
+        return "matchTracking not found", 400
 
-    if len(doc) == 0:
-        print('cant find wr for puuid: ', puuid)
-        return '0'
-    return json.loads(json_util.dumps(doc[0]))
+    print('amount downloaded:', matchesDownloaded, 'total amount:',tracking['matchAmount'])
+    res = {
+        'totalAmount' : tracking['matchAmount'],
+        'downloaded' : matchesDownloaded,
+        'matchesToBeDownloaded' : tracking['matchAmount'] - matchesDownloaded
+    }
+    return json.loads(json_util.dumps(res))
 
 
 @lb2000.route("/match", methods=['GET', 'POST'])
@@ -148,7 +156,7 @@ def ajax_newMatchHistory():
     collection = db.matchTracking 
     matches = collection.find_one({'puuid' : puuid})
     if not matches:
-        print('matches not found')
+        print('match not found')
         return "match not found", 400
     return json.loads(json_util.dumps(matches))
 

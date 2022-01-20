@@ -11,10 +11,21 @@
                 </div>
             </div>
         </div>
-        <div>
-            {% if ranks|length >0 %}{% for rank in ranks %}
-            <h2>{{rank["queueType"]}}:{{rank["tier"]}}-{{rank["rank"]}}-{{rank["leaguePoints"]}}LP  WR:{{rank["wins"]}}/{{ rank["losses"] }}({{ (100*rank["wins"]/(rank["wins"]+rank["losses"]))|round }}%)</h2>
-            {% endfor %}{% endif %}
+        <div class='flex flex-col'>
+            <div>
+                {% if ranks|length >0 %}{% for rank in ranks %}
+                <h2>{{rank["queueType"]}}:{{rank["tier"]}}-{{rank["rank"]}}-{{rank["leaguePoints"]}}LP  WR:{{rank["wins"]}}/{{ rank["losses"] }}({{ (100*rank["wins"]/(rank["wins"]+rank["losses"]))|round }}%)</h2>
+                {% endfor %}{% endif %}
+            </div>
+            <div id='matchDownloadProgressBar' class='flex flex-row relative h-10 w-80 '>
+                <div class='bg-gray-800 w-0' id='processDone'>
+                </div>
+                <div class='bg-gray-600 w-80' id='processLeft'>
+                </div>
+                <p class='absolute left-1/4 top-1/4' id='processText'>
+                    Match Download Progress:
+                </p>
+            </div>
         </div>
         <div id='recentData' class="flex flex-col w-64 bg-gray-600">
             <div class="flex flex-row justify-between recentDataButtons">

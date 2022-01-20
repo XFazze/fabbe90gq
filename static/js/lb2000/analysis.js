@@ -443,7 +443,6 @@ function timeOfDay(data){//FIXME all hours are the same
       losses += value[index]["losses"];
       wins += value[index]["wins"];
       total += value[index]["wins"]+value[index]["losses"];
-      console.log('lwt', losses,wins,total, index, gamemode,value)
     }
     $("#timeOfDayTable").append(`
         <tr id='hour${index}' class='shadow-lg bg-white'>
