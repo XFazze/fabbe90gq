@@ -1,3 +1,56 @@
+$(function () {$('#onlyYou').bind("click", function () {
+  $(".playerDiv").addClass("hidden");
+  $('.'+summoner["puuid"]).removeClass("hidden");
+  $('.lanesIMG').removeClass('hidden');
+  $('.objectivDiv').addClass('hidden');
+
+  $('.teamsObjectives100').removeClass('hidden');
+  $('.teamsObjectives200').removeClass('hidden');
+  $('.teamsObjectivesMiddle').removeClass('hidden');
+  $('.random').removeClass('hidden');
+  $('.damageDiv').removeClass('hidden');
+
+  $('#teammatesButtons').children().removeClass("bg-gray-600")
+  $('#onlyYou').addClass("bg-gray-600")
+});
+});
+
+$(function () {$('#showAll').bind("click", function () {
+  $(".playerDiv").removeClass("hidden");
+  $('.lanesIMG').addClass('hidden');
+  $('.objectivDiv').removeClass('hidden');
+  $('#teammatesButtons').children().removeClass("bg-gray-600");
+  $('#showAll').addClass("bg-gray-600");
+  addScreen()
+
+});
+});
+
+$(function () {$('#showMatchup').bind("click", function () {
+  $(".playerDiv").addClass("hidden");
+  $('.matchup'+summoner["puuid"]).removeClass("hidden");
+  $('.lanesIMG').removeClass('hidden');
+  $('.objectivDiv').addClass('hidden');
+  console.log('.matchup'+summoner["puuid"])
+  addScreen()
+  $('#teammatesButtons').children().removeClass("bg-gray-600")
+  $('#showMatchup').addClass("bg-gray-600")
+});
+});
+
+$(function () {$('#helpMatchHistory').bind("click", function () {
+  $("#exampleMatch").toggleClass("hidden");
+  $('#helpMatchHistory').toggleClass("bg-gray-600")
+});
+});
+
+function addScreen(){
+  $('.teamsObjectives100').addClass('hidden');
+  $('.teamsObjectives200').addClass('hidden');
+  $('.teamsObjectivesMiddle').addClass('hidden');
+  $('.random').addClass('hidden');
+  $('.damageDiv').addClass('hidden');
+}
 
 function settingsBtn(id, default_on) {
   $('#'+id).toggleClass('bg-gray-400')
@@ -106,3 +159,15 @@ function settingsBtn(id, default_on) {
       }
     }
   };
+  var queueIdConverter = {
+    '1400' : 'UltimateSpellbook',
+    '1020' : 'OneForAll',
+    '900' : 'URF',
+    '700' : 'Clash',
+    '450' : 'ARAM',
+    '440' : 'Flex',
+    '430' : 'Blind',
+    '420' : 'Solo/Duo',
+    '400' : 'Draft'
+
+}

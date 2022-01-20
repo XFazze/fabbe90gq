@@ -20,7 +20,7 @@ def getRankedPlayers(region, riot_api_key):
         print(lastTime)
         #FIXME newly ranked players !!
         #FIXME Update meta time 
-        if lastTime + 86400 > time.time():
+        if lastTime + (60*60*24*30) > time.time():
             print('not old enough data')
             return False
 

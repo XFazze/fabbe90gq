@@ -1,19 +1,67 @@
-<div class="matchHistory  flex flex-col" style="width: fit-content;" >
-    <div class="flex flex-row  place-content-between pb-4">
-        <div class="flex" id='teammatesButtons'>
-            <button onclick='showhideBtn([{{ summonerid|tojson }}, "runestree"], ["TOP","JUNGLE", "MIDDLE", "BOTTOM", "UTILITY"], "onlyYou")' id='onlyYou' class="pr-6 bg-gray-400 bg-gray-600  text-center p-2">Show only you</button>
-            <button onclick="showhideBtn(['TOP','JUNGLE', 'MIDDLE', 'BOTTOM', 'UTILITY'], ['runestree'], 'showAll')" id='showAll' class="px-6 bg-gray-400   text-center p-2">Show all</button>
-            <button onclick='showmatchup({{ summonerid|tojson }})' id='showMatchup' class="px-6 bg-gray-400   text-center p-2"> Show matchup</button>
-        </div>
-        <button id="settings" class="bg-gray-400   text-center p-2" style="color: var(--error-color);" onclick="settingsBtn(this.id, true)">Stat settings</button>
-    </div>  
-    {% include 'lb2000/categories/matchHistory/settings.html' %}
-    <div id="match_history" class="flex flex-col items-start" >
-        
+<div class="matchHistory flex flex-col" style="width: fit-content">
+  <div class="flex flex-row place-content-between pb-4">
+    <div class="flex" id="teammatesButtons">
+      <button id="onlyYou" class="pr-6 bg-gray-400 bg-gray-600 text-center p-2">
+        Show only you
+      </button>
+      <button id="showAll" class="px-6 bg-gray-400 text-center p-2">
+        Show all
+      </button>
+      <button id="showMatchup" class="px-6 bg-gray-400 text-center p-2">
+        Show matchup
+      </button>
     </div>
-    <div class="flex justify-center">
-        <div class='hover:bg-gray-600  active:bg-white'>
-            <button class="text-black">Load 10 matches</button>
+    <button
+      id="helpMatchHistory"
+      class="bg-gray-400 text-center p-2"
+      style="color: var(--error-color)"
+    >
+      help
+    </button>
+  </div>
+  {% include 'lb2000/categories/matchHistory/settings.html' %}
+  <div id="match_history" class="flex flex-col items-start">
+    <div id="exampleMatch" class="flex hidden flex-row mb-3">
+      <div
+        class="flex flex-col w-36 place-items-center justify-center bg-red-400"
+      >
+        <p>length</p>
+        <span>date</span><span class="hidden">year</span>
+        <p>type:avg ranks</p>
+      </div>
+      <div class="flex bg-gray-400 gap-2">
+        <div class="block order-2">
+          <div class="flex order-2">
+            <div
+              class="w-44 items-center place-items-center flex flex-col flex-nonwrap group"
+            >
+              <p>kills/deaths/assists</p>
+              <p>kda(kill participation)</p>
+            </div>
+            <div
+              class="w-72 items-center place-items-center flex-col group hidden xl:flex"
+            >
+              <p>dmg champions/buildings/objectives</p>
+              <p>selfheal/teamheal/all shielding</p>
+              <p>cc time</p>
+            </div>
+            <div
+              class="w-72 items-center place-items-center flex flex-col group"
+            >
+              <p class="whitespace-nowrap">
+                vision score(wards control/killed/placed)
+              </p>
+              <p>cs(cs/min)</p>
+              <p>matchup gold difference</p>
+            </div>
+          </div>
         </div>
+      </div>
     </div>
+  </div>
+  <div class="flex justify-center">
+    <div class="hover:bg-gray-600 active:bg-white">
+      <button class=" bg-gray-400 bg-gray-400 text-center p-2" id='load10more'>Load 10 matches</button>
+    </div>
+  </div>
 </div>

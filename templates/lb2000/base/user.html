@@ -16,5 +16,15 @@
             <h2>{{rank["queueType"]}}:{{rank["tier"]}}-{{rank["rank"]}}-{{rank["leaguePoints"]}}LP  WR:{{rank["wins"]}}/{{ rank["losses"] }}({{ (100*rank["wins"]/(rank["wins"]+rank["losses"]))|round }}%)</h2>
             {% endfor %}{% endif %}
         </div>
+        <div id='recentData' class="flex flex-col w-64 bg-gray-600">
+            <div class="flex flex-row justify-between recentDataButtons">
+                <button id='soloduoRecentData' class='bg-gray-400 bg-gray-600 w-full text-center p-2'>Solo/duo</button>
+                <button id='aramRecentData' class='bg-gray-400 text-center w-full p-2'>Aram</button>
+                <button id='recentDataAll' class='bg-gray-400  text-center w-full p-2'>All</button>
+            </div>
+            <div id='recentDataTables'>
+
+            </div>
+        </div>
     </div>
 </div>

@@ -1,16 +1,11 @@
 // tailwind.config.js
 
 module.exports = {
-  content: [
-    './**/*.{html,js}',
-    './**/**/*.{html,js}',
-    './**/**/**/*.{html,js}',],
   theme: {
-    extend: {
-        '76': "19rem"
+      extend: {
+          colors: {
+              my_color: '#4dcb7a',
+          },
       },
-      display: ["hover"],
-    },
   },
-  plugins: [],
 }

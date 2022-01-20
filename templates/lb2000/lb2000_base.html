@@ -15,12 +15,12 @@
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <script>
     window.jQuery || document.write('<script src="{{url_for('static', filename='jquery.js') }}">\x3C/script>')
-    $SCRIPT_ROOT = {{ request.script_root|tojson }};
+    $SCRIPT_ROOT = {{ request.url_root|tojson }}+'lb2000/';
 </script>
 <script type="text/javascript" src="/static/js/lb2000/main.js"></script>
-<script type="text/javascript" src="/static/js/lb2000/matchHistoryNew.js"></script>
 <script type="text/javascript" src="/static/js/lb2000/analysis.js"></script>
 <script type="text/javascript" src="/static/js/lb2000/loadMatches.js"></script>
+<script type="text/javascript" src="/static/js/lb2000/recentData.js"></script>
 {% endblock %}
 {% block body %}{% endblock %}
 {% block main%}

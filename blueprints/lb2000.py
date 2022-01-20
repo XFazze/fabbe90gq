@@ -1,8 +1,11 @@
+
 from flask import *
 from config import *
 from threading import Thread
 from bson import json_util
+import time
 import os
+
 
 from lb.api_calls import *
 from lb.match_history import *
@@ -13,6 +16,8 @@ from lb.analysis import *
 from lb.popular import *
 from lb.regions import *
 from lb.newSaveMatch import *
+from lb.ranks import *
+from lb.recentData import *
 
 lb2000 = Blueprint('lb2000', __name__)
 # TODO connect accounts by verifying with pfp
@@ -28,8 +33,6 @@ lb2000 = Blueprint('lb2000', __name__)
 
 # TODO get live lobby/game
 
-# TODO redo get matches by saving raw matchdata in mongodb and reqiuesting with ajax
-
 # TODO cache more summonerdata
 
 # TODO rank distribution
@@ -44,9 +47,6 @@ lb2000 = Blueprint('lb2000', __name__)
 @lb2000.route("/", methods=['GET', 'POST'])
 @lb2000.route("/<region>/<summonername>", methods=['GET', 'POST'])
 def lb2000_index(region='noregion', summonername='nouser'):
-    #if not request.script_root:
-        # this assumes that the 'index' view function handles the path '/'
-    #    request.script_root = 'wee'
     if request.method == 'POST':
         username = request.form.get('userName')
         region = regionConverter3[request.form.get('region')]
@@ -66,16 +66,17 @@ def lb2000_index(region='noregion', summonername='nouser'):
 def returnprofile(summonername, region, popular):
     region_large = regionConverter1[region]
     summoner = get_summoner(region, summonername, riot_api_key)
-    if "status" in summoner.keys():
+    if not summoner:
         return False
     else:
         addPopular(summonername, region)
         mastery = get_mastery(region, summoner['id'], riot_api_key)
-        masterPoints = int(sum([item['championPoints']
-                           for item in mastery])/1000)
+        masterPoints = int(sum([item['championPoints']for item in mastery])/1000)
         total_mastery = get_total_mastery(region, summoner['id'], riot_api_key)
         ranks = get_rank(region, summoner['id'], riot_api_key)
-        #Thread(target=getMatches, args=(summoner['puuid'], region_large, region, riot_api_key)).start()
+        Thread(target=getMatches, args=(summoner['puuid'], region_large, region, riot_api_key)).start()
+        Thread(target=get_recentData, args=(summoner['puuid'],)).start()
+        #Thread(target=getRankedPlayers, args=(region, riot_api_key)).start()
         #match_history =  get_match_history(region_large, summoner['puuid'], riot_api_key, 0, 9)
         #Thread(target=download_matches, args=(match_history, region, riot_api_key, runeIdToName)).start()
         #Thread(target=get_details, args=(summoner['puuid'], region_large, riot_api_key)).start()
@@ -133,10 +134,10 @@ def ajax_newMatch():
     client = MongoClient('localhost', 27017)
     db = client.newMatches
     collection = db.matches
-    match = collection.find_one({'metadata': {'matchId': matchId}})
+    match = collection.find_one({'metadata.matchId': matchId})
     if not match:
         print('match not found')
-        return '0'
+        return "match not found", 400
     return json.loads(json_util.dumps(match))
     
 @lb2000.route("/newMatchHistory", methods=['GET', 'POST'])
@@ -148,8 +149,21 @@ def ajax_newMatchHistory():
     matches = collection.find_one({'puuid' : puuid})
     if not matches:
         print('matches not found')
-        return '0'
+        return "match not found", 400
     return json.loads(json_util.dumps(matches))
+
+@lb2000.route("/recentData", methods=['GET', 'POST'])
+def ajax_recentData():
+    puuid = request.args.get('puuid', 0, type=str)
+    client = MongoClient('localhost', 27017)
+    db = client.analysis
+    collection = db.recentData 
+    matches = collection.find_one({'puuid' : puuid, 'type' : 'data'})
+    if not matches:
+        print('recentdata not found')
+        return "data not found", 400
+    return json.loads(json_util.dumps(matches))
+    
 
 
 '''

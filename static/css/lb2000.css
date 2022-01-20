@@ -17,7 +17,7 @@ button {
   font-size: var(--main-font);
 }
 #main {
-  max-width: 1400px !important;
+  max-width: 1800px !important;
 }
 .centerdiv h1 {
   font-family: var(--title-font);
@@ -150,11 +150,6 @@ textarea {
 
 .detaildiv div p {
   display: none;
-}
-.playerdiv {
-  display: flex;
-  flex-direction: column;
-  gap: 1ch;
 }
 .detaildiv {
   display: flex;

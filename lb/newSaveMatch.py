@@ -33,12 +33,12 @@ def updateMatchHistory(puuid, region_large, region, riot_api_key):
         new100Matches = get_match_history(
             region_large, puuid, riot_api_key, i*100, 100)
 
-        newNotDownloadedMatches = list(set(new100Matches)-set(user['matches']))
+        newNotDownloadedMatches = [matchId for matchId in new100Matches if matchId not in user['matches']]
 
-        # print('new matches amount:', len(newNotDownloadedMatches), 'round: ', i)
+        print('new matches amount:', len(newNotDownloadedMatches), 'round: ', i)
         notDownloadedMatches.extend(newNotDownloadedMatches)
 
-        if len(newNotDownloadedMatches) != 100:
+        if len(notDownloadedMatches) != 100:
             break
 
     user['matches'].extend(notDownloadedMatches)
@@ -59,16 +59,15 @@ def downloadMatches(puuid, region_large, region, riot_api_key):
         {'metadata': {'participants': {'$in': [puuid]}}}, {'matchId': 1}))
     brokenMatches = list(brokenMatchesColl.find({'puuid': {'$in': [puuid]}}))
     print('downlaodedMatches', downloadedMatches)
-    newMatches = list(set(user['matches']) - set(downloadedMatches))
+    newMatches = [matchId for matchId in user['matches'] if matchId not in downloadedMatches]
 
     if newMatches == False:
         print('no new matches not downloaded')
         return
-
-    for matchId in newMatches:
+    for matchId in  newMatches:
         print('downloading match', matchId, round(100*(newMatches.index(matchId) /
-              len(newMatches))), newMatches.index(matchId), len(newMatches))
-        if list(matchesColl.find({'metadata': {'matchId': matchId}})):
+              len(newMatches))), '%', newMatches.index(matchId), len(newMatches))
+        if list(matchesColl.find({'metadata.matchId': matchId})):
             print('match already downloaded. Simultaneusly download is happening')
             break
         if matchId in brokenMatches:
@@ -86,6 +85,10 @@ def downloadMatches(puuid, region_large, region, riot_api_key):
                 {'summonerId': player['summonerId']}, sort=[('time', DESCENDING)])
             if not playerRank:
                 #print('user not found')
+                player['rank'] = {
+                    'tier' : 'unranked',
+                    'rank' : ''
+                }
                 continue
             player['rank'] = playerRank
 
