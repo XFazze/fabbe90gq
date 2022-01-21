@@ -36,7 +36,7 @@ button {
   text-decoration: none;
   color: var(--text-color);
 }
-.nicebutton{
+.nicebutton {
   font-family: var(--main-font);
   text-decoration: none;
   color: #000;
@@ -62,10 +62,6 @@ button {
 }
 #user_info {
   display: flex;
-}
-.pfppic {
-  max-height: 10rem;
-  min-width: 10rem;
 }
 #champion_masteryBtn {
   background-color: var(--sub-color);
@@ -218,7 +214,7 @@ textarea {
   flex-direction: column;
   gap: 0;
 }
-.multikills{
+.multikills {
   display: flex;
   flex-direction: column;
 }
@@ -250,19 +246,19 @@ textarea {
 .vision button {
   color: var(--error-color);
 }
-.TOP_matchup{
-    order: 1;
+.TOP_matchup {
+  order: 1;
 }
-.JUNGLE_matchup{
-    order: 2;
+.JUNGLE_matchup {
+  order: 2;
 }
-.MIDDLE_matchup{
-    order: 3;
+.MIDDLE_matchup {
+  order: 3;
 }
-.BOTTOM_matchup{
-    order: 4;
+.BOTTOM_matchup {
+  order: 4;
 }
 
-.UTILITY_matchup{
-    order: 5;
+.UTILITY_matchup {
+  order: 5;
 }

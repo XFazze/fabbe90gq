@@ -1,41 +1,59 @@
-<div id="user_info" class="flex flex-col pt-4">
-    
-    <h2>{{ summoner["name"] }}#{{ niceRegion }}</h2>
-    <div class="flex flex-row">
-        {% set icon_url = "http://ddragon.leagueoflegends.com/cdn/12.1.1/img/profileicon/" + summoner["profileIconId"]|string + ".png" %}
-        <div class="relative pr-4 pb-4">
-            <img src={{ icon_url }} class="pfppic">
-            <div  class='bottom-4 w-full flex justify-center absolute text-center'>
-                <div class="bg-gray-300 opacity-90 px-2">
-                    <h2 class='inset-x-1/2 text-black opacity-1'>{{ summoner["summonerLevel"] }}</h2>
-                </div>
-            </div>
+<div id="user_info" class="flex flex-col pt-4 pb-4">
+  <h2>{{ summoner["name"] }}#{{ niceRegion }}</h2>
+  <div class="flex flex-row">
+    {% set icon_url =
+    "http://ddragon.leagueoflegends.com/cdn/12.1.1/img/profileicon/" +
+    summoner["profileIconId"]|string + ".png" %}
+    <div>
+      <div class="relative pr-4">
+        <img src="{{ icon_url }}" class="w-40" />
+        <div class="bottom-4 w-full flex justify-center absolute text-center">
+          <div class="bg-gray-300 opacity-90 px-2">
+            <h2 class="inset-x-1/2 text-black opacity-1">
+              {{ summoner["summonerLevel"] }}
+            </h2>
+          </div>
         </div>
-        <div class='flex flex-col'>
-            <div>
-                {% if ranks|length >0 %}{% for rank in ranks %}
-                <h2>{{rank["queueType"]}}:{{rank["tier"]}}-{{rank["rank"]}}-{{rank["leaguePoints"]}}LP  WR:{{rank["wins"]}}/{{ rank["losses"] }}({{ (100*rank["wins"]/(rank["wins"]+rank["losses"]))|round }}%)</h2>
-                {% endfor %}{% endif %}
-            </div>
-            <div id='matchDownloadProgressBar' class='flex flex-row relative h-10 w-80 '>
-                <div class='bg-gray-800 w-0' id='processDone'>
-                </div>
-                <div class='bg-gray-600 w-80' id='processLeft'>
-                </div>
-                <p class='absolute left-1/4 top-1/4' id='processText'>
-                    Match Download Progress:
-                </p>
-            </div>
-        </div>
-        <div id='recentData' class="flex flex-col w-64 bg-gray-600">
-            <div class="flex flex-row justify-between recentDataButtons">
-                <button id='soloduoRecentData' class='bg-gray-400 bg-gray-600 w-full text-center p-2'>Solo/duo</button>
-                <button id='aramRecentData' class='bg-gray-400 text-center w-full p-2'>Aram</button>
-                <button id='recentDataAll' class='bg-gray-400  text-center w-full p-2'>All</button>
-            </div>
-            <div id='recentDataTables'>
+      </div>
 
-            </div>
+      <div
+        id="matchDownloadProgressBar"
+        class="flex flex-row bg-gray-500 relative h-10 w-40"
+      >
+        <div class="bg-gray-600 w-0" id="processDone"></div>
+        <div class="bg-gray-500 w-40" id="processLeft"></div>
+        <div class="absolute w-full h-full flex justify-center items-center">
+          <p id="processText">Matches:</p>
         </div>
+      </div>
     </div>
+    <div class="flex flex-col">
+      <div>
+        {% if ranks|length >0 %}{% for rank in ranks %}
+        <h2>
+          {{rank["queueType"]}}:{{rank["tier"]}}-{{rank["rank"]}}-{{rank["leaguePoints"]}}LP
+          WR:{{rank["wins"]}}/{{ rank["losses"] }}({{
+          (100*rank["wins"]/(rank["wins"]+rank["losses"]))|round }}%)
+        </h2>
+        {% endfor %}{% endif %}
+      </div>
+    </div>
+    <div id="recentData" class="flex flex-col w-64">
+      <div class="flex flex-row justify-between recentDataButtons">
+        <button
+          id="soloduoRecentData"
+          class="bg-gray-400 bg-gray-600 w-full text-center p-2"
+        >
+          Solo/duo
+        </button>
+        <button id="aramRecentData" class="bg-gray-400 text-center w-full p-2">
+          Aram
+        </button>
+        <button id="recentDataAll" class="bg-gray-400 text-center w-full p-2">
+          All
+        </button>
+      </div>
+      <div id="recentDataTables" class="bg-gray-600"></div>
+    </div>
+  </div>
 </div>

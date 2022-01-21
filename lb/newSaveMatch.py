@@ -33,7 +33,8 @@ def updateMatchHistory(puuid, region_large, region, riot_api_key):
         new100Matches = get_match_history(
             region_large, puuid, riot_api_key, i*100, 100)
 
-        newNotDownloadedMatches = [matchId for matchId in new100Matches if matchId not in user['matches']]
+        newNotDownloadedMatches = [
+            matchId for matchId in new100Matches if matchId not in user['matches']]
 
         print('new matches amount:', len(newNotDownloadedMatches), 'round: ', i)
         notDownloadedMatches.extend(newNotDownloadedMatches)
@@ -62,18 +63,21 @@ def downloadMatches(puuid, region_large, region, riot_api_key):
 
     brokenMatches = list(brokenMatchesColl.find({'puuid': {'$in': [puuid]}}))
     print('downlaodedMatches', downloadedMatches)
-    newMatches = [matchId for matchId in user['matches'] if matchId not in downloadedMatches and matchId not in brokenMatches]
+    newMatches = [matchId for matchId in user['matches']
+                  if matchId not in downloadedMatches and matchId not in brokenMatches]
 
     if newMatches == False:
         print('no new matches not downloaded returning')
         return
 
-    for matchId in  newMatches:
+    for matchId in newMatches:
         print('downloading match', matchId, round(100*(newMatches.index(matchId) /
               len(newMatches))), '%', newMatches.index(matchId), len(newMatches))
+
         if list(matchesColl.find({'metadata.matchId': matchId})):
             print('match already downloaded. Simultaneusly download is happening')
             continue
+
         if matchId in brokenMatches:
             print('known broken match ignored')
             continue
@@ -81,8 +85,9 @@ def downloadMatches(puuid, region_large, region, riot_api_key):
         match = get_match(region_large, matchId, riot_api_key)
         if not match:
             brokenMatchesColl.insert({'matchId': matchId, 'puuid': [puuid]})
-            return
-            
+            continue
+
+        # rank
         totalRank = 0
         for player in match['info']['participants']:
             playerRank = rankedPlayersDB[region].find_one(
@@ -90,18 +95,22 @@ def downloadMatches(puuid, region_large, region, riot_api_key):
             if not playerRank:
                 #print('user not found')
                 player['rank'] = {
-                    'tier' : 'unranked',
-                    'rank' : ''
+                    'tier': 'unranked',
+                    'rank': ''
                 }
                 continue
             player['rank'] = playerRank
 
-            totalRank += tiers.index(playerRank['tier'])*4 + divisions.index(playerRank['rank'])
+            totalRank += tiers.index(playerRank['tier']) * \
+                4 + divisions.index(playerRank['rank'])
         match['metadata']['averageRank'] = {
             'tier': tiers[int(math.floor(totalRank // 4))],
-        'division': divisions[int(math.floor(totalRank % 4))]
+            'division': divisions[int(math.floor(totalRank % 4))]
         }
 
+        if list(matchesColl.find({'metadata.matchId': matchId})):
+            print('SECOND2match already downloaded. Simultaneusly download is happening')
+            break
         matchesColl.insert(match)
     return len(newMatches)
 

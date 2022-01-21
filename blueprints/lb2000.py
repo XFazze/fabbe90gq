@@ -109,6 +109,7 @@ def ajax_progress():
     db = client.newMatches
     matchesColl = db.matches
     matchTrackingColl = db.matchTracking
+    
     matchesDownloaded = matchesColl.count_documents({'metadata.participants': {'$in': [puuid]}})
     tracking = matchTrackingColl.find_one({'puuid':puuid}, {'matchAmount':1})
     if not tracking:

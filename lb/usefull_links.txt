@@ -6,6 +6,7 @@ runes and img links:
 http://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/v1/perks.json
 
 
+
 champ images:
 http://ddragon.leagueoflegends.com/cdn/11.9.1/img/champion/"
 item images(little opld):   
@@ -25,3 +26,11 @@ http://ddragon.leagueoflegends.com/cdn/8.11.1/img/spell/SummonerBarrier.png
 
 ESPORT
 https://gist.github.com/levi/e7e5e808ac0119e154ce
+
+
+find duplicates in mongo
+db.matches.aggregate([{"$group" : { "_id": "$metadata.matchId", "count": { "$sum": 1 } } }, {"$match": {"_id" :{ "$ne" : null } , "count" : {"$gt": 1} } }, {"$project": {"name" : "$_id", "_id" : 0} }]);
+
+
+TODO ranked color on position
+https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ranked/positions/

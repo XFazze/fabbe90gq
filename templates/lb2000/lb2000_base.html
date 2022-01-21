@@ -18,9 +18,10 @@
     $SCRIPT_ROOT = {{ request.url_root|tojson }}+'lb2000/';
 </script>
 <script type="text/javascript" src="/static/js/lb2000/main.js"></script>
+<script type="text/javascript" src="/static/js/lb2000/buttons.js"></script>
 <script type="text/javascript" src="/static/js/lb2000/analysis.js"></script>
-<script type="text/javascript" src="/static/js/lb2000/loadMatches.js"></script>
 <script type="text/javascript" src="/static/js/lb2000/recentData.js"></script>
+<script type="text/javascript" src="/static/js/lb2000/loadMatches.js"></script>
 <script type="text/javascript" src="/static/js/lb2000/matchDownloadProgress.js"></script>
 {% endblock %}
 {% block body %}{% endblock %}
@@ -36,6 +37,7 @@
         {% include 'lb2000/categories/matchHistory.html' %}
         {% include 'lb2000/categories/mastery.html' %}
         {% include 'lb2000/categories/analysis.html' %}
+        {% include 'lb2000/categories/liveGame.html' %}
         </div>
     </div>
 </div>
