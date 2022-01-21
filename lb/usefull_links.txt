@@ -23,7 +23,8 @@ http://ddragon.leagueoflegends.com/cdn/12.1.1/data/en_US/champion.json
 https://ddragon.leagueoflegends.com/cdn/12.1.1/data/en_US/summoner.json
 http://ddragon.leagueoflegends.com/cdn/8.11.1/img/spell/SummonerBarrier.png
 
-
+map icons
+https://raw.communitydragon.org/pbe/plugins/rcp-fe-lol-match-history/global/default/
 ESPORT
 https://gist.github.com/levi/e7e5e808ac0119e154ce
 
@@ -31,6 +32,6 @@ https://gist.github.com/levi/e7e5e808ac0119e154ce
 find duplicates in mongo
 db.matches.aggregate([{"$group" : { "_id": "$metadata.matchId", "count": { "$sum": 1 } } }, {"$match": {"_id" :{ "$ne" : null } , "count" : {"$gt": 1} } }, {"$project": {"name" : "$_id", "_id" : 0} }]);
 
-
+<img width="2rem" height="2rem" src="https://raw.communitydragon.org/pbe/game/assets/ux/scoreboard/scoreboardatlas.png" class="object-none">
 TODO ranked color on position
 https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ranked/positions/

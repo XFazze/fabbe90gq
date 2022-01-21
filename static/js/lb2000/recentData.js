@@ -1,14 +1,17 @@
 $(document).ready(function () {
   start();
-  $GAME_VERSION = '12.1.1';
 });
 timeFrames = ['24h', '3d', '7d', '30d', 'lifetime'];
 
 async function start() {
   data = await getRecentData(summoner['puuid']);
   let queueIdRecent = ['420', '450', 'total'];
+  $('#recentDataTables').html('');
+
   queueIdRecent.forEach((qId) => {
-    let table = $(`<table></table>`).addClass('hidden dt' + qId);
+    let table = $(`<div></div>`).addClass(
+      'hidden flex h-full flex-col  dt' + qId
+    );
     timeFrames.forEach((time) => {
       table.append(createTableRecentData(data[qId][time], time));
     });
@@ -65,28 +68,25 @@ async function getRecentData(puuid) {
 
 function createTableRecentData(value, key) {
   if (value['total'] == 0) {
-    return $(`<tr>
-        <th class='w-24'>
+    return $(`<div class='flex flex-row h-full justify-center'>
+        <p class='w-16'>
             ${key}
-        </th>
-        <th class='w-18'>
-            NO
-        </th>
-        <th class='w-18'>
-            MATCHES
-        </th>
-        </tr>`);
+        </p>
+        <p class='w-32'>
+            NO MATCHES
+        </p>
+        </div>`).addClass('my-auto');
   } else {
-    return $(`<tr>
-    <th class='w-24'>
+    return $(`<div class='flex flex-row h-full justify-center'>
+    <p class='w-16'>
         ${key}
-        </th>
-        <th class='w-14'>
-            ${Math.floor((1000 * value['wins']) / value['total']) / 10}%
-        </th>
-        <th class='w-14'>
-            ${value['wins']}/${value['losses']}
-        </th>
-        </tr>`);
+        </p>
+        <div class='w-32 flex flex-row justify-around'>
+        <p class='w-8'> ${
+          Math.floor((1000 * value['wins']) / value['total']) / 10
+        }% </p>
+        <p class='w-8'>  (${value['wins']}/${value['losses']})</p>
+        </div>
+        </div>`).addClass('my-auto');
   }
 }

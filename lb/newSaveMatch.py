@@ -59,10 +59,14 @@ def downloadMatches(puuid, region_large, region, riot_api_key):
     user = list(matchTrackingColl.find({'puuid': puuid}))[0]
 
     downloadedMatches = list(matchesColl.find(
-        {'metadata': {'participants': {'$in': [puuid]}}}, {'matchId': 1}))
+        {'metadata.participants': {'$in': [puuid]}}, {'metadata.matchId': 1}))
+    downloadedMatches = [m['metadata']['matchId'] for m in downloadedMatches]
 
-    brokenMatches = list(brokenMatchesColl.find({'puuid': {'$in': [puuid]}}))
-    print('downlaodedMatches', downloadedMatches)
+    brokenMatches = list(matchesColl.find(
+        {'metadata.participants': {'$in': [puuid]}}, {'metadata.matchId': 1}))
+    brokenMatches = [m['metadata']['matchId'] for m in brokenMatches]
+
+    #print('downlaodedMatches', brokenMatches)
     newMatches = [matchId for matchId in user['matches']
                   if matchId not in downloadedMatches and matchId not in brokenMatches]
 
@@ -93,7 +97,7 @@ def downloadMatches(puuid, region_large, region, riot_api_key):
             playerRank = rankedPlayersDB[region].find_one(
                 {'summonerId': player['summonerId']}, sort=[('time', DESCENDING)])
             if not playerRank:
-                #print('user not found')
+                # print('user not found')
                 player['rank'] = {
                     'tier': 'unranked',
                     'rank': ''

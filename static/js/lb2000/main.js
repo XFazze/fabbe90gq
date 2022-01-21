@@ -11,3 +11,5 @@ async function ajaxRetry(ajaxSettings, wait = 1000) {
     return await ajaxRetry(ajaxSettings, wait + 1000);
   }
 }
+
+$GAME_VERSION = '12.1.1';

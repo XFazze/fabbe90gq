@@ -5,14 +5,13 @@
 <script type="text/javascript" >
     var summonerid = {{ summonerid|tojson }}
     var summoner = {{ summoner|tojson }}
+    var region = {{ region|tojson }}
     stylesheet = document.styleSheets[0]
-    stylesheet.insertRule("."+summonerid+"t {order:-1;}", 0);
-    stylesheet.insertRule("."+summonerid+"w {background:#24a5ea;}", 0);
-    stylesheet.insertRule("."+summonerid+"l {background:#ea3924;}", 0);
     
 </script>
 
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script type="module" src="/static/js.cookie.mjs"></script>
 <script>
     window.jQuery || document.write('<script src="{{url_for('static', filename='jquery.js') }}">\x3C/script>')
     $SCRIPT_ROOT = {{ request.url_root|tojson }}+'lb2000/';
@@ -23,6 +22,8 @@
 <script type="text/javascript" src="/static/js/lb2000/recentData.js"></script>
 <script type="text/javascript" src="/static/js/lb2000/loadMatches.js"></script>
 <script type="text/javascript" src="/static/js/lb2000/matchDownloadProgress.js"></script>
+<script type="text/javascript" src="/static/js/lb2000/ranks.js"></script>
+<script type="module" src="/static/js/lb2000/multiAcc.js"></script>
 {% endblock %}
 {% block body %}{% endblock %}
 {% block main%}
@@ -38,6 +39,7 @@
         {% include 'lb2000/categories/mastery.html' %}
         {% include 'lb2000/categories/analysis.html' %}
         {% include 'lb2000/categories/liveGame.html' %}
+        {% include 'lb2000/categories/multiAcc.html' %}
         </div>
     </div>
 </div>

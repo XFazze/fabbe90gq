@@ -1,13 +1,13 @@
-<div id="user_info" class="flex flex-col pt-4 pb-4">
+<div id="user_info" class="flex flex-col pt-4 pb-16">
   <h2>{{ summoner["name"] }}#{{ niceRegion }}</h2>
-  <div class="flex flex-row">
+  <div class="flex flex-row gap-4">
     {% set icon_url =
-    "http://ddragon.leagueoflegends.com/cdn/12.1.1/img/profileicon/" +
-    summoner["profileIconId"]|string + ".png" %}
+    "https://raw.communitydragon.org/latest/game/assets/ux/summonericons/profileicon"
+    + summoner["profileIconId"]|string + ".png" %}
     <div>
-      <div class="relative pr-4">
+      <div class="relative">
         <img src="{{ icon_url }}" class="w-40" />
-        <div class="bottom-4 w-full flex justify-center absolute text-center">
+        <div class="bottom-0 w-full flex justify-center absolute text-center">
           <div class="bg-gray-300 opacity-90 px-2">
             <h2 class="inset-x-1/2 text-black opacity-1">
               {{ summoner["summonerLevel"] }}
@@ -27,18 +27,22 @@
         </div>
       </div>
     </div>
-    <div class="flex flex-col">
-      <div>
-        {% if ranks|length >0 %}{% for rank in ranks %}
-        <h2>
-          {{rank["queueType"]}}:{{rank["tier"]}}-{{rank["rank"]}}-{{rank["leaguePoints"]}}LP
-          WR:{{rank["wins"]}}/{{ rank["losses"] }}({{
-          (100*rank["wins"]/(rank["wins"]+rank["losses"]))|round }}%)
-        </h2>
-        {% endfor %}{% endif %}
+    <div id="ranks" class="bg-gray-600">
+      <div class="flex flex-row justify-between ranksButtons">
+        <button id="soloqB" class="bg-gray-400 bg-gray-600 w-full p-2">
+          Solo/duo
+        </button>
+        <button id="flexBut" class="bg-gray-400 text-center w-full p-2">
+          Flex
+        </button>
+      </div>
+      <div id="ranksDiv">
+        <div class="flex w-full pt-16 justify-center items-center">
+          <p>Loading rank</p>
+        </div>
       </div>
     </div>
-    <div id="recentData" class="flex flex-col w-64">
+    <div id="recentData" class="flex bg-gray-600 flex-col w-64">
       <div class="flex flex-row justify-between recentDataButtons">
         <button
           id="soloduoRecentData"
@@ -53,7 +57,11 @@
           All
         </button>
       </div>
-      <div id="recentDataTables" class="bg-gray-600"></div>
+      <div id="recentDataTables" class="bg-gray-600 h-full">
+        <div class="flex w-full pt-16 justify-center items-center">
+          <p>Loading Recent Data</p>
+        </div>
+      </div>
     </div>
   </div>
 </div>

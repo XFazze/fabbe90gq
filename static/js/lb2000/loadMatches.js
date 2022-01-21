@@ -72,7 +72,7 @@ function createMatchDiv(match) {
   );
   let teamsDiv = $('<div></div>').addClass('flex gap-4');
   let objectives = $('<div></div>').addClass(
-    'flex-row flex order-2 gap-4 hidden items-center objectivDiv'
+    'flex-row flex order-2 gap-1 hidden items-center objectivDiv'
   );
 
   let teams = {
@@ -91,10 +91,7 @@ function createMatchDiv(match) {
       dateValue.getDate() +
       '/' +
       (dateValue.getMonth() + 1) +
-      '</span>'
-  );
-  let year = $(
-    '<span class="hidden">-' +
+      '-' +
       String(dateValue.getFullYear()).slice(-2) +
       '</span>'
   );
@@ -106,7 +103,7 @@ function createMatchDiv(match) {
       match['metadata']['averageRank']['tier']
     } ${match['metadata']['averageRank']['division']}</p>`
   );
-  meta.prepend([length, date, year, queueId]);
+  meta.prepend([length, date, queueId]);
 
   let teamsPlayers = { 100: '', 200: '' };
   var totalKills = {
@@ -115,11 +112,12 @@ function createMatchDiv(match) {
   };
   var userPos;
   let goldMatchups = {
-    TOP: { 100: 0, 200: 0 },
-    JUNGLE: { 100: 0, 200: 0 },
-    MIDDLE: { 100: 0, 200: 0 },
-    BOTTOM: { 100: 0, 200: 0 },
-    UTILITY: { 100: 0, 200: 0 },
+    TOP: { '100': 0, '200': 0 },
+    JUNGLE: { '100': 0, '200': 0 },
+    MIDDLE: { '100': 0, '200': 0 },
+    BOTTOM: { '100': 0, '200': 0 },
+    UTILITY: { '100': 0, '200': 0 },
+    '': { '100': 0, '200': 0 },
   };
   match['info']['participants'].forEach((player) => {
     teamsPlayers[player['teamId']] =
@@ -146,6 +144,7 @@ function createMatchDiv(match) {
         <p class='h-8'>${
           match['info']['teams'][0]['objectives']['champion']['kills']
         }</p>
+        <p class='h-8 mb-4'>${Math.floor(teamgold.team100 / 1000)}k</p>
         <p class='h-8'>${
           match['info']['teams'][0]['objectives']['dragon']['kills']
         }</p>
@@ -158,16 +157,16 @@ function createMatchDiv(match) {
         <p class='h-8'>${
           match['info']['teams'][0]['objectives']['tower']['kills']
         }</p>
-        <p class='h-8'>${
+        <p class='h-8 '>${
           match['info']['teams'][0]['objectives']['inhibitor']['kills']
         }</p>
-        <p class='h-8'>${Math.floor(teamgold.team100 / 1000)}k</p>
-        </div>`).addClass(' xl:flex flex-col teamsObjectives100');
+        </div>`).addClass(' xl:flex flex-col teamsObjectives100 text-center');
 
   let teamsObjectives200 = $(`<div>
         <p class='h-8'>${
           match['info']['teams'][1]['objectives']['champion']['kills']
         }</p>
+        <p class='h-8 mb-4'>${Math.floor(teamgold.team200 / 1000)}k</p>
         <p class='h-8'>${
           match['info']['teams'][1]['objectives']['dragon']['kills']
         }</p>
@@ -177,23 +176,22 @@ function createMatchDiv(match) {
         <p class='h-8'>${
           match['info']['teams'][1]['objectives']['riftHerald']['kills']
         }</p>
-        <p class='h-8'>${
+        <p class='h-8 '>${
           match['info']['teams'][1]['objectives']['tower']['kills']
         }</p>
         <p class='h-8'>${
           match['info']['teams'][1]['objectives']['inhibitor']['kills']
         }</p>
-        <p class='h-8'>${Math.floor(teamgold.team200 / 1000)}k</p>
-        </div>`).addClass(' xl:flex flex-col teamsObjectives200');
+        </div>`).addClass(' xl:flex flex-col teamsObjectives200  text-center');
   // TODO make these go to the raw cdragon
   let teamsObjectivesMiddle = $(`<div>
-        <img src="https://raw.communitydragon.org/pbe/plugins/rcp-fe-lol-postgame/global/default/mask-icon-offense.png" class='h-8 w-8'>
-        <img src="/static/pics/objectives/drake.png" class='h-8 w-8'>
-        <img src="/static/pics/objectives/baron.png" class='h-8 w-8'>
-        <img src="/static/pics/objectives/riftherald.png" class='h-8 w-8'>
-        <img src="/static/pics/objectives/tower.png" class='h-8 w-8'>
-        <img src="/static/pics/objectives/inhib.png" class='h-8 w-8'>
-        <img src="https://raw.communitydragon.org/pbe/plugins/rcp-fe-lol-postgame/global/default/mask-icon-gold.png" class='h-8 w-8'>
+        <img src="https://raw.communitydragon.org/pbe/plugins/rcp-fe-lol-match-history/global/default/kills.png" class='h-8 w-8'>
+        <img src="https://raw.communitydragon.org/pbe/plugins/rcp-fe-lol-match-history/global/default/icon_gold.png" class='h-8 w-8 mb-4'>
+        <img src="https://raw.communitydragon.org/pbe/plugins/rcp-fe-lol-match-history/global/default/dragon-100.png" class='h-8 w-8'>
+        <img src="https://raw.communitydragon.org/pbe/plugins/rcp-fe-lol-match-history/global/default/baron-100.png" class='h-8 w-8'>
+        <img src="https://raw.communitydragon.org/pbe/plugins/rcp-fe-lol-match-history/global/default/herald-100.png" class='h-8 w-8'>
+        <img src="https://raw.communitydragon.org/pbe/plugins/rcp-fe-lol-match-history/global/default/tower-100.png" class='h-8 w-8'>
+        <img src="https://raw.communitydragon.org/pbe/plugins/rcp-fe-lol-match-history/global/default/inhibitor-100.png" class='h-8 w-8 '>
     
         </div>`).addClass('flex flex-col xl:flex teamsObjectivesMiddle');
   objectives.prepend([
@@ -235,7 +233,7 @@ function createMatchDiv(match) {
     let champDiv = $(`<div></div>`)
       .prepend([champ, champlvl])
       .addClass('relative flex place-items-center');
-
+    //FIXME in ultbook there is a sumonercalss named Summoner_UltBookPlaceholder.png and more
     let sum1 = $(
       `<img src="http://ddragon.leagueoflegends.com/cdn/8.11.1/img/spell/${
         summonerIdToName[player['summoner1Id']]
