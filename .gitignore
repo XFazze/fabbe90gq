@@ -4,7 +4,12 @@ static/lolgames_html/EUW1/*
 static/lolgames_html/EUN1/*
 
 # Byte-compiled / optimized / DLL files
+*/*/*/__pycache__/
+
+*/*/__pycache__/
+*/__pycache__/
 __pycache__/
+*.cpython-37.pyc
 *.py[cod]
 *$py.class
 

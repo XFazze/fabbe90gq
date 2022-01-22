@@ -1,56 +1,56 @@
-
 <div class="analysis hidden">
-  <div id="analysisButtons" class="flex">
-    <button id="checkProgress" class="pr-6 bg-gray-400 bg-gray-600  text-center p-2">Check Progress</button>
-    <button id="winrates" class="pr-6 bg-gray-400 bg-gray-600  text-center p-2">Winrates</button>
-    <button id="timeOfDay" class="pr-6 bg-gray-400 bg-gray-600  text-center p-2">Time Of Day</button>
+  <div class="underContentBtns flex"">
+    <button id="winRates" class="pr-6 bg-gray-400 bg-gray-600 text-center p-2">
+      Winrates
+    </button>
+    <button id="timeOfDay" class="pr-6 bg-gray-400  text-center p-2">
+      Time Of Day
+    </button>
   </div>
-  <div id='analysisContent'>
-    <div id='noData'>
-      <h2>There was no data. Check progress</h2>
-    </div>
-    <div id="progressDiv" class="hidden">
-        <p id="analazyedMatchesAmount">Analyzed games</p>
-        <p id="downloadedMatchesAmount">Downloaded games:</p>
-        <p id="totalMatchesAmount">Total games:</p>
-    </div>
-    <div id='wr' class="hidden ">
-      <p id='wrDone' class="hidden">0</p>
-      <div  class="flex flex-row gap-1 items-start">
-        <table id="queueWR" class=''>
-          <tr class="shadow-lg bg-white">
-            <th class="bg-blue-100 border text-left px-2 py-1">Queue Type</th>
-            <th class="bg-blue-100 border text-left px-2 py-1">Wins/Losses</th>
-            <th class="bg-blue-100 border text-left px-2 py-1">Winrate</th>
-          </tr>
-          <tr class="totalWR"></tr>
-        </table>
-        <table id="roleWR" class=''>
-          <tr class="shadow-lg bg-white">
-            <th class="bg-blue-100 border text-left px-2 py-1">Queue Type</th>
-            <th class="bg-blue-100 border text-left px-2 py-1">Wins/Losses</th>
-            <th class="bg-blue-100 border text-left px-2 py-1">Winrate</th>
-          </tr>
-        </table>
-        <table id="champWR" class=''>
-          <tr class="shadow-lg bg-white">
-            <th class="bg-blue-100 border text-left px-2 py-1">Queue Type</th>
-            <th class="bg-blue-100 border text-left px-2 py-1">Wins/Losses</th>
-            <th class="bg-blue-100 border text-left px-2 py-1">Winrate</th>
-          </tr>
-        </table>
-      </div>
-    </div>
-    <div id='timeOfDayDiv' class="hidden">
-      <p id='timeOfDayDONE' class="hidden">0</p>
-      <table id="timeOfDayTable" class=''>
+
+  <p id="wrDone" class="hidden">0</p>
+
+  <div id="DivwinRates" class="hidden">
+    <div class="flex flex-row gap-1 items-start">
+      <table id="queueWR" class="">
         <tr class="shadow-lg bg-white">
-          <th class="bg-blue-100 border text-left px-2 py-1">Hour of the day</th>
+          <th class="bg-blue-100 border text-left px-2 py-1">Queue Type</th>
+          <th class="bg-blue-100 border text-left px-2 py-1">Wins/Losses</th>
+          <th class="bg-blue-100 border text-left px-2 py-1">Winrate</th>
+        </tr>
+        <tr class="totalWR"></tr>
+      </table>
+      <table id="roleWR" class="">
+        <tr class="shadow-lg bg-white">
+          <th class="bg-blue-100 border text-left px-2 py-1">Queue Type</th>
           <th class="bg-blue-100 border text-left px-2 py-1">Wins/Losses</th>
           <th class="bg-blue-100 border text-left px-2 py-1">Winrate</th>
         </tr>
       </table>
-
+      <table id="champWR" class="">
+        <tr class="shadow-lg bg-white">
+          <th class="bg-blue-100 border text-left px-2 py-1">Queue Type</th>
+          <th class="bg-blue-100 border text-left px-2 py-1">Wins/Losses</th>
+          <th class="bg-blue-100 border text-left px-2 py-1">Winrate</th>
+        </tr>
+      </table>
     </div>
+  </div>
+
+  <div id="noData">
+    <h2>There was no data. Check progress</h2>
+  </div>
+
+  <div id="DivtimeOfDay" class="hidden">
+    <p id="timeOfDayDONE" class="hidden">0</p>
+    <table id="timeOfDayTable" class="">
+      <tr class="shadow-lg bg-white">
+        <th class="bg-blue-100 border text-left px-2 py-1">
+          Hour of the day
+        </th>
+        <th class="bg-blue-100 border text-left px-2 py-1">Wins/Losses</th>
+        <th class="bg-blue-100 border text-left px-2 py-1">Winrate</th>
+      </tr>
+    </table>
   </div>
 </div>

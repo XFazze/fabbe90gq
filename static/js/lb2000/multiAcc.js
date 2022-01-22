@@ -1,8 +1,8 @@
 import Cookies from '/static/js.cookie.mjs';
 
-//$(document).ready(function () {
-//multiAcc();
-//});
+$(document).ready(function () {
+  multiAcc();
+});
 
 $(function () {
   $('#multiAccVerify').bind('click', async function () {
@@ -13,7 +13,21 @@ $(function () {
       Cookies.set('browserId', browserId);
     }
     console.log('edistsing browserId', browserId);
-    await verifyCheck(browserId);
+    let resp = await verifyCheck(browserId);
+    console.log('Multiacc: ', resp);
+    if (resp == 'successful') {
+      $('#multiAccResp').html(`<div>
+      <p>Success, account added</p>
+      <p>Go to other profiles and do the same</p>
+      </div>`);
+      $('#multiAccResp').removeClass('hidden');
+    } else {
+      $('#multiAccResp').html(`<div>
+      <p>Failed, error:</p>
+        <p >${resp}</p>
+        </div>`);
+      $('#multiAccResp').removeClass('hidden');
+    }
   });
 });
 
@@ -25,7 +39,7 @@ async function verifyCheck(browserId) {
       region: region,
       browserId: browserId,
     },
-    url: $SCRIPT_ROOT + 'verify',
+    url: $SCRIPT_ROOT + 'multiAcc/verify',
     cache: false,
     async: false,
     tryCount: 0,
@@ -35,6 +49,7 @@ async function verifyCheck(browserId) {
     return await $.ajax(ajaxSettings);
   } catch (e) {
     console.log('verify failed', e.responseText);
+    return e.responseText;
   }
 }
 
@@ -49,7 +64,7 @@ async function getMultiAccounts() {
       puuid: summoner['puuid'],
       region: region,
     },
-    url: $SCRIPT_ROOT + 'multiAcc',
+    url: $SCRIPT_ROOT + 'multiAcc/multiAccFind',
     cache: false,
     async: false,
     tryCount: 0,

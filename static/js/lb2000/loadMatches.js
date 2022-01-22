@@ -1,11 +1,11 @@
-//TODO load 10 recent matches
 //TODO scroll/click to load more
 //TODO select what date it should load
+//TODO select gamemode
 var ajaxSettings;
 var matchTracking, matchTrackingIndex;
 $(document).ready(function () {
   recentDataStart();
-  $GAME_VERSION = '12.1.1';
+  $GAME_VERSION = '12.2.1';
 });
 
 async function recentDataStart() {
@@ -34,7 +34,7 @@ async function getMatchHistory() {
     data: {
       puuid: summoner['puuid'],
     },
-    url: $SCRIPT_ROOT + 'newMatchHistory',
+    url: $SCRIPT_ROOT + 'match/matchHistory',
     cache: false,
     async: false,
     tryCount: 0,
@@ -50,7 +50,7 @@ async function loadTen(matches) {
       data: {
         id: matchId,
       },
-      url: $SCRIPT_ROOT + 'newMatch',
+      url: $SCRIPT_ROOT + 'match/match',
       cache: false,
       async: false,
       tryCount: 0,
@@ -315,7 +315,7 @@ function createMatchDiv(match) {
       player['item5'],
     ];
     itemsValue = itemsValue.sort().reverse();
-    let itemPath = 'http://ddragon.leagueoflegends.com/cdn/12.1.1/img/item/';
+    let itemPath = 'http://ddragon.leagueoflegends.com/cdn/12.2.1/img/item/';
     for (let index = 0; index < itemsValue.length; index++) {
       if (itemsValue[index] == 0) {
         itemsValue[index] = '/static/pics/transparent';

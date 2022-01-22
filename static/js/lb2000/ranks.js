@@ -4,42 +4,7 @@ $(document).ready(function () {
 
 async function rankStart() {
   data = await getRanks(summoner['id']);
-  let queueIdRecent = ['RANKED_SOLO_5x5', 'RANKED_TEAM_5x5'];
-
-  $('#ranksDiv').html('');
-  queueIdRecent.forEach((qId) => {
-    if (!data[qId]) {
-      let text = $(`<p>No rank</p>`);
-      let nodata = $('<div></div>').addClass(
-        'hidden flex justify-center items-center ' + qId
-      );
-      nodata.prepend([text]);
-      $('#ranksDiv').append(nodata);
-      return;
-    }
-
-    let rank = $(`<div></div>`).addClass('hidden bg-gray-600 relative r' + qId);
-    let img = $(
-      `<div><img src='https://raw.communitydragon.org/pbe/plugins/rcp-fe-lol-postgame/global/default/ranked-tier-${data[
-        qId
-      ]['tier'].toLowerCase()}.png'></div>`
-    ).addClass('w-32');
-
-    let tier =
-      $(`<div class='text-center w-full absolute top-2'><p>${data[qId]['rank']}  ${data[qId]['leaguePoints']} LP 
-    </p></div>`);
-
-    let stats = $(`<div class='text-center w-full '><p>${
-      Math.floor(
-        (1000 * data[qId]['wins']) / (data[qId]['wins'] + data[qId]['losses'])
-      ) / 10
-    }% (${data[qId]['wins']}/${data[qId]['losses']})
-    </p></div>`);
-
-    rank.prepend([img, tier, stats]);
-    $('#ranksDiv').append(rank);
-  });
-  $('.rRANKED_SOLO_5x5').removeClass('hidden');
+  await fillRanks(data);
 }
 async function getRanks(summonerId) {
   ajaxSettings = {
@@ -57,6 +22,48 @@ async function getRanks(summonerId) {
   return await ajaxRetry(ajaxSettings, 1000);
 }
 
+async function fillRanks(data) {
+  let queueIdRecent = ['RANKED_SOLO_5x5', 'RANKED_TEAM_5x5'];
+
+  $('#ranksDiv').html('');
+  queueIdRecent.forEach((qId) => {
+    if (!data[qId]) {
+      let text = $(`<p>No rank</p>`);
+      let nodata = $('<div></div>').addClass(
+        'hidden flex justify-center items-center r' + qId
+      );
+      nodata.prepend([text]);
+      $('#ranksDiv').append(nodata);
+      return;
+    } else {
+      createRankHtml(qId);
+    }
+  });
+  $('.rRANKED_SOLO_5x5').removeClass('hidden');
+}
+
+async function createRankHtml(qId) {
+  let rank = $(`<div></div>`).addClass('hidden bg-gray-600 relative r' + qId);
+  let img = $(
+    `<div><img src='https://raw.communitydragon.org/pbe/plugins/rcp-fe-lol-postgame/global/default/ranked-tier-${data[
+      qId
+    ]['tier'].toLowerCase()}.png'></div>`
+  ).addClass('w-32');
+
+  let tier =
+    $(`<div class='text-center w-full absolute top-2'><p>${data[qId]['rank']}  ${data[qId]['leaguePoints']} LP 
+</p></div>`);
+
+  let stats = $(`<div class='text-center w-full '><p>${
+    Math.floor(
+      (1000 * data[qId]['wins']) / (data[qId]['wins'] + data[qId]['losses'])
+    ) / 10
+  }% (${data[qId]['wins']}/${data[qId]['losses']})
+</p></div>`);
+
+  rank.prepend([img, tier, stats]);
+  $('#ranksDiv').append(rank);
+}
 //buttons
 $(function () {
   $('#soloqB').bind('click', function () {

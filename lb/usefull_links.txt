@@ -18,9 +18,9 @@ https://dev.whatismymmr.com/
 game constatns:
 https://developer.riotgames.com/docs/lol#general_game-constants
 https://static.developer.riotgames.com/docs/lol/queues.json
-http://ddragon.leagueoflegends.com/cdn/12.1.1/data/en_US/champion.json
+http://ddragon.leagueoflegends.com/cdn/12.2.1/data/en_US/champion.json
 
-https://ddragon.leagueoflegends.com/cdn/12.1.1/data/en_US/summoner.json
+https://ddragon.leagueoflegends.com/cdn/12.2.1/data/en_US/summoner.json
 http://ddragon.leagueoflegends.com/cdn/8.11.1/img/spell/SummonerBarrier.png
 
 map icons

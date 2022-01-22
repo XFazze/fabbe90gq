@@ -1,7 +1,8 @@
-
+authlib
 flask
 python-dotenv
 requests
 authlib
 six
 ratelimit
+celery

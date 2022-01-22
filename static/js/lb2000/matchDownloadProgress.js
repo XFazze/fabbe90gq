@@ -6,7 +6,7 @@ $(document).ready(function () {
 async function matchDownloadProgress() {
   let progress = await checkProgress(summoner['puuid']);
   if (progress['downloaded'] >= progress['totalAmount']) {
-    console.log('all matches are downloaded returning');
+    console.log('matchDownloadProgress: all matches are downloaded');
     $('#processText').text('All Matches');
     return;
   }
