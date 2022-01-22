@@ -10,8 +10,6 @@ from lb.queueId import *
 from lb.api_calls import *
 from lb.regions import *
 from lb.summonerSpells import *
-# TODO put boots always on most right item slot
-# TODO add average rank
 
 
 def jsonconvert(json_match, runeIdToName, region, api_key):
@@ -331,9 +329,7 @@ def generate_html(match_json, region):
         keystoneimg = tf.img(
             src=match_json[player]['perks']['keystone'], Class='keystone w-8')
         keystone = tf.DIV([keystoneimg])
-        # TODO get full runes to show on hover
         runestree = tf.DIV(runes, Class='runestree group-hover:flex w-64 flex')
-        # TODO remove all but keystone and make button to show ontop
         runes = tf.DIV([keystone, runestree], Class='group runes flex')
 # detailsdiv
         for category in match_json[player].keys():
@@ -350,7 +346,6 @@ def generate_html(match_json, region):
 # divstuff stuff
         username = unicodedata.normalize(
             'NFKD', match_json[player]['meta']['summonerName']).encode('ascii', 'ignore')
-        # TODO fix to work with all unicode names
         summonername = tf.p(
             username, Class='w-16 text-right overflow-hidden whitespace-nowrap')
         summonernamediv = tf.A(

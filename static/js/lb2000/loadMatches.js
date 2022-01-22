@@ -1,4 +1,3 @@
-//TODO scroll/click to load more
 //TODO select what date it should load
 //TODO select gamemode
 var ajaxSettings;
@@ -411,11 +410,13 @@ function createMatchDiv(match) {
 
     //FIXME objective damage isnt working
     let damage = $(
-      `<p>${Math.floor(player['totalDamageDealtToChampions'] / 1000)}k/${
-        Math.floor(player['damageDealtToBuildings'] / 100) / 10
-      }k/${Math.floor(
-        player['damageDealtToObjectives'] - player['damageDealtToObjectives']
-      )}</p>`
+      `<p>${Math.floor(
+        player['totalDamageDealtToChampions'] / 1000
+      )}/${Math.floor(player['damageDealtToBuildings'] / 1000)}/${Math.floor(
+        (player['damageDealtToObjectives'] - player['damageDealtToBuildings']) /
+          1000
+      )} k
+      </p>`
     ); // champions/buildings/objectives
     let heal = $(
       `<p>${

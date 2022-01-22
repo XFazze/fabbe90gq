@@ -2,6 +2,7 @@ import Cookies from '/static/js.cookie.mjs';
 
 $(document).ready(function () {
   multiAcc();
+  multiAccChanges();
 });
 
 $(function () {
@@ -55,24 +56,46 @@ async function verifyCheck(browserId) {
 
 async function multiAcc() {
   var accs = await getMultiAccounts();
-  console.log(accs);
+  accs = accs['data'];
+  if (accs) {
+    accs.forEach(async (user) => {
+      var user = await createMultiAccDiv(user);
+      $('#DivlinkAccount').append(user);
+    });
+  } else {
+    $('#DivlinkAccount').text('There were no linked accounts');
+  }
 }
 async function getMultiAccounts() {
   ajaxSettings = {
     type: 'GET',
     data: {
       puuid: summoner['puuid'],
-      region: region,
     },
-    url: $SCRIPT_ROOT + 'multiAcc/multiAccFind',
+    url: $SCRIPT_ROOT + 'multiAcc/find',
     cache: false,
     async: false,
-    tryCount: 0,
-    retryLimit: 10,
   };
   return await ajaxRetry(ajaxSettings);
 }
-
+async function createMultiAccDiv(user) {
+  let player = $('<div></div>').addClass('flex  p-4');
+  let pfp = $(
+    `<img src="https://raw.communitydragon.org/latest/game/assets/ux/summonericons/profileicon${user['profileIconId']}.png"></img>`
+  ).addClass('w-24');
+  let link = $(
+    `<a href='${$SCRIPT_ROOT}${user['region']}/${user['name']}'></a>`
+  );
+  let info = $(`<div></div>`).addClass('flex flex-col justify-center');
+  let username = $(`<h2>${user['name']}</h2>`);
+  let region = $(`<h2>${regionConverter4[user['region']]}</h2>`);
+  let summonerLevel = $(`<h2>${user['summonerLevel']}</h2>`);
+  info.prepend(username, region, summonerLevel);
+  //console.log(username);
+  player.prepend(pfp, info);
+  link.prepend(player);
+  return link;
+}
 function makeid(length) {
   var result = '';
   var characters =
@@ -82,4 +105,43 @@ function makeid(length) {
     result += characters.charAt(Math.floor(Math.random() * charactersLength));
   }
   return result;
+}
+var regionConverter4 = {
+  'eun1': 'EUNE',
+  'euw1': 'EUW',
+  'kr': 'KR',
+  'na1': 'NA',
+  'br1': 'BR',
+  'la1': 'LAN',
+  'la2': 'LAS',
+  'oc1': 'OCE',
+  'ru': 'RU',
+  'tr1': 'TR',
+  'jp1': 'JA',
+};
+
+async function multiAccChanges() {
+  var changes = await getMultiAccChanges(summoner['puuid']);
+  changes['pfps'].forEach((pfp) => {
+    $('#profilePictureHistory').append(
+      `<img class='mb-2' src="https://raw.communitydragon.org/latest/game/assets/ux/summonericons/profileicon${pfp}.png">`
+    );
+  });
+  changes['name'].forEach((name) => {
+    $('#summonerNamesHistory').append(`<p class='mb-2'>${name}</p>`);
+  });
+  //console.log('s', changes);
+}
+
+async function getMultiAccChanges(summonerPuuid) {
+  ajaxSettings = {
+    type: 'GET',
+    data: {
+      puuid: summoner['puuid'],
+    },
+    url: $SCRIPT_ROOT + 'multiAcc/changes',
+    cache: false,
+    async: false,
+  };
+  return await ajaxRetry(ajaxSettings);
 }

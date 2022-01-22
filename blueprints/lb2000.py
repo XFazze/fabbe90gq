@@ -19,12 +19,14 @@ from lb.newSaveMatch import *
 from lb.ranks import *
 from lb.recentData import *
 from lb.summoner import *
+from lb.mastery import *
 from blueprints.lb2000bps.progress import progress
 from blueprints.lb2000bps.wr import wr
 from blueprints.lb2000bps.match import match
 from blueprints.lb2000bps.recentData import recentData
 from blueprints.lb2000bps.ranks import ranks
 from blueprints.lb2000bps.multiAcc import multiAcc
+from blueprints.lb2000bps.mastery import mastery
 
 lb2000 = Blueprint('lb2000', __name__)
 lb2000.register_blueprint(progress, url_prefix='/progress')
@@ -33,9 +35,9 @@ lb2000.register_blueprint(match, url_prefix='/match')
 lb2000.register_blueprint(recentData, url_prefix='/recentData')
 lb2000.register_blueprint(ranks, url_prefix='/ranks')
 lb2000.register_blueprint(multiAcc, url_prefix='/multiAcc')
+lb2000.register_blueprint(mastery, url_prefix='/mastery')
 
 
-# TODO connect accounts by verifying with pfp
 # TODO player Tags
 # champs player wr for champs/length
 # TODO timeframes in analysis
@@ -46,9 +48,6 @@ lb2000.register_blueprint(multiAcc, url_prefix='/multiAcc')
 
 # TODO summoner top champ background
 
-# TODO get live lobby/game
-
-# TODO cache more summonerdata
 
 # TODO rank distribution
 # TODO average rank of champion
@@ -58,8 +57,7 @@ lb2000.register_blueprint(multiAcc, url_prefix='/multiAcc')
 
 # TODO calendar of matches
 
-# TODO summoner history
-
+# TODO search bar examples
 
 @lb2000.route("/", methods=['GET', 'POST'])
 @lb2000.route("/<region>/<summonername>", methods=['GET', 'POST'])
@@ -73,7 +71,7 @@ def lb2000_index(region='noregion', summonername='nouser'):
 
     res = render_template('lb2000/lb2000_search.html',
                           error=False, popular=popular)
-    if summonername != 'nouser' or region != 'noregion':
+    if summonername != 'nouser' or region != 'noregion' or region == 'multiAcc':
         res = returnprofile(summonername, region, popular)
     if not res:
         res = render_template('lb2000/lb2000_search.html', error=True)
@@ -81,42 +79,41 @@ def lb2000_index(region='noregion', summonername='nouser'):
 
 
 def returnprofile(summonername, region, popular):
+    print('region', region)
     region_large = regionConverter1[region]
     summoner = get_summoner(region, summonername, riot_api_key)
     if not summoner:
         return False
     else:
         Thread(target=updateSummoner, args=(summoner, region)).start()
+        Thread(target=updateMasterySummoner, args=(
+            summoner['id'], region, summoner['puuid'], riot_api_key)).start()
         addPopular(summonername, region)
-        mastery = get_mastery(region, summoner['id'], riot_api_key)
-        masterPoints = int(sum([item['championPoints']
-                           for item in mastery])/1000)
-        total_mastery = get_total_mastery(region, summoner['id'], riot_api_key)
         Thread(target=getMatches, args=(
             summoner['puuid'], region_large, region, riot_api_key)).start()
         Thread(target=get_recentData, args=(summoner['puuid'],)).start()
         Thread(target=getRankedPlayers, args=(
             region, summoner['id'], riot_api_key)).start()
-
-        multiAccId = randint(1, 27)
-        multiAccUrl = f'https://raw.communitydragon.org/latest/game/assets/ux/summonericons/profileicon{ multiAccId }.png'
-        client = MongoClient('localhost', 27017)
-        coll = client.lb2000.multiAcc
-        coll.replace_one({'puuid': summoner['puuid']}, {
-                         'puuid': summoner['puuid'], 'pfpId': multiAccId}, upsert=True)
-        coll = client.lb2000.puuidRegion
-        coll.replace_one({'puuid': summoner['puuid']}, {
-                         'puuid': summoner['puuid'], 'region': region}, upsert=True)
+        multiAccId, multiAccUrl = multiAccGet(summoner['id'])
 
         # match_history =  get_match_history(region_large, summoner['puuid'], riot_api_key, 0, 9)
         # Thread(target=download_matches, args=(match_history, region, riot_api_key, runeIdToName)).start()
         # Thread(target=get_details, args=(summoner['puuid'], region_large, riot_api_key)).start()
         timenow = time.time()
-        for i in mastery:
-            i["championId"] = str(i["championId"])
+
         print('profile success')
-        return render_template('lb2000/lb2000_base.html', summoner=summoner, region=region, region_large=region_large, niceRegion=regionConverter4[region], mastery=mastery, total_mastery=total_mastery, champ_id_to_name=champ_id_to_name, timenow=timenow,
-                               summonerid=str(summoner['id']),  masterPoints=masterPoints, popular=popular, multiAccUrl=multiAccUrl)
+        return render_template('lb2000/lb2000_base.html', summoner=summoner, region=region, region_large=region_large, niceRegion=regionConverter4[region], champ_id_to_name=champ_id_to_name, timenow=timenow,
+                               summonerid=str(summoner['id']),   popular=popular, multiAccUrl=multiAccUrl)
+
+
+def multiAccGet(puuid):
+    multiAccId = randint(1, 27)
+    multiAccUrl = f'https://raw.communitydragon.org/latest/game/assets/ux/summonericons/profileicon{ multiAccId }.png'
+    client = MongoClient('localhost', 27017)
+    coll = client.lb2000.multiAcc
+    coll.replace_one({'puuid': puuid}, {
+        'puuid': puuid, 'pfpId': multiAccId}, upsert=True)
+    return multiAccId, multiAccUrl
 
 
 '''

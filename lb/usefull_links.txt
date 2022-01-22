@@ -9,8 +9,15 @@ http://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/defaul
 
 champ images:
 http://ddragon.leagueoflegends.com/cdn/11.9.1/img/champion/"
-item images(little opld):   
-http://ddragon.leagueoflegends.com/cdn/10.18.1/img/item/
+
+item images:   
+https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/v1/items.json
+https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/items/icons2d/
+
+#champion icons
+https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/v1/champion-summary.json
+https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/v1/champion-icons/
+
 
 mmmr:
 https://dev.whatismymmr.com/

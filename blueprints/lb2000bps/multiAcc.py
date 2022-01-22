@@ -5,7 +5,7 @@ from bson import json_util
 import time
 import os
 from random import randint
-from pymongo import MongoClient
+from pymongo import MongoClient, DESCENDING
 
 from lb.api_calls import *
 multiAcc = Blueprint('multiAcc', __name__)
@@ -48,19 +48,19 @@ def multiAccVerify():
     return 'successful', 200
 
 
-@multiAcc.route("/multiAccFind", methods=['GET', 'POST'])
+@multiAcc.route("/find", methods=['GET', 'POST'])
 def multiAccFind():
     puuid = request.args.get('puuid', 0, type=str)
     client = MongoClient('localhost', 27017)
     db = client.lb2000
     summoners = db.summoners
-    #riotApiKey = list(config.find({'type': 'riotApiKey'}))[0]['value']
+    # riotApiKey = list(config.find({'type': 'riotApiKey'}))[0]['value']
     multiAccColl = db.multiAcc
     try:
         accounts = list(multiAccColl.find({'accounts': {'$in': [puuid]}}))[0]
         # print(accounts)
     except:
-        return 'there was no multi accunts', 400
+        return json.loads(json_util.dumps({'data': False}))
     if not accounts:
         print('users doesnt exists')
         return 'this account has no linked accounts', 400
@@ -75,3 +75,26 @@ def multiAccFind():
         # TODO add rank
 
     return json.loads(json_util.dumps(res))
+
+# FIXME when monogdb server responds
+
+
+@multiAcc.route("/changes", methods=['GET', 'POST'])
+def multiAccChangesd():
+    puuid = request.args.get('puuid', 0, type=str)
+    client = MongoClient('localhost', 27017)
+    db = client.lb2000
+    summoners = db.summoners
+    # riotApiKey = list(config.find({'type': 'riotApiKey'}))[0]['value']
+
+    pfps = list(summoners.find({'puuid': puuid}).sort(
+        [('time', DESCENDING)]).distinct('profileIconId'))
+    name = list(summoners.find({'puuid': puuid}).sort(
+        [('time', DESCENDING)]).distinct('name'))
+    # TODO fix so you can see time
+    #pfps = list(summoners.distinct('profileIconId', {'puuid': puuid}))
+    data = {
+        'pfps': pfps,
+        'name': name
+    }
+    return json.loads(json_util.dumps(data))

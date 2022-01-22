@@ -1,19 +1,23 @@
 <div class="multiAcc hidden">
   <div class="underContentBtns flex">
     <button
-      id="linkedAccounts"
-      class="pr-6 bg-gray-400 bg-gray-600 text-center p-2"
+      id="linkAccount"
+      class="px-6 bg-gray-400 bg-gray-600 text-center p-2"
     >
-      Linked accoutns
+      Linked accounts
     </button>
-    <button id="linkAccount" class="px-6 bg-gray-400 text-center p-2">
+    <button id="linkedAccounts" class="pr-6 bg-gray-400 text-center p-2">
       Link this account
     </button>
+    <button id="summonerHistory" class="px-6 bg-gray-400 text-center p-2">
+      Summoner History
+    </button>
   </div>
-  <div id="DivlinkAccount" class="hidden">
-    <p>Linked accounts</p>
-  </div>
-  <div id="DivlinkedAccounts" class="flex flex-row place-content-between p-4">
+  <div id="DivlinkAccount" class=""></div>
+  <div
+    id="DivlinkedAccounts"
+    class="grid-rows-3 hidden place-content-between p-4"
+  >
     <div class="flex">
       <img src="{{ multiAccUrl }}" class="w-40 h-40 pr-4" />
       <div class="flex flex-col p-4">
@@ -22,7 +26,7 @@
           id="multiAccVerify"
           class="bg-gray-400 text-center p-1 px-0 m-1"
         >
-          Click this to link this account
+          Click to link this account
         </button>
         <p class="w-64">Link another account on this browser</p>
       </div>
@@ -31,5 +35,14 @@
         class="flex w-full h-full content-center items-center hidden"
       ></div>
     </div>
+  </div>
+  <div id="DivsummonerHistory" class="flex flex-row hidden gap-8">
+    <div id="summonerNamesHistory">
+      <h3>Summoner Name</h3>
+    </div>
+    <div id="profilePictureHistory">
+      <h3>Profile Picture</h3>
+    </div>
+    <div id="levelHistory"></div>
   </div>
 </div>
