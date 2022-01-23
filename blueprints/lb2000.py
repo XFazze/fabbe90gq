@@ -20,6 +20,7 @@ from lb.ranks import *
 from lb.recentData import *
 from lb.summoner import *
 from lb.mastery import *
+
 from blueprints.lb2000bps.progress import progress
 from blueprints.lb2000bps.wr import wr
 from blueprints.lb2000bps.match import match
@@ -27,6 +28,7 @@ from blueprints.lb2000bps.recentData import recentData
 from blueprints.lb2000bps.ranks import ranks
 from blueprints.lb2000bps.multiAcc import multiAcc
 from blueprints.lb2000bps.mastery import mastery
+from blueprints.lb2000bps.liveGame import liveGame
 
 lb2000 = Blueprint('lb2000', __name__)
 lb2000.register_blueprint(progress, url_prefix='/progress')
@@ -36,6 +38,7 @@ lb2000.register_blueprint(recentData, url_prefix='/recentData')
 lb2000.register_blueprint(ranks, url_prefix='/ranks')
 lb2000.register_blueprint(multiAcc, url_prefix='/multiAcc')
 lb2000.register_blueprint(mastery, url_prefix='/mastery')
+lb2000.register_blueprint(liveGame, url_prefix='/liveGame')
 
 
 # TODO player Tags

@@ -1,23 +1,18 @@
-<div class="taskbar w-full">
-  <ul id="taskbarinner" class="flex flex-row">
-    <li id="matchHistory" class="bg-gray-600 bg-gray-400 p-4 pr-6">
-      <div>
-        <button
-          onclick="taskbarBtn('matchHistory')"
-          class="rounded-none text-2xl"
-        >
-          Match History
-        </button>
-      </div>
-    </li>
-    <li id="mastery" class="bg-gray-400 p-4 px-6">
-      <div>
-        <button onclick="taskbarBtn('mastery')" class="rounded-none text-2xl">
-          Mastery
-        </button>
-      </div>
-    </li>
-    <!--
+<div class="underContentBtns flex bg-gray-300">
+  <button
+    id="matchHistory"
+    class="px-6 bg-gray-400 bg-gray-600 text-center p-4"
+  >
+    Match History
+  </button>
+  <button id="mastery" class="px-6 bg-gray-400 text-center p-4">Mastery</button>
+  <button id="liveGame" class="px-6 bg-gray-400 text-center p-4">
+    Live game
+  </button>
+  <button id="multiAcc" class="px-6 bg-gray-400 text-center p-4">
+    Accounts
+  </button>
+  <!--
     <li id="analysis" class="bg-gray-400 p-4 px-6">
       <div>
         <button onclick="taskbarBtn('analysis')" class="rounded-none text-2xl">
@@ -25,12 +20,4 @@
         </button>
       </div>
     </li>-->
-    <li id="multiAcc" class="bg-gray-400 p-4 px-6">
-      <div>
-        <button onclick="taskbarBtn('multiAcc')" class="rounded-none text-2xl">
-          Accounts
-        </button>
-      </div>
-    </li>
-  </ul>
 </div>

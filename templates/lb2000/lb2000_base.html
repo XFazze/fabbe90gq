@@ -1,50 +1,47 @@
-{% extends "templateLb2000.html" %}
-{% block link %}
+{% extends "templateLb2000.html" %} {% block link %}
 <link rel="stylesheet" href="{{url_for('static',filename='css/main.css')}}" />
-<link rel="stylesheet" href="/static/css/lb2000.css">
-<script type="text/javascript" >
-    var summonerid = {{ summonerid|tojson }}
-    var summoner = {{ summoner|tojson }}
-    var region = {{ region|tojson }}
-    var champIdToName = {{ champ_id_to_name|tojson }}
-    var timeNow = {{ timenow|tojson }}
-    stylesheet = document.styleSheets[0]
-    
+<link rel="stylesheet" href="/static/css/lb2000.css" />
+<script type="text/javascript">
+  var summonerid = {{ summonerid|tojson }}
+  var summoner = {{ summoner|tojson }}
+  var region = {{ region|tojson }}
+  var champIdToName = {{ champ_id_to_name|tojson }}
+  var timeNow = {{ timenow|tojson }}
+  stylesheet = document.styleSheets[0]
 </script>
 
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <script type="module" src="/static/js.cookie.mjs"></script>
 <script>
-    window.jQuery || document.write('<script src="{{url_for('static', filename='jquery.js') }}">\x3C/script>')
-    $SCRIPT_ROOT = {{ request.url_root|tojson }}+'lb2000/';
+  window.jQuery || document.write('<script src="{{url_for('static', filename='jquery.js') }}">\x3C/script>')
+  $SCRIPT_ROOT = {{ request.url_root|tojson }}+'lb2000/';
 </script>
 <script type="text/javascript" src="/static/js/lb2000/main.js"></script>
 <script type="text/javascript" src="/static/js/lb2000/buttons.js"></script>
 <script type="text/javascript" src="/static/js/lb2000/analysis.js"></script>
 <script type="text/javascript" src="/static/js/lb2000/recentData.js"></script>
 <script type="text/javascript" src="/static/js/lb2000/loadMatches.js"></script>
-<script type="text/javascript" src="/static/js/lb2000/matchDownloadProgress.js"></script>
+<script
+  type="text/javascript"
+  src="/static/js/lb2000/matchDownloadProgress.js"
+></script>
 <script type="text/javascript" src="/static/js/lb2000/ranks.js"></script>
 <script type="text/javascript" src="/static/js/lb2000/mastery.js"></script>
 
 <script type="module" src="/static/js/lb2000/multiAcc.js"></script>
-{% endblock %}
-{% block body %}{% endblock %}
-{% block main%}
-<div class="flex flex-col justify-center ml-4 mt-4" >
-    <div class="bg-gray-300 ">
-        {% include 'lb2000/base/shortSearchBar.html' %}
-        {% include 'lb2000/base/user.html' %}
-        {% include 'lb2000/base/mainNav.html' %}
+{% endblock %} {% block body %}{% endblock %} {% block main%}
+<div class="flex flex-col justify-center ml-4 mt-4">
+  {% include 'lb2000/base/shortSearchBar.html' %} {% include
+  'lb2000/base/user.html' %}
+  <div class="bg-gray-300">
+    <div id="contents" class="p-4 pt-0" style="width: fit-content">
+      {% include 'lb2000/base/mainNav.html' %} {% include
+      'lb2000/categories/matchHistory.html' %} {% include
+      'lb2000/categories/mastery.html' %} {% include
+      'lb2000/categories/liveGame.html' %} {% include
+      'lb2000/categories/multiAcc.html' %}
     </div>
-    <div id="contents" class="p-4 pt-0 bg-gray-600 " style="width: fit-content;">
-        {% include 'lb2000/categories/matchHistory.html' %}
-        {% include 'lb2000/categories/mastery.html' %}
-        <!--{% include 'lb2000/categories/analysis.html' %}-->
-        {% include 'lb2000/categories/liveGame.html' %}
-        {% include 'lb2000/categories/multiAcc.html' %}
-        </div>
-    </div>
+  </div>
 </div>
 {% endblock %}
 <!---
