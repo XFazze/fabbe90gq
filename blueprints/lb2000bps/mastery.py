@@ -7,7 +7,7 @@ import os
 from random import randint
 from pymongo import MongoClient, DESCENDING
 
-from lb.api_calls import *
+from lb2000.update.api_calls import *
 mastery = Blueprint('mastery', __name__)
 
 

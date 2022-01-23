@@ -1,5 +1,5 @@
 {
     "python.analysis.extraPaths": [
-        "./lb"
+        "./lb2000"
     ]
 }

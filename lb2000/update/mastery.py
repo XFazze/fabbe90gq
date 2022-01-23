@@ -3,7 +3,7 @@ from doctest import master
 from pymongo import MongoClient, DESCENDING
 from copy import deepcopy
 import time
-from lb.api_calls import *
+from lb2000.update.api_calls import *
 
 
 def updateMasterySummoner(id, region, puuid, riotApiKey):

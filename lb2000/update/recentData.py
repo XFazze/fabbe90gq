@@ -4,11 +4,11 @@ from hashlib import new
 import time
 from pprint import pprint
 from pymongo import MongoClient, DESCENDING
-from lb.queueId import *
-from lb.seasonsSplits import *
+from lb2000.queueId import *
+from lb2000.seasonsSplits import *
 
 
-def get_recentData(puuid):
+def updateRecentData(puuid):
     client = MongoClient('localhost', 27017)
     newMatchesdb = client.newMatches
     matchesColl = newMatchesdb.matches

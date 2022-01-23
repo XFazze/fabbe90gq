@@ -1,6 +1,6 @@
 
 from pymongo import MongoClient
-from lb.regions import * 
+from lb2000.regions import * 
 
 def addPopular(summonerName, region):
     client = MongoClient('localhost', 27017)

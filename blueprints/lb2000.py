@@ -7,19 +7,19 @@ import time
 import os
 from random import randint
 
-from lb.api_calls import *
-from lb.match_history import *
-from lb.championIdtoname import *
+from lb2000.championIdtoname import *
 from forms.lb2000_form import *
-from lb.runes import *
-from lb.analysis import *
-from lb.popular import *
-from lb.regions import *
-from lb.newSaveMatch import *
-from lb.ranks import *
-from lb.recentData import *
-from lb.summoner import *
-from lb.mastery import *
+from lb2000.runes import *
+from lb2000.analysis import *
+from lb2000.popular import *
+from lb2000.regions import *
+from lb2000.update.api_calls import *
+from lb2000.update.saveMatch import *
+from lb2000.update.ranks import *
+from lb2000.update.recentData import *
+from lb2000.update.summoner import *
+from lb2000.update.mastery import *
+from lb2000.update.liveGame import *
 
 from blueprints.lb2000bps.progress import progress
 from blueprints.lb2000bps.wr import wr
@@ -30,6 +30,7 @@ from blueprints.lb2000bps.multiAcc import multiAcc
 from blueprints.lb2000bps.mastery import mastery
 from blueprints.lb2000bps.liveGame import liveGame
 
+# blueprints
 lb2000 = Blueprint('lb2000', __name__)
 lb2000.register_blueprint(progress, url_prefix='/progress')
 lb2000.register_blueprint(wr, url_prefix='/wr')
@@ -82,26 +83,21 @@ def lb2000_index(region='noregion', summonername='nouser'):
 
 
 def returnprofile(summonername, region, popular):
-    print('region', region)
     region_large = regionConverter1[region]
-    summoner = get_summoner(region, summonername, riot_api_key)
+    summoner = get_summoner(region, summonername, riotApiKey)
     if not summoner:
         return False
     else:
         Thread(target=updateSummoner, args=(summoner, region)).start()
-        Thread(target=updateMasterySummoner, args=(
-            summoner['id'], region, summoner['puuid'], riot_api_key)).start()
-        addPopular(summonername, region)
-        Thread(target=getMatches, args=(
-            summoner['puuid'], region_large, region, riot_api_key)).start()
-        Thread(target=get_recentData, args=(summoner['puuid'],)).start()
-        Thread(target=getRankedPlayers, args=(
-            region, summoner['id'], riot_api_key)).start()
+        Thread(target=updateLiveGame, args=(region, summoner['id'], riotApiKey)).start()
+        Thread(target=updateMasterySummoner, args=(summoner['id'], region, summoner['puuid'], riotApiKey)).start()
+        Thread(target=addPopular, args=(summonername, region)).start()
+        Thread(target=updateMatches, args=(summoner['puuid'], region_large, region, riotApiKey)).start()
+        Thread(target=updateRecentData, args=(summoner['puuid'],)).start()
+        Thread(target=updateRankedPlayers, args=(region, summoner['id'], riotApiKey)).start()
         multiAccId, multiAccUrl = multiAccGet(summoner['id'])
 
-        # match_history =  get_match_history(region_large, summoner['puuid'], riot_api_key, 0, 9)
-        # Thread(target=download_matches, args=(match_history, region, riot_api_key, runeIdToName)).start()
-        # Thread(target=get_details, args=(summoner['puuid'], region_large, riot_api_key)).start()
+        # Thread(target=get_details, args=(summoner['puuid'], region_large, riotApiKey)).start()
         timenow = time.time()
 
         print('profile success')

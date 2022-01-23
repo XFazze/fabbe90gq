@@ -32,6 +32,6 @@ def ajax_matchHistory():
     collection = db.matchTracking
     newMatchHistory = collection.find_one({'puuid': puuid})
     if not newMatchHistory:
-        print('match not found')
+        print('matchHistory not found')
         return "match not found", 400
     return json.loads(json_util.dumps(newMatchHistory))

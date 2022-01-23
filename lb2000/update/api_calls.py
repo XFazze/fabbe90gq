@@ -101,7 +101,7 @@ def get_match(region_large, match_id, api_key):
 
 def get_match_timeline(region_large, match_id, api_key):
     url = "https://" + region_large + ".api.riotgames.com/lol/match/v5/matches/" + \
-        match_id + "/timeline?api_key=" + api_key
+        match_id + "/timeline"
     params = {
         'api_key': api_key
     }
@@ -112,11 +112,12 @@ def get_match_timeline(region_large, match_id, api_key):
 def get_live_game(region, id, api_key):
     url = "https://" + region + \
         ".api.riotgames.com/lol/spectator/v4/active-games/by-summoner/" + \
-        id + "?api_key=" + api_key
+        id 
     params = {
         'api_key': api_key
     }
-    #print("live game url: ", url)
+
+    print("live game url: ", url)
     return call(url, params=params)
 
 
@@ -134,6 +135,6 @@ def get_league(region, tier, division, queue, page, api_key):
 
 if __name__ == '__main__':
     x = get_rank(
-        'EUN1', 'nmbjtla69-VM-0IVtbgJ6skxP6PDQZa_3imnDmNUfC9G-S0', riot_api_key)
+        'EUN1', 'nmbjtla69-VM-0IVtbgJ6skxP6PDQZa_3imnDmNUfC9G-S0', riotApiKey)
     z = next(item for item in x if item["queueType"] == "RANKED_SOLO_5x5")
     print(z)

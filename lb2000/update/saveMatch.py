@@ -2,19 +2,19 @@
 from requests import get
 import math
 from pymongo import MongoClient, DESCENDING
-from lb.ranks import *
-from lb.api_calls import *
+from lb2000.ranks import *
+from lb2000.update.api_calls import *
 from config import *
 
 
-def getMatches(puuid, region_large, region, riot_api_key):
-    newAmount = updateMatchHistory(puuid, region_large, region, riot_api_key)
+def updateMatches(puuid, region_large, region, riotApiKey):
+    newAmount = updateMatchHistory(puuid, region_large, region, riotApiKey)
     print('donw with updateMatchHistory:', newAmount)
-    newAmount = downloadMatches(puuid, region_large, region, riot_api_key)
+    newAmount = downloadMatches(puuid, region_large, region, riotApiKey)
     print('donw with downloadMatches', newAmount)
 
 
-def updateMatchHistory(puuid, region_large, region, riot_api_key):
+def updateMatchHistory(puuid, region_large, region, riotApiKey):
     client = MongoClient('localhost', 27017)
     db = client.newMatches
     collection = db.matchTracking
@@ -31,7 +31,7 @@ def updateMatchHistory(puuid, region_large, region, riot_api_key):
     notDownloadedMatches = []
     for i in range(11):
         new100Matches = get_match_history(
-            region_large, puuid, riot_api_key, i*100, 100)
+            region_large, puuid, riotApiKey, i*100, 100)
 
         newNotDownloadedMatches = [
             matchId for matchId in new100Matches if matchId not in user['matches']]
@@ -48,9 +48,9 @@ def updateMatchHistory(puuid, region_large, region, riot_api_key):
     return len(notDownloadedMatches)
 
 
-def downloadMatches(puuid, region_large, region, riot_api_key):
+def downloadMatches(puuid, region_large, region, riotApiKey):
     client = MongoClient('localhost', 27017)
-    rankedPlayersDB = client.newMatches
+    rankedPlayersDB = client.rankedPlayers
     newMatchesDB = client.newMatches
     matchTrackingColl = newMatchesDB.matchTracking
     matchesColl = newMatchesDB.matches
@@ -86,7 +86,7 @@ def downloadMatches(puuid, region_large, region, riot_api_key):
             print('known broken match ignored')
             continue
 
-        match = get_match(region_large, matchId, riot_api_key)
+        match = get_match(region_large, matchId, riotApiKey)
         if not match:
             brokenMatchesColl.insert({'matchId': matchId, 'puuid': [puuid]})
             continue
@@ -121,4 +121,4 @@ def downloadMatches(puuid, region_large, region, riot_api_key):
 
 if __name__ == '__main__':
     getMatches('r8ShSO0Y7ADEG-nBNQwIVZ4S4cXx8AJxtTsCwyui2V34DMO4MYkXL-eyo7C4PDF8yGXH0PwVgOSnSQ',
-               'EUROPE', 'EUN1', riot_api_key)
+               'EUROPE', 'EUN1', riotApiKey)

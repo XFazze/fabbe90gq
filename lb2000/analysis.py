@@ -5,10 +5,10 @@ from pprint import pprint
 from pymongo import MongoClient
 from threading import Thread
 
-from lb.seasonsSplits import seasonsDates
-from lb.queueId import queueIdConverter
-from lb.championIdtoname import champNames
-from lb.api_calls import *
+from lb2000.seasonsSplits import seasonsDates
+from lb2000.queueId import queueIdConverter
+from lb2000.championIdtoname import champNames
+from lb2000.update.api_calls import *
 
 # what scores?
 

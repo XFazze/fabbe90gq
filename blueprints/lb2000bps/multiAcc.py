@@ -7,7 +7,7 @@ import os
 from random import randint
 from pymongo import MongoClient, DESCENDING
 
-from lb.api_calls import *
+from lb2000.update.api_calls import *
 multiAcc = Blueprint('multiAcc', __name__)
 
 
@@ -24,13 +24,12 @@ def multiAccVerify():
     except:
         return 'website fault didnt save your first request', 400
 
-    summoner = get_summonerPuuid(region, puuid, riot_api_key)
+    summoner = get_summonerPuuid(region, puuid, riotApiKey)
     if pfpId != summoner['profileIconId']:
         return 'Wrong profile Id', 400
 
     try:
         accounts = list(coll.find({'browserId': browserId}))[0]
-        print(accounts)
         if puuid in accounts['accounts']:
             return 'You have already added this account', 400
 

@@ -6,10 +6,10 @@ import os
 from datetime import datetime
 from threading import Thread
 from ratelimit import limits
-from lb.queueId import *
-from lb.api_calls import *
-from lb.regions import *
-from lb.summonerSpells import *
+from lb2000.queueId import *
+from lb2000.update.api_calls import *
+from lb2000.regions import *
+from lb2000.summonerSpells import *
 
 
 def jsonconvert(json_match, runeIdToName, region, api_key):

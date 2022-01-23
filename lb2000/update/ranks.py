@@ -1,23 +1,18 @@
 
-from lb.api_calls import *
+from lb2000.update.api_calls import *
 from config import *
 from pymongo import MongoClient, DESCENDING
 import time
-from lb.seasonsSplits import *
+from lb2000.seasonsSplits import *
 
 
-queues = ['RANKED_SOLO_5x5', 'RANKED_FLEX_SR']
-divisions = ['I', 'II', 'III', 'IV']
-tiers = ['IRON', 'BRONZE', 'SILVER', 'GOLD', 'PLATINUM', 'DIAMOND']
+
+def updateRankedPlayers(region, summonerId, riotApiKey):
+    # monthlyAllPlayers(region,riotApiKey)
+    getRankedPlayer(region, summonerId, riotApiKey)
 
 
-def getRankedPlayers(region, summonerId, riot_api_key):
-    # monthlyAllPlayers(region,riot_api_key)
-    print('WEWEEWAE')
-    getRankedPlayer(region, summonerId, riot_api_key)
-
-
-def monthlyAllPlayers(region, riot_api_key):
+def monthlyAllPlayers(region, riotApiKey):
     client = MongoClient('localhost', 27017)
     db = client.rankedPlayers
     regionRankedPlayersColl = db[region]
@@ -26,7 +21,6 @@ def monthlyAllPlayers(region, riot_api_key):
     try:
         lastTime = regionRankedPlayersColl.find(
             {'summonerId': 'meta'})[0]['time']
-        print(lastTime)
         # FIXME newly ranked players !!
         # FIXME Update meta time
         if lastTime + (60*60*24*30) > t:
@@ -45,7 +39,7 @@ def monthlyAllPlayers(region, riot_api_key):
                 print(queue, tier, division)
                 page = 1
                 league = get_league(region, tier,  division,
-                                    queue, page, riot_api_key)
+                                    queue, page, riotApiKey)
                 for player in league:
                     player['time'] = t
 
@@ -56,12 +50,12 @@ def monthlyAllPlayers(region, riot_api_key):
                     regionRankedPlayersColl.insert_many(league)
                     page += 1
                     league = get_league(
-                        region, tier,  division, queue, page, riot_api_key)
+                        region, tier,  division, queue, page, riotApiKey)
                     for player in league:
                         player['time'] = t
 
 
-def getRankedPlayer(region, summonerId, riot_api_key):
+def getRankedPlayer(region, summonerId, riotApiKey):
     client = MongoClient('localhost', 27017)
     db = client.rankedPlayers
     regionRankedPlayersColl = db[region]
@@ -76,12 +70,14 @@ def getRankedPlayer(region, summonerId, riot_api_key):
             return
     except:
         pass
-    ranks = get_rank(region, summonerId, riot_api_key)
+    ranks = get_rank(region, summonerId, riotApiKey)
     for player in ranks:
         player['time'] = t
     print(ranks)
+    if not ranks:
+        return
     regionRankedPlayersColl.insert_many(ranks)
 
 
 if __name__ == '__main__':
-    getRankedPlayers('EUN1', riot_api_key)
+    getRankedPlayers('EUN1', riotApiKey)
