@@ -1,11 +1,13 @@
-// tailwind.config.js
-
 module.exports = {
+  content: ['./templates/*html',
+  './templates/**/*.html',
+  './templates/**/**/*.html',
+  './templates/**/**/**/*.html',
+  './static/js/*.js',
+  './static/js/**/*.js',
+  './static/js/**/**/*.js',],
   theme: {
-      extend: {
-          colors: {
-              my_color: '#4dcb7a',
-          },
-      },
+    extend: {},
   },
+  plugins: [],
 }
