@@ -6,8 +6,9 @@ Website developed by Fabian.
 - Lb2000 league of legends stat site
 
 ## start mongod in background
-
+```
 mongod --fork --logpath /var/log/mongod.log
+```
 
 ## stat tailwindcss jit recomplining 
 ```
