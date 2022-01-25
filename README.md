@@ -9,17 +9,12 @@ Website developed by Fabian.
 ## start devepment mode 
 This will start mongod and tailwind jit compiling in the background
 
-## start mongod in background
+## start mongod and tailwindcss watch 
 ```
-mongod --fork --logpath /var/log/mongod.log
-```
-
-## start tailwindcss jit recomplining 
-```
-npx tailwindcss -o static/css/main.css -w
+npm run dev
 ```
 
 ## start flask server
 ```
-npx tailwindcss -o static/css/main.css -w
+python3 mainscript.py
 ```
