@@ -73,12 +73,18 @@ def lb2000_index(region='noregion', summonername='nouser'):
 
     popular = getPopular(region)
 
+    print('before first template')
     res = render_template('lb2000/lb2000_search.html',
                           error=False, popular=popular)
+    print('hsa reneder first template')
     if summonername != 'nouser' or region != 'noregion' or region == 'multiAcc':
+        print('found profile')
         res = returnprofile(summonername, region, popular)
     if not res:
-        res = render_template('lb2000/lb2000_search.html', error=True)
+        print('foshoudl return wrong')
+        summoners = getUpdateLostSummoner(summonername, region, riotApiKey)
+        print(summoners)
+        res = render_template('lb2000/lb2000LostSummoner.html', regionConverter4=regionConverter4, summoners=summoners)
     return res
 
 

@@ -1,0 +1,36 @@
+{% extends "template.html" %}
+{% block link %}
+<link rel="stylesheet" href="{{url_for('static',filename='css/main.css')}}" />
+<link rel="stylesheet" href="/static/css/lb2000.css">
+{% endblock %}
+{% block body %}{% endblock %}
+{% block main%}
+<div class="centerdiv flex items-center flex-col ">
+        {% include 'lb2000/base/shortSearchBar.html' %}
+        <div class="flex flex-col">
+        {% for summoner in summoners %}
+            {% if not summoners[summoner]['puuid']%}
+                <div>
+                    <h2>{{ regionConverter4[summoner] }}</h2>
+                    <h3>No summoner</h3>
+                </div>
+            {% else %}
+            <a href='{{request.url_root}}lb2000/{{summoners[summoner]["region"]}}/{{summoners[summoner]["name"]}}'>
+                <div class="flex w-80 justify-between">
+                    {% set icon_url ="https://raw.communitydragon.org/latest/game/assets/ux/summonericons/profileicon" + summoners[summoner]["profileIconId"]|string + ".png" %}
+                    
+                        <div class=" flex-col">
+                            <h2>{{ regionConverter4[summoners[summoner]['region']] }}</h2>
+                            <h3>{{ summoners[summoner]['name']}}</h3>
+                            <h3>Level {{ summoners[summoner]['summonerLevel']}}</h3>
+                        </div>
+                        <img src='{{icon_url}}' class='w-24 h-24' >
+                </div>
+            </a>
+            {% endif %}
+
+        {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}
