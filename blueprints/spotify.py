@@ -14,7 +14,7 @@ def spotifyAuth():
     collection = client.website.spotifystate
     collection.insert_one({'state': state})
     url = 'https://accounts.spotify.com/authorize?' + 'response_type=' + 'code' + '&client_id=' + \
-        client_id + '&scope=' + scopes + '&redirect_uri=' + redirect_uri + '&state' + state
+        spotifyId + '&scope=' + scopes + '&redirect_uri=' + spotifyRedirectUri + '&state' + state
     return redirect(url)
 
 
@@ -31,11 +31,12 @@ def spotifyCallback():
     url = 'https://accounts.spotify.com/api/token'
     params = {
         'code': code,
-        'redirect_uri': redirect_uri,
+        'redirect_uri': spotifyRedirectUri,
         'grant_type': 'authorization_code'
     }
-    resp = requests.post(url, auth=(client_id, client_secret), data=params)
+    resp = requests.post(url, auth=(spotifyId, spotifySecret), data=params)
     respData = resp.json()
+    print(respData)
     session['tokens'] = {
         'access_token': respData['access_token'],
         'refresh_token': respData['refresh_token'],
@@ -50,7 +51,7 @@ def spotifyRefresh():
         'refresh_token': session.get('tokens').get('refresh_token'),
         'grant_type': 'authorization_code'
     }
-    resp = requests.post(url, auth=(client_id, client_secret), data=params)
+    resp = requests.post(url, auth=(spotifyId, spotifySecret), data=params)
     respData = resp.json()
     session['tokens']['access_token'] = respData.get('access_token')
     return json.dumps(session['tokens'])

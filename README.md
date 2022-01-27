@@ -18,3 +18,7 @@ npm run dev
 ```
 python3 mainscript.py
 ```
+
+## Config.py file
+riotApiKey
+secretKey - Import os and os.urandom(12).hex()
