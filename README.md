@@ -21,4 +21,9 @@ python3 mainscript.py
 
 ## Config.py file
 riotApiKey
+
 secretKey - Import os and os.urandom(12).hex()
+
+spotifyId
+spotifySecret 
+spotifyRedirectUri
