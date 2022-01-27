@@ -10,8 +10,8 @@ from lb2000.seasonsSplits import *
 
 def updateRecentData(puuid):
     client = MongoClient('localhost', 27017)
-    newMatchesdb = client.newMatches
-    matchesColl = newMatchesdb.matches
+    lb2000db = client.lb2000
+    matchesColl = lb2000db.matches
     analysisdb = client.analysis
     recentDataColl = analysisdb.recentData
 

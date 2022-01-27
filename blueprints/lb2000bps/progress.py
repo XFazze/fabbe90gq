@@ -15,7 +15,7 @@ progress = Blueprint('progress', __name__)
 def ajax_progress():
     puuid = request.args.get('puuid', 0, type=str)
     client = MongoClient('localhost', 27017)
-    db = client.newMatches
+    db = client.lb2000
     matchesColl = db.matches
     matchTrackingColl = db.matchTracking
 

@@ -16,7 +16,7 @@ def updateMatches(puuid, region_large, region, riotApiKey):
 
 def updateMatchHistory(puuid, region_large, region, riotApiKey):
     client = MongoClient('localhost', 27017)
-    db = client.newMatches
+    db = client.lb2000
     collection = db.matchTracking
     if not collection.Collection.count_documents({'puuid': puuid}):
         print('new user')
@@ -51,10 +51,10 @@ def updateMatchHistory(puuid, region_large, region, riotApiKey):
 def downloadMatches(puuid, region_large, region, riotApiKey):
     client = MongoClient('localhost', 27017)
     rankedPlayersDB = client.rankedPlayers
-    newMatchesDB = client.newMatches
-    matchTrackingColl = newMatchesDB.matchTracking
-    matchesColl = newMatchesDB.matches
-    brokenMatchesColl = newMatchesDB.brokenMatches
+    lb2000DB = client.lb2000
+    matchTrackingColl = lb2000DB.matchTracking
+    matchesColl = lb2000DB.matches
+    brokenMatchesColl = lb2000DB.brokenMatches
 
     user = list(matchTrackingColl.find({'puuid': puuid}))[0]
 

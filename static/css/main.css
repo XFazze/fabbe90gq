@@ -541,6 +541,14 @@ Ensure the default browser behavior of the `hidden` attribute.
   margin: 0.25rem;
 }
 
+.m-0\.5 {
+  margin: 0.125rem;
+}
+
+.m-0 {
+  margin: 0px;
+}
+
 .mx-4 {
   margin-left: 1rem;
   margin-right: 1rem;
@@ -979,6 +987,10 @@ Ensure the default browser behavior of the `hidden` attribute.
 .text-xs {
   font-size: 0.75rem;
   line-height: 1rem;
+}
+
+.font-bold {
+  font-weight: 700;
 }
 
 .leading-4 {
