@@ -11,6 +11,7 @@ Website developed by Fabian.
 ## requirements
 * apache2 
 * WSGIDaemonProcess
+* ```pip3 install -r requirements.txt```
 
 1. copy config file
 2. add ssl key and pem
