@@ -6,4 +6,4 @@ sys.path.insert(0,"/home/ubuntu/website/")
 
 from config import secretKey
 from mainscript import app as application
-application.secret_key = secret_key
+application.secret_key = secretKey
