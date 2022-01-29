@@ -14,7 +14,8 @@ Website developed by Fabian.
 
 1. copy config file
 2. add ssl key and pem
-3. enable config
+3. change linux user in config and wsgi file
+4. enable config
 
 ## start devepment mode 
 This will start mongod and tailwind jit compiling in the background
