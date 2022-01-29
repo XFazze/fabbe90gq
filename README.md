@@ -6,6 +6,16 @@ Website developed by Fabian.
 - Lb2000 league of legends stat site
 
 ## Deployment
+
+### Setup
+## requirements
+* apache2 
+* WSGIDaemonProcess
+
+1. copy config file
+2. add ssl key and pem
+3. enable config
+
 ## start devepment mode 
 This will start mongod and tailwind jit compiling in the background
 
