@@ -1,65 +1,36 @@
-<VirtualHost *:80>
-                ServerName 192.168.0.2
-                ServerAdmin email@mywebsite.com
-                DocumentRoot /var/www/html/
-                <Directory /var/www/html/>
+<VirtualHost *:443>
+                ServerName fabbe90.gq
+                ServerAdmin blixtvinge@gmail.com
+
+                SSLEngine on
+                SSLCertificateFile "/etc/apache2/ssl/fabbe90.gq.pem"
+                SSLCertificateKeyFile "/etc/apache2/ssl/fabbe90.gq.key"
+
+
+                DocumentRoot /home/pi/website/static/
+                <Directory /home/pi/website/static/  >
                         Options FollowSymLinks MultiViews
                         AllowOverride all
-                        Order deny,allow
-                        allow from all
+                        Require all granted
                 </Directory>
 
 
-                WSGIDaemonProcess base user=pi group=www-data threads=5
-                WSGIScriptAlias /home /home/pi/moin/rasp/flaskwebsite/flaskwebsite/flaskwebsite.wsgi
+                WSGIDaemonProcess base user=pi group=www-data threads=4
+                WSGIScriptAlias / /home/pi/website/main.wsgi
 
                 <Location />
                         WSGIProcessGroup base
                 </Location>
-                <Directory /home/pi/moin/rasp/flaskwebsite/flaskwebsite >
+
+                <Directory /home/pi/website/ >
+                        Require all granted
                         Options FollowSymLInks
-                        Order allow,deny
-                        Allow from all
                 </Directory>
 
 
-
-                WSGIDaemonProcess second user=pi group=www-data threads=5
-                WSGIScriptAlias /alien /home/pi/moin/rasp/flaskwebsite/secondsite/secondsite.wsgi
-
-                <Location />
-                        WSGIProcessGroup second
-                </Location>
-
-                <Directory /home/pi/moin/rasp/flaskwebsite/secondsite >
-                        AuthType Basic
-                        AuthName "pp check"
-                        AuthUserFile /etc/apache2/pictrs/.alienpasswd
-                        Require valid-user
-                        Options FollowSymLInks
-                        Order allow,deny
-                        Allow from all
-                </Directory>
-
-
-                WSGIDaemonProcess third user=pi group=www-data threads=5
-                WSGIScriptAlias /factorio /home/pi/moin/rasp/flaskwebsite/factorio/factoriosite.wsgi
-
-                <Location />
-                        WSGIProcessGroup third
-                </Location>
-
-                <Directory /home/pi/moin/rasp/flaskwebsite/factorio >
-                        Options FollowSymLInks
-                        Order allow,deny
-                        Allow from all
-                </Directory>
-
-
-                Alias /static /home/pi/moin/rasp/flaskwebsite/static
-                <Directory /home/pi/moin/rasp/flaskwebsite/static>
-                        Order allow,deny
-                        Allow from all
+                Alias /static /home/pi/website/static
+                <Directory /home/pi/website/static/ >
+                        Require all granted
                 </Directory>
 
                 ErrorLog ${APACHE_LOG_DIR}/error.log
