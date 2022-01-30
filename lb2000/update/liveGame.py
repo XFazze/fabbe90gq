@@ -9,7 +9,7 @@ import math
 def updateLiveGame(region, id, riotApiKey):
     client = MongoClient('localhost', 27017)
     liveGameColl = client.lb2000.liveGame
-    rankedPlayersDB = client.rankedPlayers
+    rankedPlayersColl = client.lb2000.rankedPlayers
     t = time.time()
     try:
         lastGame = list(liveGameColl.find({'participants.summonerId': id}))[0]
@@ -37,8 +37,8 @@ def updateLiveGame(region, id, riotApiKey):
     #TODO add summoner level
     totalRank = 0
     for player in res['participants']:
-        playerRank = rankedPlayersDB[region].find_one(
-            {'summonerId': player['summonerId']}, sort=[('time', DESCENDING)])
+        playerRank = rankedPlayersColl.find_one(
+            {'summonerId': player['summonerId'], 'region':region}, sort=[('time', DESCENDING)])
         if not playerRank:
             # print('user not found')
             player['rank'] = {

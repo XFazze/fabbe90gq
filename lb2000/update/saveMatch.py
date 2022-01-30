@@ -50,9 +50,9 @@ def updateMatchHistory(puuid, region_large, region, riotApiKey):
 
 def downloadMatches(puuid, region_large, region, riotApiKey):
     client = MongoClient('localhost', 27017)
-    rankedPlayersDB = client.rankedPlayers
     lb2000DB = client.lb2000
     matchTrackingColl = lb2000DB.matchTracking
+    rankedPlayersColl = lb2000DB.rankedPlayers
     matchesColl = lb2000DB.matches
     brokenMatchesColl = lb2000DB.brokenMatches
 
@@ -93,24 +93,35 @@ def downloadMatches(puuid, region_large, region, riotApiKey):
 
         # rank
         totalRank = 0
-        for player in match['info']['participants']:
-            playerRank = rankedPlayersDB[region].find_one(
-                {'summonerId': player['summonerId']}, sort=[('time', DESCENDING)])
-            if not playerRank:
-                # print('user not found')
-                player['rank'] = {
-                    'tier': 'unranked',
-                    'rank': ''
-                }
-                continue
-            player['rank'] = playerRank
+        rankedPlayers = 0
+        try:
+            for player in match['info']['participants']:
+                playerRank = rankedPlayersColl.find_one({'summonerId': player['summonerId'], 'region':region}, sort=[('time', DESCENDING)])
+                if not playerRank:
+                    # print('user not found')
+                    player['rank'] = {
+                        'tier': 'unranked',
+                        'rank': ''
+                    }
+                    continue
+                rankedPlayers += 1
+                player['rank'] = playerRank
+                totalRank += tiers.index(playerRank['tier']) * 4 + divisions.index(playerRank['rank'])
+        except:
+            pass
+        if rankedPlayers:
+            totalRank = totalRank/rankedPlayers
 
-            totalRank += tiers.index(playerRank['tier']) * \
-                4 + divisions.index(playerRank['rank'])
-        match['metadata']['averageRank'] = {
-            'tier': tiers[int(math.floor(totalRank // 4))],
-            'division': divisions[int(math.floor(totalRank % 4))]
-        }
+            match['metadata']['averageRank'] = { 
+                'tier': tiers[int(math.floor(totalRank // 4))],
+                'division': divisions[int(math.floor(totalRank % 4))]
+            }
+        
+        else:
+            match['metadata']['averageRank'] = { 
+                'tier' : None,
+                'division' : None
+            }
 
         if list(matchesColl.find({'metadata.matchId': matchId})):
             print('SECOND2match already downloaded. Simultaneusly download is happening')
