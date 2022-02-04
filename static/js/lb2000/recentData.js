@@ -1,7 +1,7 @@
 $(document).ready(function () {
   start();
 });
-timeFrames = ['24h', '3d', '7d', '30d', 'lifetime'];
+timeFrames = ['3d', '7d', '30d', 'lifetime'];
 
 async function start() {
   data = await getRecentData(summoner['puuid']);

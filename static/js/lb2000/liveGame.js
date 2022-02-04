@@ -5,7 +5,6 @@ $(document).ready(function () {
   
 async function liveGameLoad() {
     var data = await getLiveGame();
-    console.log('dlivegame', data)
     if(data['gameLength'] == 0){
         createNoLiveGame()
     }else{
@@ -28,7 +27,6 @@ async function getLiveGame() {
   }
   
 function createNoLiveGame(){
-    console.log('no game data')
     var liveGameDiv = $(`<div class='w-full h-64 flex justify-center items-center'></div>`)
     liveGameDiv.append(`<h2>Not currently ingame</h2>`)
     $('#DivliveGame').html(liveGameDiv)
@@ -118,7 +116,6 @@ function createLiveGame(match){
     let sums = $(`<div></div>`)
       .prepend([sum1, sum2])
       .addClass('relative flex-col flex place-items-center self-center ');
-      console.log(player['perks']['perkIds'][0], runeIdToPath[player['perks']['perkIds'][0]])
     let runePath =
       'https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/v1/';
     let primaryTree = $(`<div>

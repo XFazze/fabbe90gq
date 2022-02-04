@@ -42,7 +42,7 @@ def updateRecentData(puuid):
     newData['type'] = 'data'
     newData['puuid'] = puuid
     #print('newdata')
-    # pprint(newData)
+    #pprint(newData)
     recentDataColl.update_one({'$and': [{'type': 'meta'}, {'puuid': puuid}]}, {
                               '$set': {'lastMatch': lastMatch}})
     #print(recentDataColl.find_one({'type': 'data', 'puuid': puuid}))

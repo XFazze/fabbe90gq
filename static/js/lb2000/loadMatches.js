@@ -208,7 +208,7 @@ function createMatchDiv(match) {
       'w-fit text-clip '
     );
     let rank = $(`<P>${player['rank']} | ${player['summonerLevel']} lvl</p>`);
-    let summonerDiv = $(`<div></div>`)
+    let summonerDiv = $(`<a href='${$SCRIPT_ROOT}${region}/${player["summonerName"]}'><div></div></a>`)
       .prepend([username, rank])
       .addClass(
         'w-36 truncate items-center place-items-center flex flex-col flex-nonwrap '

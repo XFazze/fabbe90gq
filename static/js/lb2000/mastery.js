@@ -24,10 +24,11 @@ async function masteryLoad() {
         })</p>`
       );
     }
+    console.log(timeNow, champ['lastPlayTime'])
     let lastTime = $(
       `<p>${Math.floor(
-        (timeNow - champ['championPoints']) / (60 * 1000 * 24 * 60)
-      )}d</p>`
+        (timeNow - champ['lastPlayTime']/1000) / (60  * 24 * 6)
+      )/10}d</p>`
     );
     let champDiv = $(
       `<div class='flex flex-col items-center p-1'></div>`
