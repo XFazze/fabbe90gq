@@ -6,3 +6,5 @@ authlib
 six
 ratelimit
 celery
+flask_wtf
+sphc

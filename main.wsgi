@@ -2,8 +2,8 @@
 import sys
 import logging
 logging.basicConfig(stream=sys.stderr)
-sys.path.insert(0,"/home/pi/website/")
+sys.path.insert(0,"/home/ubuntu/website/")
 
-from config import secret_key
+from config import secretKey
 from mainscript import app as application
-application.secret_key = secret_key
+application.secret_key = secretKey

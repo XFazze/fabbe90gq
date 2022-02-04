@@ -16,7 +16,7 @@
             <input type="submit" name='region' value="JA" class='rounded-lg p-1 hover:bg-gray-600 cursor-pointer active:bg-white w-12 bg-white'>
         </div>
     </form>
-    <div id='popular' class="flex flex-row gap-4 justify-center whitespace-nonwrap">
+    <div id='popular' class="flex flex-row gap-4 overflow-hidden whitespace-nonwrap">
         {% for user in popular %}
         <div >
             <a href='/lb2000/{{ user['region'] }}/{{ user['summonerName'] }}'>

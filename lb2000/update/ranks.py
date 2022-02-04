@@ -57,10 +57,8 @@ def monthlyAllPlayers(region, riotApiKey):
 
 def getRankedPlayer(region, summonerId, riotApiKey):
     client = MongoClient('localhost', 27017)
-    db = client.rankedPlayers
-    regionRankedPlayersColl = db[region]
-    oldRanks = list(regionRankedPlayersColl.find({'summonerId': summonerId
-                                                  }, sort=[('time', DESCENDING)]))
+    db = client.lb2000
+    oldRanks = list(db.find({'summonerId': summonerId,'region' : region}, sort=[('time', DESCENDING)]))
     # print(oldRanks)
 
     t = time.time()
@@ -73,10 +71,11 @@ def getRankedPlayer(region, summonerId, riotApiKey):
     ranks = get_rank(region, summonerId, riotApiKey)
     for player in ranks:
         player['time'] = t
+        player['region'] = region
     print(ranks)
     if not ranks:
         return
-    regionRankedPlayersColl.insert_many(ranks)
+    db.insert_many(ranks)
 
 
 if __name__ == '__main__':

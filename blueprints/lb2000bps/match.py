@@ -15,7 +15,7 @@ match = Blueprint('match', __name__)
 def ajax_match():
     matchId = request.args.get('id', 0, type=str)
     client = MongoClient('localhost', 27017)
-    db = client.newMatches
+    db = client.lb2000
     collection = db.matches
     match = collection.find_one({'metadata.matchId': matchId})
     if not match:
@@ -28,7 +28,7 @@ def ajax_match():
 def ajax_matchHistory():
     puuid = request.args.get('puuid', 0, type=str)
     client = MongoClient('localhost', 27017)
-    db = client.newMatches
+    db = client.lb2000
     collection = db.matchTracking
     newMatchHistory = collection.find_one({'puuid': puuid})
     if not newMatchHistory:
