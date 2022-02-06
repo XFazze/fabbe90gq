@@ -89,22 +89,22 @@ def returnprofile(summonername, region, popular):
     summoner = get_summoner(region, summonername, riotApiKey)
     if not summoner:
         return False
-    else:
-        Thread(target=updateSummoner, args=(summoner, region)).start()
-        Thread(target=updateLiveGame, args=(region, summoner['id'], riotApiKey)).start()
-        Thread(target=updateMasterySummoner, args=(summoner['id'], region, summoner['puuid'], riotApiKey)).start()
-        Thread(target=addPopular, args=(summonername, region)).start()
-        Thread(target=updateMatches, args=(summoner['puuid'], region_large, region, riotApiKey)).start()
-        Thread(target=updateRecentData, args=(summoner['puuid'],)).start()
-        Thread(target=updateRankedPlayers, args=(region, summoner['id'], riotApiKey)).start()
-        multiAccId, multiAccUrl = multiAccGet(summoner['id'])
+        
+    Thread(target=updateSummoner, args=(summoner, region)).start()
+    Thread(target=updateLiveGame, args=(region, summoner['id'], riotApiKey)).start()
+    Thread(target=updateMasterySummoner, args=(summoner['id'], region, summoner['puuid'], riotApiKey)).start()
+    Thread(target=addPopular, args=(summonername, region)).start()
+    Thread(target=updateMatches, args=(summoner['puuid'], region_large, region, riotApiKey)).start()
+    Thread(target=updateRecentData, args=(summoner['puuid'],)).start()
+    Thread(target=updateRankedPlayers, args=(region, summoner['id'], riotApiKey)).start()
+    multiAccId, multiAccUrl = multiAccGet(summoner['id'])
 
-        # Thread(target=get_details, args=(summoner['puuid'], region_large, riotApiKey)).start()
-        timenow = time.time()
+    # Thread(target=get_details, args=(summoner['puuid'], region_large, riotApiKey)).start()
+    timenow = time.time()
 
-        print('profile success')
-        return render_template('lb2000/lb2000_base.html', summoner=summoner, region=region, region_large=region_large, niceRegion=regionConverter4[region], champ_id_to_name=champ_id_to_name, timenow=timenow,
-                               summonerid=str(summoner['id']),   popular=popular, multiAccUrl=multiAccUrl)
+    print('profile success')
+    return render_template('lb2000/lb2000_base.html', summoner=summoner, region=region, region_large=region_large, niceRegion=regionConverter4[region], champ_id_to_name=champ_id_to_name, timenow=timenow,
+                            summonerid=str(summoner['id']),   popular=popular, multiAccUrl=multiAccUrl)
 
 
 def multiAccGet(puuid):

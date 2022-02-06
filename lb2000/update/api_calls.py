@@ -16,6 +16,9 @@ def call(url, params={}, headers={}):
         print('error occured', url, response)
         if response.status_code == 404:
             return False
+        if response.status_code == 403:
+            print('api key is outdated')
+            return False
         time.sleep(20)
 
         response = requests.get(url, params=params, headers=headers)
