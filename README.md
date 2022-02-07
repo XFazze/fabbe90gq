@@ -19,7 +19,8 @@ Website developed by Fabian.
 4. enable config
 
 ## start devepment mode 
-This will start mongod and tailwind jit compiling in the background
+This will start mongod and tailwind jit compiling in the background.
+Navigate to the src/ directory and then run the commands.
 
 ## start mongod and tailwindcss watch 
 ```
