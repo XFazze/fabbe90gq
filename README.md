@@ -4,6 +4,8 @@ Website developed by Fabian.
 
 - Bjornbanan(discordbot) commands + invite
 - Lb2000 league of legends stat site
+- Random Games and simulations
+- Spotify Top Artist and Song
 
 ## Deployment
 
