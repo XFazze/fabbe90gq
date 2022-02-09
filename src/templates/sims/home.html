@@ -1,0 +1,18 @@
+{% extends "template.html" %}
+{% block link %}
+    <link rel="stylesheet" href="/static/css/games.css">
+    <link rel="stylesheet" href="/static/css/basic.css">
+    <script type="text/javascript" src="/static/js/games/home.js"></script>
+{% endblock %}
+{% block body %}background-color:#23856D;{% endblock %}
+{% block main%}
+<div class="centerdiv">
+    <h1>Sims</h1>
+    <a href="/sims/rsa" ><h2>Rsa</h2></a><br>
+    <a href="/sims/chaostriangle" ><h2>Chaos Triangle</h2></a><br>
+    <a href="/sims/chaoscircle" ><h2>Chaos Circle</h2></a><br>
+    <a href="/sims/sortingalgorithms" ><h2>Sorting Algorithms</h2></a><br>
+    <a href="/sims/rng" ><h2>Random generator</h2></a><br>
+    <a href="/sims/pathFinders" ><h2>NEW Path finding</h2></a><br>
+</div>
+{% endblock %}

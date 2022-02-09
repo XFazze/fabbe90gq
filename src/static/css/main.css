@@ -1,5 +1,5 @@
 /*
-! tailwindcss v3.0.16 | MIT License | https://tailwindcss.com
+! tailwindcss v3.0.19 | MIT License | https://tailwindcss.com
 */
 
 /*
@@ -535,14 +535,6 @@ Ensure the default browser behavior of the `hidden` attribute.
 
 .m-2 {
   margin: 0.5rem;
-}
-
-.m-0\.5 {
-  margin: 0.125rem;
-}
-
-.m-0 {
-  margin: 0px;
 }
 
 .m-1 {

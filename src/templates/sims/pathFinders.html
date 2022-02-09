@@ -1,7 +1,7 @@
 {% extends "template.html" %}
 {% block link %}
-    <link rel="stylesheet" href="/static/css/basic.css">
-    <link rel="stylesheet" href="/static/css/games.css">
+<link rel="stylesheet" href="/static/css/games.css">
+    <link rel="stylesheet" href="{{url_for('static',filename='css/main.css')}}" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script type="text/javascript" src="/static/js/sims/pendulum.js"></script>
 {% endblock %}
@@ -9,9 +9,18 @@
 {% block main%}
 <div class="centerdiv">
     <a href="/sims" class="allgames"><h2>All Sims</h2></a>
-    <h1>Pendulum</h1>
+    <h1>Path finders</h1>
 </div>
+
+<!-- TODO select preset or make own graph
+TODO oiler path/
+TODO oiler cycle
+TODO hamilton path
+TODO hamilton cycle
+TODO different algorithm
+-->
 <div styler="display:flex" class="centerdiv">
+    <h2>Select Graph</h2>
     <button id="swing" onclick="swing()">Start</button>
     <canvas id="game-layer" width=1000px height=700px style="margin: auto; display:block; padding:0;"></canvas><br>
 </div>
