@@ -1,7 +1,4 @@
 @tailwind base;
-@tailwind components;
-@tailwind utilities;
-
 @layer base{
     button{
         --tw-bg-opacity: 1;
@@ -13,4 +10,9 @@
     button:hover{
         background-color: rgba(75, 85, 99, var(--tw-bg-opacity));
     }
+    h1{
+        @apply text-3xl;
+    }
 }
+@tailwind components;
+@tailwind utilities;
