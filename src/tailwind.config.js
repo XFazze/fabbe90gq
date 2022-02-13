@@ -1,13 +1,18 @@
 module.exports = {
-  content: ['./templates/*html',
+  content: [
+  './templates/*html',
   './templates/**/*.html',
   './templates/**/**/*.html',
   './templates/**/**/**/*.html',
   './static/js/*.js',
   './static/js/**/*.js',
-  './static/js/**/**/*.js',],
+  './static/js/**/**/*.js',
+],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        'sans': ['Roboto'],
+      },},
   },
   plugins: [],
 }
