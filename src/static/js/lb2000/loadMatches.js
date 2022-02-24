@@ -214,17 +214,20 @@ function createMatchDiv(match) {
         'w-36 truncate items-center place-items-center flex flex-col flex-nonwrap '
       );
     let teamPositionToImg = {
-      TOP: 'rankposition_gold-top',
-      JUNGLE: 'rankposition_gold-jungle',
-      MIDDLE: 'rankposition_gold-mid',
-      BOTTOM: 'rankposition_gold-bot',
-      UTILITY: 'rankposition_gold-support',
+      TOP: 'top',
+      JUNGLE: 'jungle',
+      MIDDLE: 'mid',
+      BOTTOM: 'bottom',
+      UTILITY: 'support',
     };
+    let laneDiv = $(
+      `<div class='h-full w-12 relative flex place-items-center'></div>`)
     let lane = $(
-      `<div><img src='https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/assets/ranked/positions/${
+      `<div><img src='https://raw.communitydragon.org/latest/plugins/rcp-fe-lol-career-stats/global/default/position_${
         teamPositionToImg[player['teamPosition']]
-      }.png' class='w-10 pr-2'></div>`
-    ).addClass('relative flex place-items-center lanesIMG');
+      }.png' class='w-12'></div>`
+    ).addClass('relative flex place-items-center lanesIMG bg-black');
+    laneDiv.append(lane)
 
     let champ = $(
       `<img src='http://ddragon.leagueoflegends.com/cdn/${$GAME_VERSION}/img/champion/${player['championName']}.png' ></img>`
@@ -440,7 +443,7 @@ function createMatchDiv(match) {
     let playerDiv = $('<div></div>')
       .prepend([
         summonerDiv,
-        lane,
+        laneDiv,
         champDiv,
         sums,
         runes,

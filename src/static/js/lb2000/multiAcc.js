@@ -63,7 +63,9 @@ async function multiAcc() {
       $('#DivlinkAccount').append(user);
     });
   } else {
-    $('#DivlinkAccount').text('There were no linked accounts');
+    let noLinkedAccDiv = $(`<div class='w-full h-64 flex justify-center items-center'></div>`)
+    noLinkedAccDiv.append(`<h2>There were no linked accounts</h2>`)
+    $('#DivlinkAccount').html(noLinkedAccDiv)
   }
 }
 async function getMultiAccounts() {

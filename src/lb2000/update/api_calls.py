@@ -1,10 +1,7 @@
 import requests
 import json
-import os.path
 import time
-import sphc
 import os
-from datetime import datetime
 from ratelimit import limits, sleep_and_retry
 
 
@@ -115,7 +112,7 @@ def get_match_timeline(region_large, match_id, api_key):
 def get_live_game(region, id, api_key):
     url = "https://" + region + \
         ".api.riotgames.com/lol/spectator/v4/active-games/by-summoner/" + \
-        id 
+        id
     params = {
         'api_key': api_key
     }

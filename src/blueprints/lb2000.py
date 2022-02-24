@@ -80,23 +80,29 @@ def lb2000_index(region='noregion', summonername='nouser'):
     if not res:
         summoners = getUpdateLostSummoner(summonername, region, riotApiKey)
         print(summoners)
-        res = render_template('lb2000/lb2000LostSummoner.html', regionConverter4=regionConverter4, summoners=summoners)
+        res = render_template('lb2000/lb2000LostSummoner.html',
+                              regionConverter4=regionConverter4, summoners=summoners)
     return res
 
 
 def returnprofile(summonername, region, popular):
     region_large = regionConverter1[region]
     summoner = get_summoner(region, summonername, riotApiKey)
+    print(f'summoner {summoner}')
     if not summoner:
         return False
-        
+
     Thread(target=updateSummoner, args=(summoner, region)).start()
-    Thread(target=updateLiveGame, args=(region, summoner['id'], riotApiKey)).start()
-    Thread(target=updateMasterySummoner, args=(summoner['id'], region, summoner['puuid'], riotApiKey)).start()
+    Thread(target=updateLiveGame, args=(
+        region, summoner['id'], riotApiKey)).start()
+    Thread(target=updateMasterySummoner, args=(
+        summoner['id'], region, summoner['puuid'], riotApiKey)).start()
     Thread(target=addPopular, args=(summonername, region)).start()
-    Thread(target=updateMatches, args=(summoner['puuid'], region_large, region, riotApiKey)).start()
+    Thread(target=updateMatches, args=(
+        summoner['puuid'], region_large, region, riotApiKey)).start()
     Thread(target=updateRecentData, args=(summoner['puuid'],)).start()
-    Thread(target=updateRankedPlayers, args=(region, summoner['id'], riotApiKey)).start()
+    Thread(target=updateRankedPlayers, args=(
+        region, summoner['id'], riotApiKey)).start()
     multiAccId, multiAccUrl = multiAccGet(summoner['id'])
 
     # Thread(target=get_details, args=(summoner['puuid'], region_large, riotApiKey)).start()
@@ -104,7 +110,7 @@ def returnprofile(summonername, region, popular):
 
     print('profile success')
     return render_template('lb2000/lb2000_base.html', summoner=summoner, region=region, region_large=region_large, niceRegion=regionConverter4[region], champ_id_to_name=champ_id_to_name, timenow=timenow,
-                            summonerid=str(summoner['id']),   popular=popular, multiAccUrl=multiAccUrl)
+                           summonerid=str(summoner['id']),   popular=popular, multiAccUrl=multiAccUrl)
 
 
 def multiAccGet(puuid):

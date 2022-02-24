@@ -1,8 +1,10 @@
 <head>
-    {% block link %}{% endblock %}
+    <link rel="stylesheet" href="{{url_for('static',filename='css/main.css')}}" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js" type="text/javascript"></script>
     <link rel="shortcut icon" href="/static/favicon.ico">
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Roboto&family=Roboto+Mono&display=swap" rel="stylesheet">
+    {% block link %}{% endblock %}
   
     <title>Fabbe90.gq</title>
 </head>
@@ -40,7 +42,7 @@
 </style>
 
 
-<body style="background:var(--bg-color);display: flex;justify-content: center;" {% block body %}{% endblock %}>
+<body style="background:var(--bg-color);display: flex;justify-content: center;{% block bodyStyle %}{% endblock %}" {% block body %}{% endblock %}>
     <a href="/" id="home">Sites</a>
 
     <div id="main">

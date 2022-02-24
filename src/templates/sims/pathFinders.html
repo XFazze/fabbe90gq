@@ -1,14 +1,9 @@
-{% extends "template.html" %}
+{% extends "sims/simsTemplate.html" %}
 {% block link %}
-<link rel="stylesheet" href="/static/css/games.css">
-    <link rel="stylesheet" href="{{url_for('static',filename='css/main.css')}}" />
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script type="text/javascript" src="/static/js/sims/pendulum.js"></script>
+    <script type="text/javascript" src="/static/js/sims/pathFinders.js"></script>
 {% endblock %}
-{% block body %}background-color:#23856D;{% endblock %}
 {% block main%}
 <div class="centerdiv">
-    <a href="/sims" class="allgames"><h2>All Sims</h2></a>
     <h1>Path finders</h1>
 </div>
 
@@ -19,9 +14,34 @@ TODO hamilton path
 TODO hamilton cycle
 TODO different algorithm
 -->
-<div styler="display:flex" class="centerdiv">
-    <h2>Select Graph</h2>
-    <button id="swing" onclick="swing()">Start</button>
-    <canvas id="game-layer" width=1000px height=700px style="margin: auto; display:block; padding:0;"></canvas><br>
+<div styler="display:flex" class="flex-row h-full">
+    <div id="part" class="w-full flex justify-between">
+        <button id="selectGraph" class="w-full bg-gray-600" >Select Graph</button>
+        <button id="selectAlgorithm" class="w-full">Select Algorithm</button>
+        <button id="viewSolutions" class="w-full">View result</button>
+    </div>
+    <div id="DivselectGraph">
+        <div>
+            <h2>Presets</h2>
+            <div id="presetList">
+                <button id="preset1">
+                    Preset 1
+                </button>
+                <button id="preset2">
+                    Preset 2
+                </button>
+            </div>
+        </div>
+        <div>
+            <canvas width=900 height=700px id="editGraph"></canvas>
+        </div>
+    </div>
+    <div id="DivselectAlgorithm" class="hidden">
+        <h2>Select Algorithm</h2>
+    </div>
+    <div id="DivviewSolutions" class="hidden">
+        <h2>View solutions</h2>
+        <canvas id="game-layer" width=900 height=700px style="margin: auto; display:block; padding:0;"></canvas><br>
+    </div>
 </div>
 {% endblock %}
