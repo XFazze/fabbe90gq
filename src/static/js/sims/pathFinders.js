@@ -1,3 +1,16 @@
+
+$(function () {
+  var canvas = $("#editGraph")[0];
+  var ctx = canvas.getContext("2d");
+
+  var nodes, roads;
+  var hitNode;
+  selectPreset('preset3');  
+
+  var offsetX=canvas.offsetLeft;
+  var offsetY=canvas.offsetTop;
+
+
 function getNodes(roads){
     var nodes = []
     roads.forEach(road => {
@@ -11,9 +24,79 @@ function getNodes(roads){
     return nodes;
 }
 
+function createNodeNameToCoords(nodes){
+  let ret = {};
+  nodes.forEach(node => {
+    ret[node[0]] = [node[1], node[2]]
+  });
+  return ret
+}
+
+function fillRoads(ctx, roads, nodeNameToCoords){
+  roads.forEach(road => {
+    ctx.beginPath();
+    ctx.fillStyle = 'red';
+    let begiCoords = nodeNameToCoords[road[0]]
+    let endCoords = nodeNameToCoords[road[1]]
+    ctx.moveTo(begiCoords[0], begiCoords[1]);
+    ctx.lineTo(endCoords[0], endCoords[1]);
+    ctx.stroke();
+    
+    let middleCoords = [(begiCoords[0]+endCoords[0])/2, (begiCoords[1]+endCoords[1])/2]
+    ctx.beginPath();
+    ctx.fillStyle = '#3d3d3d';
+    ctx.fillRect(middleCoords[0]-10,middleCoords[1]-10, 20, 20 )
+    ctx.fillStyle = '#FFFFFF';
+    ctx.font = "16px Arial";
+    ctx.fillText(road[2],middleCoords[0]-10,middleCoords[1]+5)
+    ctx.fill();
+
+
+  });
+}
+
+function fillNodes(ctx, nodes){
+  nodes.forEach(node => {
+    let x = node[1]
+    let y = node[2]
+    ctx.fillStyle = "#141414";
+    ctx.beginPath();
+    ctx.arc(x, y , 20, 0, 2 * Math.PI);
+    ctx.fill();
+
+    ctx.beginPath();
+    ctx.font = "20px Arial";
+    ctx.fillStyle = "#FFFFFF";
+    ctx.fillText(node[0],x-10,y+5)
+    ctx.fill();
+
+    
+  });
+}
+
+async function reFill(){
+  ctx.fillStyle = 'white';
+  ctx.fillRect(0, 0, 900, 700);
+  let nodeNameToCoords = createNodeNameToCoords(nodes)
+  fillRoads(ctx, roads, nodeNameToCoords);
+  fillNodes(ctx, nodes);
+}
 function fillPreset(ctx, btn){
-    preset1 = [
-        ['S', '1', 1],
+    var presets = {};
+    presets['preset1'] = [[
+      ['S', '1', 2],
+      ['S', '2', 3],
+      ['1', '2', 2],
+      ['1', '3', 4],
+      ['2', '3', 4],
+    ], [
+      ['S', 200,300],
+      ['1', 300,200],
+      ['2', 300,400],
+      ['3', 400,300],
+    ]]
+    presets['preset2'] = [[
+    ['S', '1', 1],
     ['S', '7', 6],
     ['S', '12', 16],
     ['1', '8', 8],
@@ -27,6 +110,7 @@ function fillPreset(ctx, btn){
     ['13', '18', 26],
     ['8', '2', 9],
     ['2', '14', 10],
+    ['2', '3', 2],
     ['14', '15', 23],
     ['15', '18', 27],
     ['18', '19', 30],
@@ -39,31 +123,50 @@ function fillPreset(ctx, btn){
     ['3', '4', 3],
     ['4', '5', 4],
     ['5', '6', 5],
+    ['5', '10', 13],
     ['6', '11', 15],
     ['6', '10', 14],
     ['11', '20', 22],
     ['9', '10', 0],
     ['10', '11', 0]
+    ],[
+  ['S', 40, 600],
+  ['12', 70, 300],
+  ['16', 120, 100],
+  ['7',   200, 400],
+  ['1',   300, 600],
+  ['8',   350, 300],
+  ['13',   300, 200],
+  ['17',   250, 100],
+  ['2',   400, 600],
+  ['14',   400, 200],
+  ['3',   500, 550],
+  ['4',   580, 600],
+  ['9',   500, 300],
+  ['15',   500, 200],
+  ['18',   450, 100],
+  ['5',   680, 600],
+  ['10',   650, 300],
+  ['19',   650, 100],
+  ['6',   850, 600],
+  ['11',   850, 300],
+  ['20',   850, 100]]]
+    presets['preset3'] = [
+      [],[
+      ['S', 300, 300]]
     ]
-    let nodes = getNodes(roads)
+    nodes = presets[btn][1]
+    roads = presets[btn][0]
+    console.log(nodes)
+    reFill()
 }
 
-
 function selectPreset(btn){
-    var editGraph = $('#editGraph')[0];
-    var ctx = editGraph.getContext("2d");
-    ctx.fillStyle = 'white';
-    ctx.fillRect(0, 0, 900, 700);
     fillPreset(ctx, btn)
 
 }
 
-
-window.onload = function () {
-    selectPreset('preset1');
-};
-
-
+// menu button
 $(function () {
     for (let btnI = 0; btnI < $('#part').children().length; btnI++) {
       let btn = $('#part').children()[btnI].id;
@@ -89,7 +192,8 @@ $(function () {
       });
     }
   });
-  
+ 
+// preset button
 $(function() {
     for (let btnI = 0; btnI < $('#presetList').children().length; btnI++) {
         let btn = $('#presetList').children()[btnI].id;
@@ -108,7 +212,44 @@ $(function() {
       }
 })
 
+function handleMouseDown(e){
+  mouseX=parseInt(e.clientX-offsetX);
+  mouseY=parseInt(e.clientY-offsetY);
+  console.log('mousednw', mouseX, mouseY)
+  nodes.forEach(node => {
+    //console.log(Math.abs(mouseX- node[1]) < 20, Math.abs(mouseY - node[1]) < 20)
+    if (Math.abs(mouseX- node[1]) < 20 && Math.abs(mouseY- node[1]) < 20){
+      console.log('hit a node');
+      hitNode = node;
+      return;
+    }
 
+  });
+}
+
+async function handleMouseUp(e){
+  mouseX=parseInt(e.clientX-offsetX);
+  mouseY=parseInt(e.clientY-offsetY);
+  console.log('mouseup', mouseX, mouseY);
+  if (!hitNode){
+    return 0 
+  }
+  let i = nodes.indexOf(hitNode)
+  nodes.splice(i,1)
+  hitNode[1] = mouseX;
+  hitNode[2] = mouseY;
+  console.log(nodes, hitNode)
+  await nodes.push(hitNode)
+  await reFill()
+
+
+
+}
+
+
+$('body').on('mousedown', '#editGraph', function(e){handleMouseDown(e);});
+$('body').on('mouseup', '#editGraph', function(e){handleMouseUp(e);});
+});
 // TODO the nodes and edges
 // default
 // preset

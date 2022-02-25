@@ -651,16 +651,16 @@ button:hover {
   height: 6rem;
 }
 
+.h-full {
+  height: 100%;
+}
+
 .h-8 {
   height: 2rem;
 }
 
 .h-10 {
   height: 2.5rem;
-}
-
-.h-full {
-  height: 100%;
 }
 
 .h-40 {
@@ -687,12 +687,12 @@ button:hover {
   width: 6rem;
 }
 
-.w-3\/6 {
-  width: 50%;
-}
-
 .w-full {
   width: 100%;
+}
+
+.w-3\/6 {
+  width: 50%;
 }
 
 .w-12 {
@@ -885,14 +885,14 @@ button:hover {
   background-color: rgb(226 232 240 / var(--tw-bg-opacity));
 }
 
-.bg-gray-400 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(156 163 175 / var(--tw-bg-opacity));
-}
-
 .bg-gray-600 {
   --tw-bg-opacity: 1;
   background-color: rgb(75 85 99 / var(--tw-bg-opacity));
+}
+
+.bg-gray-400 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(156 163 175 / var(--tw-bg-opacity));
 }
 
 .bg-white {
