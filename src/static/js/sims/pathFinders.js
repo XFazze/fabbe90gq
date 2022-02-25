@@ -3,9 +3,9 @@ $(function () {
   var canvas = $("#editGraph")[0];
   var ctx = canvas.getContext("2d");
 
-  var nodes, roads;
-  var hitNode;
-  selectPreset('preset3');  
+  var nodes, roads, nodeNameToCoords;
+  var hitNode, middleCoords;
+  selectPreset('preset1');  
 
   var offsetX=canvas.offsetLeft;
   var offsetY=canvas.offsetTop;
@@ -77,10 +77,11 @@ function fillNodes(ctx, nodes){
 async function reFill(){
   ctx.fillStyle = 'white';
   ctx.fillRect(0, 0, 900, 700);
-  let nodeNameToCoords = createNodeNameToCoords(nodes)
+  nodeNameToCoords = createNodeNameToCoords(nodes)
   fillRoads(ctx, roads, nodeNameToCoords);
   fillNodes(ctx, nodes);
 }
+
 function fillPreset(ctx, btn){
     var presets = {};
     presets['preset1'] = [[
@@ -157,7 +158,7 @@ function fillPreset(ctx, btn){
     ]
     nodes = presets[btn][1]
     roads = presets[btn][0]
-    console.log(nodes)
+    //console.log(nodes)
     reFill()
 }
 
@@ -212,13 +213,11 @@ $(function() {
       }
 })
 
-function handleMouseDown(e){
-  mouseX=parseInt(e.clientX-offsetX);
-  mouseY=parseInt(e.clientY-offsetY);
-  console.log('mousednw', mouseX, mouseY)
+function checkHitNode(){
+  hitNode = undefined
   nodes.forEach(node => {
-    //console.log(Math.abs(mouseX- node[1]) < 20, Math.abs(mouseY - node[1]) < 20)
-    if (Math.abs(mouseX- node[1]) < 20 && Math.abs(mouseY- node[1]) < 20){
+    //console.log(node, Math.abs(mouseX- node[1]) < 20, Math.abs(mouseY - node[2]))
+    if (Math.abs(mouseX- node[1]) < 20 && Math.abs(mouseY- node[2]) < 20){
       console.log('hit a node');
       hitNode = node;
       return;
@@ -227,21 +226,95 @@ function handleMouseDown(e){
   });
 }
 
-async function handleMouseUp(e){
+function handleEnter(e) {
+  console.log('handle enter')
+  var keyCode = e.keyCode;
+  if (keyCode === 13) {
+      fillWeightText(this.value);
+      document.body.removeChild(this);
+      hasInput = false;
+  }
+}
+
+async function editTextWeight(defaultValue){
+    let input = document.createElement('input');
+
+    input.type = 'text';
+    input.style.position = 'fixed';
+    input.style.background = 'blue';
+    input.defaultValue = defaultValue;
+    input.style.left = (middleCoords[0] - 4) + 'px';
+    input.style.top = (middleCoords[1] - 4) + 'px';
+
+    input.onkeydown = handleEnter;
+
+    $('#canvasDiv')[0].appendChild(input);
+
+    input.focus();
+
+    hasInput = true;
+
+}
+
+function fillWeightText(newWeight){
+  console.log('filling', middleCoords)
+  ctx.beginPath();
+  ctx.fillStyle = '#3d3d3d';
+  ctx.fillRect(middleCoords[0]-10,middleCoords[1]-10, 20, 20 )
+  ctx.fillStyle = '#FFFFFF';
+  ctx.font = "16px Arial";
+  console.log('filled red')
+  console.log('filled wirhg')
+  ctx.fillText(newWeight,middleCoords[0]-10,middleCoords[1]+5)
+  ctx.fill();
+
+}
+
+async function checkHitRoadWeight(){
+  roads.forEach(road => {
+    let begiCoords = nodeNameToCoords[road[0]]
+    let endCoords = nodeNameToCoords[road[1]]
+    middleCoords = [(begiCoords[0]+endCoords[0])/2, (begiCoords[1]+endCoords[1])/2]
+    if (Math.abs(mouseX- middleCoords[0]) < 20 && Math.abs(mouseY- middleCoords[1]) < 20){
+      editTextWeight(road[2]);
+      return
+    }
+
+  });
+
+}
+
+function handleMouseDown(e){
   mouseX=parseInt(e.clientX-offsetX);
   mouseY=parseInt(e.clientY-offsetY);
-  console.log('mouseup', mouseX, mouseY);
-  if (!hitNode){
-    return 0 
-  }
+  //console.log('mousednw', mouseX, mouseY)
+
+  checkHitNode()
+  checkHitRoadWeight()
+
+
+
+}
+
+async function moveNode(){
   let i = nodes.indexOf(hitNode)
   nodes.splice(i,1)
   hitNode[1] = mouseX;
   hitNode[2] = mouseY;
-  console.log(nodes, hitNode)
   await nodes.push(hitNode)
   await reFill()
 
+
+}
+async function handleMouseUp(e){
+  mouseX = parseInt(e.clientX-offsetX);
+  mouseY = parseInt(e.clientY-offsetY);
+  console.log('mouseup', mouseX, mouseY);
+
+  if (hitNode){
+    moveNode ()
+  }
+  
 
 
 }
