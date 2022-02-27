@@ -1,15 +1,29 @@
 
 $(function () {
+  var letters = createLetters()
   var canvas = $("#editGraph")[0];
   var ctx = canvas.getContext("2d");
 
   var nodes, roads, nodeNameToCoords;
-  var hitNode, middleCoords;
+  var hitNode, roadOrigin, middleCoords;
+  var spaceDown;
   selectPreset('preset1');  
 
   var offsetX=canvas.offsetLeft;
   var offsetY=canvas.offsetTop;
 
+
+function createLetters(){
+  let gigaFreeLetters = []
+  let freeLetters = 'abcdefghijklmnopqrstuvwxyz'.split('') //ABCDEFGHIJKLMNOPQRSTUVWYZ
+  freeLetters.forEach(letter => {
+    freeLetters.forEach(letter2 => {
+      gigaFreeLetters.push(letter+letter2)
+    })
+  });
+  freeLetters = freeLetters.concat(gigaFreeLetters)
+  return freeLetters
+}
 
 function getNodes(roads){
     var nodes = []
@@ -42,13 +56,13 @@ function fillRoads(ctx, roads, nodeNameToCoords){
     ctx.lineTo(endCoords[0], endCoords[1]);
     ctx.stroke();
     
-    let middleCoords = [(begiCoords[0]+endCoords[0])/2, (begiCoords[1]+endCoords[1])/2]
+    let tempMiddleCoords = [(begiCoords[0]+endCoords[0])/2, (begiCoords[1]+endCoords[1])/2]
     ctx.beginPath();
     ctx.fillStyle = '#3d3d3d';
-    ctx.fillRect(middleCoords[0]-10,middleCoords[1]-10, 20, 20 )
+    ctx.fillRect(tempMiddleCoords[0]-10,tempMiddleCoords[1]-10, 20, 20 )
     ctx.fillStyle = '#FFFFFF';
     ctx.font = "16px Arial";
-    ctx.fillText(road[2],middleCoords[0]-10,middleCoords[1]+5)
+    ctx.fillText(road[2],tempMiddleCoords[0]-10,tempMiddleCoords[1]+5)
     ctx.fill();
 
 
@@ -213,28 +227,6 @@ $(function() {
       }
 })
 
-function checkHitNode(){
-  hitNode = undefined
-  nodes.forEach(node => {
-    //console.log(node, Math.abs(mouseX- node[1]) < 20, Math.abs(mouseY - node[2]))
-    if (Math.abs(mouseX- node[1]) < 20 && Math.abs(mouseY- node[2]) < 20){
-      console.log('hit a node');
-      hitNode = node;
-      return;
-    }
-
-  });
-}
-
-function handleEnter(e) {
-  console.log('handle enter')
-  var keyCode = e.keyCode;
-  if (keyCode === 13) {
-      fillWeightText(this.value);
-      document.body.removeChild(this);
-      hasInput = false;
-  }
-}
 
 async function editTextWeight(defaultValue){
     let input = document.createElement('input');
@@ -242,58 +234,128 @@ async function editTextWeight(defaultValue){
     input.type = 'text';
     input.style.position = 'fixed';
     input.style.background = 'blue';
+    input.style.width = '20px';
     input.defaultValue = defaultValue;
-    input.style.left = (middleCoords[0] - 4) + 'px';
-    input.style.top = (middleCoords[1] - 4) + 'px';
+    input.style.left = (middleCoords[0] - 10 + offsetX) + 'px';
+    input.style.top = (middleCoords[1] - 10 + offsetY) + 'px';
 
-    input.onkeydown = handleEnter;
+    input.onkeydown = weightHandleEnter;
 
     $('#canvasDiv')[0].appendChild(input);
 
-    input.focus();
+    input.select();
 
     hasInput = true;
 
 }
 
-function fillWeightText(newWeight){
-  console.log('filling', middleCoords)
+function weightHandleEnter(e) {
+  console.log('handle enter')
+  var keyCode = e.keyCode;
+  if (keyCode === 13) {
+      fixMiddleCoords = [parseInt(this.style.left.slice(0, -2))-offsetX+10, parseInt(this.style.top.slice(0,-2))-offsetY+10]
+      
+      fillWeightText(this.value, fixMiddleCoords);
+      $('#canvasDiv')[0].removeChild(this);
+      hasInput = false;
+  }
+}
+
+function fillWeightText(newWeight, middleCoords){
   ctx.beginPath();
   ctx.fillStyle = '#3d3d3d';
   ctx.fillRect(middleCoords[0]-10,middleCoords[1]-10, 20, 20 )
   ctx.fillStyle = '#FFFFFF';
   ctx.font = "16px Arial";
-  console.log('filled red')
-  console.log('filled wirhg')
   ctx.fillText(newWeight,middleCoords[0]-10,middleCoords[1]+5)
   ctx.fill();
 
 }
 
+
+async function checkHitNode(){
+  let res = 0
+  hitNode = undefined
+  roadOrigin = undefined
+  nodes.forEach(node => {
+    //console.log(node, Math.abs(mouseX- node[1]) < 20, Math.abs(mouseY - node[2]))
+    if (Math.abs(mouseX- node[1]) < 20 && Math.abs(mouseY- node[2]) < 20){
+      console.log('hit a node');
+      res = 1
+      console.log('herer', spaceDown);
+      if (spaceDown){
+        let i = nodes.indexOf(node)
+        nodes.splice(i,1)
+        for (let index = roads.length-1; index >= 0; index--) {
+          const road = roads[index];
+          
+          console.log(road)
+          if(road[1] == node[0] || road[0] == node[0]){
+            console.log('rr', road)
+            let i = roads.indexOf(road)
+            roads.splice(i,1)
+
+          }
+        };
+        console.log(roads);
+      reFill()
+      }else{
+      hitNode = node;
+    }
+
+  }});
+  
+  return res
+}
+
 async function checkHitRoadWeight(){
+  let res = 0
   roads.forEach(road => {
     let begiCoords = nodeNameToCoords[road[0]]
     let endCoords = nodeNameToCoords[road[1]]
     middleCoords = [(begiCoords[0]+endCoords[0])/2, (begiCoords[1]+endCoords[1])/2]
     if (Math.abs(mouseX- middleCoords[0]) < 20 && Math.abs(mouseY- middleCoords[1]) < 20){
-      editTextWeight(road[2]);
-      return
+      
+      if (spaceDown){
+        console.log('removing road', road);
+        let i = roads.indexOf(road)
+        console.log('removing road', roads.length);
+        roads.splice(i,1)
+        console.log('removing road', roads.length);
+        reFill()
+      }else{
+      editTextWeight(road[2], middleCoords);
     }
-
+    res = 1}
+    
   });
+  return res
 
 }
 
-function handleMouseDown(e){
-  mouseX=parseInt(e.clientX-offsetX);
-  mouseY=parseInt(e.clientY-offsetY);
-  //console.log('mousednw', mouseX, mouseY)
+async function removeOldEditRoadWeight(){
+  let canvasChildren = $('#canvasDiv').children()
+  for (let i = 0; i < canvasChildren.length; i++) {
+    const element = canvasChildren[i];
+    if(element.tagName == 'INPUT'){
+      $('#canvasDiv')[0].removeChild(element);
+    }
+    
+  }
 
-  checkHitNode()
-  checkHitRoadWeight()
 
+}
 
-
+async function createNode(coords){
+  let freeLetters = [...letters]
+  nodes.forEach(node => {
+    if(freeLetters.includes(node[0])){
+      let i = freeLetters.indexOf(node[0])
+      freeLetters.splice(i, 1)
+    }
+  });
+  nodes.push([freeLetters[0], coords[0], coords[1]])
+  reFill()
 }
 
 async function moveNode(){
@@ -306,28 +368,77 @@ async function moveNode(){
 
 
 }
+
+async function chechNodeOrRoad(){
+  let createdRoad = false
+  nodes.forEach(node => {
+    if (Math.abs(mouseX- node[1]) < 20 && Math.abs(mouseY- node[2]) < 20){
+      if(hitNode[0] != node[0]){
+        roads.push([hitNode[0], node[0], 10])
+      }
+      createdRoad = true
+      return
+    }
+  });
+  if(!createdRoad){
+    moveNode()
+  }
+  reFill()
+
+
+}
+
+async function handleMouseDown(e){
+  mouseX=parseInt(e.clientX-offsetX);
+  mouseY=parseInt(e.clientY-offsetY);
+  //console.log('mousednw', mouseX, mouseY)
+
+  let hitAnyThing = await checkHitNode()
+
+  await removeOldEditRoadWeight()
+
+  hitAnyThing += await checkHitRoadWeight()
+
+  if(!hitAnyThing){
+    createNode([mouseX,mouseY])
+  }
+
+
+}
+
 async function handleMouseUp(e){
   mouseX = parseInt(e.clientX-offsetX);
   mouseY = parseInt(e.clientY-offsetY);
   console.log('mouseup', mouseX, mouseY);
 
   if (hitNode){
-    moveNode ()
+    chechNodeOrRoad()
   }
-  
-
-
 }
-
 
 $('body').on('mousedown', '#editGraph', function(e){handleMouseDown(e);});
 $('body').on('mouseup', '#editGraph', function(e){handleMouseUp(e);});
+
+
+
+async function handleKeyDown(e){
+  if(e.which == 32){
+    spaceDown = true
+  }
+}
+async function handleKeyUp(e){
+  if(e.which == 32){
+    spaceDown = false
+  }
+}
+
+$('body').on('keydown', function(e){handleKeyDown(e);});
+$('body').on('keyup', function(e){handleKeyUp(e);});
+
 });
-// TODO the nodes and edges
-// default
-// preset
-// edited preset
-// PRIORITY TODO VIEW A GRAPH
+// TODO change weight
+// TODO add new nodes
+// TODO add new roads
 
 // TODO select algorithm/purpuse
 // From list
