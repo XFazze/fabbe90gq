@@ -3,18 +3,19 @@ $(function () {
   var letters = createLetters()
   var canvas = $("#editGraph")[0];
   var ctx = canvas.getContext("2d");
+  
+  var offsetX=canvas.offsetLeft;
+  var offsetY=canvas.offsetTop;
 
   var nodes, roads, nodeNameToCoords;
   var hitNode, hitRoadWeigh;
   var spaceDown;
-  var algorithm;
+  var algorithm = 'eulerVagBruteForce';
   r = fillPreset('preset1');
   nodes = r.nodes
   roads = r.roads
   nodeNameToCoords = r.nodeNameToCoords
 
-  var offsetX=canvas.offsetLeft;
-  var offsetY=canvas.offsetTop;
 
 
 
@@ -95,7 +96,6 @@ $(function () {
 });
 
 
-
 async function editTextWeight(defaultValue, middleCoords, offsetX,offsetY, road){
   let input = document.createElement('input');
 
@@ -116,6 +116,7 @@ async function editTextWeight(defaultValue, middleCoords, offsetX,offsetY, road)
   hasInput = true;
 
 }
+
 function weightHandleEnter(e) {
   var keyCode = e.keyCode;
   if (keyCode === 13) {
@@ -135,6 +136,7 @@ function weightHandleEnter(e) {
 async function handleMouseDown(e){
   mouseX=parseInt(e.clientX-offsetX);
   mouseY=parseInt(e.clientY-offsetY);
+  console.log(mouseX, offsetX)
 
   hitNode = await checkHitNode(mouseX, mouseY, nodes)
 
@@ -171,7 +173,6 @@ $('body').on('mousedown', '#editGraph', function(e){handleMouseDown(e);});
 $('body').on('mouseup', '#editGraph', function(e){handleMouseUp(e);});
 
 
-
 async function handleKeyDown(e){
   if(e.which == 32){
     spaceDown = true
@@ -187,6 +188,19 @@ async function handleKeyUp(e){
 $('body').on('keydown', function(e){handleKeyDown(e);});
 $('body').on('keyup', function(e){handleKeyUp(e);});
 
+
+
+function solve(){
+  nameToFunctionReference = {
+    'eulerVagBruteForce' : eulerVagBruteForce
+  }
+  roads = doubleSidedRoads(roads)
+  hideErrors()
+  fun = nameToFunctionReference[algorithm]
+  let solutions = fun(roads)
+  console.log('SOLUTIONS: ', solutions)
+}
+$('#solve').click(solve)
 });
 
 // TODO select algorithm/purpuse

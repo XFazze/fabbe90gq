@@ -1,6 +1,8 @@
 {% extends "sims/simsTemplate.html" %}
 {% block link %}
     <script type="text/javascript" src="/static/js/sims/pathFinder/selectGraph.js"></script>
+    <script type="text/javascript" src="/static/js/sims/pathFinder/setup.js"></script>
+    <script type="text/javascript" src="/static/js/sims/pathFinder/eulerVagBrute.js"></script>
     <script type="text/javascript" src="/static/js/sims/pathFinder/main.js"></script>
 {% endblock %}
 {% block main%}
@@ -22,7 +24,7 @@ TODO different algorithm
         <button id="viewSolutions" class="w-full">View result</button>
     </div>
 
-    <div id="DivselectGraph">
+    <div id="DivselectGraph" class="hidden">
         <div>
             <h2>Presets</h2>
             <div id="presetList">
@@ -54,19 +56,22 @@ TODO different algorithm
     <div id="DivselectAlgorithm" class="hidden flex flex-col gap-4">
         <h2>Select Algorithm</h2>
         <div id='algorithms' class="flex flex-col gap-4">
-
+            <!--
             <div id="shortestPath" class="flex-col justify-between gap-4">
                 <h3>Kortaste vägen - minsta summa av vikt från nod till nod</h3>
                 <button id="shortestPathBruteForce" class="" >Brute force</button>
                 <button id="nearestNeighbour" class="" >Nearest Neighbour</button>
                 <button id="dijkstras" class="" >Dijkstras Algorithm</button>
             </div>
-
+            -->
             <div id="eulerVag" class="flex-col justify-between gap-4">
                 <h3>Eulerväg - en väg som passerar alla kanter</h3>
                 <button id="eulerVagBruteForce" class=" bg-gray-600" >Brute force</button>
-                <button id="fleurys" class=" bg-gray-600" >Fleurys Algorithm</button>
+                
+            <!--<button id="fleurys" class="" >Fleurys Algorithm</button> -->
             </div>
+            <!--
+            
 
             <div id="eulerCykel" class="flex-col justify-between gap-4">
                 <h3>Eulercykel - en cykel som passerar alla kanter</h3>
@@ -91,11 +96,15 @@ TODO different algorithm
                 <button id="kruskals" class="" >Kruskals Algorithm</button>
                 <button id="prims" class="" >Prims Algorithm</button>
             </div>
+            -->
         </div>
 
     </div>
-    <div id="DivviewSolutions" class="hidden">
+    <div id="DivviewSolutions" class="">
         <h2>View solutions</h2>
+        <button id="solve">Solve</button>
+        <button>Step by Step(of the best)</button>
+        <p id="errorNoRoadStartingNode" class="hidden">Error: starting node must have roads</p>
         <canvas id="game-layer" width=900 height=700px style="margin: auto; display:block; padding:0;"></canvas><br>
     </div>
 </div>
