@@ -1,6 +1,7 @@
 {% extends "sims/simsTemplate.html" %}
 {% block link %}
-    <script type="text/javascript" src="/static/js/sims/pathFinders.js"></script>
+    <script type="text/javascript" src="/static/js/sims/pathFinder/selectGraph.js"></script>
+    <script type="text/javascript" src="/static/js/sims/pathFinder/main.js"></script>
 {% endblock %}
 {% block main%}
 <div class="centerdiv">
@@ -20,6 +21,7 @@ TODO different algorithm
         <button id="selectAlgorithm" class="w-full">Select Algorithm</button>
         <button id="viewSolutions" class="w-full">View result</button>
     </div>
+
     <div id="DivselectGraph">
         <div>
             <h2>Presets</h2>
@@ -48,8 +50,49 @@ TODO different algorithm
             </p>
         </div>
     </div>
-    <div id="DivselectAlgorithm" class="hidden">
+
+    <div id="DivselectAlgorithm" class="hidden flex flex-col gap-4">
         <h2>Select Algorithm</h2>
+        <div id='algorithms' class="flex flex-col gap-4">
+
+            <div id="shortestPath" class="flex-col justify-between gap-4">
+                <h3>Kortaste vägen - minsta summa av vikt från nod till nod</h3>
+                <button id="shortestPathBruteForce" class="" >Brute force</button>
+                <button id="nearestNeighbour" class="" >Nearest Neighbour</button>
+                <button id="dijkstras" class="" >Dijkstras Algorithm</button>
+            </div>
+
+            <div id="eulerVag" class="flex-col justify-between gap-4">
+                <h3>Eulerväg - en väg som passerar alla kanter</h3>
+                <button id="eulerVagBruteForce" class=" bg-gray-600" >Brute force</button>
+                <button id="fleurys" class=" bg-gray-600" >Fleurys Algorithm</button>
+            </div>
+
+            <div id="eulerCykel" class="flex-col justify-between gap-4">
+                <h3>Eulercykel - en cykel som passerar alla kanter</h3>
+                <button id="eulerCykelBruteForce" class="" >Brute force</button>
+                <button id="heirholzers" class="" >Heirholzers Algorithm</button>
+            </div>
+
+            <div id="hamiltonVag" class="flex-col justify-between gap-4">
+                <h3>Hamiltonväg - en väg som passerar alla noder</h3>
+                <button id="hamiltonVagBruteForce" class="" >Brute force</button>
+                <button id="cheapestLink" class="" >Cheapest link</button>
+            </div>
+
+            <div id="hamiltonCykel" class="flex-col justify-between gap-4">
+                <h3>Hamiltoncykel - en cykel som passerar alla noder</h3>
+                <button id="hamiltonCykelBruteForce" class="" >Brute force</button>
+            </div>
+
+            <div id="minmalTree" class="flex-col justify-between gap-4">
+                <h3>Minimalt uppspänt träd - minsta summa av vikt i en graf</h3>
+                <button id="minmalTreeBruteForce" class="" >Brute force</button>
+                <button id="kruskals" class="" >Kruskals Algorithm</button>
+                <button id="prims" class="" >Prims Algorithm</button>
+            </div>
+        </div>
+
     </div>
     <div id="DivviewSolutions" class="hidden">
         <h2>View solutions</h2>
