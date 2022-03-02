@@ -30,18 +30,37 @@ function hideErrors(){
     $('#errorNoRoadStartingNode').hide()
 
 }
-
-function checkDoubles(roads){
-    for (let i = roads.length-1; i > -1 ; i--) {
+function betterInclude(roads, reverse){
+    for (let i = 0; i < roads.length; i++) {
         const road = roads[i];
-        let reverse = [...road]
-        if(roads.includes(reverse)){
+        let equals = true
+        for (let ii = 0; ii < road.length; ii++) {
+            if(road[ii] != reverse[ii]){
+                equals = false
+                break
+            }
+        }
+        if(equals){
             return true
-            
         }
     }
     return false
 }
+
+function checkNotDoubles(roads){
+    for (let i = roads.length-1; i > -1 ; i--) {
+        const road = roads[i];
+        let reverse = [...road]
+        reverse = [reverse[1], reverse[0], reverse[2]]
+        if(betterInclude(roads, reverse)){
+            return false
+            
+        }
+    }
+    return true
+}
+
+
 function formatSolutions(paths){
     let weighted = []
     paths.forEach(path => {

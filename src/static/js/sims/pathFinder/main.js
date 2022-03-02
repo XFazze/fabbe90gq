@@ -198,7 +198,8 @@ function solve(){
   hideErrors()
   fun = nameToFunctionReference[algorithm]
   let solutions = fun(roads)
-  console.log('SOLUTIONS: ', solutions)
+  let sortedSolutions = formatSolutions(solutions)
+  console.log('SOLUTIONS: ', sortedSolutions)
 }
 $('#solve').click(solve)
 });

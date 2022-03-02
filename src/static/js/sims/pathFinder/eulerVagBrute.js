@@ -6,13 +6,14 @@ function eulerVagBruteForce(roads){
     }
     let rounds = 10
     let x = 0
+    let solutions = []
     while(x < rounds){
         console.log('round', x)
         x += 1
         let r = eulerVagBruteForceRound(nodes, roads, activePaths)
         activePaths = r.newActiveRoads
-        solutions = r.solutions
-        console.log(activePaths)
+        solutions = solutions.concat(r.solutions)
+        
         if(activePaths.length == 0){
             break
         }
@@ -28,17 +29,16 @@ function eulerVagBruteForceRound(nodes, roads, activePaths){
         if(didTrippleBack(path)){
             return
         }
+        if(eulerVagSolved(path, roads)){
+            solutions.push(path)
+            return
+        }
 
         roads.forEach(road => {
             let clonePath = [...path];
             if(road[0] == path[path.length - 1][1]){
-                clonePath.push(road)
-                if(eulerVagSolved(path, roads)){
-                    solutions.push(clonePath)
-                }else{
+                    clonePath.push(road)
                 newActiveRoads.push(clonePath)
-            }
-
             }
         });
     });
@@ -64,7 +64,7 @@ function eulerVagSolved(path, roads){
             cloneRoads.splice(ii, 1)
         }
     }
-    return checkDoubles(cloneRoads)
+    return checkNotDoubles(cloneRoads)
 }
 // active roads
 // loop every active to go next road in it 
