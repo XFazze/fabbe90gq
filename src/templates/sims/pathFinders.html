@@ -3,6 +3,7 @@
     <script type="text/javascript" src="/static/js/sims/pathFinder/selectGraph.js"></script>
     <script type="text/javascript" src="/static/js/sims/pathFinder/setup.js"></script>
     <script type="text/javascript" src="/static/js/sims/pathFinder/eulerVagBrute.js"></script>
+    <script type="text/javascript" src="/static/js/sims/pathFinder/showingSolutions.js"></script>
     <script type="text/javascript" src="/static/js/sims/pathFinder/main.js"></script>
 {% endblock %}
 {% block main%}
@@ -24,7 +25,7 @@ TODO different algorithm
         <button id="viewSolutions" class="w-full">View result</button>
     </div>
 
-    <div id="DivselectGraph" class="hidden">
+    <div id="DivselectGraph" class="">
         <div>
             <h2>Presets</h2>
             <div id="presetList">
@@ -100,11 +101,18 @@ TODO different algorithm
         </div>
 
     </div>
-    <div id="DivviewSolutions" class="">
+    <div id="DivviewSolutions" class="hidden">
         <h2>View solutions</h2>
         <button id="solve">Solve</button>
         <button>Step by Step(of the best)</button>
+        <div id="progress">
+            <p  class="inline">Round: </p>
+            <p id="progressRound"class="inline" > 0</p>
+            <p  class="inline">Active paths: </p>
+            <p id="progressActivePaths" class="inline">0</p>
+        </div>
         <p id="errorNoRoadStartingNode" class="hidden">Error: starting node must have roads</p>
+        <p id="slowerModeEnables" class="hidden">Note: no simple solution found. Going through all.</p>
         <canvas id="game-layer" width=900 height=700px style="margin: auto; display:block; padding:0;"></canvas><br>
     </div>
 </div>

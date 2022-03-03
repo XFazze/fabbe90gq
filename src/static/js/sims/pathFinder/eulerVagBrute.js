@@ -4,18 +4,34 @@ function eulerVagBruteForce(roads){
     if(activePaths.length == 0){
         $('#errorNoRoadStartingNode').show()
     }
-    let rounds = 10
+    let rounds = 100
     let x = 0
     let solutions = []
+    let notPrio = []
+    let slower = false
     while(x < rounds){
-        console.log('round', x)
+        console.log(`round: ${x} activePaths: ${activePaths.length}`)
+        $('#progressRound').text(x)
+        $('#progressActivePaths').text(activePaths.length)
+
         x += 1
         let r = eulerVagBruteForceRound(nodes, roads, activePaths)
         activePaths = r.newActiveRoads
         solutions = solutions.concat(r.solutions)
+        if(!slower){
+            let r2 = sortPriority(activePaths)
+            activePaths = r2.notDoubles
+            notPrio.concat(r2.doubles)
+        }
         
-        if(activePaths.length == 0){
+        if(activePaths.length == 0 && slower){
             break
+        }else if(activePaths.length == 0){
+            activePaths= notPrio
+            slower = true
+            console.log('slower is activated')
+            $('#slowerModeEnables').show()
+
         }
     }
     return solutions
@@ -29,10 +45,17 @@ function eulerVagBruteForceRound(nodes, roads, activePaths){
         if(didTrippleBack(path)){
             return
         }
+        if(hasLoop(path)){
+            return
+        }
         if(eulerVagSolved(path, roads)){
             solutions.push(path)
             return
         }
+
+
+        // TODO add setup function that checks if loop has been achieved
+        // check if this node has been stepped on before and check if the loop between is same
 
         roads.forEach(road => {
             let clonePath = [...path];

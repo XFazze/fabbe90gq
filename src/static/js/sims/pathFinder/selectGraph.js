@@ -273,9 +273,10 @@ function createLetters(){
   
   }
 
-  function deleteSomething(){
+  function deleteSomething(mousePosition){
+    console.log(mousePosition)
     nodes.forEach(node => {
-        if (Math.abs(mouseX- node[1]) < 20 && Math.abs(mouseY- node[2]) < 20){
+        if (Math.abs(mousePosition.x- node[1]) < 20 && Math.abs(mousePosition.y- node[2]) < 20){
             let i = nodes.indexOf(node)
             nodes.splice(i,1)
             for (let index = roads.length-1; index >= 0; index--) {
@@ -295,7 +296,7 @@ function createLetters(){
         let begiCoords = nodeNameToCoords[road[0]]
         let endCoords = nodeNameToCoords[road[1]]
         middleCoords = [(begiCoords[0]+endCoords[0])/2, (begiCoords[1]+endCoords[1])/2]
-        if (Math.abs(mouseX- middleCoords[0]) < 20 && Math.abs(mouseY- middleCoords[1]) < 20){
+        if (Math.abs(mousePosition.x- middleCoords[0]) < 20 && Math.abs(mousePosition.y- middleCoords[1]) < 20){
           
            //  console.log('removing road', road);
             let i = roads.indexOf(road)

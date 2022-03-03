@@ -28,24 +28,37 @@ function bruteForceStart(nodes, roads){
 
 function hideErrors(){
     $('#errorNoRoadStartingNode').hide()
+    $('#slowerModeEnables').hide()
+
+}
+
+function arrayEquals(array1, array2){
+    for (let i = 0; i < array1.length; i++) {
+        if(Array.isArray(array1[i][0])){
+            if(!arrayEquals(array1[i], array2[i])){
+                return false    
+            }
+        }else{
+            if(array1[i] != array2[i]){
+                return false
+            }
+        }   
+    }
+    return true
 
 }
 function betterInclude(roads, reverse){
+    let matches = 0
     for (let i = 0; i < roads.length; i++) {
         const road = roads[i];
-        let equals = true
-        for (let ii = 0; ii < road.length; ii++) {
-            if(road[ii] != reverse[ii]){
-                equals = false
-                break
-            }
-        }
-        if(equals){
-            return true
+
+        if(arrayEquals(road, reverse)){
+            matches += 1
         }
     }
-    return false
+    return matches
 }
+
 
 function checkNotDoubles(roads){
     for (let i = roads.length-1; i > -1 ; i--) {
@@ -90,4 +103,92 @@ function sortFirstElement(paths, weighted){
     }
     return res
 
+}
+
+function removeLoop(path){
+    for (let i = 0; i < path.length; i++) {
+        const road = path[i];
+        var endloop;
+
+        // check if there are two of same road
+        if(betterInclude(road, path) > 1){
+            continue
+        }
+
+        // checks how long the loop is
+        for (let ii = i; ii < path.length; ii++) {
+            const road2 = path[ii];
+            if(road2[1] == road[0]){
+                endloop = ii;
+                break
+            }
+        }
+
+        // finds other loops 
+        path = removeOtherLoops(path, endloop, i)
+    }
+    return path
+}
+function removeOtherLoops(path, startIndex, startIndexOfRealLoop){
+    for (let i = startIndex; i < path.length; i++) {
+        const road2 = path[i];
+
+        if(!arrayEquals(road2, path[startIndexOfRealLoop])){
+            continue
+        }
+        let okLoop = true;
+        for (let ii = 0; ii < startIndex-startIndexOfRealLoop; ii++) {
+            const road3 = path[ii+i];
+            if(ii+i > path.length-1){
+                okLoop = false
+                break
+            }
+            if(!arrayEquals(road3, path[ii+startIndexOfRealLoop])){
+                okLoop = false
+                break 
+            }
+        }
+        if(okLoop){
+            path.splice(i, startIndex-startIndexOfRealLoop)
+        }
+    }
+    return path
+}
+
+function hasLoop(path){
+    let pathWithoutLoops = removeLoop([...path])
+    if(arrayEquals(path, pathWithoutLoops)){
+        return false
+    }
+    return true
+
+}
+
+function sortPriority(paths){
+    let notDoubles = []
+    let doubles = []
+    for (let i = 0; i < paths.length; i++) {
+        const path = paths[i];
+        let isDouble = false
+        for (let ii = 0; ii < path.length; ii++) {
+            const road = path[ii];
+            if(betterInclude(path, road) > 1){
+                doubles.push(path)
+                isDouble = true
+                break
+            }
+        }
+        if(!isDouble){
+            notDoubles.push(path)
+        }
+    }
+    return {notDoubles, doubles}
+}
+
+function getMousePos(canvas, evt) {
+    var rect = canvas.getBoundingClientRect();
+    return {
+      x: evt.clientX - rect.left,
+      y: evt.clientY - rect.top
+    };
 }

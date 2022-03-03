@@ -3,13 +3,15 @@ $(function () {
   var letters = createLetters()
   var canvas = $("#editGraph")[0];
   var ctx = canvas.getContext("2d");
+  var mousePosition = {x:0, y:0};
+
   
   var offsetX=canvas.offsetLeft;
   var offsetY=canvas.offsetTop;
+  console.log($("#editGraph")[0].offsetTop, canvas.offsetTop)
 
   var nodes, roads, nodeNameToCoords;
   var hitNode, hitRoadWeigh;
-  var spaceDown;
   var algorithm = 'eulerVagBruteForce';
   r = fillPreset('preset1');
   nodes = r.nodes
@@ -136,7 +138,7 @@ function weightHandleEnter(e) {
 async function handleMouseDown(e){
   mouseX=parseInt(e.clientX-offsetX);
   mouseY=parseInt(e.clientY-offsetY);
-  console.log(mouseX, offsetX)
+  //console.log(mouseX, offsetX)
 
   hitNode = await checkHitNode(mouseX, mouseY, nodes)
 
@@ -162,7 +164,8 @@ async function handleMouseDown(e){
 async function handleMouseUp(e){
   mouseX = parseInt(e.clientX-offsetX);
   mouseY = parseInt(e.clientY-offsetY);
- //  console.log('mouseup', mouseX, mouseY);
+
+  //console.log('mouseup', mouseX, mouseY, canvas);
 
   if (hitNode){
     chechNodeOrRoad(mouseX,mouseY , nodes, roads)
@@ -175,19 +178,22 @@ $('body').on('mouseup', '#editGraph', function(e){handleMouseUp(e);});
 
 async function handleKeyDown(e){
   if(e.which == 32){
-    spaceDown = true
-    deleteSomething()
+    deleteSomething(mousePosition)
   }
 }
 async function handleKeyUp(e){
   if(e.which == 32){
-    spaceDown = false
   }
 }
 
 $('body').on('keydown', function(e){handleKeyDown(e);});
 $('body').on('keyup', function(e){handleKeyUp(e);});
 
+
+$(document).bind('mousemove',function(mouseMoveEvent){
+  mousePosition.x = mouseMoveEvent.pageX - offsetX;
+  mousePosition.y = mouseMoveEvent.pageY - offsetY;
+  });
 
 
 function solve(){
@@ -200,6 +206,7 @@ function solve(){
   let solutions = fun(roads)
   let sortedSolutions = formatSolutions(solutions)
   console.log('SOLUTIONS: ', sortedSolutions)
+  showSolutions(solutions)
 }
 $('#solve').click(solve)
 });
