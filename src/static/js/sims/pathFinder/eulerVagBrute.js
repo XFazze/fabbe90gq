@@ -18,6 +18,7 @@ function eulerVagBruteForce(roads){
         let r = eulerVagBruteForceRound(nodes, roads, activePaths)
         activePaths = r.newActiveRoads
         solutions = solutions.concat(r.solutions)
+        showSolutions(solutions)
         if(!slower){
             let r2 = sortPriority(activePaths)
             activePaths = r2.notDoubles

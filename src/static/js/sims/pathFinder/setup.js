@@ -74,37 +74,6 @@ function checkNotDoubles(roads){
 }
 
 
-function formatSolutions(paths){
-    let weighted = []
-    paths.forEach(path => {
-        let w = countWeight(path)
-        weighted.push(w)
-    });
-    let sorted = sortFirstElement(paths, weighted)
-    return sorted
-}
-
-function countWeight(path){
-    let w = 0
-    path.forEach(road => {
-        w += road[2]
-    });
-    return w
-}
-function sortFirstElement(paths, weighted){
-    res = []
-    paths.sort(function(a, b){  
-        return weighted.indexOf(a) - weighted.indexOf(b);
-      });
-    weighted.sort()
-    for (let i = 0; i < paths.length; i++) {
-        const path = paths[i];
-        res.push(weighted[i], path)
-    }
-    return res
-
-}
-
 function removeLoop(path){
     for (let i = 0; i < path.length; i++) {
         const road = path[i];

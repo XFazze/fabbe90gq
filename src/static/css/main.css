@@ -581,6 +581,10 @@ button:hover {
   order: 5;
 }
 
+.float-left {
+  float: left;
+}
+
 .m-2 {
   margin: 0.5rem;
 }
@@ -757,6 +761,10 @@ button:hover {
   width: 4rem;
 }
 
+.w-1 {
+  width: 0.25rem;
+}
+
 .max-w-4xl {
   max-width: 56rem;
 }
@@ -853,6 +861,22 @@ button:hover {
   overflow: hidden;
 }
 
+.overflow-visible {
+  overflow: visible;
+}
+
+.overflow-scroll {
+  overflow: scroll;
+}
+
+.overflow-x-scroll {
+  overflow-x: scroll;
+}
+
+.overflow-y-scroll {
+  overflow-y: scroll;
+}
+
 .truncate {
   overflow: hidden;
   text-overflow: ellipsis;
@@ -892,6 +916,11 @@ button:hover {
 .bg-gray-600 {
   --tw-bg-opacity: 1;
   background-color: rgb(75 85 99 / var(--tw-bg-opacity));
+}
+
+.bg-zinc-50 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(250 250 250 / var(--tw-bg-opacity));
 }
 
 .bg-gray-400 {
@@ -939,6 +968,16 @@ button:hover {
   background-color: rgb(55 65 81 / var(--tw-bg-opacity));
 }
 
+.bg-slate-100 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(241 245 249 / var(--tw-bg-opacity));
+}
+
+.bg-slate-500 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(100 116 139 / var(--tw-bg-opacity));
+}
+
 .p-4 {
   padding: 1rem;
 }
@@ -975,6 +1014,10 @@ button:hover {
   padding-top: 0px;
 }
 
+.pr-4 {
+  padding-right: 1rem;
+}
+
 .pt-4 {
   padding-top: 1rem;
 }
@@ -999,8 +1042,12 @@ button:hover {
   padding-bottom: 1rem;
 }
 
-.pr-4 {
-  padding-right: 1rem;
+.pr-16 {
+  padding-right: 4rem;
+}
+
+.pr-12 {
+  padding-right: 3rem;
 }
 
 .text-left {
@@ -1023,6 +1070,10 @@ button:hover {
 
 .font-bold {
   font-weight: 700;
+}
+
+.font-medium {
+  font-weight: 500;
 }
 
 .leading-4 {

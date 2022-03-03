@@ -180,6 +180,9 @@ async function handleKeyDown(e){
   if(e.which == 32){
     deleteSomething(mousePosition)
   }
+  if(e.which == 16){
+    printGraph(nodes,roads)
+  }
 }
 async function handleKeyUp(e){
   if(e.which == 32){
@@ -206,7 +209,6 @@ function solve(){
   let solutions = fun(roads)
   let sortedSolutions = formatSolutions(solutions)
   console.log('SOLUTIONS: ', sortedSolutions)
-  showSolutions(solutions)
 }
 $('#solve').click(solve)
 });

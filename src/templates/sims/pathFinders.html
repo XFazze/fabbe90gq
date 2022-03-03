@@ -38,6 +38,12 @@ TODO different algorithm
                 <button id="preset3">
                     Preset 3
                 </button>
+                <button id="preset4">
+                    Preset 4
+                </button>
+                <button id="preset5">
+                    Preset 5
+                </button>
             </div>
         </div>
         <div id="canvasDiv">
@@ -113,6 +119,14 @@ TODO different algorithm
         </div>
         <p id="errorNoRoadStartingNode" class="hidden">Error: starting node must have roads</p>
         <p id="slowerModeEnables" class="hidden">Note: no simple solution found. Going through all.</p>
+        <div id="solutions" class="hidden ">
+            <div class="bg-white w-full overflow-y-scroll w-full h-40">
+            <p class="pr-4 inline font-bold">Weight</p>
+            <p class="inline font-bold">Node order</p>
+            <table id="solutionList" class="w-full" >
+            </table>
+        </div>
+        </div>
         <canvas id="game-layer" width=900 height=700px style="margin: auto; display:block; padding:0;"></canvas><br>
     </div>
 </div>
