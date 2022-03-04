@@ -29,6 +29,7 @@ function bruteForceStart(nodes, roads){
 function hideErrors(){
     $('#errorNoRoadStartingNode').hide()
     $('#slowerModeEnables').hide()
+    $('#noSolutions').hide()
 
 }
 

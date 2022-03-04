@@ -91,6 +91,12 @@ $(function () {
 
         $('#' + algorithmId).addClass('bg-gray-600');
         algorithm = algorithmId
+        solve(algorithm)
+        $(`#DivselectAlgorithm`).addClass('hidden')
+        $(`#selectAlgorithm`).removeClass('bg-gray-600')
+        
+        $(`#DivviewSolutions`).removeClass('hidden')
+        $(`#viewSolutions`).addClass('bg-gray-600')
       });
 
   }
@@ -199,8 +205,10 @@ $(document).bind('mousemove',function(mouseMoveEvent){
   });
 
 
-function solve(){
-  
+function solve(algorithm='none'){
+  if(!algorithm=='none'){
+    algorithm = algorithm
+  }
 $('#solutionList').empty()
   nameToFunctionReference = {
     'eulerVagBruteForce' : eulerVagBruteForce
@@ -210,6 +218,11 @@ $('#solutionList').empty()
   fun = nameToFunctionReference[algorithm]
   console.log('noddd', nodes)
   let solutions = fun(roads, nodes)
+  if(!solutions.length){
+    console.log('no solutions')
+    $(`#noSolutions`).show()
+    return
+  }
   let sortedSolutions = formatSolutions(solutions)
   showSolutions(solutions, nodes, roads)
   drawSolution(nodes, roads, sortedSolutions[0], createNodeNameToCoords)

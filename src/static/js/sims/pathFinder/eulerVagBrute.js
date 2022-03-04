@@ -18,7 +18,9 @@ function eulerVagBruteForce(roads, nodes){
         let r = eulerVagBruteForceRound(nodes, roads, activePaths)
         activePaths = r.newActiveRoads
         solutions = solutions.concat(r.solutions)
-        showSolutions(solutions, nodes,roads)
+        if(solutions.length){
+            showSolutions(solutions, nodes,roads)
+        }
         if(!slower){
             let r2 = sortPriority(activePaths)
             activePaths = r2.notDoubles
@@ -43,9 +45,6 @@ function eulerVagBruteForceRound(nodes, roads, activePaths){
     let newActiveRoads = []
     let solutions = []
     activePaths.forEach(path => {
-        if(didTrippleBack(path)){
-            return
-        }
         if(hasLoop(path)){
             return
         }
@@ -60,6 +59,9 @@ function eulerVagBruteForceRound(nodes, roads, activePaths){
 
         roads.forEach(road => {
             let clonePath = [...path];
+            if(betterInclude(path, road) || betterInclude(path,[road[1], road[0], road[2]])){
+                return
+            }
             if(road[0] == path[path.length - 1][1]){
                     clonePath.push(road)
                 newActiveRoads.push(clonePath)
@@ -67,16 +69,6 @@ function eulerVagBruteForceRound(nodes, roads, activePaths){
         });
     });
     return {newActiveRoads, solutions}
-}
-
-function didTrippleBack(path){ // checks if it goes over, back and over again. 
-    if(path.length < 2){
-        return false
-    }
-    if(path[path.length - 1][0] == path[path.length - 2][1] && path[path.length - 1][1] == path[path.length - 2][0]){
-        return true
-    }
-    return false
 }
 
 function eulerVagSolved(path, roads){

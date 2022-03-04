@@ -93,7 +93,7 @@ async function markSolution(nodes, roads, solution){
 async function canvas_arrow(ctx, begiCoords, endCoords) {
 
 
-    var headlen = 10; // length of head in pixels
+    var headlen = 20; // length of head in pixels
     var dx = endCoords[0] - begiCoords[0];
     var dy = endCoords[1] - begiCoords[1];
     var angle = Math.atan2(dy, dx);
@@ -107,6 +107,6 @@ async function canvas_arrow(ctx, begiCoords, endCoords) {
     ctx.closePath()
 
     ctx.lineWidth = 2
-    ctx.strokeStyle = 'blue'
+    ctx.strokeStyle = 'green'
     ctx.stroke()
   }
