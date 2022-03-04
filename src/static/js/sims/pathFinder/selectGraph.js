@@ -1,4 +1,3 @@
-
 function createLetters(){
     let gigaFreeLetters = []
     let freeLetters = 'abcdefghijklmnopqrstuvwxyz'.split('') //ABCDEFGHIJKLMNOPQRSTUVWYZ
@@ -30,58 +29,6 @@ function createLetters(){
       return nodes;
   }
   
-  
-  function fillRoads(ctx, roads, nodeNameToCoords){
-    roads.forEach(road => {
-      ctx.beginPath();
-      ctx.fillStyle = 'red';
-      let begiCoords = nodeNameToCoords[road[0]]
-      let endCoords = nodeNameToCoords[road[1]]
-      ctx.moveTo(begiCoords[0], begiCoords[1]);
-      ctx.lineTo(endCoords[0], endCoords[1]);
-      ctx.stroke();
-      
-      let tempMiddleCoords = [(begiCoords[0]+endCoords[0])/2, (begiCoords[1]+endCoords[1])/2]
-      ctx.beginPath();
-      ctx.fillStyle = '#3d3d3d';
-      ctx.fillRect(tempMiddleCoords[0]-10,tempMiddleCoords[1]-10, 20, 20 )
-      ctx.fillStyle = '#FFFFFF';
-      ctx.font = "16px Arial";
-      ctx.fillText(road[2],tempMiddleCoords[0]-10,tempMiddleCoords[1]+5)
-      ctx.fill();
-  
-  
-    });
-  }
-  
-  function fillNodes(ctx, nodes){
-    nodes.forEach(node => {
-      let x = node[1]
-      let y = node[2]
-      ctx.fillStyle = "#141414";
-      ctx.beginPath();
-      ctx.arc(x, y , 20, 0, 2 * Math.PI);
-      ctx.fill();
-  
-      ctx.beginPath();
-      ctx.font = "20px Arial";
-      ctx.fillStyle = "#FFFFFF";
-      ctx.fillText(node[0],x-10,y+5)
-      ctx.fill();
-  
-      
-    });
-  }
-  
-  async function reFill(){
-    var ctx = $("#editGraph")[0].getContext("2d");
-    ctx.fillStyle = 'white';
-    ctx.fillRect(0, 0, 900, 700);
-    nodeNameToCoords = createNodeNameToCoords(nodes)
-    fillRoads(ctx, roads, nodeNameToCoords);
-    fillNodes(ctx, nodes);
-    return nodeNameToCoords
-  }
   
   function fillPreset(btn){
       var presets = {};
@@ -347,25 +294,11 @@ function createLetters(){
       nodes = presets[btn][1]
       roads = presets[btn][0]
       //console.log(nodes)
-      reFill()
+      reFill('editGraph', createNodeNameToCoords)
       return {nodes, roads, nodeNameToCoords}
   }
   
 
-  
-  
-  function fillWeightText(newWeight, middleCoords){
-    var ctx = $("#editGraph")[0].getContext("2d");
-    ctx.beginPath();
-    ctx.fillStyle = '#3d3d3d';
-    ctx.fillRect(middleCoords[0]-10,middleCoords[1]-10, 20, 20 )
-    ctx.fillStyle = '#FFFFFF';
-    ctx.font = "16px Arial";
-    ctx.fillText(newWeight,middleCoords[0]-10,middleCoords[1]+5)
-    ctx.fill();
-  
-  }
-  
   
   async function checkHitNode(mouseX, mouseY, nodes){
     let res = 0
@@ -426,7 +359,7 @@ function createLetters(){
   async function createNode(coords, letters, nodes){
     let freeLetters = findFreeLetters(letters, nodes)
     nodes.push([freeLetters[0], coords[0], coords[1]])
-    nodeNameToCoords = await reFill()
+    nodeNameToCoords = await reFill('editGraph')
     return {nodeNameToCoords, nodes};
   }
   
@@ -436,12 +369,12 @@ function createLetters(){
     hitNode[1] = mouseX;
     hitNode[2] = mouseY;
     await nodes.push(hitNode)
-    await reFill()
+    await reFill('editGraph', createNodeNameToCoords)
   
   
   }
   
-  async function chechNodeOrRoad(mouseX,mouseY, nodes, roads){
+  async function chechNodeOrRoad(mouseX,mouseY, nodes, roads, hitNode){
     let createdRoad = false
     nodes.forEach(node => {
       if (Math.abs(mouseX- node[1]) < 20 && Math.abs(mouseY- node[2]) < 20){
@@ -455,7 +388,8 @@ function createLetters(){
     if(!createdRoad){
       moveNode()
     }
-    reFill()
+    reFill('editGraph')
+    
   
   
   }
@@ -474,8 +408,9 @@ function createLetters(){
                 roads.splice(i,1)
     
               }
-            };
-          reFill()
+            };      
+            reFill('editGraph')
+
     
       }});
 
@@ -490,8 +425,8 @@ function createLetters(){
            //  console.log('removing road', roads.length);
             roads.splice(i,1)
            //  console.log('removing road', roads.length);
-            reFill()
-        }
+           reFill('editGraph')
+          }
         
       });
   }

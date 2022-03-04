@@ -1,5 +1,6 @@
 {% extends "sims/simsTemplate.html" %}
 {% block link %}
+    <script type="text/javascript" src="/static/js/sims/pathFinder/draw.js"></script>
     <script type="text/javascript" src="/static/js/sims/pathFinder/selectGraph.js"></script>
     <script type="text/javascript" src="/static/js/sims/pathFinder/setup.js"></script>
     <script type="text/javascript" src="/static/js/sims/pathFinder/eulerVagBrute.js"></script>
@@ -127,7 +128,7 @@ TODO different algorithm
             </table>
         </div>
         </div>
-        <canvas id="game-layer" width=900 height=700px style="margin: auto; display:block; padding:0;"></canvas><br>
+        <canvas id="solutionGraph" width=900 height=700px style="margin: auto; display:block; padding:0;"></canvas><br>
     </div>
 </div>
 {% endblock %}

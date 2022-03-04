@@ -1,4 +1,4 @@
-function eulerVagBruteForce(roads){
+function eulerVagBruteForce(roads, nodes){
     var activePaths = bruteForceStart(nodes, roads)
 
     if(activePaths.length == 0){
@@ -18,7 +18,7 @@ function eulerVagBruteForce(roads){
         let r = eulerVagBruteForceRound(nodes, roads, activePaths)
         activePaths = r.newActiveRoads
         solutions = solutions.concat(r.solutions)
-        showSolutions(solutions)
+        showSolutions(solutions, nodes,roads)
         if(!slower){
             let r2 = sortPriority(activePaths)
             activePaths = r2.notDoubles

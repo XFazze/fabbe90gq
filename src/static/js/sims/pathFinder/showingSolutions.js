@@ -1,15 +1,26 @@
-function showSolutions(solutions){
+function showSolutions(solutions, nodes,roads, createNodeNameToCoords){
     $('#solutions').show()
     solutions.forEach(solution => {
-        addSolutionToList(solution)
+        addSolutionToList(solution, nodes,roads)
         
     });
+
+    $("#solutionList tr").click(function(){
+        $(this).addClass('bg-slate-600').siblings().removeClass('bg-slate-600');    
+        var passedNodes=$(this).find('td')
+        let solution = []
+        for (let i = 1; i < passedNodes.length; i++) {
+            const node = passedNodes[i];
+            solution.push(node.innerHTML)
+        }
+        drawSolution(nodes, roads, solution, createNodeNameToCoords)
+  });
     // TODO click on row and show visually
     // TODO show one solution visually fully
     // TODO show one solution visually step by step 
 }
 
-function addSolutionToList(solution){
+function addSolutionToList(solution, nodes,roads){
     res = ``
     solution.forEach(node => {
         res = res + `<td>${node[1]}</td>`
@@ -18,6 +29,7 @@ function addSolutionToList(solution){
     <td class=''>${countWeight(solution)}</td>
     <td>S</td>${res}</tr>`)
     $('#solutionList tr:even').addClass('bg-slate-100')
+    
         
 }
 
@@ -35,7 +47,7 @@ function formatSolutions(paths){
 function countWeight(path){
     let w = 0
     path.forEach(road => {
-        w += road[2]
+        w += parseInt(road[2])
     });
     return w
 }
@@ -51,5 +63,11 @@ function sortFirstElement(paths, weighted){
         res.push(weighted[i], path)
     }
     return res
+
+}
+
+async function drawSolution(nodes, roads, solution, createNodeNameToCoords){
+    await reFill('solutionGraph', createNodeNameToCoords)
+    await markSolution(nodes, roads, solution, createNodeNameToCoords)
 
 }

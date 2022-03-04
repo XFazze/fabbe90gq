@@ -129,13 +129,13 @@ function weightHandleEnter(e) {
       hitRoadWeigh[2] = this.value
       roads.push(hitRoadWeigh)
       hitRoadWeigh = undefined
-      fillWeightText(this.value, fixMiddleCoords);
+      fillText(this.value, fixMiddleCoords, 'editGraph');
       $('#canvasDiv')[0].removeChild(this);
       hasInput = false;
   }
 }
 
-async function handleMouseDown(e){
+async function handleMouseDown(e, nodes, roads){
   mouseX=parseInt(e.clientX-offsetX);
   mouseY=parseInt(e.clientY-offsetY);
   //console.log(mouseX, offsetX)
@@ -161,19 +161,19 @@ async function handleMouseDown(e){
 
 }
 
-async function handleMouseUp(e){
+async function handleMouseUp(e, nodes, roads){
   mouseX = parseInt(e.clientX-offsetX);
   mouseY = parseInt(e.clientY-offsetY);
 
   //console.log('mouseup', mouseX, mouseY, canvas);
 
   if (hitNode){
-    chechNodeOrRoad(mouseX,mouseY , nodes, roads)
+    chechNodeOrRoad(mouseX,mouseY , nodes, roads, hitNode)
   }
 }
 
-$('body').on('mousedown', '#editGraph', function(e){handleMouseDown(e);});
-$('body').on('mouseup', '#editGraph', function(e){handleMouseUp(e);});
+$('body').on('mousedown', '#editGraph', function(e){handleMouseDown(e, nodes,roads);});
+$('body').on('mouseup', '#editGraph', function(e){handleMouseUp(e, nodes,roads);});
 
 
 async function handleKeyDown(e){
@@ -200,17 +200,28 @@ $(document).bind('mousemove',function(mouseMoveEvent){
 
 
 function solve(){
+  
+$('#solutionList').empty()
   nameToFunctionReference = {
     'eulerVagBruteForce' : eulerVagBruteForce
   }
   roads = doubleSidedRoads(roads)
   hideErrors()
   fun = nameToFunctionReference[algorithm]
-  let solutions = fun(roads)
+  console.log('noddd', nodes)
+  let solutions = fun(roads, nodes)
   let sortedSolutions = formatSolutions(solutions)
+  showSolutions(solutions, nodes, roads)
+  drawSolution(nodes, roads, sortedSolutions[0], createNodeNameToCoords)
+
   console.log('SOLUTIONS: ', sortedSolutions)
 }
 $('#solve').click(solve)
+$("#solutionList tr").click(function(){
+  $(this).addClass('bg-slate-600').siblings().removeClass('bg-slate-600');    
+  var value=$(this).find('td:first').html();
+  alert(value);    
+});
 });
 
 // TODO select algorithm/purpuse
