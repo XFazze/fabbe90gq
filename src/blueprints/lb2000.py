@@ -95,8 +95,7 @@ def returnprofile(summonername, region, popular):
     Thread(target=updateSummoner, args=(summoner, region)).start()
     Thread(target=updateLiveGame, args=(
         region, summoner['id'], riotApiKey)).start()
-    Thread(target=updateMasterySummoner, args=(
-        summoner['id'], region, summoner['puuid'], riotApiKey)).start()
+    #Thread(target=updateMasterySummoner, args=(summoner['id'], region, summoner['puuid'], riotApiKey)).start()
     Thread(target=addPopular, args=(summonername, region)).start()
     Thread(target=updateMatches, args=(
         summoner['puuid'], region_large, region, riotApiKey)).start()

@@ -19,9 +19,6 @@ $(function () {
   nodeNameToCoords = r.nodeNameToCoords
 
 
-
-
-
 // menu button
 $(function () {
     for (let btnI = 0; btnI < $('#part').children().length; btnI++) {

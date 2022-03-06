@@ -1,5 +1,4 @@
 
-from doctest import master
 from pymongo import MongoClient, DESCENDING
 from copy import deepcopy
 import time

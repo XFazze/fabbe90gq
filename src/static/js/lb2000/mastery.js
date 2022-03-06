@@ -1,7 +1,6 @@
 $(document).ready(function () {
-  masteryLoad();
+  $('#mastery').click(masteryLoad());
 });
-
 async function masteryLoad() {
   var data = await getMastery();
   data['mastery'].forEach(async (champ) => {
@@ -51,6 +50,7 @@ async function getMastery() {
     data: {
       puuid: summoner['puuid'],
       region: region,
+      id: summoner[id],
     },
     url: $SCRIPT_ROOT + 'mastery',
     cache: false,
