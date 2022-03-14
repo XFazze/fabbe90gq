@@ -15,7 +15,7 @@ mastery = Blueprint('mastery', __name__)
 def getMastery():
     puuid = request.args.get('puuid', 0, type=str)
     region = request.args.get('region', 0, type=str)
-    print(riotApiKey, 'aaaa')
+    id = request.args.get('id', 0, type=str)
     updateMasterySummoner(id, region, puuid, riotApiKey)
     client = MongoClient('localhost', 27017)
     coll = client.lb2000.mastery
