@@ -13,6 +13,7 @@ multiAcc = Blueprint('multiAcc', __name__)
 
 @multiAcc.route("/verify", methods=['GET', 'POST'])
 def multiAccVerify():
+    print('hellooooo')
     puuid = request.args.get('puuid', 0, type=str)
     region = request.args.get('region', 0, type=str)
     browserId = request.args.get('browserId', 0, type=str)
@@ -20,6 +21,7 @@ def multiAccVerify():
     coll = client.lb2000.multiAcc
 
     try:
+        print('puuid', puuid)
         pfpId = list(coll.find({'puuid': puuid}))[0]['pfpId']
     except:
         return 'website fault didnt save your first request', 400

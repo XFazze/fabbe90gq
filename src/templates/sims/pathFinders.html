@@ -4,6 +4,7 @@
     <script type="text/javascript" src="/static/js/sims/pathFinder/selectGraph.js"></script>
     <script type="text/javascript" src="/static/js/sims/pathFinder/setup.js"></script>
     <script type="text/javascript" src="/static/js/sims/pathFinder/eulerVagBrute.js"></script>
+    <script type="text/javascript" src="/static/js/sims/pathFinder/djikstra.js"></script>
     <script type="text/javascript" src="/static/js/sims/pathFinder/showingSolutions.js"></script>
     <script type="text/javascript" src="/static/js/sims/pathFinder/main.js"></script>
 {% endblock %}
@@ -64,14 +65,15 @@ TODO different algorithm
     <div id="DivselectAlgorithm" class="hidden flex flex-col gap-4">
         <h2>Select Algorithm</h2>
         <div id='algorithms' class="flex flex-col gap-4">
-            <!--
+            
             <div id="shortestPath" class="flex-col justify-between gap-4">
                 <h3>Kortaste vägen - minsta summa av vikt från nod till nod</h3>
+                <button id="djikstra" class="" >djikstra</button>
+                <!--
                 <button id="shortestPathBruteForce" class="" >Brute force</button>
                 <button id="nearestNeighbour" class="" >Nearest Neighbour</button>
-                <button id="dijkstras" class="" >Dijkstras Algorithm</button>
+                <button id="dijkstras" class="" >Dijkstras Algorithm</button>-->
             </div>
-            -->
             <div id="eulerVag" class="flex-col justify-between gap-4">
                 <h3>Eulerväg - en väg som passerar alla kanter</h3>
                 <button id="eulerVagBruteForce" class=" bg-gray-600" >Brute force</button>

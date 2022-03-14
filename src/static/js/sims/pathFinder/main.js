@@ -211,7 +211,8 @@ function solve(algorithm='none'){
   }
 $('#solutionList').empty()
   nameToFunctionReference = {
-    'eulerVagBruteForce' : eulerVagBruteForce
+    'eulerVagBruteForce' : eulerVagBruteForce,
+    'djikstra' : djikstra
   }
   roads = doubleSidedRoads(roads)
   hideErrors()
