@@ -27,6 +27,9 @@ function bruteForceStart(nodes, roads){
 }
 
 function hideErrors(){
+    var ctx = $(`#solutionGraph`)[0].getContext("2d");
+    ctx.fillStyle = 'white';
+    ctx.fillRect(0, 0, 900, 700);
     $('#errorNoRoadStartingNode').hide()
     $('#slowerModeEnables').hide()
     $('#noSolutions').hide()
