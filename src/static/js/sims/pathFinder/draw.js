@@ -42,7 +42,7 @@
     });
   }
   
-  async function reFill(canvasId){
+  async function reFill(canvasId, roads, nodes){
     var ctx = $(`#${canvasId}`)[0].getContext("2d");
     ctx.fillStyle = 'white';
     ctx.fillRect(0, 0, 900, 700);

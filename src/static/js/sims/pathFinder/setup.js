@@ -175,3 +175,11 @@ function logPaths(queue){
         console.log(element)
     });
 }
+function createNodeNameToCoords(nodes){
+    console.log('creawnode indside', nodes)
+  let ret = {};
+  nodes.forEach(node => {
+    ret[node[0]] = [node[1], node[2]]
+  });
+  return ret
+}
