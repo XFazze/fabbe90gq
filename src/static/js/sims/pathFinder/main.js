@@ -230,7 +230,6 @@ $('#solutionList').empty()
 
   //console.log('SOLUTIONS: ', sortedSolutions)
 }
-$('#solve').click(solve)
 $("#solutionList tr").click(function(){
   $(this).addClass('bg-slate-600').siblings().removeClass('bg-slate-600');    
   var value=$(this).find('td:first').html();
