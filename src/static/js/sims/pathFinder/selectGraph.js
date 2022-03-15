@@ -668,6 +668,7 @@ function getNodes(roads){
   async function createNode(coords, letters, nodes){
     let freeLetters = findFreeLetters(letters, nodes)
     nodes.push([freeLetters[0], coords[0], coords[1]])
+    console.log('created node')
     return nodes;
   }
   

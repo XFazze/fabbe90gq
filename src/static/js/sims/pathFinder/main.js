@@ -146,7 +146,6 @@ async function handleMouseDown(e, nodes, roads){
   //console.log(mouseX, offsetX)
 
   hitNode = await checkHitNode(mouseX, mouseY, nodes)
-  console.log('hitnode', hitNode)
   await removeOldEditRoadWeight()
 
   r = await checkHitRoadWeight(roads, nodeNameToCoords,mouseX, mouseY)
@@ -157,7 +156,7 @@ async function handleMouseDown(e, nodes, roads){
     editTextWeight(hitRoadWeigh[2], middleCoords, offsetX,offsetY, hitRoadWeigh)
   }
 
-  if(!hitRoadWeigh && !hitNode){
+  if(!r.road && !hitNode){
     nodes = await createNode([mouseX,mouseY], letters, nodes)
     nodeNameToCoords = await reFill('editGraph', roads, nodes)
   }
