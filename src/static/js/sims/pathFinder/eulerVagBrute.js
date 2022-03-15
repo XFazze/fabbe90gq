@@ -11,8 +11,6 @@ function eulerVagBruteForce(roads, nodes){
     let slower = false
     while(x < rounds){
         console.log(`round: ${x} activePaths: ${activePaths.length}`)
-        $('#progressRound').text(x)
-        $('#progressActivePaths').text(activePaths.length)
 
         x += 1
         let r = eulerVagBruteForceRound(nodes, roads, activePaths)

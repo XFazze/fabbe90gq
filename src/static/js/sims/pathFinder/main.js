@@ -8,7 +8,6 @@ $(function () {
   
   var offsetX=canvas.offsetLeft;
   var offsetY=canvas.offsetTop;
-  console.log($("#editGraph")[0].offsetTop, canvas.offsetTop)
 
   var nodes, roads, nodeNameToCoords;
   var hitNode, hitRoadWeigh;
@@ -216,8 +215,10 @@ $('#solutionList').empty()
   }
   roads = doubleSidedRoads(roads)
   hideErrors()
+  $('#inProgress').show()
   fun = nameToFunctionReference[algorithm]
   let solutions = fun(roads, nodes)
+  $('#inProgress').hide()
   if(!solutions.length){
     console.log('no solutions')
     $(`#noSolutions`).show()
@@ -227,7 +228,7 @@ $('#solutionList').empty()
   showSolutions(solutions, nodes, roads)
   drawSolution(nodes, roads, sortedSolutions[0], createNodeNameToCoords)
 
-  console.log('SOLUTIONS: ', sortedSolutions)
+  //console.log('SOLUTIONS: ', sortedSolutions)
 }
 $('#solve').click(solve)
 $("#solutionList tr").click(function(){
