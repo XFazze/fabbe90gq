@@ -16,9 +16,6 @@ function showSolutions(solutions, nodes,roads, createNodeNameToCoords){
         }
         drawSolution(nodes, roads, solution, createNodeNameToCoords)
   });
-    // TODO click on row and show visually
-    // TODO show one solution visually fully
-    // TODO show one solution visually step by step 
 }
 
 function addSolutionToList(solution, nodes,roads){
@@ -68,7 +65,7 @@ function sortFirstElement(paths, weighted){
 }
 
 async function drawSolution(nodes, roads, solution, createNodeNameToCoords){
-    await reFill('solutionGraph', createNodeNameToCoords)
+    await reFill('solutionGraph', roads, nodes)
     await markSolution(nodes, roads, solution, createNodeNameToCoords)
 
 }

@@ -1,6 +1,6 @@
 function createLetters(){
     let gigaFreeLetters = []
-    let freeLetters = 'abcdefghijklmnopqrstuvwxyz'.split('') //ABCDEFGHIJKLMNOPQRSTUVWYZ
+    let freeLetters = 'SEabcdefghijklmnopqrstuvwxyz'.split('') //ABCDEFGHIJKLMNOPQRSTUVWYZ
     freeLetters.forEach(letter => {
       freeLetters.forEach(letter2 => {
         gigaFreeLetters.push(letter+letter2)
@@ -9,25 +9,18 @@ function createLetters(){
     freeLetters = freeLetters.concat(gigaFreeLetters)
     return freeLetters
   }
-  function createNodeNameToCoords(nodes){
-    let ret = {};
-    nodes.forEach(node => {
-      ret[node[0]] = [node[1], node[2]]
+function getNodes(roads){
+    var nodes = []
+    roads.forEach(road => {
+        if(!nodes.includes(road[0])){
+            nodes.append(road[0])
+        }
+        if(!nodes.includes(road[1])){
+            nodes.append(road[1])
+        }
     });
-    return ret
-  }
-  function getNodes(roads){
-      var nodes = []
-      roads.forEach(road => {
-          if(!nodes.includes(road[0])){
-              nodes.append(road[0])
-          }
-          if(!nodes.includes(road[1])){
-              nodes.append(road[1])
-          }
-      });
-      return nodes;
-  }
+    return nodes;
+}
   
   
   function fillPreset(btn){
@@ -610,8 +603,7 @@ function createLetters(){
      ]]
      nodes = presets[btn][1]
       roads = presets[btn][0]
-      //console.log(nodes, roads)
-      reFill('editGraph', createNodeNameToCoords)
+      reFill('editGraph', roads, nodes)
       return {nodes, roads, nodeNameToCoords}
   }
   
@@ -676,8 +668,7 @@ function createLetters(){
   async function createNode(coords, letters, nodes){
     let freeLetters = findFreeLetters(letters, nodes)
     nodes.push([freeLetters[0], coords[0], coords[1]])
-    nodeNameToCoords = await reFill('editGraph')
-    return {nodeNameToCoords, nodes};
+    return nodes;
   }
   
   async function moveNode(){
@@ -686,7 +677,6 @@ function createLetters(){
     hitNode[1] = mouseX;
     hitNode[2] = mouseY;
     await nodes.push(hitNode)
-    await reFill('editGraph', createNodeNameToCoords)
   
   
   }
@@ -697,22 +687,20 @@ function createLetters(){
       if (Math.abs(mouseX- node[1]) < 20 && Math.abs(mouseY- node[2]) < 20){
         if(hitNode[0] != node[0]){
           roads.push([hitNode[0], node[0], 10])
+          createdRoad = true
+          return
         }
-        createdRoad = true
-        return
       }
     });
     if(!createdRoad){
-      moveNode()
+      nodes = moveNode()
     }
-    reFill('editGraph')
-    
+    return roads
   
   
   }
 
   function deleteSomething(mousePosition){
-    console.log(mousePosition)
     nodes.forEach(node => {
         if (Math.abs(mousePosition.x- node[1]) < 20 && Math.abs(mousePosition.y- node[2]) < 20){
             let i = nodes.indexOf(node)
@@ -726,7 +714,6 @@ function createLetters(){
     
               }
             };      
-            reFill('editGraph')
 
     
       }});
@@ -742,10 +729,10 @@ function createLetters(){
            //  console.log('removing road', roads.length);
             roads.splice(i,1)
            //  console.log('removing road', roads.length);
-           reFill('editGraph')
           }
         
       });
+      reFill('editGraph', roads, nodes)
   }
 
 function printGraph(nodes, roads){

@@ -146,7 +146,7 @@ async function handleMouseDown(e, nodes, roads){
   //console.log(mouseX, offsetX)
 
   hitNode = await checkHitNode(mouseX, mouseY, nodes)
-
+  console.log('hitnode', hitNode)
   await removeOldEditRoadWeight()
 
   r = await checkHitRoadWeight(roads, nodeNameToCoords,mouseX, mouseY)
@@ -158,9 +158,8 @@ async function handleMouseDown(e, nodes, roads){
   }
 
   if(!hitRoadWeigh && !hitNode){
-    a = await createNode([mouseX,mouseY], letters, nodes)
-    nodeNameToCoords = a.nodeNameToCoords
-    nodes = a.nodes
+    nodes = await createNode([mouseX,mouseY], letters, nodes)
+    nodeNameToCoords = await reFill('editGraph', roads, nodes)
   }
 
 
@@ -173,7 +172,8 @@ async function handleMouseUp(e, nodes, roads){
   //console.log('mouseup', mouseX, mouseY, canvas);
 
   if (hitNode){
-    chechNodeOrRoad(mouseX,mouseY , nodes, roads, hitNode)
+    roads = await chechNodeOrRoad(mouseX,mouseY , nodes, roads, hitNode)
+    await reFill('editGraph', roads, nodes)
   }
 }
 
@@ -236,10 +236,4 @@ $("#solutionList tr").click(function(){
   alert(value);    
 });
 });
-
-// TODO select algorithm/purpuse
-// From list
-
-// TODO View solutions 
-// TODO View algorithm in action
 
