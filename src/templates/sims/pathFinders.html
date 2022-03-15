@@ -68,7 +68,7 @@ TODO different algorithm
             
             <div id="shortestPath" class="flex-col justify-between gap-4">
                 <h3>Kortaste vägen - minsta summa av vikt från nod till nod</h3>
-                <button id="djikstra" class="" >djikstra</button>
+                <button id="djikstra" class=" bg-gray-600">djikstra</button>
                 <!--
                 <button id="shortestPathBruteForce" class="" >Brute force</button>
                 <button id="nearestNeighbour" class="" >Nearest Neighbour</button>
@@ -76,7 +76,7 @@ TODO different algorithm
             </div>
             <div id="eulerVag" class="flex-col justify-between gap-4">
                 <h3>Eulerväg - en väg som passerar alla kanter</h3>
-                <button id="eulerVagBruteForce" class=" bg-gray-600" >Brute force</button>
+                <button id="eulerVagBruteForce"  >Brute force</button>
                 
             <!--<button id="fleurys" class="" >Fleurys Algorithm</button> -->
             </div>
@@ -112,13 +112,9 @@ TODO different algorithm
     </div>
     <div id="DivviewSolutions" class="hidden">
         <h2>View solutions</h2>
-        <button id="solve">Solve</button>
-        <button>Step by Step(of the best)</button>
-        <div id="progress">
-            <p  class="inline">Round: </p>
-            <p id="progressRound"class="inline" > 0</p>
-            <p  class="inline">Active paths: </p>
-            <p id="progressActivePaths" class="inline">0</p>
+        <div id="inProgress" class="hidden">
+            <p>Solving</p>
+            <img src="https://c.tenor.com/Ay19-AbBCfIAAAAC/hangover-math.gif" width="400" >
         </div>
         <p id="errorNoRoadStartingNode" class="hidden">Error: starting node must have roads</p>
         <p id="slowerModeEnables" class="hidden">Note: no simple solution found. Going through all.</p>
