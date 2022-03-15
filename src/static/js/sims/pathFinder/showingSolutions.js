@@ -1,5 +1,6 @@
 function showSolutions(solutions, nodes,roads, createNodeNameToCoords){
     $('#solutions').show()
+    $('#solutionList tr').remove(); 
     solutions.forEach(solution => {
         addSolutionToList(solution, nodes,roads)
         

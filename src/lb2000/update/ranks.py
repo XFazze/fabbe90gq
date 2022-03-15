@@ -6,7 +6,6 @@ import time
 from lb2000.seasonsSplits import *
 
 
-
 def updateRankedPlayers(region, summonerId, riotApiKey):
     # monthlyAllPlayers(region,riotApiKey)
     getRankedPlayer(region, summonerId, riotApiKey)
@@ -57,8 +56,9 @@ def monthlyAllPlayers(region, riotApiKey):
 
 def getRankedPlayer(region, summonerId, riotApiKey):
     client = MongoClient('localhost', 27017)
-    db = client.lb2000
-    oldRanks = list(db.find({'summonerId': summonerId,'region' : region}, sort=[('time', DESCENDING)]))
+    db = client.lb2000.ranks
+    oldRanks = list(db.find({'summonerId': summonerId,
+                    'region': region}, sort=[('time', DESCENDING)]))
     # print(oldRanks)
 
     t = time.time()

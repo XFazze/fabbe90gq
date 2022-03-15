@@ -103,7 +103,7 @@ def returnprofile(summonername, region, popular):
     Thread(target=updateRecentData, args=(summoner['puuid'],)).start()
     Thread(target=updateRankedPlayers, args=(
         region, summoner['id'], riotApiKey)).start()
-    multiAccId, multiAccUrl = multiAccGet(summoner['id'])
+    multiAccId, multiAccUrl = multiAccGet(summoner['puuid'])
 
     # Thread(target=get_details, args=(summoner['puuid'], region_large, riotApiKey)).start()
     timenow = time.time()
@@ -120,6 +120,7 @@ def multiAccGet(puuid):
     coll = client.lb2000.multiAcc
     coll.replace_one({'puuid': puuid}, {
         'puuid': puuid, 'pfpId': multiAccId}, upsert=True)
+    print('it is replaced', puuid)
     return multiAccId, multiAccUrl
 
 

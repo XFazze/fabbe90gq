@@ -53,7 +53,7 @@ function betterInclude(roads, reverse){
     for (let i = 0; i < roads.length; i++) {
         const road = roads[i];
 
-        if(arrayEquals(road, reverse)){
+        if(arrayEquals(road, reverse) && road.length == reverse.length){
             matches += 1
         }
     }
@@ -161,4 +161,17 @@ function getMousePos(canvas, evt) {
       x: evt.clientX - rect.left,
       y: evt.clientY - rect.top
     };
+}
+
+function getPathValue(path){
+    res = 0
+    path.forEach(road => {
+        res += road[2]
+    });
+    return res
+}
+function logPaths(queue){
+    queue.forEach(element => {
+        console.log(element)
+    });
 }

@@ -211,12 +211,12 @@ function solve(algorithm='none'){
   }
 $('#solutionList').empty()
   nameToFunctionReference = {
-    'eulerVagBruteForce' : eulerVagBruteForce
+    'eulerVagBruteForce' : eulerVagBruteForce,
+    'djikstra' : djikstra
   }
   roads = doubleSidedRoads(roads)
   hideErrors()
   fun = nameToFunctionReference[algorithm]
-  console.log('noddd', nodes)
   let solutions = fun(roads, nodes)
   if(!solutions.length){
     console.log('no solutions')
