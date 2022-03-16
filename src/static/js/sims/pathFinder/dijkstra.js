@@ -1,3 +1,11 @@
+// TODO DO real djikstras
+// this is not a real djikstas since
+// real djikstras is 
+// 1. evalueate cheapest neighbor to go (from start ?)
+// 2. go to neighboor check if fastest way if so log 
+// repeat until end node
+// go back fastest ways 
+
 function djikstra(roads, nodes){
     let queue = bruteForceStart(nodes, roads)
 
