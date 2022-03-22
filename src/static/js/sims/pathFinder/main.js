@@ -65,6 +65,7 @@ $(function() {
           r = fillPreset(btn);
           nodes = r.nodes
           roads = r.roads
+          console.log('first roads', roads)
           nodeNameToCoords = r.nodeNameToCoords
         });
       }
@@ -182,7 +183,7 @@ $('body').on('mouseup', '#editGraph', function(e){handleMouseUp(e, nodes,roads);
 
 async function handleKeyDown(e){
   if(e.which == 32){
-    deleteSomething(mousePosition)
+    deleteSomething(mousePosition, roads, nodes)
   }
   if(e.which == 16){
     printGraph(nodes,roads)
@@ -210,8 +211,10 @@ function solve(algorithm='none'){
 $('#solutionList').empty()
   nameToFunctionReference = {
     'eulerVagBruteForce' : eulerVagBruteForce,
-    'djikstra' : djikstra
+    'dijkstra' : dijkstra,
+    'rdijkstra' : rdijkstra,
   }
+  console.log('halff side road', roads)
   roads = doubleSidedRoads(roads)
   hideErrors()
   $('#inProgress').show()

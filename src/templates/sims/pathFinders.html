@@ -5,6 +5,7 @@
     <script type="text/javascript" src="/static/js/sims/pathFinder/selectGraph.js"></script>
     <script type="text/javascript" src="/static/js/sims/pathFinder/eulerVagBrute.js"></script>
     <script type="text/javascript" src="/static/js/sims/pathFinder/dijkstra.js"></script>
+    <script type="text/javascript" src="/static/js/sims/pathFinder/rdijkstra.js"></script>
     <script type="text/javascript" src="/static/js/sims/pathFinder/showingSolutions.js"></script>
     <script type="text/javascript" src="/static/js/sims/pathFinder/main.js"></script>
 {% endblock %}
@@ -77,8 +78,9 @@ TODO different algorithm
             
             <div id="shortestPath" class="flex-col justify-between gap-4">
                 <h3>Kortaste vägen - minsta summa av vikt från nod till nod</h3>
-                <button id="djikstra" class=" bg-gray-600">djikstra</button>
+                <button id="rdijkstra" class=" bg-gray-600">dijkstra</button>
                 <!--
+                <button id="dijkstra" class=" bg-gray-600">dijkstra</button>
                 <button id="shortestPathBruteForce" class="" >Brute force</button>
                 <button id="nearestNeighbour" class="" >Nearest Neighbour</button>
                 <button id="dijkstras" class="" >Dijkstras Algorithm</button>-->
