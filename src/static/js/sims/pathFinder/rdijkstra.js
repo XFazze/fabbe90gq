@@ -1,11 +1,11 @@
 function rdijkstra(roads, nodes) {
 	console.log('ROADS', roads);
-	let queue = [['S',0, 'S']];
+	let queue = [['S', 'S',0]];
 
 	if (queue.length == 0) {
 		$('#errorNoRoadStartingNode').show();
 	}
-	let rounds = 1000;
+	let rounds = 10;
 	let x = 0;
 	let solutions = [];
 	let solutionsLen = solutions.length;
@@ -16,14 +16,15 @@ function rdijkstra(roads, nodes) {
 		r = dijkRound(queue, nodes, roads, solutions, dead);
 		//logPaths(queue)
         if(r.solution){
-            console.log('Solution', r.solution)
-            return solutions
+            console.log('Solution', r.solution.path)
+            return [r.solution.path]
         }
 		queue = r.queue;
 		dead = r.dead;
 
 
 		if (!queue.length) {
+			console.log('fouynd no solution')
 			return [];
 		}
 	}
@@ -35,8 +36,8 @@ function dijkFindCheapest(activePaths) {
 	let cheapest = [9999999, 0];
 	for (let i = 0; i < activePaths.length; i++) {
 		const path = activePaths[i];
-		if (path[1] < cheapest[0]) {
-			cheapest = [path[1], i];
+		if (path[2] < cheapest[0]) {
+			cheapest = [path[2], i];
 		}
 	}
 	return [activePaths[cheapest[1]], cheapest[1]];
@@ -50,6 +51,7 @@ function dijkRound(queue, nodes, roads, dead) {
 	queue.splice(i, 1);
     if(cheapest[0] == 'E'){
         let solution = backtrack(cheapest, dead)
+		console.log('sss', solution)
         return {queue, dead, solution}
     }
 	dead.push(cheapest);
@@ -59,15 +61,20 @@ function dijkRound(queue, nodes, roads, dead) {
 }
 
 function backtrack(cheapest, dead){
-    res = {'value': cheapest[1], 'path' : [cheapest]}
-    n = cheapest[1] // last node before E
+	console.log('backteacking', cheapest)
+    res = {'value': cheapest[2], 'path' : [cheapest]}
+    var n = cheapest[1] // last node before E
     while (n!='S'){
+		console.log('while not s',n, n != 'S')
         for (let i = 0; i < dead.length; i++) {
             const deadR = dead[i];
+			console.log('maby',n,deadR)
             if(n==deadR[0]){
-                n = deadR[2]
-                res.path.push(deadR)
-                continue
+                n = deadR[1]
+				console.log('yess', res.path)
+                res.path.splice(0,0, deadR)
+				console.log('yess11', res.path)
+                break
             }
         }
     }
@@ -76,7 +83,7 @@ function backtrack(cheapest, dead){
 function dijkRemoveSolutions(queue, solutions) {
 	for (let i = 0; i < queue.length; i++) {
 		const path = queue[i];
-		if (path[path.length - 1][1] == 'E') {
+		if (path[path.length - 1][2] == 'E') {
 			queue.splice(i, 1);
 			if (!solutions.length) {
 				solutions.push(path);
@@ -96,10 +103,10 @@ function dijkExpand(cheapest, queue, roads, dead) {
 
 	//console.log('roads', roads)
 	roads.forEach((road) => {
-		console.log('roqad,', lastNode, road, road[0] == lastNode[1] , !deadNode(road[1],dead))
-		if (road[0] == lastNode[1] && !deadNode(road[1],dead)) {
-			let newPath = [road[1], cheapest[1] + road[2], road[0]];
-			console.log('road,', newPath)
+		//console.log('roqad,', lastNode, road, road[0]==lastNode , !deadNode(road[1],dead))
+		if (road[0] == lastNode && !deadNode(road[2],dead)) {
+			let newPath = [road[1], road[0], cheapest[2] + road[2]];
+			//console.log('road,', newPath)
 			queue.push(newPath);
 		}
 	});
@@ -116,46 +123,3 @@ function deadNode(node, dead){
     return false
 
 }
-
-function dijkRemoveBadRoads(connectingRoads, queue, dead) {
-	for (let i = connectingRoads.length - 1; i > -1; i--) {
-		const path = connectingRoads[i];
-		queue = dijkQueueCheck(path, queue, dead);
-	}
-	return queue;
-}
-
-function dijkQueueCheck(path, queue, dead) {
-	//console.log('checkign on', path)
-	for (let i = queue.length - 1; i > -1; i--) {
-		const qPath = queue[i];
-		//console.log('dead', dead, path[path.length-1][1])
-		if (betterInclude(dead, path[path.length - 1][1])) {
-			//console.log('dead node', path[path.length-1][1], path, dead)
-			return queue;
-		}
-
-		if (path[path.length - 1][1] == 'Sa') {
-			console.log('we made it', path);
-		}
-		if (qPath[qPath.length - 1][1] != path[path.length - 1][1]) {
-			//console.log('first', qPath[qPath.length-1][1], 'second',path[path.length-1][1] )
-			continue;
-		}
-		if (getPathValue(qPath) > getPathValue(path)) {
-			console.log('cheaper path found');
-
-			queue.splice(i, 1);
-			queue.push(path);
-			//console.log('found better path', path)
-		}
-		//console.log('worse path', path)
-		return queue;
-	}
-	queue.push(path);
-	//console.log('no interfernec', path)
-	return queue;
-}
-// active roads
-// loop every active to go next road in it
-// check if its passed all paths

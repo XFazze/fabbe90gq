@@ -227,6 +227,7 @@ $('#solutionList').empty()
     return
   }
   let sortedSolutions = formatSolutions(solutions)
+  console.log('ssssss', sortedSolutions)
   showSolutions(solutions, nodes, roads)
   drawSolution(nodes, roads, sortedSolutions[0], createNodeNameToCoords)
 
