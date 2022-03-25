@@ -226,10 +226,12 @@ $('#solutionList').empty()
     $(`#noSolutions`).show()
     return
   }
-  let sortedSolutions = formatSolutions(solutions)
-  console.log('ssssss', sortedSolutions)
-  showSolutions(solutions, nodes, roads)
-  drawSolution(nodes, roads, sortedSolutions[0], createNodeNameToCoords)
+  //let sortedSolutions = formatSolutions(solutions)
+  let sortedSolutions = [[solutions[0][solutions.length][2],solutions[0]]]
+  console.log('sortedSolutionss',sortedSolutions.length, sortedSolutions)
+  showSolutions(sortedSolutions, nodes, roads)
+  let nodeOnlyList = convertPathToNodes(sortedSolutions[0][1])
+  drawSolution(nodes, roads, nodeOnlyList, createNodeNameToCoords)
 
   //console.log('SOLUTIONS: ', sortedSolutions)
 }

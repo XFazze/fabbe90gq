@@ -1,5 +1,5 @@
 function dijkstra(roads, nodes){
-    console.log('ROADS', roads)
+   //console.log('ROADS', roads)
     let queue = bruteForceStart(nodes, roads)
 
     if(queue.length == 0){
@@ -12,7 +12,7 @@ function dijkstra(roads, nodes){
     let dead = []
     while(x < rounds){
         x += 1
-        console.log('dijkstra roud', x )
+       //console.log('dijkstra roud', x )
         r = dijkRound(queue, nodes, roads, solutions,dead)
         //logPaths(queue)
         queue = r.queue
@@ -126,14 +126,14 @@ function dijkQueueCheck(path, queue, dead){
         }
         
         if(path[path.length-1][1] == 'Sa'){
-            console.log('we made it', path)
+           //console.log('we made it', path)
         }
         if(qPath[qPath.length-1][1] != path[path.length-1][1]){
             //console.log('first', qPath[qPath.length-1][1], 'second',path[path.length-1][1] )
             continue
         }
         if(getPathValue(qPath) > getPathValue(path)){
-            console.log('cheaper path found')
+           //console.log('cheaper path found')
 
             queue.splice(i, 1)
             queue.push(path)

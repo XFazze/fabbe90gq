@@ -5,19 +5,21 @@ function rdijkstra(roads, nodes) {
 	if (queue.length == 0) {
 		$('#errorNoRoadStartingNode').show();
 	}
-	let rounds = 10;
+	let rounds = 100000;
 	let x = 0;
 	let solutions = [];
-	let solutionsLen = solutions.length;
 	let dead = [];
 	while (x < rounds) {
 		x += 1;
 		console.log('dijkstra roud', x);
 		r = dijkRound(queue, nodes, roads, solutions, dead);
+		//console.log('logapath')
 		//logPaths(queue)
+		//console.log('deadlog')
+		//logPaths(dead)
         if(r.solution){
-            console.log('Solution', r.solution.path)
-            return [r.solution.path]
+            //console.log('Solution', r.solution)
+            return [r.solution]
         }
 		queue = r.queue;
 		dead = r.dead;
@@ -28,6 +30,7 @@ function rdijkstra(roads, nodes) {
 			return [];
 		}
 	}
+	console.log('found no solutions')
 	return solutions;
 }
 
@@ -44,36 +47,39 @@ function dijkFindCheapest(activePaths) {
 }
 
 function dijkRound(queue, nodes, roads, dead) {
-    console.log('qq,', queue)
+    let solution = false
 	let [cheapest, i] = dijkFindCheapest(queue);
-	console.log('cheapest', cheapest);
-
 	queue.splice(i, 1);
-    if(cheapest[0] == 'E'){
+	//console.log('cheapest', cheapest)
+	if(alreadyCheapestWayToNode(cheapest, dead)){
+		//console.log('already found cheapest')
+		return { queue, dead, solution }
+	}
+	dead.push(cheapest);
+    if(cheapest[1] == 'E'){
         let solution = backtrack(cheapest, dead)
-		console.log('sss', solution)
         return {queue, dead, solution}
     }
-	dead.push(cheapest);
 	queue = dijkExpand(cheapest, queue, roads, dead);
-    let solution = false
+	//console.log('dont return', solution)
 	return { queue, dead, solution };
 }
 
 function backtrack(cheapest, dead){
-	console.log('backteacking', cheapest)
-    res = {'value': cheapest[2], 'path' : [cheapest]}
+	//console.log('backteacking', cheapest)
+	//logPaths(dead)
+    var res = []
     var n = cheapest[1] // last node before E
     while (n!='S'){
-		console.log('while not s',n, n != 'S')
+		//console.log('while not s',n, n != 'S')
         for (let i = 0; i < dead.length; i++) {
             const deadR = dead[i];
-			console.log('maby',n,deadR)
-            if(n==deadR[0]){
-                n = deadR[1]
-				console.log('yess', res.path)
-                res.path.splice(0,0, deadR)
-				console.log('yess11', res.path)
+			//console.log('maby',n,deadR)
+            if(n==deadR[1]){
+				//console.log('yess',res,deadR)
+                n = deadR[0]
+                res.splice(0,0, deadR)
+				//console.log('afters',res,deadR)
                 break
             }
         }
@@ -99,13 +105,12 @@ function dijkRemoveSolutions(queue, solutions) {
 }
 
 function dijkExpand(cheapest, queue, roads, dead) {
-	let lastNode = cheapest[0];
+	let lastNode = cheapest[1];
 
-	//console.log('roads', roads)
 	roads.forEach((road) => {
 		//console.log('roqad,', lastNode, road, road[0]==lastNode , !deadNode(road[1],dead))
-		if (road[0] == lastNode && !deadNode(road[2],dead)) {
-			let newPath = [road[1], road[0], cheapest[2] + road[2]];
+		if (road[0] == lastNode && !deadNode(road[1],dead)) {
+			let newPath = [road[0], road[1], cheapest[2] + road[2]];
 			//console.log('road,', newPath)
 			queue.push(newPath);
 		}
@@ -116,10 +121,18 @@ function dijkExpand(cheapest, queue, roads, dead) {
 function deadNode(node, dead){
     for (let i = 0; i < dead.length; i++) {
         const deadN = dead[i];
-        if(deadN[0] == node) {
+        if(deadN[1] == node) {
             return true;
         }
     }
     return false
-
+}
+function alreadyCheapestWayToNode(cheapest, dead){
+	for (let i = 0; i < dead.length; i++) {
+		const dd = dead[i];
+		if(dd[1] == cheapest[1]){
+			return true
+		}
+	}
+	return false
 }
