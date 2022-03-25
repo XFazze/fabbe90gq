@@ -65,6 +65,7 @@ $(function() {
           r = fillPreset(btn);
           nodes = r.nodes
           roads = r.roads
+          console.log('first roads', roads)
           nodeNameToCoords = r.nodeNameToCoords
         });
       }
@@ -182,7 +183,7 @@ $('body').on('mouseup', '#editGraph', function(e){handleMouseUp(e, nodes,roads);
 
 async function handleKeyDown(e){
   if(e.which == 32){
-    deleteSomething(mousePosition)
+    deleteSomething(mousePosition, roads, nodes)
   }
   if(e.which == 16){
     printGraph(nodes,roads)
@@ -210,8 +211,10 @@ function solve(algorithm='none'){
 $('#solutionList').empty()
   nameToFunctionReference = {
     'eulerVagBruteForce' : eulerVagBruteForce,
-    'djikstra' : djikstra
+    'dijkstra' : dijkstra,
+    'rdijkstra' : rdijkstra,
   }
+  console.log('halff side road', roads)
   roads = doubleSidedRoads(roads)
   hideErrors()
   $('#inProgress').show()
@@ -223,9 +226,12 @@ $('#solutionList').empty()
     $(`#noSolutions`).show()
     return
   }
-  let sortedSolutions = formatSolutions(solutions)
-  showSolutions(solutions, nodes, roads)
-  drawSolution(nodes, roads, sortedSolutions[0], createNodeNameToCoords)
+  //let sortedSolutions = formatSolutions(solutions)
+  let sortedSolutions = [[solutions[0][solutions.length][2],solutions[0]]]
+  console.log('sortedSolutionss',sortedSolutions.length, sortedSolutions)
+  showSolutions(sortedSolutions, nodes, roads)
+  let nodeOnlyList = convertPathToNodes(sortedSolutions[0][1])
+  drawSolution(nodes, roads, nodeOnlyList, createNodeNameToCoords)
 
   //console.log('SOLUTIONS: ', sortedSolutions)
 }

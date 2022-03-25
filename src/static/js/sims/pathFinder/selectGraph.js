@@ -1037,7 +1037,7 @@ function getNodes(roads){
   
   }
 
-  function deleteSomething(mousePosition){
+  function deleteSomething(mousePosition, roads, nodes){
     nodes.forEach(node => {
         if (Math.abs(mousePosition.x- node[1]) < 20 && Math.abs(mousePosition.y- node[2]) < 20){
             let i = nodes.indexOf(node)

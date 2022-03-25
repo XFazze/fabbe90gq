@@ -3,11 +3,11 @@
 var ajaxSettings;
 var matchTracking, matchTrackingIndex;
 $(document).ready(function () {
-  recentDatdjikstrat();
+  recentDatdijkstrat();
   $GAME_VERSION = '12.2.1';
 });
 
-async function recentDatdjikstrat() {
+async function recentDatdijkstrat() {
   matchTracking = await getMatchHistory();
   $(`.${summoner['puuid']}`).css('float', 'left');
   await loadTen(matchTracking['matches'].splice(0, 10));

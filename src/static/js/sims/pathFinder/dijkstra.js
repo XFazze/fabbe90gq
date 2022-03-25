@@ -1,3 +1,5 @@
+function dijkstra(roads, nodes){
+   //console.log('ROADS', roads)
 // TODO DO real djikstras
 // this is not a real djikstas since
 // real djikstras is 
@@ -12,14 +14,14 @@ function djikstra(roads, nodes){
     if(queue.length == 0){
         $('#errorNoRoadStartingNode').show()
     }
-    let rounds = 100
+    let rounds = 1000
     let x = 0
     let solutions = []
     let solutionsLen = solutions.length
     let dead = []
     while(x < rounds){
         x += 1
-        //console.log('dijkstra roud', x )
+       //console.log('dijkstra roud', x )
         r = dijkRound(queue, nodes, roads, solutions,dead)
         //logPaths(queue)
         queue = r.queue
@@ -100,6 +102,7 @@ function dijkCheckNeighbors(cheapest, queue, roads, dead){
     let lastNode = cheapest[cheapest.length-1]
 
     let connectingRoads = []
+    //console.log('roads', roads)
     roads.forEach(road => {
         if(road[0] == lastNode[1] && road[1] != lastNode[0]){
             //console.log('road,', lastNode,road)
@@ -108,6 +111,7 @@ function dijkCheckNeighbors(cheapest, queue, roads, dead){
             connectingRoads.push(temp)
         }
     });
+    //console.log('connecting roads', connectingRoads)
     queue = dijkRemoveBadRoads(connectingRoads, queue, dead)
     return queue
 }
@@ -129,11 +133,17 @@ function dijkQueueCheck(path, queue, dead){
             //console.log('dead node', path[path.length-1][1], path, dead)
             return queue
         }
+        
+        if(path[path.length-1][1] == 'Sa'){
+           //console.log('we made it', path)
+        }
         if(qPath[qPath.length-1][1] != path[path.length-1][1]){
             //console.log('first', qPath[qPath.length-1][1], 'second',path[path.length-1][1] )
             continue
         }
         if(getPathValue(qPath) > getPathValue(path)){
+           //console.log('cheaper path found')
+
             queue.splice(i, 1)
             queue.push(path)
             //console.log('found better path', path)
