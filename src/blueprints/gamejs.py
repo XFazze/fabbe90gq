@@ -51,3 +51,8 @@ def pig():
 @gamejs.route("/abbeGame", methods=['GET', 'POST'])
 def abbeGame():
     return render_template('games/abbeGame.html')
+
+
+@gamejs.route("/abbePong", methods=['GET', 'POST'])
+def abbePong():
+    return render_template('games/abbePong.html')
