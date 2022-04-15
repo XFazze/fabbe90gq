@@ -1,0 +1,1558 @@
+<div id="glowscript" class="glowscript">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <link type="text/css" href="https://www.glowscript.org/css/redmond/2.1/jquery-ui.custom.css" rel="stylesheet" />
+    <link type="text/css" href="https://www.glowscript.org/css/ide.css" rel="stylesheet" />
+    <script type="text/javascript" src="https://www.glowscript.org/lib/jquery/2.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://www.glowscript.org/lib/jquery/2.1/jquery-ui.custom.min.js"></script>
+    <script type="text/javascript" src="https://www.glowscript.org/package/glow.3.2.min.js"></script>
+    <script type="text/javascript" src="https://www.glowscript.org/package/RSrun.3.2.min.js"></script>
+    <script type="text/javascript"><!--//--><![CDATA[//><!--
+    
+    // START JAVASCRIPT
+    ;(function() {;
+    var ρσ_modules = {};
+    ρσ_modules.pythonize = {};
+    ρσ_modules.random = {};
+    
+    (function(){
+        function strings() {
+            var string_funcs, exclude, name;
+            string_funcs = set("capitalize strip lstrip rstrip islower isupper isspace lower upper swapcase center count endswith startswith find rfind index rindex format join ljust rjust partition rpartition replace split rsplit splitlines zfill".split(" "));
+            if (!arguments.length) {
+                exclude = (function(){
+                    var s = ρσ_set();
+                    s.jsset.add("split");
+                    s.jsset.add("replace");
+                    return s;
+                })();
+            } else if (arguments[0]) {
+                exclude = Array.prototype.slice.call(arguments);
+            } else {
+                exclude = null;
+            }
+            if (exclude) {
+                string_funcs = string_funcs.difference(set(exclude));
+            }
+            var ρσ_Iter0 = string_funcs;
+            ρσ_Iter0 = ((typeof ρσ_Iter0[Symbol.iterator] === "function") ? (ρσ_Iter0 instanceof Map ? ρσ_Iter0.keys() : ρσ_Iter0) : Object.keys(ρσ_Iter0));
+            for (var ρσ_Index0 of ρσ_Iter0) {
+                name = ρσ_Index0;
+                (ρσ_expr_temp = String.prototype)[(typeof name === "number" && name < 0) ? ρσ_expr_temp.length + name : name] = (ρσ_expr_temp = ρσ_str.prototype)[(typeof name === "number" && name < 0) ? ρσ_expr_temp.length + name : name];
+            }
+        };
+        if (!strings.__module__) Object.defineProperties(strings, {
+            __module__ : {value: "pythonize"}
+        });
+    
+        ρσ_modules.pythonize.strings = strings;
+    })();
+    
+    (function(){
+        var ρσ_seed_state, ρσ_get_random_byte;
+        ρσ_seed_state = (function(){
+            var ρσ_d = {};
+            ρσ_d["key"] = ρσ_list_decorate([]);
+            ρσ_d["key_i"] = 0;
+            ρσ_d["key_j"] = 0;
+            return ρσ_d;
+        }).call(this);
+        ρσ_get_random_byte = (function() {
+            var ρσ_anonfunc = function () {
+                var ρσ_unpack;
+                ρσ_seed_state.key_i = (ρσ_seed_state.key_i + 1) % 256;
+                ρσ_seed_state.key_j = (ρσ_seed_state.key_j + (ρσ_expr_temp = ρσ_seed_state.key)[ρσ_bound_index(ρσ_seed_state.key_i, ρσ_expr_temp)]) % 256;
+                ρσ_unpack = [(ρσ_expr_temp = ρσ_seed_state.key)[ρσ_bound_index(ρσ_seed_state.key_j, ρσ_expr_temp)], 
+                (ρσ_expr_temp = ρσ_seed_state.key)[ρσ_bound_index(ρσ_seed_state.key_i, ρσ_expr_temp)]];
+                (ρσ_expr_temp = ρσ_seed_state.key)[ρσ_bound_index(ρσ_seed_state.key_i, ρσ_expr_temp)] = ρσ_unpack[0];
+                (ρσ_expr_temp = ρσ_seed_state.key)[ρσ_bound_index(ρσ_seed_state.key_j, ρσ_expr_temp)] = ρσ_unpack[1];
+                return (ρσ_expr_temp = ρσ_seed_state.key)[ρσ_bound_index(((ρσ_expr_temp = ρσ_seed_state.key)[ρσ_bound_index(ρσ_seed_state.key_i, ρσ_expr_temp)] + (ρσ_expr_temp = ρσ_seed_state.key)[ρσ_bound_index(ρσ_seed_state.key_j, ρσ_expr_temp)]) % 256, ρσ_expr_temp)];
+            };
+            if (!ρσ_anonfunc.__module__) Object.defineProperties(ρσ_anonfunc, {
+                __module__ : {value: "random"}
+            });
+            return ρσ_anonfunc;
+        })();
+        function seed() {
+            var x = (arguments[0] === undefined || ( 0 === arguments.length-1 && arguments[arguments.length-1] !== null && typeof arguments[arguments.length-1] === "object" && arguments[arguments.length-1] [ρσ_kwargs_symbol] === true)) ? seed.__defaults__.x : arguments[0];
+            var ρσ_kwargs_obj = arguments[arguments.length-1];
+            if (ρσ_kwargs_obj === null || typeof ρσ_kwargs_obj !== "object" || ρσ_kwargs_obj [ρσ_kwargs_symbol] !== true) ρσ_kwargs_obj = {};
+            if (Object.prototype.hasOwnProperty.call(ρσ_kwargs_obj, "x")){
+                x = ρσ_kwargs_obj.x;
+            }
+            var i, j, ρσ_unpack;
+            ρσ_seed_state.key_i = ρσ_seed_state.key_j = 0;
+            if (typeof x === "number") {
+                x = x.toString();
+            } else if (typeof x !== "string") {
+                throw new TypeError("unhashable type: '" + typeof x + "'");
+            }
+            for (var ρσ_Index1 = 0; ρσ_Index1 < 256; ρσ_Index1++) {
+                i = ρσ_Index1;
+                (ρσ_expr_temp = ρσ_seed_state.key)[(typeof i === "number" && i < 0) ? ρσ_expr_temp.length + i : i] = i;
+            }
+            j = 0;
+            for (var ρσ_Index2 = 0; ρσ_Index2 < 256; ρσ_Index2++) {
+                i = ρσ_Index2;
+                j = (j + (ρσ_expr_temp = ρσ_seed_state.key)[(typeof i === "number" && i < 0) ? ρσ_expr_temp.length + i : i] + x.charCodeAt(i % x.length)) % 256;
+                ρσ_unpack = [(ρσ_expr_temp = ρσ_seed_state.key)[(typeof j === "number" && j < 0) ? ρσ_expr_temp.length + j : j], 
+                (ρσ_expr_temp = ρσ_seed_state.key)[(typeof i === "number" && i < 0) ? ρσ_expr_temp.length + i : i]];
+                (ρσ_expr_temp = ρσ_seed_state.key)[(typeof i === "number" && i < 0) ? ρσ_expr_temp.length + i : i] = ρσ_unpack[0];
+                (ρσ_expr_temp = ρσ_seed_state.key)[(typeof j === "number" && j < 0) ? ρσ_expr_temp.length + j : j] = ρσ_unpack[1];
+            }
+        };
+        if (!seed.__defaults__) Object.defineProperties(seed, {
+            __defaults__ : {value: {x:(new Date).getTime()}},
+            __handles_kwarg_interpolation__ : {value: true},
+            __argnames__ : {value: ["x"]},
+            __module__ : {value: "random"}
+        });
+    
+        seed();
+        function random() {
+            var n, m, i;
+            n = 0;
+            m = 1;
+            for (var ρσ_Index3 = 0; ρσ_Index3 < 8; ρσ_Index3++) {
+                i = ρσ_Index3;
+                n += ρσ_get_random_byte() * m;
+                m *= 256;
+            }
+            return n / 0x10000000000000000;
+        };
+        if (!random.__module__) Object.defineProperties(random, {
+            __module__ : {value: "random"}
+        });
+    
+        function randrange() {
+            return choice(range.apply(this, arguments));
+        };
+        if (!randrange.__module__) Object.defineProperties(randrange, {
+            __module__ : {value: "random"}
+        });
+    
+        function randint(a, b) {
+            return int(random() * (b - a + 1) + a);
+        };
+        if (!randint.__argnames__) Object.defineProperties(randint, {
+            __argnames__ : {value: ["a", "b"]},
+            __module__ : {value: "random"}
+        });
+    
+        function uniform(a, b) {
+            return random() * (b - a) + a;
+        };
+        if (!uniform.__argnames__) Object.defineProperties(uniform, {
+            __argnames__ : {value: ["a", "b"]},
+            __module__ : {value: "random"}
+        });
+    
+        function choice(seq) {
+            if (seq.length > 0) {
+                return seq[ρσ_bound_index(Math.floor(random() * seq.length), seq)];
+            } else {
+                throw new IndexError;
+            }
+        };
+        if (!choice.__argnames__) Object.defineProperties(choice, {
+            __argnames__ : {value: ["seq"]},
+            __module__ : {value: "random"}
+        });
+    
+        function shuffle() {
+            var x = ( 0 === arguments.length-1 && arguments[arguments.length-1] !== null && typeof arguments[arguments.length-1] === "object" && arguments[arguments.length-1] [ρσ_kwargs_symbol] === true) ? undefined : arguments[0];
+            var random_f = (arguments[1] === undefined || ( 1 === arguments.length-1 && arguments[arguments.length-1] !== null && typeof arguments[arguments.length-1] === "object" && arguments[arguments.length-1] [ρσ_kwargs_symbol] === true)) ? shuffle.__defaults__.random_f : arguments[1];
+            var ρσ_kwargs_obj = arguments[arguments.length-1];
+            if (ρσ_kwargs_obj === null || typeof ρσ_kwargs_obj !== "object" || ρσ_kwargs_obj [ρσ_kwargs_symbol] !== true) ρσ_kwargs_obj = {};
+            if (Object.prototype.hasOwnProperty.call(ρσ_kwargs_obj, "random_f")){
+                random_f = ρσ_kwargs_obj.random_f;
+            }
+            var j, ρσ_unpack, i;
+            for (var ρσ_Index4 = 0; ρσ_Index4 < x.length; ρσ_Index4++) {
+                i = ρσ_Index4;
+                j = Math.floor(random_f() * (i + 1));
+                ρσ_unpack = [x[(typeof j === "number" && j < 0) ? x.length + j : j], x[(typeof i === "number" && i < 0) ? x.length + i : i]];
+                x[(typeof i === "number" && i < 0) ? x.length + i : i] = ρσ_unpack[0];
+                x[(typeof j === "number" && j < 0) ? x.length + j : j] = ρσ_unpack[1];
+            }
+            return x;
+        };
+        if (!shuffle.__defaults__) Object.defineProperties(shuffle, {
+            __defaults__ : {value: {random_f:random}},
+            __handles_kwarg_interpolation__ : {value: true},
+            __argnames__ : {value: ["x", "random_f"]},
+            __module__ : {value: "random"}
+        });
+    
+        function sample(population, k) {
+            var x, j, ρσ_unpack, i;
+            x = population.slice();
+            for (var ρσ_Index5 = population.length - 1; ρσ_Index5 > population.length - k - 1; ρσ_Index5-=1) {
+                i = ρσ_Index5;
+                j = Math.floor(random() * (i + 1));
+                ρσ_unpack = [x[(typeof j === "number" && j < 0) ? x.length + j : j], x[(typeof i === "number" && i < 0) ? x.length + i : i]];
+                x[(typeof i === "number" && i < 0) ? x.length + i : i] = ρσ_unpack[0];
+                x[(typeof j === "number" && j < 0) ? x.length + j : j] = ρσ_unpack[1];
+            }
+            return x.slice(population.length - k);
+        };
+        if (!sample.__argnames__) Object.defineProperties(sample, {
+            __argnames__ : {value: ["population", "k"]},
+            __module__ : {value: "random"}
+        });
+    
+        ρσ_modules.random.ρσ_seed_state = ρσ_seed_state;
+        ρσ_modules.random.ρσ_get_random_byte = ρσ_get_random_byte;
+        ρσ_modules.random.seed = seed;
+        ρσ_modules.random.random = random;
+        ρσ_modules.random.randrange = randrange;
+        ρσ_modules.random.randint = randint;
+        ρσ_modules.random.uniform = uniform;
+        ρσ_modules.random.choice = choice;
+        ρσ_modules.random.shuffle = shuffle;
+        ρσ_modules.random.sample = sample;
+    })();
+    async function __main__() {
+    "use strict";
+        var display = canvas;
+        var scene = canvas();
+    
+        var version, print, arange, __name__, type, ρσ_ls, fruit, stick, leaf, eye_1, pupil_1, eye_2, pupil_2, apple, ρσ_unpack, TRUE, paus, svårare, gamemode, ingen_vägg, inte_hoppa, difficulty, score, rundor, b, a, hitbox, väntar, BANA, morot, pausat, högsta_banan, banor, variabel, score_label, walls, döden, apa, i, kvars, kvar, ser, speed, continue_loop, jump_speed, t0, konstant, k, gravitation, la, wall, DÖD, räka, räkor, la_9, la_10, la_11, la_12, la_13, la_14, la_15, la_16, la_17, la_18, la_1, la_2, la_3, la_4, la_5, la_6, la_7, la_8;
+        version = ρσ_list_decorate([ "3.2", "glowscript" ]);
+        Array.prototype['+'] = function(r) {return this.concat(r)}
+        Array.prototype['*'] = function(r) {return __array_times_number(this, r)}
+        window.__GSlang = "vpython";
+        print = GSprint;
+        arange = range;
+        __name__ = "__main__";
+        type = pytype;
+        var strings = ρσ_modules.pythonize.strings;
+    
+        strings();
+        var random = ρσ_modules.random;
+    
+        "6";
+        async function grundinstallningar() {
+            var ρσ_ls, hitbox, a, b, rundor, score, difficulty, inte_hoppa, ingen_vägg, gamemode, svårare, paus, TRUE, väntar, BANA, morot, pausat, högsta_banan;
+            "7";
+            hitbox = 0;
+            "8";
+            a = 10;
+            "9";
+            b = 10;
+            "10";
+            rundor = 1;
+            "11";
+            score = 0;
+            "12";
+            difficulty = 1;
+            "13";
+            inte_hoppa = 0;
+            "14";
+            ingen_vägg = 1;
+            "15";
+            gamemode = 0;
+            "16";
+            svårare = 150;
+            "17";
+            paus = 0;
+            "18";
+            TRUE = 1;
+            "19";
+            väntar = 1;
+            "20";
+            BANA = 0;
+            "21";
+            morot = 0;
+            "22";
+            pausat = 0;
+            "23";
+            högsta_banan = ρσ_list_decorate([ 0 ]);
+            "24";
+            return [TRUE, paus, svårare, gamemode, ingen_vägg, inte_hoppa, difficulty, score, 
+            rundor, b, a, hitbox, väntar, BANA, morot, pausat, högsta_banan];
+        };
+        if (!grundinstallningar.__module__) Object.defineProperties(grundinstallningar, {
+            __module__ : {value: null}
+        });
+    
+        "27";
+        async function detectCol(obj1, obj2) {
+            var ρσ_ls, xSize, ySize, zSize, currDist;
+            "28";
+            if (ρσ_instanceof(obj1, box) && ρσ_instanceof(obj2, box)) {
+                "29";
+                xSize = obj1.length["+"](obj2.length)["/"](2);
+                "30";
+                ySize = obj1.height["+"](obj2.height)["/"](2);
+                "31";
+                zSize = obj1.width["+"](obj2.width)["/"](2);
+                "32";
+                currDist = obj1.pos["-"](obj2.pos);
+                "33";
+                if (abs(currDist.x)["<"](xSize) && abs(currDist.y)["<"](ySize) && abs(currDist.z)["<"](zSize)) {
+                    "34";
+                    return true;
+                    "35";
+                } else {
+                    "36";
+                    return false;
+                    "37";
+                }
+            } else {
+                "38";
+                return false;
+            }
+        };
+        if (!detectCol.__argnames__) Object.defineProperties(detectCol, {
+            __argnames__ : {value: ["obj1", "obj2"]},
+            __module__ : {value: null}
+        });
+    
+        "42";
+        scene.width = 700;
+        "43";
+        scene.height = 500;
+        "44";
+        scene.title = "Mangospel";
+        "45";
+        scene.range = 240;
+        "46";
+        scene.background = vec(.1, .1, .1);
+        "49";
+        fruit = ρσ_interpolate_kwargs.call(this, sphere, [ρσ_desugar_kwargs({pos: vec(0, 0, 0), radius: 13, color: vec(2, 1, 0)})]);
+        "50";
+        stick = ρσ_interpolate_kwargs.call(this, cylinder, [ρσ_desugar_kwargs({pos: fruit.pos["+"](vec(0, 13, 0)), axis: vec(0, 1, 0), radius: 2, length: 8, color: vec(.6, .3, 0)})]);
+        "51";
+        leaf = ρσ_interpolate_kwargs.call(this, ellipsoid, [ρσ_desugar_kwargs({pos: fruit.pos["+"](vec(10, 20, 0)), axis: vec(1, .3, 0), size: vec(20, 10, 4), color: vec(0, 1, 0)})]);
+        "52";
+        eye_1 = ρσ_interpolate_kwargs.call(this, sphere, [ρσ_desugar_kwargs({pos: vec(4, 4, 10), radius: 2, color: vec(0, 1, 0)})]);
+        "53";
+        pupil_1 = ρσ_interpolate_kwargs.call(this, sphere, [ρσ_desugar_kwargs({pos: vec(4, 4, 11.8), radius: .5, color: vec(0, 0, 0)})]);
+        "54";
+        eye_2 = ρσ_interpolate_kwargs.call(this, sphere, [ρσ_desugar_kwargs({pos: vec(4["-u"](), 4, 10), radius: 2, color: vec(0, 1, 0)})]);
+        "55";
+        pupil_2 = ρσ_interpolate_kwargs.call(this, sphere, [ρσ_desugar_kwargs({pos: vec(4["-u"](), 4, 11.8), radius: .5, color: vec(0, 0, 0)})]);
+        "56";
+        apple = ρσ_interpolate_kwargs.call(this, compound, [ρσ_list_decorate([ fruit, stick, leaf, eye_1, pupil_1, eye_2, pupil_2 ])].concat([ρσ_desugar_kwargs({origin: fruit.pos})]));
+        "58";
+        ρσ_unpack = (await grundinstallningar());
+    ρσ_unpack = ρσ_unpack_asarray(17, ρσ_unpack);
+        TRUE = ρσ_unpack[0];
+        paus = ρσ_unpack[1];
+        svårare = ρσ_unpack[2];
+        gamemode = ρσ_unpack[3];
+        ingen_vägg = ρσ_unpack[4];
+        inte_hoppa = ρσ_unpack[5];
+        difficulty = ρσ_unpack[6];
+        score = ρσ_unpack[7];
+        rundor = ρσ_unpack[8];
+        b = ρσ_unpack[9];
+        a = ρσ_unpack[10];
+        hitbox = ρσ_unpack[11];
+        väntar = ρσ_unpack[12];
+        BANA = ρσ_unpack[13];
+        morot = ρσ_unpack[14];
+        pausat = ρσ_unpack[15];
+        högsta_banan = ρσ_unpack[16];
+        "59";
+        banor = 0;
+        "60";
+        variabel = 0;
+        "62";
+        while ((TRUE === 1 || typeof TRUE === "object" && ρσ_equals(TRUE, 1))) {
+            "63";
+            for (var ρσ_Index6 = 0; ρσ_Index6["<"](rundor); ρσ_Index6++) {
+                i = ρσ_Index6;
+                "64";
+                if (difficulty["<"](0)) {
+                    "65";
+                    score_label = ρσ_interpolate_kwargs.call(this, label, [ρσ_desugar_kwargs({pos: vec(0, 250["-u"](), 0), text: "Points:"["+"](floor(difficulty["/"](10)["+"](1["*"](score))["+"](1))), height: 40, box: false, color: vec(1, 1, 0), font: "sans"})]);
+                    "66";
+                } else {
+                    "67";
+                    score_label = ρσ_interpolate_kwargs.call(this, label, [ρσ_desugar_kwargs({pos: vec(0, 250["-u"](), 0), text: "Points:"["+"](floor(difficulty["/"](10)["+"](1["*"](score)))), height: 40, box: false, color: vec(1, 1, 0), font: "sans"})]);
+                }
+                "69";
+                walls = ρσ_list_decorate([]);
+                "70";
+                if ((difficulty === 0 || typeof difficulty === "object" && ρσ_equals(difficulty, 0))) {
+                    "71";
+                    walls.append(ρσ_interpolate_kwargs.call(this, box, [ρσ_desugar_kwargs({pos: vec(0, 250["-u"](), 0), size: vec(7e4, 10, 10), color: vec(0, 0, 0), opacity: 1})]));
+                    "72";
+                } else {
+                    "73";
+                    döden = ρσ_interpolate_kwargs.call(this, box, [ρσ_desugar_kwargs({pos: vec(0, 400["-u"](), 0), size: vec(7e4, 10, 10), color: vec(10, 0, 0), opacity: 1})]);
+                    "74";
+                    ingen_vägg = 0;
+                }
+                "75";
+                for (var ρσ_Index7 = 0; ρσ_Index7["<"](a); ρσ_Index7++) {
+                    i = ρσ_Index7;
+                    "76";
+                    apa = 150["*"](i["-"](1));
+                    "77";
+                    walls.append(ρσ_interpolate_kwargs.call(this, box, [ρσ_desugar_kwargs({pos: vec(random.randint(150["-u"](), 150), apa, 0), size: vec(svårare, .5, 10), color: vec(0, 1, 0), opacity: 0})]));
+                }
+                "78";
+                kvars = ρσ_list_decorate([]);
+                "79";
+                for (var ρσ_Index8 = 0; ρσ_Index8["<"](a); ρσ_Index8++) {
+                    i = ρσ_Index8;
+                    "80";
+                    kvar = ρσ_interpolate_kwargs.call(this, label, [ρσ_desugar_kwargs({pos: ρσ_getitem(walls, i["+"](ingen_vägg)).pos["-"](vec(0, 5, 0)), text: len(walls)["-"](ingen_vägg)["-"](i), height: 15, box: false, color: vec(1, 1, 1), font: "sans"})]);
+                    "81";
+                    kvars.append(kvar);
+                }
+                "82";
+                walls.append(ρσ_interpolate_kwargs.call(this, box, [ρσ_desugar_kwargs({pos: vec(0, apa["+"](100), 0), size: vec(1e3, 10, 10), color: vec(1, 1, 0), opacity: 1})]));
+                "85";
+                ser = ρσ_list_decorate([]);
+                "86";
+                for (var ρσ_Index9 = 0; ρσ_Index9["<"](a); ρσ_Index9++) {
+                    i = ρσ_Index9;
+                    "87";
+                    if (banor[">="](5)) {
+                        "88";
+                        ser.append(ρσ_interpolate_kwargs.call(this, box, [ρσ_desugar_kwargs({pos: ρσ_getitem(walls, i["+"](ingen_vägg)).pos, size: vec(svårare, 10, 10), color: vec(0, 1, 0), opacity: 1["+"](.01)["-"](gamemode)["-"](floor(banor["/"](6)))})]));
+                        "89";
+                    }
+                    if (banor[">="](9)) {
+                        "90";
+                        ser.append(ρσ_interpolate_kwargs.call(this, box, [ρσ_desugar_kwargs({pos: ρσ_getitem(walls, i["+"](ingen_vägg)).pos, size: vec(svårare, 10, 10), color: vec(0, 1, 0), opacity: 1["+"](.01)["-"](gamemode)["-"](10)})]));
+                        "91";
+                    }
+                    if (banor["<"](5)) {
+                        "92";
+                        ser.append(ρσ_interpolate_kwargs.call(this, box, [ρσ_desugar_kwargs({pos: ρσ_getitem(walls, i["+"](ingen_vägg)).pos, size: vec(svårare, 10, 10), color: vec(0, 1, 0), opacity: 1["+"](.01)["-"](gamemode)["-"](floor(score["/"](200)))})]));
+                    }
+                    "93";
+                    ρσ_getitem(ser, i).pos.y=ρσ_getitem(ser, i).pos.y["-"](3);
+                }
+                "96";
+                for (var ρσ_Index10 = 0; ρσ_Index10["<"](a); ρσ_Index10++) {
+                    i = ρσ_Index10;
+                    "97";
+                    ρσ_getitem(walls, i["+"](1)).bb = ρσ_interpolate_kwargs.call(this, box, [ρσ_desugar_kwargs({pos: ρσ_getitem(ser, i).pos, size: vec(200, .5, 10), color: vec(1, 0, 0), opacity: 0})]);
+                    "98";
+                    ρσ_getitem(walls, i["+"](1)).bb.pos.y=ρσ_getitem(walls, i["+"](1)).bb.pos.y["-"](5);
+                }
+                "100";
+                apple.vel = vec(0, 0, 0);
+                "101";
+                apple.pos = ρσ_getitem(walls, ingen_vägg).pos;
+                "102";
+                apple.pos.y=apple.pos.y["+"](20);
+                "103";
+                apple.bb = ρσ_interpolate_kwargs.call(this, box, [ρσ_desugar_kwargs({pos: apple.pos["+"](vec(0, 0, 0)), size: vec(26, 28, 26), color: vec(1, 1, 1), opacity: 0["+"](hitbox)})]);
+                "106";
+                speed = 3;
+                "107";
+                continue_loop = true;
+                "108";
+                jump_speed = vec(0, 8.4, 0);
+                "109";
+                scene.camera.follow(apple);
+                "110";
+                t0 = clock();
+                "113";
+                while (continue_loop) {
+                    "114";
+                    if ((hitbox === 1 || typeof hitbox === "object" && ρσ_equals(hitbox, 1))) {
+                        "115";
+                        apple.bb.visible = true;
+                        "116";
+                    }
+                    if ((hitbox === 0 || typeof hitbox === "object" && ρσ_equals(hitbox, 0))) {
+                        "117";
+                        apple.bb.visible = false;
+                    }
+                    "118";
+                    (await rate(60["+"](rundor)));
+                    "119";
+                    konstant = 0;
+                    "120";
+                    k = (await keysdown());
+                    "121";
+                    gravitation = vec(0, .2["-u"](), 0);
+                    "122";
+                    if (ρσ_in("d", k)) {
+                        "123";
+                        apple.pos.x=apple.pos.x["+"](speed["+"](.5));
+                        "124";
+                        apple.bb.pos.x=apple.bb.pos.x["+"](speed["+"](.5));
+                        "125";
+                    }
+                    if (ρσ_in("a", k)) {
+                        "126";
+                        apple.pos.x=apple.pos.x["-"](speed["-"](.5));
+                        "127";
+                        apple.bb.pos.x=apple.bb.pos.x["-"](speed["-"](.5));
+                        "128";
+                    }
+                    if (ρσ_in("esc", k)) {
+                        "129";
+                        la = ρσ_interpolate_kwargs.call(this, label, [ρσ_desugar_kwargs({pos: apple.pos["+"](vec(0, 20, 0)), text: "Tryck esc för att fortsätta", height: 60, box: false, color: vec(1, 1, 1), font: "sans"})]);
+                        "130";
+                        (await sleep(.5));
+                        "131";
+                        while ((pausat === 0 || typeof pausat === "object" && ρσ_equals(pausat, 0))) {
+                            "132";
+                            (await rate(60));
+                            "133";
+                            k = (await keysdown());
+                            "134";
+                            if (ρσ_in("esc", k)) {
+                                "135";
+                                (await sleep(.1));
+                                "136";
+                                la.visible = false;
+                                "137";
+                                break;
+                            }
+                        }
+                        "138";
+                        pausat = 0;
+                    }
+                    "140";
+                    var ρσ_Iter11 = walls;
+                    ρσ_Iter11 = ((typeof ρσ_Iter11[Symbol.iterator] === "function") ? (ρσ_Iter11 instanceof Map ? ρσ_Iter11.keys() : ρσ_Iter11) : Object.keys(ρσ_Iter11));
+                    for (var ρσ_Index11 of ρσ_Iter11) {
+                        wall = ρσ_Index11;
+                        "141";
+                        if ((await detectCol(apple.bb, wall.bb))) {
+                            "142";
+                            apple.pos.y=apple.pos.y["-"](1.5);
+                            "143";
+                            apple.bb.pos = apple.pos;
+                            "144";
+                        }
+                        if ((await detectCol(apple.bb, wall))) {
+                            "145";
+                            gravitation = vec(0, 0, 0);
+                            "146";
+                            if (inte_hoppa[">"](30)) {
+                                "147";
+                                if (ρσ_in(" ", k)) {
+                                    "148";
+                                    apple.vel = jump_speed;
+                                    "149";
+                                    inte_hoppa = 0;
+                                    "150";
+                                } else {
+                                    "151";
+                                    apple.vel = vec(0, 0, 0);
+                                    "152";
+                                }
+                            } else {
+                                "153";
+                                apple.vel = vec(0, 0, 0);
+                                "155";
+                            }
+                        }
+                    }
+                    if ((difficulty === 0 || typeof difficulty === "object" && ρσ_equals(difficulty, 0))) {
+                        "156";
+                        if (apple.bb.pos.y["<"](ρσ_getitem(walls, 0).pos.y["+"](20))) {
+                            "157";
+                            gravitation = vec(0, 0, 0);
+                            "158";
+                            score_label.visible = false;
+                            "159";
+                            DÖD = ρσ_interpolate_kwargs.call(this, label, [ρσ_desugar_kwargs({pos: apple.pos["+"](vec(20, 20, 0)), text: "Du dog med score:"["+"](floor(difficulty["/"](10)["+"](1["*"](score)))), height: 60, box: false, color: vec(1, 1, 0), font: "sans"})]);
+                            "160";
+                            continue_loop = false;
+                            "162";
+                            break;
+                        }
+                    }
+                    "164";
+                    apple.vel=apple.vel["+"](gravitation);
+                    "165";
+                    apple.pos=apple.pos["+"](apple.vel);
+                    "166";
+                    apple.bb.pos = apple.pos;
+                    "167";
+                    inte_hoppa=inte_hoppa["+"](1);
+                    "169";
+                    if (difficulty[">"](0)) {
+                        "170";
+                        if ((banor === 0 || typeof banor === "object" && ρσ_equals(banor, 0))) {
+                            "171";
+                            döden.pos.y=döden.pos.y["+"](1["+"](rundor["/"](10))["+"](difficulty["/"](2)));
+                            "172";
+                        } else {
+                            "173";
+                            döden.pos.y=döden.pos.y["+"](1["+"](difficulty["/"](2))["+"](banor["/"](10)));
+                            "175";
+                        }
+                    }
+                    if (difficulty[">"](0)) {
+                        "176";
+                        if (apple.pos.y["<"](döden.pos.y)) {
+                            "177";
+                            gravitation = vec(0, 0, 0);
+                            "178";
+                            score_label.visible = false;
+                            "179";
+                            score=score["+"](apple.pos.y["/"](150)["+"](1));
+                            "180";
+                            DÖD = ρσ_interpolate_kwargs.call(this, label, [ρσ_desugar_kwargs({pos: apple.pos["+"](vec(20, 20, 0)), text: "Du dog med score:"["+"](floor(difficulty["/"](10)["+"](1["*"](score)))), height: 60, box: false, color: vec(1, 1, 0), font: "sans"})]);
+                            "181";
+                            continue_loop = false;
+                            "182";
+                            apple.bb.visible = false;
+                            "183";
+                            break;
+                            "184";
+                        }
+                    }
+                    if (apple.pos.y["<"](400["-u"]())) {
+                        "185";
+                        gravitation = vec(0, 0, 0);
+                        "186";
+                        score_label.visible = false;
+                        "187";
+                        DÖD = ρσ_interpolate_kwargs.call(this, label, [ρσ_desugar_kwargs({pos: apple.pos["+"](vec(20, 20, 0)), text: "Du dog med score:"["+"](floor(difficulty["/"](10)["+"](1["*"](score)))), height: 60, box: false, color: vec(1, 1, 0), font: "sans"})]);
+                        "188";
+                        continue_loop = false;
+                        "189";
+                        apple.bb.visible = false;
+                        "190";
+                        break;
+                        "191";
+                    }
+                    if (difficulty[">"](a["*"](2))) {
+                        "192";
+                        score_label.visible = false;
+                        "193";
+                        DÖD = ρσ_interpolate_kwargs.call(this, label, [ρσ_desugar_kwargs({pos: apple.pos["+"](vec(20, 20, 0)), text: "Difficulty unresonable score:"["+"](0), height: 50, box: false, color: vec(1, 0, 0), font: "sans"})]);
+                        "194";
+                        continue_loop = false;
+                        "195";
+                        apple.bb.visible = false;
+                        "197";
+                    }
+                    if (apple.bb.pos.y[">"](ρσ_getitem(walls, len(walls)["-"](1)).pos.y["-"](30))) {
+                        "198";
+                        print("Your time on", a, "jumps is:", clock()["-"](t0), "sec");
+                        "199";
+                        a=a["+"](b);
+                        "200";
+                        ρσ_getitem(walls, len(walls)["-"](1)).visible = false;
+                        "201";
+                        ρσ_delitem(walls, (len(walls)["-"](1)));
+                        "202";
+                        var ρσ_Iter12 = range(len(kvars));
+                        ρσ_Iter12 = ((typeof ρσ_Iter12[Symbol.iterator] === "function") ? (ρσ_Iter12 instanceof Map ? ρσ_Iter12.keys() : ρσ_Iter12) : Object.keys(ρσ_Iter12));
+                        for (var ρσ_Index12 of ρσ_Iter12) {
+                            i = ρσ_Index12;
+                            "203";
+                            ρσ_getitem(kvars, i).visible = false;
+                        }
+                        "204";
+                        var ρσ_Iter13 = range(len(walls)["-"](konstant)["-"](ingen_vägg));
+                        ρσ_Iter13 = ((typeof ρσ_Iter13[Symbol.iterator] === "function") ? (ρσ_Iter13 instanceof Map ? ρσ_Iter13.keys() : ρσ_Iter13) : Object.keys(ρσ_Iter13));
+                        for (var ρσ_Index13 of ρσ_Iter13) {
+                            i = ρσ_Index13;
+                            "205";
+                            ρσ_getitem(walls, i["+"](ingen_vägg["*"](1["-u"]()))).visible = false;
+                            "206";
+                            ρσ_getitem(ser, i["+"](ingen_vägg["*"](1["-u"]()))).visible = false;
+                            "207";
+                            score_label.visible = false;
+                            "208";
+                            konstant=konstant["-"](1);
+                            "209";
+                        }
+                        if ((ingen_vägg === 0 || typeof ingen_vägg === "object" && ρσ_equals(ingen_vägg, 0))) {
+                            "210";
+                            döden.visible = false;
+                            "211";
+                        }
+                        if ((difficulty === 0 || typeof difficulty === "object" && ρσ_equals(difficulty, 0))) {
+                            "212";
+                            ρσ_getitem(ser, len(ser)["-"](1)).visible = false;
+                        }
+                        "213";
+                        kvars = ρσ_list_decorate([]);
+                        "214";
+                        continue_loop = false;
+                        "215";
+                        rundor=rundor["+"](1);
+                        "216";
+                        score=score["+"](a);
+                        "217";
+                        apple.bb.visible = false;
+                        "218";
+                        if (score["<"](100)) {
+                            "219";
+                            svårare=svårare["-"](floor(svårare["/"](20)));
+                            "220";
+                        }
+                        if ((banor === 9 || typeof banor === "object" && ρσ_equals(banor, 9))) {
+                            "221";
+                            if (högsta_banan.count(9)[">="](9)) {
+                                "222";
+                                if ((variabel === 9 || typeof variabel === "object" && ρσ_equals(variabel, 9))) {
+                                    "223";
+                                    banor=banor["+"](1);
+                                    "224";
+                                    variabel=variabel["+"](1);
+                                    "225";
+                                }
+                            }
+                        }
+                        if ((banor === 8 || typeof banor === "object" && ρσ_equals(banor, 8))) {
+                            "226";
+                            if (högsta_banan.count(8)[">="](8)) {
+                                "227";
+                                if ((variabel === 8 || typeof variabel === "object" && ρσ_equals(variabel, 8))) {
+                                    "228";
+                                    banor=banor["+"](1);
+                                    "229";
+                                    variabel=variabel["+"](1);
+                                    "230";
+                                }
+                            }
+                        }
+                        if ((banor === 7 || typeof banor === "object" && ρσ_equals(banor, 7))) {
+                            "231";
+                            if (högsta_banan.count(7)[">="](7)) {
+                                "232";
+                                if ((variabel === 7 || typeof variabel === "object" && ρσ_equals(variabel, 7))) {
+                                    "233";
+                                    banor=banor["+"](1);
+                                    "234";
+                                    variabel=variabel["+"](1);
+                                    "235";
+                                }
+                            }
+                        }
+                        if ((banor === 6 || typeof banor === "object" && ρσ_equals(banor, 6))) {
+                            "236";
+                            if (högsta_banan.count(6)[">="](6)) {
+                                "237";
+                                if ((variabel === 6 || typeof variabel === "object" && ρσ_equals(variabel, 6))) {
+                                    "238";
+                                    banor=banor["+"](1);
+                                    "239";
+                                    variabel=variabel["+"](1);
+                                    "240";
+                                }
+                            }
+                        }
+                        if ((banor === 5 || typeof banor === "object" && ρσ_equals(banor, 5))) {
+                            "241";
+                            if (högsta_banan.count(5)[">="](5)) {
+                                "242";
+                                if ((variabel === 5 || typeof variabel === "object" && ρσ_equals(variabel, 5))) {
+                                    "243";
+                                    banor=banor["+"](1);
+                                    "244";
+                                    variabel=variabel["+"](1);
+                                    "245";
+                                }
+                            }
+                        }
+                        if ((banor === 4 || typeof banor === "object" && ρσ_equals(banor, 4))) {
+                            "246";
+                            if (högsta_banan.count(4)[">="](4)) {
+                                "247";
+                                if ((variabel === 4 || typeof variabel === "object" && ρσ_equals(variabel, 4))) {
+                                    "248";
+                                    banor=banor["+"](1);
+                                    "249";
+                                    variabel=variabel["+"](1);
+                                    "250";
+                                }
+                            }
+                        }
+                        if ((banor === 3 || typeof banor === "object" && ρσ_equals(banor, 3))) {
+                            "251";
+                            if (högsta_banan.count(3)[">="](3)) {
+                                "252";
+                                if ((variabel === 3 || typeof variabel === "object" && ρσ_equals(variabel, 3))) {
+                                    "253";
+                                    banor=banor["+"](1);
+                                    "254";
+                                    variabel=variabel["+"](1);
+                                    "255";
+                                }
+                            }
+                        }
+                        if ((banor === 2 || typeof banor === "object" && ρσ_equals(banor, 2))) {
+                            "256";
+                            if (högsta_banan.count(2)[">="](2)) {
+                                "257";
+                                if ((variabel === 2 || typeof variabel === "object" && ρσ_equals(variabel, 2))) {
+                                    "258";
+                                    banor=banor["+"](1);
+                                    "259";
+                                    variabel=variabel["+"](1);
+                                    "260";
+                                }
+                            }
+                        }
+                        if ((banor === 1 || typeof banor === "object" && ρσ_equals(banor, 1))) {
+                            "261";
+                            if (högsta_banan.count(1)[">="](1)) {
+                                "262";
+                                if ((variabel === 1 || typeof variabel === "object" && ρσ_equals(variabel, 1))) {
+                                    "263";
+                                    banor=banor["+"](1);
+                                    "264";
+                                    variabel=variabel["+"](1);
+                                    "265";
+                                }
+                            }
+                        }
+                        if ((banor === 0 || typeof banor === "object" && ρσ_equals(banor, 0))) {
+                            "266";
+                            if (högsta_banan.count(0)[">="](1)) {
+                                "267";
+                                if ((variabel === 0 || typeof variabel === "object" && ρσ_equals(variabel, 0))) {
+                                    "268";
+                                    banor=banor["+"](1);
+                                    "269";
+                                    variabel=variabel["+"](1);
+                                    "270";
+                                }
+                            }
+                        }
+                        if (banor[">"](ρσ_getitem(högsta_banan, len(högsta_banan)["-"](1)))) {
+                            "271";
+                            högsta_banan.append(banor);
+                        }
+                        "272";
+                        högsta_banan = list(set(högsta_banan));
+                    }
+                }
+            }
+            "273";
+            paus = 1;
+            "274";
+            räka = ρσ_interpolate_kwargs.call(this, label, [ρσ_desugar_kwargs({pos: apple.pos["-"](vec(0, 60, 0)), text: "Press r to restart", height: 50, box: false, color: vec(0, 1, 0), font: "sans"})]);
+            "275";
+            räkor = ρσ_interpolate_kwargs.call(this, label, [ρσ_desugar_kwargs({pos: apple.pos["-"](vec(0, 120, 0)), text: "Press esc to go to settings", height: 30, box: false, color: vec(0, 1, 1), font: "sans"})]);
+            "276";
+            rundor = 1;
+            "277";
+            while ((paus === 1 || typeof paus === "object" && ρσ_equals(paus, 1))) {
+                "278";
+                väntar = 1;
+                "279";
+                (await rate(60));
+                "280";
+                k = (await keysdown());
+                "281";
+                konstant = 0;
+                "282";
+                if (ρσ_in("r", k)) {
+                    "283";
+                    ρσ_getitem(walls, len(walls)["-"](1)).visible = false;
+                    "284";
+                    ρσ_delitem(walls, (len(walls)["-"](1)));
+                    "285";
+                    var ρσ_Iter14 = range(len(kvars));
+                    ρσ_Iter14 = ((typeof ρσ_Iter14[Symbol.iterator] === "function") ? (ρσ_Iter14 instanceof Map ? ρσ_Iter14.keys() : ρσ_Iter14) : Object.keys(ρσ_Iter14));
+                    for (var ρσ_Index14 of ρσ_Iter14) {
+                        i = ρσ_Index14;
+                        "286";
+                        ρσ_getitem(kvars, i).visible = false;
+                        "287";
+                    }
+                    if ((difficulty === 0 || typeof difficulty === "object" && ρσ_equals(difficulty, 0))) {
+                        "288";
+                        ingen_vägg = 1;
+                        "289";
+                    } else {
+                        "290";
+                        ingen_vägg = 0;
+                    }
+                    "291";
+                    ρσ_delitem(walls, (len(walls)["-"](1)));
+                    "292";
+                    var ρσ_Iter15 = range(len(walls)["-"](konstant)["-"](ingen_vägg));
+                    ρσ_Iter15 = ((typeof ρσ_Iter15[Symbol.iterator] === "function") ? (ρσ_Iter15 instanceof Map ? ρσ_Iter15.keys() : ρσ_Iter15) : Object.keys(ρσ_Iter15));
+                    for (var ρσ_Index15 of ρσ_Iter15) {
+                        i = ρσ_Index15;
+                        "293";
+                        ρσ_getitem(walls, i["+"](ingen_vägg["*"](1["-u"]()))).visible = false;
+                        "294";
+                        ρσ_getitem(ser, i["+"](ingen_vägg["*"](1["-u"]()))["+"](1)).visible = false;
+                        "295";
+                        score_label.visible = false;
+                        "296";
+                        konstant=konstant["-"](1);
+                    }
+                    "297";
+                    ρσ_getitem(ser, 0).visible = false;
+                    "298";
+                    if ((ingen_vägg === 0 || typeof ingen_vägg === "object" && ρσ_equals(ingen_vägg, 0))) {
+                        "299";
+                        döden.visible = false;
+                    }
+                    "300";
+                    DÖD.visible = false;
+                    "301";
+                    if ((BANA === 0 || typeof BANA === "object" && ρσ_equals(BANA, 0))) {
+                        "302";
+                        hitbox = 0;
+                        "303";
+                        a = 10;
+                        "304";
+                        b = 10;
+                        "305";
+                        difficulty = 2;
+                        "306";
+                        gamemode = 0;
+                    }
+                    "307";
+                    score = 0;
+                    "308";
+                    svårare = 150;
+                    "309";
+                    räka.visible = false;
+                    "310";
+                    räkor.visible = false;
+                    "311";
+                    paus = 0;
+                    "312";
+                    break;
+                    "313";
+                }
+                if (ρσ_in("esc", k)) {
+                    "314";
+                    a = 10;
+                    "315";
+                    BANA = 1;
+                    "316";
+                    räka.visible = false;
+                    "317";
+                    räkor.visible = false;
+                    "318";
+                    ρσ_getitem(walls, len(walls)["-"](1)).visible = false;
+                    "319";
+                    ρσ_delitem(walls, (len(walls)["-"](1)));
+                    "320";
+                    var ρσ_Iter16 = range(len(kvars));
+                    ρσ_Iter16 = ((typeof ρσ_Iter16[Symbol.iterator] === "function") ? (ρσ_Iter16 instanceof Map ? ρσ_Iter16.keys() : ρσ_Iter16) : Object.keys(ρσ_Iter16));
+                    for (var ρσ_Index16 of ρσ_Iter16) {
+                        i = ρσ_Index16;
+                        "321";
+                        ρσ_getitem(kvars, i).visible = false;
+                        "322";
+                    }
+                    if ((difficulty === 0 || typeof difficulty === "object" && ρσ_equals(difficulty, 0))) {
+                        "323";
+                        ingen_vägg = 1;
+                        "324";
+                    } else {
+                        "325";
+                        ingen_vägg = 0;
+                    }
+                    "326";
+                    ρσ_delitem(walls, (len(walls)["-"](1)));
+                    "327";
+                    var ρσ_Iter17 = range(len(walls)["-"](konstant)["-"](ingen_vägg));
+                    ρσ_Iter17 = ((typeof ρσ_Iter17[Symbol.iterator] === "function") ? (ρσ_Iter17 instanceof Map ? ρσ_Iter17.keys() : ρσ_Iter17) : Object.keys(ρσ_Iter17));
+                    for (var ρσ_Index17 of ρσ_Iter17) {
+                        i = ρσ_Index17;
+                        "328";
+                        ρσ_getitem(walls, i["+"](ingen_vägg["*"](1["-u"]()))).visible = false;
+                        "329";
+                        ρσ_getitem(ser, i["+"](ingen_vägg["*"](1["-u"]()))["+"](1)).visible = false;
+                        "330";
+                        score_label.visible = false;
+                        "331";
+                        konstant=konstant["-"](1);
+                    }
+                    "332";
+                    ρσ_getitem(ser, 0).visible = false;
+                    "333";
+                    if ((ingen_vägg === 0 || typeof ingen_vägg === "object" && ρσ_equals(ingen_vägg, 0))) {
+                        "334";
+                        döden.visible = false;
+                    }
+                    "335";
+                    DÖD.visible = false;
+                    "336";
+                    apple.pos = vec(0, 0, 0);
+                    "337";
+                    walls = ρσ_list_decorate([]);
+                    "338";
+                    print(högsta_banan);
+                    "339";
+                    if (högsta_banan.count(1)[">="](1)) {
+                        "340";
+                        walls.append(ρσ_interpolate_kwargs.call(this, box, [ρσ_desugar_kwargs({pos: vec(60["-u"](), 150, 0), size: vec(20, 2, 40), color: vec(1, 1, 1), opacity: 1})]));
+                        "341";
+                        la_9 = ρσ_interpolate_kwargs.call(this, label, [ρσ_desugar_kwargs({pos: vec(60["-u"](), 150, 0), text: "bana 1", height: 10, box: false, color: vec(1, 1, 1), font: "sans"})]);
+                    }
+                    "342";
+                    print(högsta_banan);
+                    "343";
+                    if (högsta_banan.count(2)[">="](1)) {
+                        "344";
+                        walls.append(ρσ_interpolate_kwargs.call(this, box, [ρσ_desugar_kwargs({pos: vec(100, 150, 0), size: vec(20, 2, 40), color: vec(1, 1, 1), opacity: 1})]));
+                        "345";
+                        la_10 = ρσ_interpolate_kwargs.call(this, label, [ρσ_desugar_kwargs({pos: vec(100, 150, 0), text: "bana 2", height: 10, box: false, color: vec(1, 1, 1), font: "sans"})]);
+                        "346";
+                    }
+                    if (högsta_banan.count(3)[">="](1)) {
+                        "347";
+                        walls.append(ρσ_interpolate_kwargs.call(this, box, [ρσ_desugar_kwargs({pos: vec(60["-u"](), 200, 0), size: vec(20, 2, 40), color: vec(1, 1, 1), opacity: 1})]));
+                        "348";
+                        la_11 = ρσ_interpolate_kwargs.call(this, label, [ρσ_desugar_kwargs({pos: vec(60["-u"](), 200, 0), text: "bana 3", height: 10, box: false, color: vec(1, 1, 1), font: "sans"})]);
+                        "349";
+                    }
+                    if (högsta_banan.count(4)[">="](1)) {
+                        "350";
+                        walls.append(ρσ_interpolate_kwargs.call(this, box, [ρσ_desugar_kwargs({pos: vec(100, 200, 0), size: vec(20, 2, 40), color: vec(1, 1, 1), opacity: 1})]));
+                        "351";
+                        la_12 = ρσ_interpolate_kwargs.call(this, label, [ρσ_desugar_kwargs({pos: vec(100, 200, 0), text: "bana 4", height: 10, box: false, color: vec(1, 1, 1), font: "sans"})]);
+                        "352";
+                    }
+                    if (högsta_banan.count(5)[">="](1)) {
+                        "353";
+                        walls.append(ρσ_interpolate_kwargs.call(this, box, [ρσ_desugar_kwargs({pos: vec(60["-u"](), 250, 0), size: vec(20, 2, 40), color: vec(1, 1, 1), opacity: 1})]));
+                        "354";
+                        la_13 = ρσ_interpolate_kwargs.call(this, label, [ρσ_desugar_kwargs({pos: vec(60["-u"](), 250, 0), text: "bana 5", height: 10, box: false, color: vec(1, 1, 1), font: "sans"})]);
+                        "355";
+                    }
+                    if (högsta_banan.count(6)[">="](1)) {
+                        "356";
+                        walls.append(ρσ_interpolate_kwargs.call(this, box, [ρσ_desugar_kwargs({pos: vec(100, 250, 0), size: vec(20, 2, 40), color: vec(1, 1, 1), opacity: 1})]));
+                        "357";
+                        la_14 = ρσ_interpolate_kwargs.call(this, label, [ρσ_desugar_kwargs({pos: vec(100, 250, 0), text: "bana 6", height: 10, box: false, color: vec(1, 1, 1), font: "sans"})]);
+                        "358";
+                    }
+                    if (högsta_banan.count(7)[">="](1)) {
+                        "359";
+                        walls.append(ρσ_interpolate_kwargs.call(this, box, [ρσ_desugar_kwargs({pos: vec(60["-u"](), 300, 0), size: vec(20, 2, 40), color: vec(1, 1, 1), opacity: 1})]));
+                        "360";
+                        la_15 = ρσ_interpolate_kwargs.call(this, label, [ρσ_desugar_kwargs({pos: vec(60["-u"](), 300, 0), text: "bana 7", height: 10, box: false, color: vec(1, 1, 1), font: "sans"})]);
+                        "361";
+                    }
+                    if (högsta_banan.count(8)[">="](1)) {
+                        "362";
+                        walls.append(ρσ_interpolate_kwargs.call(this, box, [ρσ_desugar_kwargs({pos: vec(100, 300, 0), size: vec(20, 2, 40), color: vec(1, 1, 1), opacity: 1})]));
+                        "363";
+                        la_16 = ρσ_interpolate_kwargs.call(this, label, [ρσ_desugar_kwargs({pos: vec(100, 300, 0), text: "bana 8", height: 10, box: false, color: vec(1, 1, 1), font: "sans"})]);
+                        "364";
+                    }
+                    if (högsta_banan.count(9)[">="](1)) {
+                        "365";
+                        walls.append(ρσ_interpolate_kwargs.call(this, box, [ρσ_desugar_kwargs({pos: vec(60["-u"](), 350, 0), size: vec(20, 2, 40), color: vec(1, 1, 1), opacity: 1})]));
+                        "366";
+                        la_17 = ρσ_interpolate_kwargs.call(this, label, [ρσ_desugar_kwargs({pos: vec(60["-u"](), 350, 0), text: "bana 9", height: 10, box: false, color: vec(1, 1, 1), font: "sans"})]);
+                        "367";
+                    }
+                    if (högsta_banan.count(10)[">="](1)) {
+                        "368";
+                        walls.append(ρσ_interpolate_kwargs.call(this, box, [ρσ_desugar_kwargs({pos: vec(0, 400, 0), size: vec(20, 2, 40), color: vec(1, 1, 1), opacity: 1})]));
+                        "369";
+                        la_18 = ρσ_interpolate_kwargs.call(this, label, [ρσ_desugar_kwargs({pos: vec(0, 400, 0), text: "THE END", height: 10, box: false, color: vec(1, 1, 1), font: "sans"})]);
+                    }
+                    "370";
+                    print(walls);
+                    "371";
+                    walls.append(ρσ_interpolate_kwargs.call(this, box, [ρσ_desugar_kwargs({pos: vec(0, 40["-u"](), 0), size: vec(1e4, 2, 40), color: vec(1, 1, 1), opacity: 1})]));
+                    "372";
+                    walls.append(ρσ_interpolate_kwargs.call(this, box, [ρσ_desugar_kwargs({pos: vec(0, 80["*"](2)["+"](banor["*"](25))["+"](20), 0), size: vec(1e4, 2, 40), color: vec(0, 1["*"](2), 0), opacity: 1})]));
+                    "373";
+                    walls.append(ρσ_interpolate_kwargs.call(this, box, [ρσ_desugar_kwargs({pos: vec(30["-u"]()["*"](2), 50, 0), size: vec(20, 2, 40), color: vec(0, 0, 0), opacity: 1})]));
+                    "374";
+                    walls.append(ρσ_interpolate_kwargs.call(this, box, [ρσ_desugar_kwargs({pos: vec(60["-u"]()["*"](2), 50, 0), size: vec(20, 2, 40), color: vec(0, 0, 1["*"](2)), opacity: 1})]));
+                    "375";
+                    walls.append(ρσ_interpolate_kwargs.call(this, box, [ρσ_desugar_kwargs({pos: vec(90["-u"]()["*"](2), 50, 0), size: vec(20, 2, 40), color: vec(0, 1["*"](2), 1["*"](2)), opacity: 1})]));
+                    "376";
+                    walls.append(ρσ_interpolate_kwargs.call(this, box, [ρσ_desugar_kwargs({pos: vec(50["*"](2), 50, 0), size: vec(20, 2, 40), color: vec(5["*"](2), 1["*"](2), 0["*"](2)), opacity: 1})]));
+                    "377";
+                    walls.append(ρσ_interpolate_kwargs.call(this, box, [ρσ_desugar_kwargs({pos: vec(80["*"](2), 50, 0), size: vec(20, 2, 40), color: vec(1["*"](2), 1["*"](2), 1["*"](2)), opacity: 1})]));
+                    "378";
+                    walls.append(ρσ_interpolate_kwargs.call(this, box, [ρσ_desugar_kwargs({pos: vec(60["-u"]()["*"](2), 100, 0), size: vec(20, 2, 40), color: vec(1["*"](2), 0, 0), opacity: 1})]));
+                    "379";
+                    walls.append(ρσ_interpolate_kwargs.call(this, box, [ρσ_desugar_kwargs({pos: vec(90["-u"]()["*"](2), 100, 0), size: vec(20, 2, 40), color: vec(1["*"](2), 0, 0), opacity: 1})]));
+                    "380";
+                    walls.append(ρσ_interpolate_kwargs.call(this, box, [ρσ_desugar_kwargs({pos: vec(50["*"](2), 100, 0), size: vec(20, 2, 40), color: vec(1["*"](2), 0, 0), opacity: 1})]));
+                    "381";
+                    la_1 = ρσ_interpolate_kwargs.call(this, label, [ρσ_desugar_kwargs({pos: apple.pos["+"](vec(0, 150["-u"](), 0)), text: "How many platforms the first round should have", height: 10, box: false, color: vec(0, 0, 1["*"](2)), font: "sans"})]);
+                    "382";
+                    la_2 = ρσ_interpolate_kwargs.call(this, label, [ρσ_desugar_kwargs({pos: apple.pos["+"](vec(0, 130["-u"](), 0)), text: "How many platforms you add each round", height: 10, box: false, color: vec(0, 1["*"](2), 1["*"](2)), font: "sans"})]);
+                    "383";
+                    la_3 = ρσ_interpolate_kwargs.call(this, label, [ρσ_desugar_kwargs({pos: apple.pos["+"](vec(0, 90["-u"](), 0)), text: "Difficulty on the game", height: 10, box: false, color: vec(5["*"](2), 1["*"](2), 0["*"](2)), font: "sans"})]);
+                    "384";
+                    la_4 = ρσ_interpolate_kwargs.call(this, label, [ρσ_desugar_kwargs({pos: apple.pos["+"](vec(0, 170["-u"](), 0)), text: "Gamemode (1= osynliga platformar, 0 = synliga platformar)", height: 10, box: false, color: vec(1["*"](2), 1["*"](2), 1["*"](2)), font: "sans"})]);
+                    "385";
+                    la_5 = ρσ_interpolate_kwargs.call(this, label, [ρσ_desugar_kwargs({pos: apple.pos["+"](vec(0, 70["-u"](), 0)), text: "Red = negative", height: 10, box: false, color: vec(1["*"](2), 0, 0), font: "sans"})]);
+                    "386";
+                    la_6 = ρσ_interpolate_kwargs.call(this, label, [ρσ_desugar_kwargs({pos: apple.pos["+"](vec(0, 110["-u"](), 0)), text: "Ifall hitbox ska vara på eller av", height: 10, box: false, color: vec(0, 0, 0), font: "sans"})]);
+                    "387";
+                    la_7 = ρσ_interpolate_kwargs.call(this, label, [ρσ_desugar_kwargs({pos: vec(0, 80["*"](2)["+"](banor["*"](25))["+"](20), 0), text: "spara settings och kör spelet", height: 10, box: false, color: vec(1, 1, 1), font: "sans"})]);
+                    "388";
+                    la_8 = ρσ_interpolate_kwargs.call(this, label, [ρσ_desugar_kwargs({pos: vec(0, 40["-u"](), 0), text: "reseta settings", height: 10, box: false, color: vec(1, 1, 1), font: "sans"})]);
+                    "389";
+                    väntar = 1;
+                    "390";
+                    while ((väntar === 1 || typeof väntar === "object" && ρσ_equals(väntar, 1))) {
+                        "391";
+                        (await rate(60));
+                        "392";
+                        apple.bb.pos = apple.pos;
+                        "393";
+                        k = (await keysdown());
+                        "394";
+                        if (ρσ_in("w", k)) {
+                            "395";
+                            apple.pos.y=apple.pos.y["+"](2["+"](banor["/"](2)));
+                            "396";
+                            apple.bb.pos.y=apple.bb.pos.y["+"](2["+"](banor["/"](2)));
+                            "397";
+                        }
+                        if (ρσ_in(" ", k)) {
+                            "398";
+                            apple.pos.y=apple.pos.y["+"](2["+"](banor["/"](2)));
+                            "399";
+                            apple.bb.pos.y=apple.bb.pos.y["+"](2["+"](banor["/"](2)));
+                            "400";
+                        }
+                        if (ρσ_in("s", k)) {
+                            "401";
+                            apple.pos.y=apple.pos.y["-"](2["+"](banor["/"](2)));
+                            "402";
+                            apple.bb.pos.y=apple.bb.pos.y["-"](2["+"](banor["/"](2)));
+                            "403";
+                        }
+                        if (ρσ_in("a", k)) {
+                            "404";
+                            apple.pos.x=apple.pos.x["-"](2["+"](banor["/"](2)));
+                            "405";
+                            apple.bb.pos.x=apple.bb.pos.x["-"](2["+"](banor["/"](2)));
+                            "406";
+                        }
+                        if (ρσ_in("d", k)) {
+                            "407";
+                            apple.pos.x=apple.pos.x["+"](2["+"](banor["/"](2)));
+                            "408";
+                            apple.bb.pos.x=apple.bb.pos.x["+"](2["+"](banor["/"](2)));
+                            "409";
+                        }
+                        if ((await detectCol(apple.bb, ρσ_getitem(walls, 1["+"](banor))))) {
+                            "410";
+                            print("Settings saved");
+                            "411";
+                            break;
+                            "412";
+                        }
+                        if ((await detectCol(apple.bb, ρσ_getitem(walls, 2["+"](banor))))) {
+                            "413";
+                            if ((morot === 0 || typeof morot === "object" && ρσ_equals(morot, 0))) {
+                                "414";
+                                if ((hitbox === 1 || typeof hitbox === "object" && ρσ_equals(hitbox, 1))) {
+                                    "415";
+                                    hitbox = 0;
+                                    "416";
+                                } else {
+                                    "417";
+                                    hitbox = 1;
+                                }
+                                "418";
+                                print("hitbox", hitbox);
+                                "419";
+                                morot = 1;
+                                "420";
+                            }
+                        }
+                        if ((await detectCol(apple.bb, ρσ_getitem(walls, 3["+"](banor))))) {
+                            "421";
+                            if ((morot === 0 || typeof morot === "object" && ρσ_equals(morot, 0))) {
+                                "422";
+                                a=a["+"](1);
+                                "423";
+                                print("a", a);
+                                "424";
+                                morot = 1;
+                                "425";
+                            }
+                        }
+                        if ((await detectCol(apple, ρσ_getitem(walls, 4["+"](banor))))) {
+                            "426";
+                            if ((morot === 0 || typeof morot === "object" && ρσ_equals(morot, 0))) {
+                                "427";
+                                b=b["+"](1);
+                                "428";
+                                print("b", b);
+                                "429";
+                                morot = 1;
+                                "430";
+                            }
+                        }
+                        if ((await detectCol(apple.bb, ρσ_getitem(walls, 5["+"](banor))))) {
+                            "431";
+                            if ((morot === 0 || typeof morot === "object" && ρσ_equals(morot, 0))) {
+                                "432";
+                                difficulty=difficulty["+"](1);
+                                "433";
+                                print("difficulty", difficulty);
+                                "434";
+                                morot = 1;
+                                "435";
+                            }
+                        }
+                        if ((await detectCol(apple.bb, ρσ_getitem(walls, 6["+"](banor))))) {
+                            "436";
+                            if ((morot === 0 || typeof morot === "object" && ρσ_equals(morot, 0))) {
+                                "437";
+                                if ((gamemode === 1 || typeof gamemode === "object" && ρσ_equals(gamemode, 1))) {
+                                    "438";
+                                    gamemode = 0;
+                                    "439";
+                                } else {
+                                    "440";
+                                    gamemode = 1;
+                                }
+                                "441";
+                                morot = 1;
+                                "442";
+                                print("gamemode", gamemode);
+                                "443";
+                            }
+                        }
+                        if ((await detectCol(apple.bb, ρσ_getitem(walls, 7["+"](banor))))) {
+                            "444";
+                            if ((morot === 0 || typeof morot === "object" && ρσ_equals(morot, 0))) {
+                                "445";
+                                a=a["-"](1);
+                                "446";
+                                print("a", a);
+                                "447";
+                                morot = 1;
+                                "448";
+                            }
+                        }
+                        if ((await detectCol(apple.bb, ρσ_getitem(walls, 8["+"](banor))))) {
+                            "449";
+                            if ((morot === 0 || typeof morot === "object" && ρσ_equals(morot, 0))) {
+                                "450";
+                                b=b["-"](1);
+                                "451";
+                                print("b", b);
+                                "452";
+                                morot = 1;
+                                "453";
+                            }
+                        }
+                        if ((await detectCol(apple.bb, ρσ_getitem(walls, 9["+"](banor))))) {
+                            "454";
+                            if ((morot === 0 || typeof morot === "object" && ρσ_equals(morot, 0))) {
+                                "455";
+                                difficulty=difficulty["-"](1);
+                                "456";
+                                print("difficulty", difficulty);
+                                "457";
+                                morot = 1;
+                                "458";
+                            }
+                        }
+                        if ((await detectCol(apple.bb, ρσ_getitem(walls, 0["+"](banor))))) {
+                            "459";
+                            if ((morot === 0 || typeof morot === "object" && ρσ_equals(morot, 0))) {
+                                "460";
+                                ρσ_unpack = (await grundinstallningar());
+    ρσ_unpack = ρσ_unpack_asarray(16, ρσ_unpack);
+                                TRUE = ρσ_unpack[0];
+                                paus = ρσ_unpack[1];
+                                svårare = ρσ_unpack[2];
+                                gamemode = ρσ_unpack[3];
+                                ingen_vägg = ρσ_unpack[4];
+                                inte_hoppa = ρσ_unpack[5];
+                                difficulty = ρσ_unpack[6];
+                                score = ρσ_unpack[7];
+                                rundor = ρσ_unpack[8];
+                                b = ρσ_unpack[9];
+                                a = ρσ_unpack[10];
+                                hitbox = ρσ_unpack[11];
+                                väntar = ρσ_unpack[12];
+                                BANA = ρσ_unpack[13];
+                                morot = ρσ_unpack[14];
+                                pausat = ρσ_unpack[15];
+                                "461";
+                                print("inställningar resetade");
+                                "462";
+                            }
+                        }
+                        if (högsta_banan.count(1)[">="](1)) {
+                            "463";
+                            if ((await detectCol(apple.bb, ρσ_getitem(walls, 0)))) {
+                                "464";
+                                högsta_banan.append(banor);
+                                "465";
+                                a = 20;
+                                "466";
+                                b = 10;
+                                "467";
+                                break;
+                                "468";
+                            }
+                        }
+                        if (högsta_banan.count(2)[">="](1)) {
+                            "469";
+                            if ((await detectCol(apple.bb, ρσ_getitem(walls, 1)))) {
+                                "470";
+                                högsta_banan.append(banor);
+                                "471";
+                                a = 20;
+                                "472";
+                                b = 10;
+                                "473";
+                                break;
+                                "474";
+                            }
+                        }
+                        if (högsta_banan.count(3)[">="](1)) {
+                            "475";
+                            if ((await detectCol(apple.bb, ρσ_getitem(walls, 2)))) {
+                                "476";
+                                print("hej");
+                                "477";
+                                högsta_banan.append(banor);
+                                "478";
+                                a = 30;
+                                "479";
+                                b = 10;
+                                "480";
+                                break;
+                                "481";
+                            }
+                        }
+                        if (högsta_banan.count(4)[">="](1)) {
+                            "482";
+                            if ((await detectCol(apple.bb, ρσ_getitem(walls, 3)))) {
+                                "483";
+                                print("hej");
+                                "484";
+                                högsta_banan.append(banor);
+                                "485";
+                                a = 40;
+                                "486";
+                                b = 10;
+                                "487";
+                                break;
+                                "488";
+                            }
+                        }
+                        if (högsta_banan.count(5)[">="](1)) {
+                            "489";
+                            if ((await detectCol(apple.bb, ρσ_getitem(walls, 4)))) {
+                                "490";
+                                print("hej");
+                                "491";
+                                högsta_banan.append(banor);
+                                "492";
+                                a = 50;
+                                "493";
+                                b = 10;
+                                "494";
+                                break;
+                                "495";
+                            }
+                        }
+                        if (högsta_banan.count(6)[">="](1)) {
+                            "496";
+                            if ((await detectCol(apple.bb, ρσ_getitem(walls, 5)))) {
+                                "497";
+                                print("hej");
+                                "498";
+                                högsta_banan.append(banor);
+                                "499";
+                                a = 60;
+                                "500";
+                                b = 10;
+                                "501";
+                                break;
+                                "502";
+                            }
+                        }
+                        if (högsta_banan.count(7)[">="](1)) {
+                            "503";
+                            if ((await detectCol(apple.bb, ρσ_getitem(walls, 6)))) {
+                                "504";
+                                print("hej");
+                                "505";
+                                högsta_banan.append(banor);
+                                "506";
+                                a = 70;
+                                "507";
+                                b = 10;
+                                "508";
+                                break;
+                                "509";
+                            }
+                        }
+                        if (högsta_banan.count(8)[">="](1)) {
+                            "510";
+                            if ((await detectCol(apple.bb, ρσ_getitem(walls, 7)))) {
+                                "511";
+                                print("hej");
+                                "512";
+                                högsta_banan.append(banor);
+                                "513";
+                                a = 80;
+                                "514";
+                                b = 10;
+                                "515";
+                                break;
+                                "516";
+                            }
+                        }
+                        if (högsta_banan.count(9)[">="](1)) {
+                            "517";
+                            if ((await detectCol(apple.bb, ρσ_getitem(walls, 8)))) {
+                                "518";
+                                print("hej");
+                                "519";
+                                högsta_banan.append(banor);
+                                "520";
+                                a = 90;
+                                "521";
+                                b = 10;
+                                "522";
+                                break;
+                                "523";
+                            }
+                        }
+                        if (högsta_banan.count(10)[">="](1)) {
+                            "524";
+                            if ((await detectCol(apple.bb, ρσ_getitem(walls, 9)))) {
+                                "525";
+                                print("hej");
+                                "526";
+                                a = 100;
+                                "527";
+                                b = 10;
+                                "528";
+                                print("end credits");
+                                "529";
+                                break;
+                            }
+                        }
+                        "531";
+                        morot=morot["+"](1);
+                        "532";
+                        if ((morot === 30 || typeof morot === "object" && ρσ_equals(morot, 30))) {
+                            "533";
+                            morot = 0;
+                        }
+                        "534";
+                        apple.vel.x = 0;
+                        "535";
+                        apple.vel.y = 0;
+                    }
+                    "536";
+                    BANA = 1;
+                    "537";
+                    konstant = 0;
+                    "538";
+                    score = 0;
+                    "539";
+                    rundor = 1;
+                    "540";
+                    var ρσ_Iter18 = range(len(walls)["-"](konstant));
+                    ρσ_Iter18 = ((typeof ρσ_Iter18[Symbol.iterator] === "function") ? (ρσ_Iter18 instanceof Map ? ρσ_Iter18.keys() : ρσ_Iter18) : Object.keys(ρσ_Iter18));
+                    for (var ρσ_Index18 of ρσ_Iter18) {
+                        i = ρσ_Index18;
+                        "541";
+                        ρσ_getitem(walls, i).visible = false;
+                        "542";
+                        score_label.visible = false;
+                        "543";
+                        konstant=konstant["-"](1);
+                    }
+                    "544";
+                    la_1.visible = false;
+                    "545";
+                    la_2.visible = false;
+                    "546";
+                    la_3.visible = false;
+                    "547";
+                    la_4.visible = false;
+                    "548";
+                    la_5.visible = false;
+                    "549";
+                    la_6.visible = false;
+                    "550";
+                    la_7.visible = false;
+                    "551";
+                    la_8.visible = false;
+                    "552";
+                    if (högsta_banan.count(1)[">="](1)) {
+                        "553";
+                        la_9.visible = false;
+                        "554";
+                    }
+                    if (högsta_banan.count(2)[">="](1)) {
+                        "555";
+                        la_10.visible = false;
+                        "556";
+                    }
+                    if (högsta_banan.count(3)[">="](1)) {
+                        "557";
+                        la_11.visible = false;
+                        "558";
+                    }
+                    if (högsta_banan.count(4)[">="](1)) {
+                        "559";
+                        la_12.visible = false;
+                        "560";
+                    }
+                    if (högsta_banan.count(5)[">="](1)) {
+                        "561";
+                        la_13.visible = false;
+                        "562";
+                    }
+                    if (högsta_banan.count(6)[">="](1)) {
+                        "563";
+                        la_14.visible = false;
+                        "564";
+                    }
+                    if (högsta_banan.count(7)[">="](1)) {
+                        "565";
+                        la_15.visible = false;
+                        "566";
+                    }
+                    if (högsta_banan.count(8)[">="](1)) {
+                        "567";
+                        la_16.visible = false;
+                        "568";
+                    }
+                    if (högsta_banan.count(9)[">="](1)) {
+                        "569";
+                        la_17.visible = false;
+                        "570";
+                    }
+                    if (högsta_banan.count(10)[">="](1)) {
+                        "571";
+                        la_18.visible = false;
+                        "572";
+                    }
+                    if (difficulty["<="](0)) {
+                        "573";
+                        difficulty = 1["-u"]();
+                    }
+                    "574";
+                    break;
+                }
+            }
+        }
+    };
+    if (!__main__.__module__) Object.defineProperties(__main__, {
+        __module__ : {value: null}
+    });
+    
+    ;$(function(){ window.__context = { glowscript_container: $("#glowscript").removeAttr("id") }; __main__() })})()
+    // END JAVASCRIPT
+    
+    //--><!]]></script>
+    </div>
+    

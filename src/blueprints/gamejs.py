@@ -4,6 +4,7 @@ from config import *
 
 gamejs = Blueprint('gamejs', __name__)
 
+
 @gamejs.route("/")
 def gamejs_index():
     return render_template('games/home.html')
@@ -41,6 +42,12 @@ def dino():
 def bouncingballs():
     return render_template('games/bouncingballs.html')
 
+
 @gamejs.route("/pig", methods=['GET', 'POST'])
 def pig():
     return render_template('games/pig.html')
+
+
+@gamejs.route("/abbeGame", methods=['GET', 'POST'])
+def abbeGame():
+    return render_template('games/abbeGame.html')
