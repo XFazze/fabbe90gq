@@ -13,24 +13,28 @@ from blueprints.files import files
 from celery import Celery
 from functools import wraps
 from authlib.integrations.flask_client import OAuth
+import os
 
 # Initializing flask and sql
-app = Flask(__name__,  static_folder='static')
-app.config['SECRET_KEY'] = secretKey
+app = Flask(__name__, static_folder="static")
+if "secretKey" in locals():
+    app.config["SECRET_KEY"] = secretKey
+else:
+    app.config["SECRET_KEY"] = os.urandom(12).hex()
 
-app.register_blueprint(spotify, url_prefix='/spotify')
-#app.register_blueprint(urbanOsu, url_prefix='/urbanOsu')
-app.register_blueprint(bjornbanan, url_prefix='/bjornbanan')
-app.register_blueprint(gamejs, url_prefix='/gamejs')
-app.register_blueprint(sim, url_prefix='/sims')
-#app.register_blueprint(factorio, url_prefix='/factorio')
-app.register_blueprint(lb2000, url_prefix='/lb2000')
-#app.register_blueprint(user, url_prefix='/user')
-#app.register_blueprint(afknotif, url_prefix='/afknotif')
-#app.register_blueprint(files, url_prefix='/files')
+app.register_blueprint(spotify, url_prefix="/spotify")
+# app.register_blueprint(urbanOsu, url_prefix='/urbanOsu')
+app.register_blueprint(bjornbanan, url_prefix="/bjornbanan")
+app.register_blueprint(gamejs, url_prefix="/gamejs")
+app.register_blueprint(sim, url_prefix="/sims")
+# app.register_blueprint(factorio, url_prefix='/factorio')
+app.register_blueprint(lb2000, url_prefix="/lb2000")
+# app.register_blueprint(user, url_prefix='/user')
+# app.register_blueprint(afknotif, url_prefix='/afknotif')
+# app.register_blueprint(files, url_prefix='/files')
 
-# auth0 files 
-'''
+# auth0 files
+"""
 oauth = OAuth(app)
 auth0 = oauth.register(
     'auth0',
@@ -81,10 +85,10 @@ def filesDashboard():
                            userinfo=session['profile'],
                            userinfo_pretty=json.dumps(session['jwt_payload'], indent=4))
 
-'''
+"""
 # celery background task for discordbot plots
-#TODO fix image hosting and updating of discord plots
-'''
+# TODO fix image hosting and updating of discord plots
+"""
 def make_celery(app):
     celery = Celery(
         app.import_name,
@@ -100,13 +104,14 @@ def make_celery(app):
 
     celery.Task = ContextTask
     return celery
-'''
+"""
+
+
 @app.route("/")
 def index():
-    return render_template('index.html')
+    return render_template("index.html")
 
 
 # Run the site
 if __name__ == "__main__":
-    app.run(debug=True)
-
+    app.run(debug=True, host="0.0.0.0")
